@@ -111,14 +111,6 @@ CREATE TABLE [order_details] (
 )
 GO
 
-EXEC sp_addextendedproperty
-@name = N'Column_Description',
-@value = '0 là đầu tiền, 1,2,3,..',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'galery',
-@level2type = N'Column', @level2name = 'level';
-GO
-
 ALTER TABLE [accounts] ADD FOREIGN KEY ([role_id]) REFERENCES [roles] ([id])
 GO
 
