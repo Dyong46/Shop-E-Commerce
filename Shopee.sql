@@ -1,5 +1,17 @@
+USE master
+GO
+
+DROP DATABASE IF EXISTS Shopee_Clone
+GO
+
+CREATE DATABASE Shopee_Clone
+GO
+
+USE Shopee_Clone
+GO
+
 CREATE TABLE [roles] (
-  [id] char(10) PRIMARY KEY IDENTITY(1, 1),
+  [id] varchar(10) PRIMARY KEY,
   [name] nvarchar(30)
 )
 GO
@@ -19,7 +31,7 @@ CREATE TABLE [accounts] (
   [created_at] date,
   [updated_at] date,
   [deleted_at] date,
-  [role_id] char(10)
+  [role_id] varchar(10)
 )
 GO
 
@@ -62,7 +74,7 @@ CREATE TABLE [products] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [name_product] nvarchar(50),
   [desc] nvarchar(255),
-  [price] long,
+  [price] int,
   [quantity] integer,
   [created_at] date,
   [updated_at] date,
@@ -107,7 +119,7 @@ CREATE TABLE [order_details] (
   [product_id] integer,
   [order_id] integer,
   [quantity] integer,
-  [price] long
+  [price] int
 )
 GO
 
