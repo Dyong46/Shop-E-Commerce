@@ -1,13 +1,13 @@
 USE master
 GO
 
-DROP DATABASE IF EXISTS Shopee_Clone
+DROP DATABASE IF EXISTS Shopee
 GO
 
-CREATE DATABASE Shopee_Clone
+CREATE DATABASE Shopee
 GO
 
-USE Shopee_Clone
+USE Shopee
 GO
 
 CREATE TABLE [roles] (
@@ -27,7 +27,6 @@ CREATE TABLE [accounts] (
   [gender] bit,
   [date_of_birth] date,
   [img] varchar(255),
-  [token] varchar(255),
   [created_at] date,
   [updated_at] date,
   [deleted_at] date,
@@ -108,7 +107,8 @@ GO
 CREATE TABLE [orders] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [created_at] date,
-  [status_is] integer,
+  [status_id] integer,
+  [total_amount] bigint,
   [account_id] integer,
   [discount_id] integer
 )
@@ -119,7 +119,7 @@ CREATE TABLE [order_details] (
   [product_id] integer,
   [order_id] integer,
   [quantity] integer,
-  [price] int
+  [amount] int
 )
 GO
 
@@ -141,7 +141,7 @@ GO
 ALTER TABLE [reviews] ADD FOREIGN KEY ([product_id]) REFERENCES [products] ([id])
 GO
 
-ALTER TABLE [orders] ADD FOREIGN KEY ([status_is]) REFERENCES [order_status] ([id])
+ALTER TABLE [orders] ADD FOREIGN KEY ([status_id]) REFERENCES [order_status] ([id])
 GO
 
 ALTER TABLE [orders] ADD FOREIGN KEY ([account_id]) REFERENCES [accounts] ([id])

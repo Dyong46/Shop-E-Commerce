@@ -5,28 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "orders_details")
 
-public class OrdersDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+@Data @AllArgsConstructor @NoArgsConstructor
+@Entity @Table(name = "[reviews]")
+public class Review {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String comment;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private Orders order_id;
+    private Account account_id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private Products product_id;
-
-    private int quantity;
-
-    private Long price;
+    private Product product_id;
 }
