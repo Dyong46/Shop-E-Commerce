@@ -1,5 +1,14 @@
+import Footer from '~/components/Footer';
+import RegisterHeader from '~/components/RegisterHeader';
+
 const RegisterLayout = ({ children }) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <RegisterHeader />
+      {children}
+      <Footer />
+    </div>
+  );
 };
 
 export default RegisterLayout;
