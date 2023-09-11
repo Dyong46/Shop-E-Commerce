@@ -18,7 +18,8 @@ public class Product {
 
     private String name_product;
 
-    private String desc;
+    @Column(name = "description")
+    private String description;
 
     private Long price;
 
