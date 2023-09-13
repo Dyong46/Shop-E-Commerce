@@ -1,5 +1,3 @@
-import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
@@ -25,7 +23,7 @@ const Login = () => {
                 // register={register}
                 type="password"
                 className="mt-2"
-                classNameEye="absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]"
+                classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.password?.message}
                 placeholder="Password"
                 autoComplete="on"
@@ -33,7 +31,7 @@ const Login = () => {
               <div className="mt-3">
                 <Button
                   type="submit"
-                  className="flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600 font-normal"
+                  className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600 font-normal"
                   // isLoading={loginMutation.isLoading}
                   // disabled={loginMutation.isLoading}
                 >

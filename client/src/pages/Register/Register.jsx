@@ -23,7 +23,7 @@ const Register = () => {
                 // register={register}
                 type="password"
                 className="mt-2"
-                classNameEye="absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]"
+                classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.password?.message}
                 placeholder="Password"
                 autoComplete="on"
@@ -34,7 +34,7 @@ const Register = () => {
                 // register={register}
                 type="password"
                 className="mt-2"
-                classNameEye="absolute right-[5px] h-5 w-5 cursor-pointer top-[12px]"
+                classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.confirm_password?.message}
                 placeholder="Confirm Password"
                 autoComplete="on"
@@ -42,7 +42,7 @@ const Register = () => {
 
               <div className="mt-2">
                 <Button
-                  className="flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600"
+                  className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600"
                   //   isLoading={registerAccountMutation.isLoading}
                   //   disabled={registerAccountMutation.isLoading}
                 >
