@@ -1,27 +1,56 @@
 import { Link } from 'react-router-dom';
 
+let datasRight = [
+  {
+    title: 'Thông báo',
+    icon: (
+      <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 21">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" />
+      </svg>
+    )
+  },
+  {
+    title: 'Hỗ trợ',
+    icon: (
+      <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    )
+  },
+  {
+    title: 'Tiếng việt',
+    icon: (
+      <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    )
+  },
+
+];
+
+let datasLeft = [
+  'Thông báo',
+  'Kênh người bán',
+  'Tải ứng dụng',
+  'Kết nối'
+]
+
 const Header = () => {
   return (
     <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white">
       <div className="container">
         <div className="flex justify-between">
           <div className="flex justify-center align-center my-1">
-            <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" onClick={() => { }}>
-              Thông báo
-            </button>
-            <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" onClick={() => { }}>
-              Kênh người bán
-            </button>
-            <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" onClick={() => { }}>
-              Tải ứng dụng
-            </button>
-            <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" onClick={() => { }}>
-              Kết nối
-            </button>
+            {datasLeft.map((item, index) => (
+              <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" key={index} onClick={() => { }}>
+                {item}
+              </button>
+
+            ))}
 
             <div className="py-1 my-1 w-5 h-5 justify-center block bg-white rounded-full">
-              <svg class="w-[12px] h-[12px] text-gray-800 dark:text-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 2 19">
-                <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd" />
+              <svg className="w-[12px] h-[12px] text-gray-800 dark:text-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 2 19">
+                <path fillRule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clipRule="evenodd" />
               </svg>
             </div>
 
@@ -36,25 +65,16 @@ const Header = () => {
               </svg>
             </div>
           </div>
+
           <div className="flex justify-center align-center my-1">
-            <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" onClick={() => { }}>
-              <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 21">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" />
-              </svg>
-              Thông báo
-            </button>
-            <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" onClick={() => { }}>
-              <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-              </svg>
-              Hỗ trợ
-            </button>
-            <button className="py-2 px-3 flex text-xs text-left hover:text-orange" onClick={() => { }}>
-              <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6.487 1.746c0 4.192 3.592 1.66 4.592 5.754 0 .828 1 1.5 2 1.5s2-.672 2-1.5a1.5 1.5 0 0 1 1.5-1.5h1.5m-16.02.471c4.02 2.248 1.776 4.216 4.878 5.645C10.18 13.61 9 19 9 19m9.366-6h-2.287a3 3 0 0 0-3 3v2m6-8a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-              </svg>
-              Tiếng Việt
-            </button>
+            {datasRight.map((item, index) => (
+              <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" key={index} onClick={() => { }}>
+                {item.icon}
+                {item.title}
+              </button>
+
+            ))}
+
             <button className="py-2 px-3 flex text-xs text-left hover:text-orange" onClick={() => { }}>
               <div className="block h-4 w-4 mr-1 rounded-full bg-white hover:bg-orange">h</div>
               User
