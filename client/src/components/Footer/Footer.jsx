@@ -663,4 +663,4 @@ Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch & Đầu tư TP Hà N�
   );
 }
 
-export default Footer;
+export default footer;
