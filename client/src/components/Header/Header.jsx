@@ -4,36 +4,66 @@ let datasRight = [
   {
     title: 'Thông báo',
     icon: (
-      <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 21">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" />
+      <svg
+        className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 16 21"
+      >
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+          d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z"
+        />
       </svg>
-    )
+    ),
   },
   {
     title: 'Hỗ trợ',
     icon: (
-      <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      <svg
+        className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+          d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
       </svg>
-    )
+    ),
   },
   {
     title: 'Tiếng việt',
     icon: (
-      <svg className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      <svg
+        className="w-[14px] h-[14px] mx-1 text-gray-800 dark:text-white"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.8"
+          d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+        />
       </svg>
-    )
+    ),
   },
-
 ];
 
-let datasLeft = [
-  'Thông báo',
-  'Kênh người bán',
-  'Tải ứng dụng',
-  'Kết nối'
-]
+let datasLeft = ['Thông báo', 'Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
 
 const Header = () => {
   return (
@@ -42,15 +72,28 @@ const Header = () => {
         <div className="flex justify-between">
           <div className="flex justify-center align-center my-1">
             {datasLeft.map((item, index) => (
-              <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" key={index} onClick={() => { }}>
+              <button
+                className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
+                key={index}
+                onClick={() => {}}
+              >
                 {item}
               </button>
-
             ))}
 
-            <div className="py-1 my-1 w-5 h-5 justify-center block bg-white rounded-full">
-              <svg className="w-[12px] h-[12px] text-gray-800 dark:text-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 2 19">
-                <path fillRule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clipRule="evenodd" />
+            <div className="p-1 m-1 w-5 h-5 justify-center bg-white rounded-full">
+              <svg
+                className="w-[12px] h-[12px] text-gray-800 dark:text-orange"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 2 19"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
 
@@ -59,23 +102,26 @@ const Header = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-[11px] w-[11px] dark:text-orange"
                 fill="currentColor"
-                viewBox="0 0 24 24">
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
               </svg>
             </div>
           </div>
 
           <div className="flex justify-center align-center my-1">
             {datasRight.map((item, index) => (
-              <button className="py-2 px-3 flex align-center text-xs text-left hover:text-orange" key={index} onClick={() => { }}>
+              <button
+                className="py-2 px-3 flex align-center text-xs text-left hover:text-orange"
+                key={index}
+                onClick={() => {}}
+              >
                 {item.icon}
                 {item.title}
               </button>
-
             ))}
 
-            <button className="py-2 px-3 flex text-xs text-left hover:text-orange" onClick={() => { }}>
+            <button className="py-2 px-3 flex text-xs text-left hover:text-orange" onClick={() => {}}>
               <div className="block h-4 w-4 mr-1 rounded-full bg-white hover:bg-orange">h</div>
               User
             </button>
@@ -95,42 +141,85 @@ const Header = () => {
               <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                  <svg
+                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
                   </svg>
                 </div>
-                <input type="search" id="default-search" className="block w-full h-12 p-4 px-4 pl-10 text-sm text-gray-900 border rounded bg-white focus:ring-blue-500 dark:bg-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
-                <button type="submit" className="w-14 h-50 justify-items-center text-white absolute right-2.5 bottom-2.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded text-sm mt-5 px-3 py-2 dark:bg-orange dark:hover:bg-orange-700 dark:focus:ring-orange-800">
-                  <svg className="w-[12px] h-[12px] mx-auto text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                <input
+                  type="search"
+                  id="default-search"
+                  className="block w-full h-12 p-4 px-4 pl-10 text-sm text-gray-900 border rounded bg-white focus:ring-blue-500 dark:bg-white dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Search Mockups, Logos..."
+                  required
+                />
+                <button
+                  type="submit"
+                  className="w-14 h-50 justify-items-center text-white absolute right-2.5 bottom-2.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded text-sm mt-5 px-3 py-2 dark:bg-orange dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                >
+                  <svg
+                    className="w-[12px] h-[12px] mx-auto text-gray-800 dark:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.8"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
                   </svg>
                 </button>
               </div>
             </form>
             <div className="flex flex-row mr-5">
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                 Thông báo
               </button>
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                 Thông báo
               </button>
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                 Thông báo
               </button>
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                 Thông báo
               </button>
             </div>
           </div>
 
           <div className="h-12 relative">
-            <div
-              className="absolute bg-white bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
+            <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
               9+
             </div>
-            <svg className="w-[32px] h-[32px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-              <path stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1" />
+            <svg
+              className="w-[32px] h-[32px] text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 18 20"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.8"
+                d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
+              />
             </svg>
           </div>
         </div>
