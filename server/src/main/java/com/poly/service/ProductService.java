@@ -5,6 +5,7 @@ import com.poly.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,4 +24,12 @@ public class ProductService {
     public Product create(Product entity){
         return productRepository.save(entity);
     }
+    public Optional<Product> findById(Integer id) {
+    	return productRepository.getProductById(id);
+    }
+    public void delete(Product product) {
+    	product.setDeleted_at(new Date());
+    	productRepository.save(product);
+    }
+    
 }
