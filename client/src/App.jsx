@@ -5,13 +5,13 @@ import { Fragment } from 'react';
 import RegisterLayout from './layouts/RegisterLayout/RegisterLayout';
 import CartLayout from './layouts/CartLayout/CartLayout';
 import { ToastContainer } from 'react-toastify';
-
+import Cart from './pages/Cart';
 function App() {
   return (
     <>
       {/* <BrowserRouter> */}
       <div className="App">
-        <Routes>
+        {/* <Routes>
           {publicRoutes.map((route, index) => {
             const Page = route.component;
             let Layout = MainLayout;
@@ -36,7 +36,8 @@ function App() {
               />
             );
           })}
-        </Routes>
+        </Routes> */}
+        <Cart/>
       </div>
       {/* </BrowserRouter> */}
       <ToastContainer
