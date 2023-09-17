@@ -11,7 +11,7 @@ function App() {
     <>
       {/* <BrowserRouter> */}
       <div className="App">
-        {/* <Routes>
+        <Routes>
           {publicRoutes.map((route, index) => {
             const Page = route.component;
             let Layout = MainLayout;
@@ -36,8 +36,7 @@ function App() {
               />
             );
           })}
-        </Routes> */}
-        <Cart/>
+        </Routes>
       </div>
       {/* </BrowserRouter> */}
       <ToastContainer
