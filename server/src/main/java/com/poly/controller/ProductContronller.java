@@ -3,6 +3,9 @@ package com.poly.controller;
 import com.poly.entity.Product;
 import com.poly.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +28,25 @@ public class ProductContronller {
         return productService.getProductByName(name);
     }
     @PostMapping("/api/products/save")
-    public Product getSave(Product entity){
+    public Product postSave(Product entity){
         return productService.create(entity);
+    }
+
+    @GetMapping("/api/products/findbyid")
+    public Optional<Product> getProductById(@RequestParam("id") Integer id){
+        return productService.getProductById(id);
+    }
+
+    @PutMapping("/api/products/update")
+    public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
+                                  @ModelAttribute("product")Product productForm){
+        Optional<Product> product_check =productService.getProductById(id);
+        if(product_check.isPresent()){
+            Product existingProduct = product_check.get();
+            productService.save(productForm);
+            return ResponseEntity.ok(existingProduct);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -14,6 +14,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> getAllProduct();
     @Query("select o from  Product o where  o.name_product = :name_product")
     Optional<Product> findProductByName(String name_product);
+
+    @Query("select o from  Product o where  o.id = :id")
+    Optional<Product> findProductById(Integer id);
+
     @Query("select o from  Product o where  o.price = :price")
     Optional<Product> findProductByPrice(Long price);
+
+    Product save(Product product);
 }

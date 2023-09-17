@@ -17,10 +17,16 @@ public class ProductService {
     public List<Product> getAllProduct(){
         return productRepository.getAllProduct();
     }
+    public Optional<Product> getProductById(Integer id){
+        return productRepository.findProductById(id);
+    }
     public Optional<Product> getProductByName(String name){
         return productRepository.findProductByName(name);
     }
     public Product create(Product entity){
+        return productRepository.save(entity);
+    }
+    public Product save(Product entity){
         return productRepository.save(entity);
     }
 }
