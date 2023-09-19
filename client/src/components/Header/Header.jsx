@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import NavHeader from '../NavHeader';
 
 let datasRight = [
   {
@@ -69,6 +70,7 @@ const Header = () => {
   return (
     <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white">
       <div className="container">
+        {/* <NavHeader /> */}
         <div className="flex justify-between">
           <div className="flex justify-center align-center my-1">
             {datasLeft.map((item, index) => (
