@@ -8,7 +8,7 @@ const Input = ({
   rules,
   classNameInput = 'px-3 py-2 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm',
   classNameError = 'mt-1 text-red-600 min-h-[1.25rem] text-sm',
-  classNameEye = 'absolute top-[14px] right-[13px] h-6 w-6 cursor-pointer',
+  classNameEye = 'absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer',
   ...rest
 }) => {
   const [openEye, setOpenEye] = useState(false);

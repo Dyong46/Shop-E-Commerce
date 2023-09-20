@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 
 const UserSideNav = () => {
@@ -31,19 +32,43 @@ const UserSideNav = () => {
         </div>
       </div>
       <div className="mt-7">
-        <NavLink to={'/user/profile'} className="flex items-center capitalize  transition-colors text-gray-600">
+        <NavLink
+          to={'/user/profile'}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize  transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive,
+            })
+          }
+        >
           <div className="mr-3 h-[22px] w-[22px]">
             <img src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4" alt="" className="h-full w-full" />
           </div>
           Tài khoản của tôi
         </NavLink>
-        <NavLink to={'/user/password'} className="mt-4 flex items-center capitalize  transition-colors text-gray-600">
+        <NavLink
+          to={'/user/password'}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize  transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive,
+            })
+          }
+        >
           <div className="mr-3 h-[22px] w-[22px]">
             <img src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4" alt="" className="h-full w-full" />
           </div>
           Đổi mật khẩu
         </NavLink>
-        <NavLink to={'/user/purchase'} className="mt-4 flex items-center capitalize  transition-colors text-gray-600">
+        <NavLink
+          to={'/user/purchase'}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize  transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive,
+            })
+          }
+        >
           <div className="mr-3 h-[22px] w-[22px]">
             <img src="https://cf.shopee.vn/file/f0049e9df4e536bc3e7f140d071e9078" alt="" className="h-full w-full" />
           </div>

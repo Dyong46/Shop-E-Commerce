@@ -9,7 +9,6 @@ import Cart from './pages/Cart';
 function App() {
   return (
     <>
-      {/* <BrowserRouter> */}
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
@@ -38,7 +37,6 @@ function App() {
           })}
         </Routes>
       </div>
-      {/* </BrowserRouter> */}
       <ToastContainer
         position="top-right"
         autoClose={3000}

@@ -7,15 +7,18 @@ import Cart from '~/pages/Cart';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Profile from '~/pages/User/pages/Profile';
-import { Fragment } from 'react';
+import ChangePassword from '~/pages/User/pages/ChangePassword';
+import HistoryPurchase from '~/pages/User/pages/HistoryPurchase';
 
 // Pulic routes
 export const publicRoutes = [
   { path: '/', component: Home },
+  { path: '/cart', component: Cart },
   { path: '/login', component: Login, layout: RegisterLayout },
   { path: '/register', component: Register, layout: RegisterLayout },
   { path: '/user/profile', component: Profile },
-  { path: '/cart', component: Cart, layout: Fragment },
+  { path: '/user/password', component: ChangePassword },
+  { path: '/user/purchase', component: HistoryPurchase },
 ];
 
 // Private Routes
