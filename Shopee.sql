@@ -74,6 +74,7 @@ CREATE TABLE [products] (
   [name_product] nvarchar(50),
   [description] nvarchar(255),
   [price] int,
+  [img] varchar(255),
   [quantity] integer,
   [created_at] date,
   [updated_at] date,
@@ -208,17 +209,17 @@ VALUES ('XTRA', 'Voucher free ship', 10, 1, '2023-09-03', '2023-09-04'),
 GO
 
 --Chèn dữ liệu mới vào bảng products
-INSERT INTO products ([name_product], [description], [price], [quantity], [created_at], [updated_at], [category_id])
-VALUES (N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác len MIKENCO Monogram cardigan',							9500000,	50, '2023-09-03', '2023-09-03', 1),
-       (N'Áo khoác nam MIKENCO Fancy varsity',		N'Sản phẩm:Áo khoác nam MIKENCO Fancy varsity',								13000000,	30, '2023-09-03', '2023-09-03', 2),
-	   (N'Giày_Jordan',								N'Giày Jordan Paris 2 Phối Màu Nhẹ Nhàng Bản sịn Đủ Size Nam Nữ',			9500000,	50, '2023-09-03', '2023-09-03', 3),
-       (N'Bút dạ quang 6 màu highlight',				N'Văn phòng phẩm LENG KENG chuyên cung cấp những vật phẩm đơn giản phục vụ cho các hoạt động văn phòng như: giấy in, sổ, giấy note',		10000,	30, '2023-09-03', '2023-09-03', 4),
-	   (N'Sổ còng A4 A5 B5',							N'sổ ghi chép, take notes, bujo CS0',										15000,		50, '2023-09-03', '2023-09-03', 5),
-       (N'Áo Baby Tee',								N'Áo Thun form nữ',															100000,		30, '2023-09-03', '2023-09-03', 6),
-	   (N'Gấu Bông MINISO We Bare Bears ',			N'Gấu Bông Lets Bare Bear Fun Pose Miniso cute mềm mại chính hãng',			350000,		50, '2023-09-03', '2023-09-03', 7),
-       (N'Đệm Ngồi Bệt',								N'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, '2023-09-03', '2023-09-03', 8),
-	   (N'Kem Nền Fit Me',							N'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, '2023-09-03', '2023-09-03', 9),
-       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, '2023-09-03', '2023-09-03', 10);
+INSERT INTO products ([name_product], [description], [price], [quantity], [img], [created_at], [updated_at], [category_id])
+VALUES (N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác len MIKENCO Monogram cardigan',							9500000,	50, 'https://down-vn.img.susercontent.com/file/sg-11134201-22120-i51z5ni30olvf8', '2023-09-03', '2023-09-03', 1),
+       (N'Áo khoác nam MIKENCO Fancy varsity',		N'Sản phẩm:Áo khoác nam MIKENCO Fancy varsity',								13000000,	30, 'https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8', '2023-09-03', '2023-09-03', 2),
+	   (N'Giày_Jordan',								N'Giày Jordan Paris 2 Phối Màu Nhẹ Nhàng Bản sịn Đủ Size Nam Nữ',			9500000,	50, 'https://down-vn.img.susercontent.com/file/ed7a7ed84c137af454c39e8999cdc11f', '2023-09-03', '2023-09-03', 3),
+       (N'Bút dạ quang 6 màu highlight',				N'Văn phòng phẩm LENG KENG chuyên cung cấp những vật phẩm đơn giản phục vụ cho các hoạt động văn phòng như: giấy in, sổ, giấy note',		10000,	30, 'https://down-vn.img.susercontent.com/file/2f4754cba01b090b26316fdf0fbffc71', '2023-09-03', '2023-09-03', 4),
+	   (N'Sổ còng A4 A5 B5',							N'sổ ghi chép, take notes, bujo CS0',										15000,		50, 'https://down-vn.img.susercontent.com/file/vn-11134201-23020-po7j7wmmhjnv6d',  '2023-09-03', '2023-09-03', 5),
+       (N'Áo Baby Tee',								N'Áo Thun form nữ',															100000,		30, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lijy4lg57geq27', '2023-09-03', '2023-09-03', 6),
+	   (N'Gấu Bông MINISO We Bare Bears ',			N'Gấu Bông Lets Bare Bear Fun Pose Miniso cute mềm mại chính hãng',			350000,		50, 'https://down-vn.img.susercontent.com/file/4c312f44880fc1866ba97f9590bcb2d4', '2023-09-03', '2023-09-03', 7),
+       (N'Đệm Ngồi Bệt',								N'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvg8-lg0m4pbe0u801e', '2023-09-03', '2023-09-03', 8),
+	   (N'Kem Nền Fit Me',							N'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lifr5pgus7o280', '2023-09-03', '2023-09-03', 9),
+       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10);
 GO
 
 --Chèn dữ liệu mới vào bảng galery
