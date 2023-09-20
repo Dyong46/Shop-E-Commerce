@@ -5,11 +5,10 @@ import { Fragment } from 'react';
 import RegisterLayout from './layouts/RegisterLayout/RegisterLayout';
 import CartLayout from './layouts/CartLayout/CartLayout';
 import { ToastContainer } from 'react-toastify';
-
+import Cart from './pages/Cart';
 function App() {
   return (
     <>
-      {/* <BrowserRouter> */}
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
@@ -38,7 +37,6 @@ function App() {
           })}
         </Routes>
       </div>
-      {/* </BrowserRouter> */}
       <ToastContainer
         position="top-right"
         autoClose={3000}

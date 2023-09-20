@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity @Table(name = "[order_status]")
-public class OrderStatus {
+public class OrderStatus implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -4,10 +4,35 @@ import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
 import InputNumber from '~/components/InputNumber';
 import UserLayout from '../../layouts/UserLayout';
+import DateSelect from '../../components/DateSelect';
 
-const Info = () => {
-  return <div></div>;
-};
+function Info() {
+  return (
+    <Fragment>
+      <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
+        <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Tên</div>
+        <div className="sm:w-[80%] sm:pl-5">
+          <Input
+            classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+            // register={register}
+            name="name"
+            placeholder="Tên"
+            // errorMessage={errors.name?.message}
+          />
+        </div>
+      </div>
+      <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
+        <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Số điện thoại</div>
+        <div className="sm:w-[80%] sm:pl-5">
+          <InputNumber
+            classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+            placeholder="Số điện thoại"
+          />
+        </div>
+      </div>
+    </Fragment>
+  );
+}
 
 const Profile = () => {
   return (
@@ -38,7 +63,10 @@ const Profile = () => {
                 />
               </div>
             </div>
-            {/* <DateSelect errorMessage={errors.date_of_birth?.message} value={field.value} onChange={field.onChange} /> */}
+            <DateSelect
+            // value={field.value}
+            // onChange={field.onChange}
+            />
             <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
               <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right" />
               <div className="sm:w-[80%] sm:pl-5">
