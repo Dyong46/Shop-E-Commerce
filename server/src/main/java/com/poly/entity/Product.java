@@ -6,23 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity @Table(name = "[products]")
-public class Product {
+public class Product implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name_product;
 
-    private String desc;
+    private String description;
 
-    private Long price;
+    private Integer price;
 
-    private int quantity;
+    private Integer quantity;
 
     @Temporal(TemporalType.DATE)
     private Date created_at;
@@ -45,4 +46,9 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product_id")
     private List<Review> reviews;
+
+    public Product(Integer id, String name_product) {
+        this.id = id;
+        this.name_product = name_product;
+    }
 }

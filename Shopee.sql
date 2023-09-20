@@ -51,7 +51,7 @@ CREATE TABLE [categories] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [name] nvarchar(50),
   [img] varchar(255),
-  [desc] nvarchar(255),
+  [description] nvarchar(255),
   [created_at] date,
   [updated_at] date,
   [deleted_at] date
@@ -61,7 +61,7 @@ GO
 CREATE TABLE [discount] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [name] varchar(50),
-  [desc] nvarchar(255),
+  [description] nvarchar(255),
   [discount_percent] integer,
   [is_active] bit,
   [created_at] date,
@@ -72,7 +72,7 @@ GO
 CREATE TABLE [products] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [name_product] nvarchar(50),
-  [desc] nvarchar(255),
+  [description] nvarchar(255),
   [price] int,
   [quantity] integer,
   [created_at] date,
@@ -185,7 +185,7 @@ VALUES
 GO
 
 -- Chèn dữ liệu mới vào bảng categories
-INSERT INTO categories (  [name],  [img],  [desc], [created_at], [updated_at], [deleted_at]) VALUES
+INSERT INTO categories ( [name],  [img],  [description], [created_at], [updated_at], [deleted_at]) VALUES
   (N'SAMSUNG S21',					'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljzut462vh6ce8', N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
   (N'Điện thoại di động Reno8 Pro', 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljc7zaj7qs4252', N'Danh mục sản phẩm điện thoại di động', '2023-01-02', '2023-01-02', NULL),
   (N'CHÍNH HÃNG i14 Pro max'	,	'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgetrp8zuad331', N'Danh mục sản phẩm điện thoại di động',	'2023-04-05','2023-04-05',NULL),
@@ -202,23 +202,23 @@ INSERT INTO categories (  [name],  [img],  [desc], [created_at], [updated_at], [
   (N'Máy ảnh',						'https://down-vn.img.susercontent.com/file/sg-11134201-7qves-lgomwh7kw53f15', N'Danh mục sản phẩm máy ảnh và máy quay phim', '2023-01-10', '2023-01-10', NULL);
 
   --Chèn dữ liệu mới vào bảng discount
-INSERT INTO discount ([name], [desc], [discount_percent], [is_active], [created_at], [updated_at])
+INSERT INTO discount ([name], [description], [discount_percent], [is_active], [created_at], [updated_at])
 VALUES ('XTRA', 'Voucher free ship', 10, 1, '2023-09-03', '2023-09-04'),
        ('Shop', 'VoucherShop', 20, 1, '2023-09-03', '2023-09-04');
 GO
 
 --Chèn dữ liệu mới vào bảng products
-INSERT INTO products ([name_product], [desc], [price], [quantity], [created_at], [updated_at], [category_id])
-VALUES ('Áo khoác len MIKENCO Monogram cardigan',	'Sản phẩm:Áo khoác len MIKENCO Monogram cardigan',							9500000,	50, '2023-09-03', '2023-09-03', 1),
-       ('Áo khoác nam MIKENCO Fancy varsity',		'Sản phẩm:Áo khoác nam MIKENCO Fancy varsity',								13000000,	30, '2023-09-03', '2023-09-03', 2),
-	   ('Giày_Jordan',								'Giày Jordan Paris 2 Phối Màu Nhẹ Nhàng Bản sịn Đủ Size Nam Nữ',			9500000,	50, '2023-09-03', '2023-09-03', 3),
-       ('Bút dạ quang 6 màu highlight',				'Văn phòng phẩm LENG KENG chuyên cung cấp những vật phẩm đơn giản phục vụ cho các hoạt động văn phòng như: giấy in, sổ, giấy note',		10000,	30, '2023-09-03', '2023-09-03', 4),
-	   ('Sổ còng A4 A5 B5',							'sổ ghi chép, take notes, bujo CS0',										15000,		50, '2023-09-03', '2023-09-03', 5),
-       ('Áo Baby Tee',								'Áo Thun form nữ',															100000,		30, '2023-09-03', '2023-09-03', 6),
-	   ('Gấu Bông MINISO We Bare Bears ',			'Gấu Bông Lets Bare Bear Fun Pose Miniso cute mềm mại chính hãng',			350000,		50, '2023-09-03', '2023-09-03', 7),
-       ('Đệm Ngồi Bệt',								'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, '2023-09-03', '2023-09-03', 8),
-	   ('Kem Nền Fit Me',							'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, '2023-09-03', '2023-09-03', 9),
-       ('Túi Vải Đeo Vai',							'Dạng form túi lớn',														50000,		30, '2023-09-03', '2023-09-03', 10);
+INSERT INTO products ([name_product], [description], [price], [quantity], [created_at], [updated_at], [category_id])
+VALUES (N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác len MIKENCO Monogram cardigan',							9500000,	50, '2023-09-03', '2023-09-03', 1),
+       (N'Áo khoác nam MIKENCO Fancy varsity',		N'Sản phẩm:Áo khoác nam MIKENCO Fancy varsity',								13000000,	30, '2023-09-03', '2023-09-03', 2),
+	   (N'Giày_Jordan',								N'Giày Jordan Paris 2 Phối Màu Nhẹ Nhàng Bản sịn Đủ Size Nam Nữ',			9500000,	50, '2023-09-03', '2023-09-03', 3),
+       (N'Bút dạ quang 6 màu highlight',				N'Văn phòng phẩm LENG KENG chuyên cung cấp những vật phẩm đơn giản phục vụ cho các hoạt động văn phòng như: giấy in, sổ, giấy note',		10000,	30, '2023-09-03', '2023-09-03', 4),
+	   (N'Sổ còng A4 A5 B5',							N'sổ ghi chép, take notes, bujo CS0',										15000,		50, '2023-09-03', '2023-09-03', 5),
+       (N'Áo Baby Tee',								N'Áo Thun form nữ',															100000,		30, '2023-09-03', '2023-09-03', 6),
+	   (N'Gấu Bông MINISO We Bare Bears ',			N'Gấu Bông Lets Bare Bear Fun Pose Miniso cute mềm mại chính hãng',			350000,		50, '2023-09-03', '2023-09-03', 7),
+       (N'Đệm Ngồi Bệt',								N'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, '2023-09-03', '2023-09-03', 8),
+	   (N'Kem Nền Fit Me',							N'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, '2023-09-03', '2023-09-03', 9),
+       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, '2023-09-03', '2023-09-03', 10);
 GO
 
 --Chèn dữ liệu mới vào bảng galery
