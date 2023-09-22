@@ -12,11 +12,12 @@ import Profile from '~/pages/User/pages/Profile';
 import OrderLayout from '~/layouts/OrderLayout';
 import ChangePassword from '~/pages/User/pages/ChangePassword';
 import HistoryPurchase from '~/pages/User/pages/HistoryPurchase';
+import { Fragment } from 'react';
 
 // Pulic routes
 export const publicRoutes = [
   { path: '/', component: Home },
-  { path: '/cart', component: Cart },
+  { path: '/cart', component: Cart, layout: Fragment },
   { path: '/login', component: Login, layout: RegisterLayout },
   { path: '/register', component: Register, layout: RegisterLayout },
   { path: '/user/profile', component: Profile },
