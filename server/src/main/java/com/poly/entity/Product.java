@@ -23,6 +23,8 @@ public class Product implements Serializable {
 
     private Integer price;
 
+    private String img;
+
     private Integer quantity;
 
     @Temporal(TemporalType.DATE)
