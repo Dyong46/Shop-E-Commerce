@@ -14,7 +14,7 @@ Dự án Shopee-Clone là một phiên bản tương tự trang Shopee, một n�
 
 **Thêm vào giỏ hàng**: Người dùng có thể thêm sản phẩm vào giỏ hàng và quản lý số lượng.
 
-**Quản lý giỏ hàn**g: Hiển thị danh sách sản phẩm trong giỏ hàng, cho phép người dùng thay đổi số lượng hoặc xóa sản phẩm.
+**Quản lý giỏ hàng**: Hiển thị danh sách sản phẩm trong giỏ hàng, cho phép người dùng thay đổi số lượng hoặc xóa sản phẩm.
 
 **Thanh toán**: Cho phép người dùng thực hiện thanh toán cho các sản phẩm trong giỏ hàng thông qua các phương thức thanh toán khác nhau.
 
