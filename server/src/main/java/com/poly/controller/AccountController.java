@@ -61,4 +61,15 @@ public class AccountController {
         }
         return "failed";
     }
+    
+    @PostMapping("/api/register") 
+    public Account postRegister(@RequestParam("email") String email,
+    							@RequestParam("password") String password) {
+    	Account accountCheck = accountService.register(email, password);
+    	if(accountCheck == null) {
+    		return null;
+    	}else {
+    		return accountCheck;
+    	}
+    }
 }

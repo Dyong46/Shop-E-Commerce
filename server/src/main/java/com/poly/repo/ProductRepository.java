@@ -25,5 +25,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select o from Product o where o.id = :id and o.deleted_at is null")
     Optional<Product> getProductById(@Param("id") Integer id);
     
+    
     Product save(Product product);
 }
