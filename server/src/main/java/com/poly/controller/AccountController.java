@@ -6,9 +6,11 @@ import com.poly.Utils.SessionUtils;
 import com.poly.entity.Account;
 import com.poly.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,5 +73,40 @@ public class AccountController {
     	}else {
     		return accountCheck;
     	}
+    @GetMapping("/api/accounts/findbyid")
+    public Optional<Account> getAccountById(@RequestParam("id")Integer id){
+        return accountService.getProductById(id);
+    }
+    @PostMapping("/api/accounts/save")
+    public Account postSavaAccount(Account entity){
+        return accountService.create(entity);
+    }
+    @PutMapping("/api/accounts/update")
+    public ResponseEntity<Account> updateAccountById(@RequestParam("id")Integer id,
+                                                     @ModelAttribute("account")Account formAccount){
+        Optional<Account> accountCheck = accountService.getProductById(id);
+        if(accountCheck.isPresent()){
+            Account existingAccount = accountCheck.get();
+            existingAccount.setEmail(formAccount.getEmail());
+            existingAccount.setUsername(formAccount.getUsername());
+            existingAccount.setPassword(formAccount.getPassword());
+            existingAccount.setFirstname(formAccount.getFirstname());
+            existingAccount.setLastname(formAccount.getLastname());
+            existingAccount.setPhone(formAccount.getPhone());
+            existingAccount.setGender(formAccount.getGender());
+            existingAccount.setDate_of_birth(formAccount.getDate_of_birth());
+            existingAccount.setImg(formAccount.getImg());
+            existingAccount.setUpdated_at(new Date());
+            existingAccount.setDeleted_at(formAccount.getDeleted_at());
+            existingAccount.setRole_id(formAccount.getRole_id());
+            accountService.save(existingAccount);
+            return ResponseEntity.ok(existingAccount);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/api/accounts/delete")
+    public Account deleteAccount(@RequestParam("id")Integer id){
+        return accountService.deleteAccoutById(id);
     }
 }

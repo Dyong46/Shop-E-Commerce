@@ -26,5 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> getProductById(@Param("id") Integer id);
     
     
+    List<Product> findProductByPriceBetween(Double priceMin, Double priceMax);
     Product save(Product product);
 }
