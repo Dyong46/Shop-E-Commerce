@@ -67,12 +67,14 @@ public class AccountController {
     @PostMapping("/api/register") 
     public Account postRegister(@RequestParam("email") String email,
     							@RequestParam("password") String password) {
-    	Account accountCheck = accountService.register(email, password);
-    	if(accountCheck == null) {
-    		return null;
-    	}else {
-    		return accountCheck;
-    	}
+        Account accountCheck = accountService.register(email, password);
+        if (accountCheck == null) {
+            return null;
+        } else {
+            return accountCheck;
+        }
+    }
+
     @GetMapping("/api/accounts/findbyid")
     public Optional<Account> getAccountById(@RequestParam("id")Integer id){
         return accountService.getProductById(id);

@@ -32,18 +32,19 @@ public class AccountService {
     }
     
     public Account register(String email, String password) {
-		Account account = new Account();
-		account.setEmail(email);
+        Account account = new Account();
+        account.setEmail(email);
         String hashPassword = PasswordUtils.hashPassword(password);
-		account.setPassword(hashPassword);
-		account.setUsername(email);
-		
-		Date date = new Date();
-		account.setCreated_at(date);
-		
-		Role role = roleService.findById("user");
-		account.setRole_id(role);
-		return accountRepository.save(account);
+        account.setPassword(hashPassword);
+        account.setUsername(email);
+
+        Date date = new Date();
+        account.setCreated_at(date);
+
+        Role role = roleService.findById("user");
+        account.setRole_id(role);
+        return accountRepository.save(account);
+    }
 
     public Optional<Account> getProductById(Integer id){
         return accountRepository.findByProductId(id);
