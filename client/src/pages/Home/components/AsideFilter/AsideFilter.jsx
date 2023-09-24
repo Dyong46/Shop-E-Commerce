@@ -1,10 +1,19 @@
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import InputNumber from '~/components/InputNumber';
+import path from '~/constants/path';
+import PropTypes from 'prop-types';
 
-const AsideFilter = () => {
+const AsideFilter = ({ categories }) => {
+  console.log(typeof categories, categories);
   return (
     <div className="py-4">
-      <Link to={'/'} className="flex items-center font-bold">
+      <Link
+        to={path.home}
+        className={classNames('flex items-center font-bold', {
+          'text-orange': '',
+        })}
+      >
         <svg viewBox="0 0 12 10" className="mr-3 h-4 w-3 fill-current">
           <g fillRule="evenodd" stroke="none" strokeWidth={1}>
             <g transform="translate(-373 -208)">
@@ -22,21 +31,16 @@ const AsideFilter = () => {
       </Link>
       <div className="my-4 h-[1px] bg-gray-300" />
       <ul>
-        <li className="py-2 pl-2">
-          <Link to={'/'} className=" px-2">
-            Đồng hồ
-          </Link>
-        </li>
-        <li className="py-2 pl-2">
-          <Link to={'/'} className=" px-2">
-            Đồng hồ
-          </Link>
-        </li>
-        <li className="py-2 pl-2">
-          <Link to={'/'} className=" px-2">
-            Đồng hồ
-          </Link>
-        </li>
+        {categories &&
+          categories.map((caregory) => {
+            return (
+              <li key={caregory.id} className="py-2 pl-2">
+                <Link to={`${path.home}?category=${caregory.id}`} className=" px-2">
+                  {caregory.name}
+                </Link>
+              </li>
+            );
+          })}
       </ul>
       <Link to={'/'} className="mt-4 flex items-center font-bold uppercase">
         <svg
@@ -87,6 +91,10 @@ const AsideFilter = () => {
       </div>
     </div>
   );
+};
+
+AsideFilter.propTypes = {
+  categories: PropTypes.array,
 };
 
 export default AsideFilter;

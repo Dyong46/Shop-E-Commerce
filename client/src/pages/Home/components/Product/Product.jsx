@@ -7,10 +7,13 @@ const Product = ({ product }) => {
   return (
     <div>
       <Link to={`${path.home}${generateNameId({ name: product.name_product, id: product.id })}`}>
-        <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md ">
+        <div
+          className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md 
+          hover:border hover:border-orange"
+        >
           <div className="relative w-full pt-[100%]">
             <img
-              src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-ll0gy3w3fd8r25"
+              src={product.img}
               alt={product.name_product}
               className="absolute top-0 left-0 h-full w-full bg-white object-cover"
             />
@@ -30,10 +33,10 @@ const Product = ({ product }) => {
             <div className="mt-3 flex items-center justify-between">
               {/* <ProductRating rating={product.rating} /> */}
               <div className="truncate text-orange">
-                <span className="text-base">₫</span>
-                <span className="text-lg">{product.price}</span>
+                <span className="text-xs">₫</span>
+                <span className="text-base">{product.price}</span>
               </div>
-              <div className="ml-2 text-sm">
+              <div className="ml-1 text-xs text-gray-500">
                 <span>5.6k</span>
                 <span className="ml-1">Đã bán</span>
               </div>

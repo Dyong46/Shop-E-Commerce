@@ -3,20 +3,32 @@ import AsideFilter from './components/AsideFilter';
 import Product from './components/Product';
 import SortProductList from './components/SortProductList';
 import { productGetAll } from '~/servers/productService';
+import { categoriesGetAll } from '~/servers/categoryService';
 
 const Home = () => {
   const [products, setProducts] = useState(null);
+  const [categories, setCategories] = useState(null);
 
+  // Call the getProducts method and getCategories methods
   useEffect(() => {
     getProducts();
+    getCategories();
   }, []);
 
+  // Get all products
   const getProducts = async () => {
     let res = await productGetAll();
     if (res) {
       setProducts(res);
     }
-    console.log(res);
+  };
+
+  // Get all categories
+  const getCategories = async () => {
+    let res = await categoriesGetAll();
+    if (res) {
+      setCategories(res);
+    }
   };
 
   return (
@@ -24,7 +36,7 @@ const Home = () => {
       <div className="container">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-3">
-            <AsideFilter />
+            <AsideFilter categories={categories} />
           </div>
           <div className="col-span-9">
             <SortProductList />

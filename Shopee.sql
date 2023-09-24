@@ -187,19 +187,15 @@ GO
 
 -- Chèn dữ liệu mới vào bảng categories
 INSERT INTO categories ( [name],  [img],  [description], [created_at], [updated_at], [deleted_at]) VALUES
-  (N'SAMSUNG S21',					'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljzut462vh6ce8', N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
-  (N'Điện thoại di động Reno8 Pro', 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljc7zaj7qs4252', N'Danh mục sản phẩm điện thoại di động', '2023-01-02', '2023-01-02', NULL),
-  (N'CHÍNH HÃNG i14 Pro max'	,	'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgetrp8zuad331', N'Danh mục sản phẩm điện thoại di động',	'2023-04-05','2023-04-05',NULL),
-  (N'Laptop HP 240 G8/Silver/14',	'https://down-vn.img.susercontent.com/file/9337c8553ef1678d67ada680f4965838', N'Danh mục sản phẩm laptop',				'2023-03-08','2023-03-08',NULL),
-  (N'Apple MacBook Air 13',			'https://down-vn.img.susercontent.com/file/sg-11134201-22100-7jka5nkyr2iv3c', N'Danh mục sản phẩm laptop',				'2023-03-01','2023-03-01',NULL),
+  (N'Điện thoại',					'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljzut462vh6ce8', N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
+  (N'Laptop',						'https://down-vn.img.susercontent.com/file/9337c8553ef1678d67ada680f4965838', N'Danh mục sản phẩm laptop',				'2023-03-08','2023-03-08',NULL),
   (N'Quần áo nam form rộng',		'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lh3q2jlarhtff0', N'Danh mục sản phẩm quần áo nam',			 '2023-01-03', '2023-01-03', NULL),
-  (N'Quần áo nam form rộng',		'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lizhlyod4c7m32', N'Danh mục sản phẩm quần áo nam',			 '2023-06-03', '2023-06-03', NULL),
   (N'Quần áo nữ',					'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lkj1fk4w1v3cae', N'Danh mục sản phẩm quần áo nữ', '2023-01-04', '2023-01-04', NULL),
   (N'Giày thể thao',				'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgol0f2qenlf40', N'Danh mục sản phẩm giày thể thao', '2023-01-05', '2023-01-05', NULL),
   (N'Đồng hồ',						'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljfa6pdw6biq42', N'Danh mục sản phẩm đồng hồ', '2023-01-06', '2023-01-06', NULL),
   (N'Túi xách',						'https://down-vn.img.susercontent.com/file/sg-11134201-22090-zw4ygfsnyuhvc3', N'Danh mục sản phẩm túi xách và balo', '2023-01-07', '2023-01-07', NULL),
   (N'Phụ kiện điện thoại',			'https://down-vn.img.susercontent.com/file/sg-11134201-22120-477kvp0nhmlv97', N'Danh mục sản phẩm phụ kiện điện thoại', '2023-01-08', '2023-01-08', NULL),
-  (N'Ghế xếp gỗ khung thép',		'https://down-vn.img.susercontent.com/file/78dbc36ff4030351358fe7e0af5913ab', N'Danh mục sản phẩm nội thất', '2023-01-09', '2023-01-09', NULL),
+  (N'Phụ kiện nội thất',			'https://down-vn.img.susercontent.com/file/78dbc36ff4030351358fe7e0af5913ab', N'Danh mục sản phẩm nội thất', '2023-01-09', '2023-01-09', NULL),
   (N'Máy ảnh',						'https://down-vn.img.susercontent.com/file/sg-11134201-7qves-lgomwh7kw53f15', N'Danh mục sản phẩm máy ảnh và máy quay phim', '2023-01-10', '2023-01-10', NULL);
 
   --Chèn dữ liệu mới vào bảng discount
