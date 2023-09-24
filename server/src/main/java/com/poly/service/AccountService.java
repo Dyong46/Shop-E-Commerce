@@ -1,5 +1,6 @@
 package com.poly.service;
 
+import com.poly.Utils.PasswordUtils;
 import com.poly.entity.Account;
 import com.poly.entity.Role;
 import com.poly.repo.AccountRepository;
@@ -32,7 +33,8 @@ public class AccountService {
     public Account register(String email, String password) {
 		Account account = new Account();
 		account.setEmail(email);
-		account.setPassword(password);
+        String hashPassword = PasswordUtils.hashPassword(password);
+		account.setPassword(hashPassword);
 		account.setUsername(email);
 		
 		Date date = new Date();
@@ -41,6 +43,5 @@ public class AccountService {
 		Role role = roleService.findById("user");
 		account.setRole_id(role);
 		return accountRepository.save(account);
-	
     }
 }
