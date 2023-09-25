@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import NavHeader from '../NavHeader';
 
 let datasRight = [
   {
+    id: 'notification',
     title: 'Thông báo',
     icon: (
       <svg
@@ -23,6 +24,7 @@ let datasRight = [
     ),
   },
   {
+    id: 'support',
     title: 'Hỗ trợ',
     icon: (
       <svg
@@ -43,6 +45,7 @@ let datasRight = [
     ),
   },
   {
+    id: 'language',
     title: 'Tiếng việt',
     icon: (
       <svg
@@ -61,12 +64,45 @@ let datasRight = [
         />
       </svg>
     ),
+    iconEnd: (
+      <svg
+        viewBox="0 0 1024 1024"
+        fill="currentColor"
+        height="1em"
+        width="1em"
+      >
+        <path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z" />
+      </svg>
+    )
   },
 ];
 
 let datasLeft = ['Thông báo', 'Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
 
+
+
+
 const Header = () => {
+  const [isHovering, setIsHovering] = useState(false);
+  const [isUser, setIsUser] = useState(false);
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
+
+
+  const handleMouseOverUser = () => {
+    setIsUser(true);
+  };
+
+  const handleMouseOutUser = () => {
+    setIsUser(false);
+  };
+
   return (
     <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white">
       <div className="container">
@@ -77,7 +113,7 @@ const Header = () => {
               <button
                 className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
                 key={index}
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 {item}
               </button>
@@ -114,19 +150,49 @@ const Header = () => {
           <div className="flex justify-center align-center my-1">
             {datasRight.map((item, index) => (
               <button
-                className="py-2 px-3 flex align-center text-xs text-left hover:text-orange"
+                className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
                 key={index}
-                onClick={() => {}}
+                onMouseOver={
+                  item.id == 'language' ?
+                    handleMouseOver : handleMouseOut}
+
+                onMouseOut={handleMouseOut}
+
+                onClick={() => { }}
               >
                 {item.icon}
                 {item.title}
-              </button>
-            ))}
+                <div className="mt-1">
 
-            <button className="py-2 px-3 flex text-xs text-left hover:text-orange" onClick={() => {}}>
-              <div className="block h-4 w-4 mr-1 rounded-full bg-white hover:bg-orange">h</div>
+                  {item.iconEnd}
+                </div>
+              </button>
+
+
+            ),
+              console.log(isHovering, 'Hovering'),
+              console.log(isUser, 'User')
+            )}
+
+            <button onMouseOver={handleMouseOverUser} onMouseOut={handleMouseOutUser} className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200" onClick={() => { }}>
+              <div className="block h-4 w-4 mr-1 rounded-full bg-white">h</div>
               User
             </button>
+            {(isHovering && (
+
+              <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className="absolute flex flex-col justify-start align-center top-10 right-28 z-10 w-40 bg-white">
+                <button className="text-black m-3 flex justify-start hover:text-orange">Tiếng việt</button>
+                <button className="text-black m-3 flex justify-start hover:text-orange">English</button>
+              </div>
+            ))}
+            {(isUser && (
+
+              <div onMouseOver={handleMouseOverUser} onMouseOut={handleMouseOutUser} className="absolute flex flex-col justify-start align-center top-10 right-8 z-10 w-40 bg-white">
+                <a href="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">Tài khoản của tôi</a>
+                <a href="/order" className="text-black m-3 flex justify-start hover:text-orange">Đơn mua</a>
+                <a href="/login" className="text-black m-3 flex justify-start hover:text-orange">Đăng xuất</a>
+              </div>
+            ))}
           </div>
         </div>
         <div className="mt-4 flex flex-cols-12 align-center justify-center items-end gap-4">
@@ -189,23 +255,23 @@ const Header = () => {
               </div>
             </form>
             <div className="flex flex-row mr-5">
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                 Thông báo
               </button>
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                 Thông báo
               </button>
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                 Thông báo
               </button>
-              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+              <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                 Thông báo
               </button>
             </div>
           </div>
 
           <div className="h-12 relative">
-            <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-10 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
+            <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-4 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
               9+
             </div>
             <svg
@@ -226,7 +292,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
