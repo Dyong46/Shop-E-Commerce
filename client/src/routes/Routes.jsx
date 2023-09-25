@@ -13,6 +13,7 @@ import OrderLayout from '~/layouts/OrderLayout';
 import ChangePassword from '~/pages/User/pages/ChangePassword';
 import HistoryPurchase from '~/pages/User/pages/HistoryPurchase';
 import { Fragment } from 'react';
+import ProductDetail from '~/pages/ProductDeatail';
 
 // Pulic routes
 export const publicRoutes = [
@@ -24,6 +25,7 @@ export const publicRoutes = [
   { path: '/order', component: Order, layout: OrderLayout },
   { path: '/user/password', component: ChangePassword },
   { path: '/user/purchase', component: HistoryPurchase },
+  { path: '/productdetail', component: ProductDetail, layout: Fragment },
 ];
 
 // Private Routes
