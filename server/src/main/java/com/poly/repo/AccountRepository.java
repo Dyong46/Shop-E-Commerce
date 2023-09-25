@@ -11,6 +11,9 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     @Query("select o from Account o where o.username = :username and o.password = :password AND o.deleted_at IS NULL")
     Optional<Account> findAccountByUsernameAndPassword(String username, String password);
+    
+    @Query("select o from Account o where o.email = :email AND o.deleted_at IS NULL")
+    Optional<Account> findByEmail(String email);
 
     @Query("select o from  Account o where  o.id = :id AND o.deleted_at is null ")
     Optional<Account> findByProductId(Integer id);
