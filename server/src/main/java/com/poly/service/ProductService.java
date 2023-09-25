@@ -1,0 +1,47 @@
+package com.poly.service;
+
+import com.poly.entity.Product;
+import com.poly.repo.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ProductService {
+
+    @Autowired
+    ProductRepository productRepository;
+
+    public List<Product> getAllProduct(){
+        return productRepository.getAllProduct();
+    }
+    public Optional<Product> getProductById(Integer id){
+        return productRepository.findProductById(id);
+    }
+    public List<Product> findProductByPriceBetween(Double priceMin, Double priceMax){
+        return productRepository.findProductByPriceBetween(priceMin,priceMax);
+    }
+    public Optional<Product> getProductByName(String name){
+        return productRepository.findProductByName(name);
+    }
+    public Product create(Product entity){
+        return productRepository.save(entity);
+    }
+    public Product save(Product entity){
+        // Xay dung logic o day nha
+        // Set lai ngay update
+        Date date = new Date();
+        entity.setUpdated_at(date);
+        return productRepository.save(entity);
+    }
+    public Product deleteProductById(Integer id){
+        Product product = productRepository.findProductById(id).orElse(null);
+        Date currenDate = new Date();
+        product.setDeleted_at(currenDate);
+        return productRepository.save(product);
+    }
+}

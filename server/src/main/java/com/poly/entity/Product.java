@@ -5,26 +5,31 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity @Table(name = "[products]")
-public class Product {
+public class Product implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name_product;
 
-    private String desc;
+    private String description;
 
-    private Long price;
+    private Integer price;
 
-    private int quantity;
+    private String img;
+
+    private Integer quantity;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date created_at;
 
     @Temporal(TemporalType.DATE)
@@ -45,4 +50,9 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product_id")
     private List<Review> reviews;
+
+    public Product(Integer id, String name_product) {
+        this.id = id;
+        this.name_product = name_product;
+    }
 }

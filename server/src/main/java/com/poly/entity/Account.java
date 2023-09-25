@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,7 @@ public class Account implements Serializable {
     private Boolean gender;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date date_of_birth;
 
     private String img;
@@ -42,6 +44,7 @@ public class Account implements Serializable {
     private Date created_at;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date updated_at;
 
     @Temporal(TemporalType.DATE)
