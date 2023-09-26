@@ -41,6 +41,7 @@ public class Account implements Serializable {
     private String img;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date created_at;
 
     @Temporal(TemporalType.DATE)
@@ -48,6 +49,7 @@ public class Account implements Serializable {
     private Date updated_at;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date deleted_at;
 
     @ManyToOne(cascade = CascadeType.MERGE)

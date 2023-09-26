@@ -89,7 +89,7 @@ public class AccountController {
             existingAccount.setUpdated_at(new Date());
             existingAccount.setDeleted_at(formAccount.getDeleted_at());
             existingAccount.setRole_id(formAccount.getRole_id());
-            accountService.save(existingAccount);
+            accountService.update(existingAccount);
             return ResponseEntity.ok(existingAccount);
         }else {
             return ResponseEntity.notFound().build();

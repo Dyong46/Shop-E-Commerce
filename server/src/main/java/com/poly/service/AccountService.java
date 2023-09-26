@@ -1,5 +1,6 @@
 package com.poly.service;
 
+import com.poly.Utils.PasswordUtils;
 import com.poly.entity.Account;
 import com.poly.repo.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,18 @@ public class AccountService {
 
     public Account create(Account entity){
         entity.setCreated_at(new Date());
+        String password = entity.getPassword();
+        String hashPassword = PasswordUtils.hashPassword(password);
+        entity.setPassword(hashPassword);
         return accountRepository.save(entity);
     }
 
-    public Account save(Account entity){
+    public Account update(Account entity){
         entity.setUpdated_at(new Date());
+        // mã hóa password ở đây
+        String password = entity.getPassword();
+        String hashPassword = PasswordUtils.hashPassword(password);
+        entity.setPassword(hashPassword);
         return accountRepository.save(entity);
     }
 
