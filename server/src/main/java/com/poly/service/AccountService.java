@@ -2,7 +2,10 @@ package com.poly.service;
 
 import com.poly.Utils.PasswordUtils;
 import com.poly.entity.Account;
+import com.poly.entity.Role;
 import com.poly.repo.AccountRepository;
+import com.poly.repo.RoleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,9 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+    
+    @Autowired
+    RoleService roleService;
 
     public List<Account> getAll() {
         return accountRepository.findAll();
@@ -23,6 +29,21 @@ public class AccountService {
 
     public Optional<Account> getAccountByUsernameAndPassword(String username, String password){
         return accountRepository.findAccountByUsernameAndPassword(username,password);
+    }
+    
+    public Account register(String email, String password) {
+        Account account = new Account();
+        account.setEmail(email);
+        String hashPassword = PasswordUtils.hashPassword(password);
+        account.setPassword(hashPassword);
+        account.setUsername(email);
+
+        Date date = new Date();
+        account.setCreated_at(date);
+
+        Role role = roleService.findById("user");
+        account.setRole_id(role);
+        return accountRepository.save(account);
     }
 
     public Optional<Account> getProductById(Integer id){

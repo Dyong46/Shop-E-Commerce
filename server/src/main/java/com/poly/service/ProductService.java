@@ -31,6 +31,14 @@ public class ProductService {
     public Product create(Product entity){
         return productRepository.save(entity);
     }
+    public Optional<Product> findById(Integer id) {
+    	return productRepository.getProductById(id);
+    }
+    public void delete(Product product) {
+    	product.setDeleted_at(new Date());
+    	productRepository.save(product);
+    }
+    
     public Product save(Product entity){
         // Xay dung logic o day nha
         // Set lai ngay update
@@ -44,4 +52,6 @@ public class ProductService {
         product.setDeleted_at(currenDate);
         return productRepository.save(product);
     }
+    
+    
 }
