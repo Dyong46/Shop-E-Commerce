@@ -26,6 +26,7 @@ public class DiscountService {
     }
     public Discount create(Discount entity){
         Date date = new Date();
+        entity.setIs_active(true);
         entity.setCreated_at(date);
         return discountRepository.save(entity);
     }

@@ -22,6 +22,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select o from  Product o where  o.price = :price AND o.deleted_at is null ")
     Optional<Product> findProductByPrice(Long price);
 
-    List<Product> findProductByPriceBetween(Double priceMin, Double priceMax);
+    List<Product> findProductByPriceBetween(Integer priceMin, Integer priceMax);
     Product save(Product product);
 }

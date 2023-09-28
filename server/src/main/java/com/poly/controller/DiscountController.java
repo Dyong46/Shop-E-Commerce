@@ -29,12 +29,12 @@ public class DiscountController {
         return discountService.getDiscountById(id);
     }
     @PostMapping("/api/discount/save")
-    public Discount postSave(Discount entity){
+    public Discount postSave(@RequestBody Discount entity){
         return discountService.create(entity);
     }
     @PutMapping("/api/discount/update")
     public ResponseEntity<Discount> updateDiscountById(@RequestParam("id")Integer id,
-                                                       @ModelAttribute("discount")Discount formDiscount){
+                                                       @ModelAttribute("discount") Discount formDiscount){
         Optional<Discount> discountCheck = discountService.getDiscountById(id);
         if(discountCheck.isPresent()){
             Discount existingDiscount = discountCheck.get();
