@@ -22,6 +22,9 @@ public class ProductService {
     public Optional<Product> getProductById(Integer id){
         return productRepository.findProductById(id);
     }
+    public List<Product> findProductByPriceBetween(Double priceMin, Double priceMax){
+        return productRepository.findProductByPriceBetween(priceMin,priceMax);
+    }
     public Optional<Product> getProductByName(String name){
         return productRepository.findProductByName(name);
     }
@@ -29,6 +32,10 @@ public class ProductService {
         return productRepository.save(entity);
     }
     public Product save(Product entity){
+        // Xay dung logic o day nha
+        // Set lai ngay update
+        Date date = new Date();
+        entity.setUpdated_at(date);
         return productRepository.save(entity);
     }
     public Product deleteProductById(Integer id){
