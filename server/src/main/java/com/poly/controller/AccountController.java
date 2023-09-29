@@ -80,7 +80,7 @@ public class AccountController {
         return accountService.getProductById(id);
     }
     @PostMapping("/api/accounts/save")
-    public Account postSavaAccount(Account entity){
+    public Account postSavaAccount(@RequestBody Account entity){
         return accountService.create(entity);
     }
     @PutMapping("/api/accounts/update")
