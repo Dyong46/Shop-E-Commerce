@@ -35,6 +35,10 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    @PostMapping("/api/products/findbyprice")
+    public List<Product> getProductByPrice(@RequestParam("min")Double priceMin, @RequestParam("max")Double priceMax){
+        return productService.findProductByPriceBetween(priceMin,priceMax);
+    }
     @PutMapping("/api/products/update")
     public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
                                   @ModelAttribute("product")Product productForm){
