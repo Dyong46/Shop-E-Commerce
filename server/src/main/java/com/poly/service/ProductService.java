@@ -25,7 +25,7 @@ public class ProductService {
     public List<Product> findProductByPriceBetween(Integer priceMin, Integer priceMax){
         return productRepository.findProductByPriceBetween(priceMin,priceMax);
     }
-    public Optional<Product> getProductByName(String name){
+    public List<Product> getProductByName(String name){
         return productRepository.findProductByName(name);
     }
     public Product create(Product entity){

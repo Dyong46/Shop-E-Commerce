@@ -13,8 +13,8 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select o from Product o where o.deleted_at IS NULL")
     List<Product> getAllProduct();
-    @Query("select o from  Product o where  o.name_product = :name_product AND o.deleted_at is null")
-    Optional<Product> findProductByName(String name_product);
+    @Query("SELECT o FROM Product o WHERE o.name_product LIKE '%' + :name_product + '%' AND o.deleted_at IS NULL")
+    List<Product> findProductByName(String name_product);
 
     @Query("select o from  Product o where  o.id = :id AND o.deleted_at is null ")
     Optional<Product> findProductById(Integer id);

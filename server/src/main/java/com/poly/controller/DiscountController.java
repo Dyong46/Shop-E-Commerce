@@ -34,7 +34,7 @@ public class DiscountController {
     }
     @PutMapping("/api/discount/update")
     public ResponseEntity<Discount> updateDiscountById(@RequestParam("id")Integer id,
-                                                       @ModelAttribute("discount") Discount formDiscount){
+                                                       @RequestBody Discount formDiscount){
         Optional<Discount> discountCheck = discountService.getDiscountById(id);
         if(discountCheck.isPresent()){
             Discount existingDiscount = discountCheck.get();

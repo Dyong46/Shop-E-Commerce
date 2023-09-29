@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/api/products/findbyname")
-    public Optional<Product> getProductByName( @RequestParam("name") String name){
+    public List<Product> getProductByName( @RequestParam("name") String name){
         return productService.getProductByName(name);
     }
     @PostMapping("/api/products/save")
@@ -41,7 +41,7 @@ public class ProductController {
     }
     @PutMapping("/api/products/update")
     public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
-                                  @ModelAttribute("product")Product productForm){
+                                  @RequestBody Product productForm){
         Optional<Product> product_check =productService.getProductById(id);
         if(product_check.isPresent()){
             Product existingProduct = product_check.get();
