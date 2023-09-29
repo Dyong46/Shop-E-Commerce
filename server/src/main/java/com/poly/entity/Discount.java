@@ -10,7 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-@Entity @Table(name = "[discount]")
+@Entity
+@Table(name = "[discount]")
 public class Discount implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Discount implements Serializable {
 
     private Integer discount_percent;
 
-    private Boolean active;
+    private Boolean is_active;
 
     @Temporal(TemporalType.DATE)
     private Date created_at;

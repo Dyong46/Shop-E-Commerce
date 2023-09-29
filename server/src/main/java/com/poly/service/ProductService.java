@@ -22,15 +22,26 @@ public class ProductService {
     public Optional<Product> getProductById(Integer id){
         return productRepository.findProductById(id);
     }
-    public List<Product> findProductByPriceBetween(Double priceMin, Double priceMax){
+    public List<Product> findProductByPriceBetween(Integer priceMin, Integer priceMax){
         return productRepository.findProductByPriceBetween(priceMin,priceMax);
     }
-    public Optional<Product> getProductByName(String name){
+    public List<Product> getProductByName(String name){
         return productRepository.findProductByName(name);
     }
     public Product create(Product entity){
+        Date date = new Date();
+        entity.setCreated_at(date);
         return productRepository.save(entity);
     }
+    public Optional<Product> findById(Integer id) {
+    	return productRepository.findById(id);
+    }
+
+    public void delete(Product product) {
+    	product.setDeleted_at(new Date());
+    	productRepository.save(product);
+    }
+    
     public Product save(Product entity){
         // Xay dung logic o day nha
         // Set lai ngay update
@@ -40,8 +51,15 @@ public class ProductService {
     }
     public Product deleteProductById(Integer id){
         Product product = productRepository.findProductById(id).orElse(null);
-        Date currenDate = new Date();
-        product.setDeleted_at(currenDate);
-        return productRepository.save(product);
+        if(product.getId() != null){
+            Date currenDate = new Date();
+            product.setDeleted_at(currenDate);
+            productRepository.save(product);
+        }else {
+            return null;
+        }
+        return product;
     }
+    
+    
 }

@@ -41,9 +41,9 @@ public class AccountController {
                              @RequestParam("password")String password,
                              @RequestParam(value = "remember",required = false)Boolean remember){
         // mã hóa mật khẩu tại đây vì mật khẩu hiện tại trong database chưa được mã hóa nên chưa thể sử dụng
-        //String hashPassword = PasswordUtils.hashPassword(password);
+        String hashPassword = PasswordUtils.hashPassword(password);
 
-        Optional<Account> accountCheck = accountService.getAccountByUsernameAndPassword(username,password);
+        Optional<Account> accountCheck = accountService.getAccountByUsernameAndPassword(username,hashPassword);
         if(accountCheck.isPresent()){
             if (remember !=null){
                 cookieUtils.add("username",username,1);
@@ -63,17 +63,29 @@ public class AccountController {
         }
         return "failed";
     }
+    
+    @PostMapping("/api/register") 
+    public Account postRegister(@RequestParam("email") String email,
+    							@RequestParam("password") String password) {
+        Account accountCheck = accountService.register(email, password);
+        if (accountCheck == null) {
+            return null;
+        } else {
+            return accountCheck;
+        }
+    }
+
     @GetMapping("/api/accounts/findbyid")
     public Optional<Account> getAccountById(@RequestParam("id")Integer id){
         return accountService.getProductById(id);
     }
     @PostMapping("/api/accounts/save")
-    public Account postSavaAccount(Account entity){
+    public Account postSavaAccount(@RequestBody Account entity){
         return accountService.create(entity);
     }
     @PutMapping("/api/accounts/update")
     public ResponseEntity<Account> updateAccountById(@RequestParam("id")Integer id,
-                                                     @ModelAttribute("account")Account formAccount){
+                                                     @RequestBody Account formAccount){
         Optional<Account> accountCheck = accountService.getProductById(id);
         if(accountCheck.isPresent()){
             Account existingAccount = accountCheck.get();
@@ -89,7 +101,7 @@ public class AccountController {
             existingAccount.setUpdated_at(new Date());
             existingAccount.setDeleted_at(formAccount.getDeleted_at());
             existingAccount.setRole_id(formAccount.getRole_id());
-            accountService.save(existingAccount);
+            accountService.update(existingAccount);
             return ResponseEntity.ok(existingAccount);
         }else {
             return ResponseEntity.notFound().build();

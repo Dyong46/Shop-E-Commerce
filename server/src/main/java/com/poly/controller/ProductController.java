@@ -22,11 +22,11 @@ public class ProductController {
     }
 
     @GetMapping("/api/products/findbyname")
-    public Optional<Product> getProductByName( @RequestParam("name") String name){
+    public List<Product> getProductByName( @RequestParam("name") String name){
         return productService.getProductByName(name);
     }
     @PostMapping("/api/products/save")
-    public Product postSave(Product entity){
+    public Product postSave(@RequestBody Product entity){
         return productService.create(entity);
     }
 
@@ -36,16 +36,23 @@ public class ProductController {
     }
 
     @PostMapping("/api/products/findbyprice")
-    public List<Product> getProductByPrice(@RequestParam("min")Double priceMin, @RequestParam("max")Double priceMax){
+    public List<Product> getProductByPrice(@RequestParam("min")Integer priceMin, @RequestParam("max")Integer priceMax){
         return productService.findProductByPriceBetween(priceMin,priceMax);
     }
     @PutMapping("/api/products/update")
     public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
-                                  @ModelAttribute("product")Product productForm){
+                                  @RequestBody Product productForm){
         Optional<Product> product_check =productService.getProductById(id);
         if(product_check.isPresent()){
             Product existingProduct = product_check.get();
-            productService.save(productForm);
+            existingProduct.setName_product(productForm.getName_product());
+            existingProduct.setDescription(productForm.getDescription());
+            existingProduct.setPrice(productForm.getPrice());
+            existingProduct.setImg(productForm.getImg());
+            existingProduct.setQuantity(productForm.getQuantity());
+            existingProduct.setUpdated_at(productForm.getUpdated_at());
+            existingProduct.setCategory_id(productForm.getCategory_id());
+            productService.save(existingProduct);
             return ResponseEntity.ok(existingProduct);
         }else {
             return ResponseEntity.notFound().build();
