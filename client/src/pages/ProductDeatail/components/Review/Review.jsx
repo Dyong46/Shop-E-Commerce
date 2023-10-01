@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function Review({ review }) {
   const [selectedCommentImage, setSelectedCommentImage] = useState(null);
+  console.log(review);
 
   const handleClickCommentImage = (commentImageId, event) => {
     if (selectedCommentImage === commentImageId) {
