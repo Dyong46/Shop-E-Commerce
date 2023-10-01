@@ -7,7 +7,7 @@ import Cart from '~/pages/Cart';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Order from '~/pages/Order';
-import UserLayout from '~/pages/User/layouts/UserLayout';
+
 import Profile from '~/pages/User/pages/Profile';
 import OrderLayout from '~/layouts/OrderLayout';
 import ChangePassword from '~/pages/User/pages/ChangePassword';
