@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Data @AllArgsConstructor @NoArgsConstructor
-@Entity @Table(name = "[garely]")
+@Entity @Table(name = "[galery]")
 public class Gallery implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
