@@ -134,23 +134,19 @@ const Header = () => {
             </div>
 
             <div className="flex justify-center align-center my-1">
-              {datasRight.map(
-                (item, index) => (
-                  <button
-                    className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
-                    key={index}
-                    onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
-                    onMouseOut={handleMouseOut}
-                    onClick={() => {}}
-                  >
-                    {item.icon}
-                    {item.title}
-                    <div className="mt-1">{item.iconEnd}</div>
-                  </button>
-                ),
-                console.log(isHovering, 'Hovering'),
-                console.log(isUser, 'User'),
-              )}
+              {datasRight.map((item, index) => (
+                <button
+                  className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
+                  key={index}
+                  onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
+                  onMouseOut={handleMouseOut}
+                  onClick={() => {}}
+                >
+                  {item.icon}
+                  {item.title}
+                  <div className="mt-1">{item.iconEnd}</div>
+                </button>
+              ))}
 
               <button
                 onMouseOver={handleMouseOverUser}

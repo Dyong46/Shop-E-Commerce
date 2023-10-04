@@ -1,15 +1,29 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
 import InputNumber from '~/components/InputNumber';
 import UserLayout from '../../layouts/UserLayout';
 import DateSelect from '../../components/DateSelect';
+import { getAccountById } from '~/servers/accountService';
 
-function Info() {
+function Info({ username, firstname, lastname, phone }) {
   return (
     <Fragment>
       <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
+        <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Username</div>
+        <div className="sm:w-[80%] sm:pl-5">
+          <Input
+            classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+            // register={register}
+            name="username"
+            placeholder="Username"
+            // value={profile.username}
+            // errorMessage={errors.name?.message}
+          />
+        </div>
+      </div>
+      <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
         <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Tên</div>
         <div className="sm:w-[80%] sm:pl-5">
           <Input
@@ -35,6 +49,29 @@ function Info() {
 }
 
 const Profile = () => {
+  const [profile, setProfile] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [birthday, setBirthday] = useState(null);
+  const [img, setImg] = useState(null);
+
+  const getProfile = async () => {
+    let res = await getAccountById(1);
+    if (res && res.email) {
+      setProfile(res);
+    } else {
+      throw new Error('Could not find');
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  });
+
+  if (profile === null) return null;
   return (
     <UserLayout>
       <div className="rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20">
@@ -63,6 +100,27 @@ const Profile = () => {
                 />
               </div>
             </div>
+            <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
+              <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Giới tính</div>
+              <div className="sm:w-[80%] sm:pl-5">
+                <Input
+                  classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                  // register={register}
+                  name="address"
+                  placeholder="Địa chỉ"
+                  // errorMessage={errors.address?.message}
+                />
+                <input
+                  type="radio"
+                  name="gender"
+                  id="male"
+                  className="px-3 py-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
+                />
+                <label htmlFor="male" className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">
+                  Male
+                </label>
+              </div>
+            </div>
             <DateSelect
             // value={field.value}
             // onChange={field.onChange}
@@ -82,7 +140,7 @@ const Profile = () => {
           <div className="flex justify-center md:w-72 md:border-l md:border-l-gray-200">
             <div className="flex flex-col items-center">
               <div className="my-5 h-24 w-24">
-                <img src={''} alt="" className="h-full w-full rounded-full object-cover" />
+                <img src={profile.img} alt="" className="h-full w-full rounded-full object-cover" />
               </div>
               <InputFile />
               <div className="mt-3 text-gray-400">
