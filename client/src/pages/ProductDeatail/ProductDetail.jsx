@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { getIdFromNameId } from '~/utils/utils';
 import { productById } from '~/servers/productService';
 import { reviewProduct } from '~/servers/reviewService';
+import { getGalleries } from '~/servers/galleriesService';
 import Review from './components/Review';
 
 const ProductDetail = () => {
@@ -13,11 +14,13 @@ const ProductDetail = () => {
   const id = getIdFromNameId(idProduct);
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState(null);
+  const [galleries, setGalleries] = useState();
 
   const getProductId = async (idProduct) => {
     let get = await productById(idProduct);
     if (get) {
       setProduct(get);
+      getGalleriess(idProduct);
     }
   };
 
@@ -27,6 +30,17 @@ const ProductDetail = () => {
       setReviews(res);
       console.log(res);
     }
+  };
+
+  const getGalleriess = async (idProduct) => {
+    let getGa = await getGalleries(idProduct);
+    if (getGa) {
+      setGalleries(getGa);
+    }
+  };
+
+  const clickCart = () => {
+    console.log('da qua gio hang');
   };
 
   useEffect(() => {
@@ -122,32 +136,7 @@ const ProductDetail = () => {
     }
   };
 
-  const dataImage = [
-    {
-      id: 1,
-      item: 'https://down-vn.img.susercontent.com/file/vn-11134211-7qukw-lhb95cykkkj716_tn',
-    },
-    {
-      id: 2,
-      item: 'https://down-vn.img.susercontent.com/file/vn-11134211-23010-1b7ky2gkc1lv1f',
-    },
-    {
-      id: 3,
-      item: 'https://down-vn.img.susercontent.com/file/vn-11134201-23020-d8o60f2hn2nvdd',
-    },
-    {
-      id: 4,
-      item: 'https://down-vn.img.susercontent.com/file/vn-11134201-23030-4g7zng465fov94',
-    },
-    {
-      id: 5,
-      item: 'https://down-vn.img.susercontent.com/file/vn-11134201-23030-1m418l5jgiov67',
-    },
-  ];
-
-  console.log(product);
-
-  if (!product) return null;
+  if (!product || !galleries) return null;
   return (
     <div>
       <Header />
@@ -157,11 +146,11 @@ const ProductDetail = () => {
             <div className="">
               <img className="sizes" src={product.img} alt="" />
               <div className="flex flex-row flex-auto">
-                {dataImage.map((data) => (
+                {galleries.map((data) => (
                   <div className="pr-2 pt-1 cursor-pointer" key={data.id}>
                     <img
                       className="w-24"
-                      src={data.item}
+                      src={data.img}
                       alt=""
                       onClick={(event) => {
                         handleClickImage(data.id, event);
@@ -794,7 +783,7 @@ const ProductDetail = () => {
                     </span>
                   </div>
                 </div>
-                <div className="mt-8 flex">
+                <div className="mt-8 flex" onClick={clickCart}>
                   <div
                     className="flex justify-center p-3 w-56 rounded-sm cursor-pointer"
                     style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
