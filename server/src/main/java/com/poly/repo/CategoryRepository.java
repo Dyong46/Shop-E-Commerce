@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
 	@Query("select o from Category o where o.deleted_at IS NULL")
 	List<Category> getAllCategory();
 

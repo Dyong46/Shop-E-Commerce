@@ -10,10 +10,11 @@ import java.util.List;
 
 @Service
 public class CategoryService {
+
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	public List<Category> getAllCatagory() {
+	public List<Category> getAllCategory() {
 		return categoryRepository.getAllCategory();
 	}
 
@@ -22,20 +23,21 @@ public class CategoryService {
 	}
 
 	public Category save(Category category) {
-		Category categr = new Category();
-		categr.setName(category.getName());
-		categr.setImg(category.getImg());
-		categr.setDescription(category.getDescription());
-		categr.setCreated_at(new Date());
+		Category createCategory = new Category();
+		createCategory.setName(category.getName());
+		createCategory.setImg(category.getImg());
+		createCategory.setDescription(category.getDescription());
+		createCategory.setCreated_at(new Date());
 
-		return categoryRepository.save(categr);
+		return categoryRepository.save(createCategory);
 	}
 
 	public Category update(Category category, Integer id) {
-		Category updateCategory = new Category();
-		if (getCategoryById(id) == null) {
-			return updateCategory;
+		Category updateCategory = getCategoryById(id);
+		if (updateCategory == null) {
+			return null;
 		}
+
 		updateCategory.setId(id);
 		updateCategory.setName(category.getName());
 		updateCategory.setImg(category.getImg());
@@ -50,6 +52,7 @@ public class CategoryService {
     	if(category == null) {
     		return null;
     	}
+
     	category.setDeleted_at(new Date());
     	return categoryRepository.save(category);
 	}
