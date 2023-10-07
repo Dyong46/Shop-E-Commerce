@@ -1,13 +1,14 @@
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 import './style.scss';
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getIdFromNameId } from '~/utils/utils';
 import { productById } from '~/servers/productService';
 import { reviewProduct } from '~/servers/reviewService';
 import { getGalleries } from '~/servers/galleriesService';
 import Review from './components/Review';
+import { action, useStore } from '~/servers/Context';
 
 const ProductDetail = () => {
   const { idProduct } = useParams();
@@ -15,6 +16,9 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [reviews, setReviews] = useState(null);
   const [galleries, setGalleries] = useState();
+
+  const [state, dispath] = useStore();
+  const { todos, todoData } = state;
 
   const getProductId = async (idProduct) => {
     let get = await productById(idProduct);
@@ -28,7 +32,7 @@ const ProductDetail = () => {
     let res = await reviewProduct(idProduct);
     if (res) {
       setReviews(res);
-      console.log(res);
+      // console.log(res);
     }
   };
 
@@ -39,52 +43,72 @@ const ProductDetail = () => {
     }
   };
 
-  const clickCart = () => {
-    console.log('da qua gio hang');
-  };
+  // Context
 
   useEffect(() => {
     getProductId(id);
     getReview(id);
   }, [id]);
 
-  const handleClick = (event) => {
-    // console.log(event.target.className);
-    let handle = event.target.className.substring(64, 69);
-    let quantity = document.querySelector('.quantity');
-    let plusQuantity = parseInt(quantity.value);
-    if (handle == 'plus') {
-      if (plusQuantity > 0) {
-        plusQuantity++;
-        quantity.value = plusQuantity;
-      }
-    } else if (handle == 'mimus') {
-      if (quantity.value == 1) {
-        quantity.value = 1;
+  // const [quantitys, setQuantity] = useState(null);
+  // const handleClick = (event) => {
+  //   // console.log(event.target.className);
+  //   let handle = event.target.className.substring(64, 69);
+  //   let quantity = document.querySelector('.quantity');
+  //   let plusQuantity = parseInt(quantity.value);
+
+  //   if (handle == 'plus') {
+  //     if (plusQuantity > 0) {
+  //       plusQuantity++;
+  //       quantity.value = plusQuantity;
+  //     }
+  //   } else if (handle == 'mimus') {
+  //     if (quantity.value == 1) {
+  //       quantity.value = 1;
+  //     } else {
+  //       plusQuantity--;
+  //       quantity.value = plusQuantity;
+  //     }
+  //   }
+  // };
+
+  const [quantity, setQuantity] = useState(1);
+  const plusQuantity = useCallback(() => {
+    setQuantity((plus) => {
+      return plus + 1;
+    });
+  }, []);
+  const mimusQuantity = useCallback(() => {
+    setQuantity((mimus) => {
+      if (mimus == 1) {
+        return 1;
       } else {
-        plusQuantity--;
-        quantity.value = plusQuantity;
+        return mimus - 1;
       }
-    }
-  };
+    });
+  }, []);
 
   const [selectedDiv, setSelectedDiv] = useState(null);
+  const [color, setColor] = useState(null);
   const handleClickModel = (divId, event) => {
-    console.log(event.target);
+    // console.log(event.target.innerText);
     if (selectedDiv === divId) {
       setSelectedDiv(null); // Bỏ chọn nếu thẻ đã được chọn
     } else {
       setSelectedDiv(divId); // Chọn thẻ mới
+      setColor(event.target.innerText);
     }
   };
 
   const [selectedSize, setSelectedSize] = useState(null);
+  const [size, setSize] = useState(null);
   const handleClickSize = (sizeId, event) => {
-    console.log(event.target);
+    // console.log(event.target);
     if (selectedSize === sizeId) {
       setSelectedSize(null); // Bỏ chọn nếu thẻ đã được chọn
     } else {
       setSelectedSize(sizeId); // Chọn thẻ mới
+      setSize(event.target.innerText);
     }
   };
 
@@ -135,7 +159,7 @@ const ProductDetail = () => {
       document.body.style.overflow = 'auto';
     }
   };
-
+  console.log(todos, '<<<< todo');
   if (!product || !galleries) return null;
   return (
     <div>
@@ -756,14 +780,12 @@ const ProductDetail = () => {
                   <div className="flex flex-wrap items-stretch text-center">
                     <div
                       className="border border-black-500 w-8 text-xl hover:cursor-pointer handle mimus"
-                      onClick={(event) => {
-                        handleClick(event);
-                      }}
+                      onClick={mimusQuantity}
                     >
                       -
                     </div>
                     <input
-                      value={1}
+                      value={quantity}
                       type="text"
                       name=""
                       id=""
@@ -772,9 +794,7 @@ const ProductDetail = () => {
                     />
                     <div
                       className="border border-black-500 w-8 text-xl hover:cursor-pointer handle plus"
-                      onClick={(event) => {
-                        handleClick(event);
-                      }}
+                      onClick={plusQuantity}
                     >
                       +
                     </div>
@@ -783,7 +803,12 @@ const ProductDetail = () => {
                     </span>
                   </div>
                 </div>
-                <div className="mt-8 flex" onClick={clickCart}>
+                <div
+                  className="mt-8 flex"
+                  onClick={() => {
+                    dispath(action.addTodoInput(id, product.name_product, color, size, quantity));
+                  }}
+                >
                   <div
                     className="flex justify-center p-3 w-56 rounded-sm cursor-pointer"
                     style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
@@ -1180,4 +1205,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default memo(ProductDetail);
