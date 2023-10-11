@@ -1,8 +1,39 @@
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 
 const Login = () => {
+
+  const [username, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const apiUrl = `http://localhost:1203/api/login?username=${username}&password=${password}&remember=false`;
+    try {
+
+      const res = await axios.post(apiUrl).then()
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+
+
+      if (res === true) {
+        navigate('/');
+
+        alert('Login successful!');
+        // You can perform additional actions like redirecting the user to another page.
+      } else {
+        alert('Login failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Login failed. Please try again later.');
+    }
+  }
+
   return (
     <div className="bg-orange">
       <div className="container">
@@ -15,6 +46,8 @@ const Login = () => {
                 // register={register}
                 type="email"
                 className="mt-8"
+
+                onChange={(event) => setEmail(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
               />
@@ -23,6 +56,7 @@ const Login = () => {
                 // register={register}
                 type="password"
                 className="mt-2"
+                onChange={(event) => setPassword(event.target.value)}
                 classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.password?.message}
                 placeholder="Password"
@@ -30,10 +64,11 @@ const Login = () => {
               />
               <div className="mt-3">
                 <Button
-                  type="submit"
+                  type="button"
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600 font-normal"
-                  // isLoading={loginMutation.isLoading}
-                  // disabled={loginMutation.isLoading}
+                  onClick={() => handleLogin()}
+                // isLoading={loginMutation.isLoading}
+                // disabled={loginMutation.isLoading}
                 >
                   Đăng nhập
                 </Button>
@@ -121,5 +156,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
