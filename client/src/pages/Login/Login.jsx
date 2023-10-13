@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 
@@ -30,10 +31,11 @@ const Login = () => {
               />
               <div className="mt-3">
                 <Button
-                  type="submit"
+                  type="button"
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600 font-normal"
                   // isLoading={loginMutation.isLoading}
                   // disabled={loginMutation.isLoading}
+                  onClick={() => toast.success('123')}
                 >
                   Đăng nhập
                 </Button>

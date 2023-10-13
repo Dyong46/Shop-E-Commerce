@@ -1,7 +1,7 @@
 import { Fragment, useRef } from 'react';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import config from '~/constants/config';
+import { toast } from 'react-toastify';
 
 const InputFile = ({ onChange }) => {
   const fileInputRef = useRef(null);
