@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
@@ -6,62 +6,30 @@ import InputNumber from '~/components/InputNumber';
 import UserLayout from '../../layouts/UserLayout';
 import DateSelect from '../../components/DateSelect';
 import { getAccountById } from '~/servers/accountService';
-
-function Info({ username, firstname, lastname, phone }) {
-  return (
-    <Fragment>
-      <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
-        <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Username</div>
-        <div className="sm:w-[80%] sm:pl-5">
-          <Input
-            classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
-            // register={register}
-            name="username"
-            placeholder="Username"
-            // value={profile.username}
-            // errorMessage={errors.name?.message}
-          />
-        </div>
-      </div>
-      <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
-        <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Tên</div>
-        <div className="sm:w-[80%] sm:pl-5">
-          <Input
-            classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
-            // register={register}
-            name="name"
-            placeholder="Tên"
-            // errorMessage={errors.name?.message}
-          />
-        </div>
-      </div>
-      <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
-        <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Số điện thoại</div>
-        <div className="sm:w-[80%] sm:pl-5">
-          <InputNumber
-            classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
-            placeholder="Số điện thoại"
-          />
-        </div>
-      </div>
-    </Fragment>
-  );
-}
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [address, setAddress] = useState(null);
-  const [gender, setGender] = useState(null);
-  const [birthday, setBirthday] = useState(null);
-  const [img, setImg] = useState(null);
+  // const [username, setUsername] = useState(null);
+  // const [fullname, setFullname] = useState(null);
+  // const [password, setPassword] = useState(null);
+  // const [phone, setPhone] = useState(null);
+  // const [gender, setGender] = useState(null);
+  // const [birthday, setBirthday] = useState(null);
+  // const [img, setImg] = useState(null);
 
   const getProfile = async () => {
     let res = await getAccountById(1);
     if (res && res.email) {
       setProfile(res);
+      // setUsername(res.username);
+      // setFullname(res.firstname + ' ' + res.lastname);
+      // setPhone(res.phone);
+      // setGender(res.gender);
+      // setBirthday(res.birthday);
+      // setImg(res.img);
+      // setPassword(res.password);
+      toast.success('hi');
     } else {
       throw new Error('Could not find');
     }
@@ -69,7 +37,7 @@ const Profile = () => {
 
   useEffect(() => {
     getProfile();
-  });
+  }, []);
 
   if (profile === null) return null;
   return (
@@ -84,40 +52,80 @@ const Profile = () => {
             <div className="flex flex-col flex-wrap sm:flex-row">
               <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Email</div>
               <div className="sm:w-[80%] sm:pl-5">
-                <div className="pt-3 text-gray-700">minhthusay@gmail.com</div>
+                <div className="pt-3 text-gray-700">{profile.email}</div>
               </div>
             </div>
-            <Info />
-            <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
-              <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Địa chỉ</div>
+            <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
+              <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Username</div>
               <div className="sm:w-[80%] sm:pl-5">
                 <Input
                   classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
                   // register={register}
-                  name="address"
-                  placeholder="Địa chỉ"
-                  // errorMessage={errors.address?.message}
+                  name="username"
+                  placeholder="Username"
+                  value={profile.username}
+                  onChange={(e) =>
+                    setProfile({
+                      ...profile,
+                      username: e.target.value,
+                    })
+                  }
+                  // errorMessage={errors.name?.message}
+                />
+              </div>
+            </div>
+            <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
+              <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Tên</div>
+              <div className="sm:w-[80%] sm:pl-5">
+                <Input
+                  classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                  // register={register}
+                  name="name"
+                  placeholder="Tên"
+                  value={profile.firstname}
+                  onChange={(e) => setProfile({ ...profile, firstname: e.target.value })}
+                  // errorMessage={errors.name?.message}
+                />
+              </div>
+            </div>
+            <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
+              <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Số điện thoại</div>
+              <div className="sm:w-[80%] sm:pl-5">
+                <InputNumber
+                  classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
+                  placeholder="Số điện thoại"
+                  value={profile.phone}
+                  onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
                 />
               </div>
             </div>
             <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
               <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">Giới tính</div>
               <div className="sm:w-[80%] sm:pl-5">
-                <Input
+                {/* <Input
                   classNameInput="w-full rounded-sm border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:shadow-sm"
                   // register={register}
                   name="address"
                   placeholder="Địa chỉ"
                   // errorMessage={errors.address?.message}
-                />
+                /> */}
                 <input
                   type="radio"
                   name="gender"
                   id="male"
-                  className="px-3 py-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
+                  className="border-gray-300 focus:shadow-sm focus:bg-orange text-lg w-[40] h-[40]"
                 />
                 <label htmlFor="male" className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">
                   Male
+                </label>
+                <input
+                  type="radio"
+                  name="gender"
+                  id="female"
+                  className="border-gray-300 focus:shadow-sm focus:bg-orange"
+                />
+                <label htmlFor="female" className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">
+                  Female
                 </label>
               </div>
             </div>
