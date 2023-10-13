@@ -1,6 +1,7 @@
 import { ADD_TODO } from './Contants';
 const initState = {
   todos: [],
+  todoData: [],
   todoId: '',
   todoNameProduct: '',
   todoColor: '',
@@ -21,6 +22,7 @@ function reducer(state, action) {
             quantity: action.quantity,
           },
         ],
+
         todoId: action.id,
         todoNameProduct: action.name,
       };

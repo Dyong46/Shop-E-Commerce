@@ -8,7 +8,7 @@ import { productById } from '~/servers/productService';
 import { reviewProduct } from '~/servers/reviewService';
 import { getGalleries } from '~/servers/galleriesService';
 import Review from './components/Review';
-import { action, useStore } from '~/servers/Context';
+import { action, useStore } from '~/Context';
 
 const ProductDetail = () => {
   const { idProduct } = useParams();
@@ -73,6 +73,7 @@ const ProductDetail = () => {
   // };
 
   const [quantity, setQuantity] = useState(1);
+
   const plusQuantity = useCallback(() => {
     setQuantity((plus) => {
       return plus + 1;
@@ -160,10 +161,11 @@ const ProductDetail = () => {
     }
   };
   console.log(todos, '<<<< todo');
+
   if (!product || !galleries) return null;
   return (
     <div>
-      <Header />
+      <Header state={todos} />
       <div className="flex flex-col bg-pro justify-center">
         <div className="flex justify-center">
           <div className="bg-white max-w-6xl mt-5 flex flex-auto flex-row px-4 py-4">
@@ -803,12 +805,7 @@ const ProductDetail = () => {
                     </span>
                   </div>
                 </div>
-                <div
-                  className="mt-8 flex"
-                  onClick={() => {
-                    dispath(action.addTodoInput(id, product.name_product, color, size, quantity));
-                  }}
-                >
+                <div className="mt-8 flex">
                   <div
                     className="flex justify-center p-3 w-56 rounded-sm cursor-pointer"
                     style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
@@ -856,7 +853,14 @@ const ProductDetail = () => {
                         ></line>
                       </g>
                     </svg>
-                    <span style={{ color: '#F05D40' }}>Thêm vào giỏ hàng</span>
+                    <span
+                      style={{ color: '#F05D40' }}
+                      onClick={() => {
+                        dispath(action.addTodoInput(id, product.name_product, color, size, quantity));
+                      }}
+                    >
+                      Thêm vào giỏ hàng
+                    </span>
                   </div>
                   <div
                     className="flex justify-center p-3 w-56 ml-5 rounded-sm cursor-pointer"
