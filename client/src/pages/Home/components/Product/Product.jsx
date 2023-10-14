@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import path from '~/constants/path';
 import { generateNameId } from '~/utils/utils';
 
+import { memo } from 'react';
+
 const Product = ({ product }) => {
+  // Context
+
   return (
     <div>
       <Link to={`${path.home}${generateNameId({ name: product.name_product, id: product.id })}`}>
@@ -52,4 +56,4 @@ Product.propTypes = {
   product: PropTypes.object.isRequired,
 };
 
-export default Product;
+export default memo(Product);
