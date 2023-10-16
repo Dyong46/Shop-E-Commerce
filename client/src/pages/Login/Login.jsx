@@ -5,22 +5,21 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 
 const Login = () => {
-
-  const [username, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     const apiUrl = `http://localhost:1203/api/login?username=${username}&password=${password}&remember=false`;
     try {
-
-      const res = await axios.post(apiUrl).then()
+      const res = await axios
+        .post(apiUrl)
+        .then()
         .catch((error) => {
           console.error('Error fetching data:', error);
         });
 
-
-      if (res === true) {
+      if (res.data === 'login') {
         navigate('/');
 
         alert('Login successful!');
@@ -32,7 +31,7 @@ const Login = () => {
       console.error('Error during login:', error);
       alert('Login failed. Please try again later.');
     }
-  }
+  };
 
   return (
     <div className="bg-orange">
@@ -46,7 +45,6 @@ const Login = () => {
                 // register={register}
                 type="email"
                 className="mt-8"
-
                 onChange={(event) => setEmail(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
@@ -67,8 +65,8 @@ const Login = () => {
                   type="button"
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600 font-normal"
                   onClick={() => handleLogin()}
-                // isLoading={loginMutation.isLoading}
-                // disabled={loginMutation.isLoading}
+                  // isLoading={loginMutation.isLoading}
+                  // disabled={loginMutation.isLoading}
                 >
                   Đăng nhập
                 </Button>
