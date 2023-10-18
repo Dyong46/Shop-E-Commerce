@@ -110,6 +110,12 @@ CREATE TABLE [orders] (
   [created_at] date,
   [status_id] integer,
   [total_amount] bigint,
+  [fullname] nvarchar(50),
+  [phone] varchar(11),
+  [city] nvarchar(20),
+  [district] nvarchar(20),
+  [wards] nvarchar(20),
+  [specific_address] nvarchar(100),
   [account_id] integer,
   [discount_id] integer
 )

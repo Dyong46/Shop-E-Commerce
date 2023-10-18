@@ -6,10 +6,13 @@ import InputNumber from '~/components/InputNumber';
 import UserLayout from '../../layouts/UserLayout';
 import DateSelect from '../../components/DateSelect';
 import { getAccountById } from '~/servers/accountService';
-import { toast } from 'react-toastify';
+import { actions, useStore } from '~/Context/Account';
 
 const Profile = () => {
-  const [profile, setProfile] = useState(null);
+  const [state, dispatch] = useStore();
+  // const [profile, setProfile] = useState(null);
+
+  const { profile } = state;
   // const [username, setUsername] = useState(null);
   // const [fullname, setFullname] = useState(null);
   // const [password, setPassword] = useState(null);
@@ -21,7 +24,8 @@ const Profile = () => {
   const getProfile = async () => {
     let res = await getAccountById(1);
     if (res && res.email) {
-      setProfile(res);
+      dispatch(actions.login(res));
+      // setProfile(res);
       // setUsername(res.username);
       // setFullname(res.firstname + ' ' + res.lastname);
       // setPhone(res.phone);
@@ -29,7 +33,6 @@ const Profile = () => {
       // setBirthday(res.birthday);
       // setImg(res.img);
       // setPassword(res.password);
-      toast.success('hi');
     } else {
       throw new Error('Could not find');
     }
@@ -39,7 +42,7 @@ const Profile = () => {
     getProfile();
   }, []);
 
-  if (profile === null) return null;
+  if (profile.id === null) return null;
   return (
     <UserLayout>
       <div className="rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20">
@@ -65,7 +68,7 @@ const Profile = () => {
                   placeholder="Username"
                   value={profile.username}
                   onChange={(e) =>
-                    setProfile({
+                    dispatch(actions.login, {
                       ...profile,
                       username: e.target.value,
                     })

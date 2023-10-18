@@ -25,7 +25,7 @@ export const publicRoutes = [
   { path: '/user/password', component: ChangePassword },
   { path: '/user/purchase', component: HistoryPurchase },
   { path: '/productdetail', component: ProductDetail, layout: Fragment },
-  { path: '/:idProduct', component: ProductDetail, layout: Fragment },
+  { path: '/:idProduct', component: ProductDetail },
 ];
 
 // Private Routes

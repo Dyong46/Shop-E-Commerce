@@ -73,9 +73,8 @@ let datasLeft = ['Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
 const Header = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isUser, setIsUser] = useState(false);
-  const [state, dispath] = useStore();
+  const [state] = useStore();
   const { todos } = state;
-  console.log(todos);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -139,23 +138,19 @@ const Header = () => {
             </div>
 
             <div className="flex justify-center align-center my-1">
-              {datasRight.map(
-                (item, index) => (
-                  <button
-                    className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
-                    key={index}
-                    onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
-                    onMouseOut={handleMouseOut}
-                    onClick={() => {}}
-                  >
-                    {item.icon}
-                    {item.title}
-                    <div className="mt-1">{item.iconEnd}</div>
-                  </button>
-                ),
-                // console.log(isHovering, 'Hovering'),
-                // console.log(isUser, 'User'),
-              )}
+              {datasRight.map((item, index) => (
+                <button
+                  className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
+                  key={index}
+                  onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
+                  onMouseOut={handleMouseOut}
+                  onClick={() => {}}
+                >
+                  {item.icon}
+                  {item.title}
+                  <div className="mt-1">{item.iconEnd}</div>
+                </button>
+              ))}
 
               <button
                 onMouseOver={handleMouseOverUser}
@@ -182,15 +177,15 @@ const Header = () => {
                   onMouseOut={handleMouseOutUser}
                   className="absolute flex flex-col justify-start align-center top-10 right-8 z-10 w-40 bg-white"
                 >
-                  <a href="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
+                  <Link to="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
                     Tài khoản của tôi
-                  </a>
-                  <a href="/order" className="text-black m-3 flex justify-start hover:text-orange">
+                  </Link>
+                  <Link to="/order" className="text-black m-3 flex justify-start hover:text-orange">
                     Đơn mua
-                  </a>
-                  <a href="/login" className="text-black m-3 flex justify-start hover:text-orange">
+                  </Link>
+                  <Link to="/login" className="text-black m-3 flex justify-start hover:text-orange">
                     Đăng xuất
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>
