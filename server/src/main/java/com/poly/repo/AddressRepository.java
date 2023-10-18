@@ -14,8 +14,8 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
     List<Address> getAllAddress();
 
     @Query("select o from Address o where o.account_id.id = :id and o.account_id.deleted_at = null")
-    List<Address> findAddressById(Integer id);
+    List<Address> findAddressByAccountId(Integer id);
 
-    Address save(Address address);
-
+    @Query("select o from Address o where o.is_default = TRUE")
+    Address findAddressDefault();
 }
