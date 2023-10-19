@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CartListItem from './components/cart-list-item';
+
 
 let datasRight = [
   {
@@ -68,31 +69,45 @@ let datasRight = [
   },
 ];
 
+
 let datasLeft = ['Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
+
+let tempDataProduct = [
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+  { title: "hellooooo", image: "#", price: "1000" },
+]
+
+let countProduct = tempDataProduct.length;
 
 const Header = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [isCart, setIsCart] = useState(false);
-  const test = toast('askdjflkasjdlkfjalksdj'); 
 
-  const handleMouseOverTest = (which) => {
-    switch (which){
-
-      case which == isHovering: {
-       setIsHovering(true); break;
-      }
-      case which == isUser: {
-       setIsHovering(true); break;
-      }
-      case which == isCart: {
-       setIsHovering(true); break;
-      }
-      case which == isCart: {
-       setIsHovering(true); break;
-      }
-    }
-  };
+  // const handleMouseOverTest = (which) => {
+  //   switch (which) {
+  //
+  //     case which == isHovering: {
+  //       setIsHovering(true); break;
+  //     }
+  //     case which == isUser: {
+  //       setIsHovering(true); break;
+  //     }
+  //     case which == isCart: {
+  //       setIsHovering(true); break;
+  //     }
+  //     case which == isCart: {
+  //       setIsHovering(true); break;
+  //     }
+  //   }
+  // };
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -117,7 +132,7 @@ const Header = () => {
   const handleMouseOutCart = () => {
     setIsCart(false);
   };
-  
+
 
 
 
@@ -132,7 +147,7 @@ const Header = () => {
                 <button
                   className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
                   key={index}
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   {item}
                 </button>
@@ -174,22 +189,20 @@ const Header = () => {
                     key={index}
                     onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
                     onMouseOut={handleMouseOut}
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     {item.icon}
                     {item.title}
                     <div className="mt-1">{item.iconEnd}</div>
                   </button>
                 ),
-                console.log(isHovering, 'Hovering'),
-                console.log(isUser, 'User'),
               )}
 
               <button
                 onMouseOver={handleMouseOverUser}
                 onMouseOut={handleMouseOutUser}
                 className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 <div className="block h-4 w-4 mr-1 rounded-full bg-white">h</div>
                 User
@@ -204,11 +217,12 @@ const Header = () => {
                   <button className="text-black m-3 flex justify-start hover:text-orange">English</button>
                 </div>
               )}
+
               {isUser && (
                 <div
                   onMouseOver={handleMouseOverUser}
                   onMouseOut={handleMouseOutUser}
-                  className="absolute flex flex-col justify-start align-center top-10 z-10 w-40 bg-white"
+                  className="absolute flex flex-col justify-start align-center top-10 right-10 z-10 w-40 bg-white"
                 >
                   <a href="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
                     Tài khoản của tôi
@@ -283,28 +297,28 @@ const Header = () => {
                 </div>
               </form>
               <div className="flex flex-row mr-5">
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
               </div>
             </div>
 
             <div className="h-12 relative"
-                onMouseOver={handleMouseOverCart}
-                onMouseOut={handleMouseOutCart}
+              onMouseOver={handleMouseOverCart}
+              onMouseOut={handleMouseOutCart}
 
             >
               <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-4 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
-                9+
+                {countProduct > 99 ? '99+' : countProduct}
               </div>
               <svg
                 className="w-[32px] h-[32px] text-gray-800 dark:text-white"
@@ -323,26 +337,16 @@ const Header = () => {
               </svg>
               {isCart && (
                 <div
-                  onMouseOver={handleMouseOverUser}
-                  onMouseOut={handleMouseOutUser}
-                  className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-40 bg-white"
+                  className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-80 bg-white"
                 >
-                  <a href="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
-                    Tài khoản của tôi
-                  </a>
-                  <a href="/order" className="text-black m-3 flex justify-start hover:text-orange">
-                    Đơn mua
-                  </a>
-                  <a href="/login" className="text-black m-3 flex justify-start hover:text-orange">
-                    Đăng xuất
-                  </a>
+                  <CartListItem countProduct={countProduct} listItem={tempDataProduct} />
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
