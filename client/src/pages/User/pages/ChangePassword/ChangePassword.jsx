@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const ChangePassword = () => {
+  const [state, dispatch] = useStore();
+
+  const { profile } = state;
   const [errors, setErrors] = useState({});
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');

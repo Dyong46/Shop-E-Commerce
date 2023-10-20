@@ -13,26 +13,26 @@ const Profile = () => {
   // const [profile, setProfile] = useState(null);
 
   const { profile } = state;
-  // const [username, setUsername] = useState(null);
-  // const [fullname, setFullname] = useState(null);
-  // const [password, setPassword] = useState(null);
-  // const [phone, setPhone] = useState(null);
-  // const [gender, setGender] = useState(null);
-  // const [birthday, setBirthday] = useState(null);
-  // const [img, setImg] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [fullname, setFullname] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [birthday, setBirthday] = useState(null);
+  const [img, setImg] = useState(null);
 
   const getProfile = async () => {
     let res = await getAccountById(1);
     if (res && res.email) {
       dispatch(actions.login(res));
-      // setProfile(res);
-      // setUsername(res.username);
-      // setFullname(res.firstname + ' ' + res.lastname);
-      // setPhone(res.phone);
-      // setGender(res.gender);
-      // setBirthday(res.birthday);
-      // setImg(res.img);
-      // setPassword(res.password);
+
+      // setUsername(profile.username);
+      // setFullname(profile.firstname + ' ' + profile.lastname);
+      // setPhone(profile.phone);
+      // setGender(profile.gender);
+      // setBirthday(profile.birthday);
+      // setImg(profile.img);
+      // setPassword(profile.password);
     } else {
       throw new Error('Could not find');
     }
