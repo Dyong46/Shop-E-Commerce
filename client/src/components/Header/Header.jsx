@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import path from '~/constants/path';
 import { useStore } from '~/Context';
+import CartListItem from './components/cart-list-item';
 
 let datasRight = [
   {
@@ -70,12 +71,28 @@ let datasRight = [
 
 let datasLeft = ['Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
 
+let tempDataProduct = [
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+];
+
+let countProduct = tempDataProduct.length;
+
 const Header = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const [state, dispath] = useStore();
   const { todos } = state;
   console.log(todos);
+
+  const [isCart, setIsCart] = useState(false);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -91,6 +108,14 @@ const Header = () => {
 
   const handleMouseOutUser = () => {
     setIsUser(false);
+  };
+
+  const handleMouseOverCart = () => {
+    setIsCart(true);
+  };
+
+  const handleMouseOutCart = () => {
+    setIsCart(false);
   };
 
   return (
@@ -139,23 +164,19 @@ const Header = () => {
             </div>
 
             <div className="flex justify-center align-center my-1">
-              {datasRight.map(
-                (item, index) => (
-                  <button
-                    className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
-                    key={index}
-                    onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
-                    onMouseOut={handleMouseOut}
-                    onClick={() => {}}
-                  >
-                    {item.icon}
-                    {item.title}
-                    <div className="mt-1">{item.iconEnd}</div>
-                  </button>
-                ),
-                // console.log(isHovering, 'Hovering'),
-                // console.log(isUser, 'User'),
-              )}
+              {datasRight.map((item, index) => (
+                <button
+                  className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
+                  key={index}
+                  onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
+                  onMouseOut={handleMouseOut}
+                  onClick={() => {}}
+                >
+                  {item.icon}
+                  {item.title}
+                  <div className="mt-1">{item.iconEnd}</div>
+                </button>
+              ))}
 
               <button
                 onMouseOver={handleMouseOverUser}
@@ -176,11 +197,12 @@ const Header = () => {
                   <button className="text-black m-3 flex justify-start hover:text-orange">English</button>
                 </div>
               )}
+
               {isUser && (
                 <div
                   onMouseOver={handleMouseOverUser}
                   onMouseOut={handleMouseOutUser}
-                  className="absolute flex flex-col justify-start align-center top-10 right-8 z-10 w-40 bg-white"
+                  className="absolute flex flex-col justify-start align-center top-10 right-10 z-10 w-40 bg-white"
                 >
                   <a href="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
                     Tài khoản của tôi
@@ -270,27 +292,30 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="h-12 relative cursor-pointer">
-              <Link to={`${path.cart}`}>
-                <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-4 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
-                  {todos.length}
+            <div className="h-12 relative" onMouseOver={handleMouseOverCart} onMouseOut={handleMouseOutCart}>
+              <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-4 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
+                {countProduct > 99 ? '99+' : countProduct}
+              </div>
+              <svg
+                className="w-[32px] h-[32px] text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 20"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.8"
+                  d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
+                />
+              </svg>
+              {isCart && (
+                <div className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-80 bg-white">
+                  <CartListItem countProduct={countProduct} listItem={tempDataProduct} />
                 </div>
-                <svg
-                  className="w-[32px] h-[32px] text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 18 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.8"
-                    d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0h8m-8 0-1-4m9 4a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-9-4h10l2-7H3m2 7L3 4m0 0-.792-3H1"
-                  />
-                </svg>
-              </Link>
+              )}
             </div>
           </div>
         </div>
