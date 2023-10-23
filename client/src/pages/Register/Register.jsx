@@ -1,8 +1,48 @@
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 
 const Register = () => {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [repassword, setRepassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const showButton = () => {
+    return username && password && repassword;
+  }
+
+  const handleRegister = async () => {
+    const apiUrl = `http://localhost:1203/api/register?email=${username}&password=${password}`;
+    let res;
+    try {
+      if (password === repassword) {
+        res = await axios
+          .post(apiUrl)
+          .then()
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+          });
+      }
+
+      if (res.data !== null) {
+        navigate('/');
+
+        alert('Login successful!');
+        // You can perform additional actions like redirecting the user to another page.
+      } else {
+        alert('Login failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Login failed. Please try again later.');
+    }
+  };
+
   return (
     <div className="bg-orange">
       <div className="container">
@@ -15,6 +55,7 @@ const Register = () => {
                 // register={register}
                 type="email"
                 className="mt-8"
+                onChange={(event) => setUsername(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
               />
@@ -22,6 +63,7 @@ const Register = () => {
                 name="password"
                 // register={register}
                 type="password"
+                onChange={(event) => setPassword(event.target.value)}
                 className="mt-2"
                 classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.password?.message}
@@ -31,8 +73,9 @@ const Register = () => {
 
               <Input
                 name="confirm_password"
-                // register={register}
                 type="password"
+                // register={register}
+                onChange={(event) => setRepassword(event.target.value)}
                 className="mt-2"
                 classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.confirm_password?.message}
@@ -42,9 +85,11 @@ const Register = () => {
 
               <div className="mt-2">
                 <Button
+                  type="Button"
+                  onClick={() => handleRegister()}
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600"
-                  //   isLoading={registerAccountMutation.isLoading}
-                  //   disabled={registerAccountMutation.isLoading}
+                //   isLoading={registerAccountMutation.isLoading}
+                //   disabled={registerAccountMutation.isLoading}
                 >
                   Đăng ký
                 </Button>
