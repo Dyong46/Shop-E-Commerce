@@ -2,11 +2,18 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*", "./dist/*", ""]
+      "~/*": [
+        "./src/*",
+        "./dist/*",
+        ""
+      ]
     }
   },
   "parser": "babel-eslint",
-  "plugins": ["react", "prettier"],
+  "plugins": [
+    "react",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -33,7 +40,13 @@
     "react/sort-comp": [
       1,
       {
-        "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
+        "order": [
+          "type-annotations",
+          "static-methods",
+          "lifecycle",
+          "everything-else",
+          "render"
+        ]
       }
     ]
   }
