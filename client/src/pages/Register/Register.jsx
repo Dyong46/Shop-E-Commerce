@@ -12,10 +12,6 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const showButton = () => {
-    return username && password && repassword;
-  }
-
   const handleRegister = async () => {
     const apiUrl = `http://localhost:1203/api/register?email=${username}&password=${password}`;
     let res;
@@ -89,7 +85,6 @@ const Register = () => {
                   onClick={() => handleRegister()}
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600"
                 //   isLoading={registerAccountMutation.isLoading}
-                //   disabled={registerAccountMutation.isLoading}
                 >
                   Đăng ký
                 </Button>
