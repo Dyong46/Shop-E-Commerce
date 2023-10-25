@@ -4,7 +4,9 @@ import com.poly.Utils.CookieUtils;
 import com.poly.Utils.PasswordUtils;
 import com.poly.Utils.SessionUtils;
 import com.poly.entity.Account;
+import com.poly.entity.ChangePasswordDTO;
 import com.poly.service.AccountService;
+import com.poly.service.ChangePassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -27,6 +29,9 @@ public class AccountController {
     @Autowired
     SessionUtils sessionUtils;
 
+    @Autowired
+    ChangePassword changePassword;
+
     /**
      * Get all account information
      * @return account
@@ -36,32 +41,35 @@ public class AccountController {
         return accountService.getAll(); 
     }
     @PostMapping("/api/login")
-    public String postLogin (Model model,
-                             @RequestParam("username")String username,
+    public Account postLogin (Model model,
+                             @RequestParam("email")String email,
                              @RequestParam("password")String password,
                              @RequestParam(value = "remember",required = false)Boolean remember){
         // mã hóa mật khẩu tại đây vì mật khẩu hiện tại trong database chưa được mã hóa nên chưa thể sử dụng
         String hashPassword = PasswordUtils.hashPassword(password);
 
-        Optional<Account> accountCheck = accountService.getAccountByUsernameAndPassword(username,hashPassword);
-        if(accountCheck.isPresent()){
+        Account accountCheck = accountService.getAccountByEmailAndPassword(email,hashPassword);
+        if(accountCheck != null){
             if (remember !=null){
-                cookieUtils.add("username",username,1);
-                cookieUtils.add("password",password,1);
-                sessionUtils.set("accountLogin",accountCheck.get());
+                cookieUtils.add("email",email,1);
+                cookieUtils.add("password",hashPassword,1);
+                sessionUtils.set("accountLogin",accountCheck);
                 cookieUtils.add("remember",Boolean.toString(remember),1);
-                cookieUtils.add("checkID",accountCheck.get().getId().toString(),1);
+                cookieUtils.add("checkID",accountCheck.getId().toString(),1);
                 model.addAttribute("message","Login Success");
-                return "login";
+                System.out.println("login thành công");
+                return accountCheck;
             }else {
-                sessionUtils.set("accountLogin",accountCheck.get());
+                sessionUtils.set("accountLogin",accountCheck);
+                System.out.println("login thành công");
                 model.addAttribute("message","Login Success");
+                return accountCheck;
             }
         }else {
             model.addAttribute("message","Login Failed");
-            return "failed";
+            System.out.println("login failed");
+            return null;
         }
-        return "failed";
     }
     
     @PostMapping("/api/register") 
@@ -76,8 +84,8 @@ public class AccountController {
     }
 
     @GetMapping("/api/accounts/findbyid")
-    public Optional<Account> getAccountById(@RequestParam("id")Integer id){
-        return accountService.getProductById(id);
+    public Account getAccountById(@RequestParam("id")Integer id){
+        return accountService.getAccountById(id);
     }
     @PostMapping("/api/accounts/save")
     public Account postSavaAccount(@RequestBody Account entity){
@@ -86,21 +94,16 @@ public class AccountController {
     @PutMapping("/api/accounts/update")
     public ResponseEntity<Account> updateAccountById(@RequestParam("id")Integer id,
                                                      @RequestBody Account formAccount){
-        Optional<Account> accountCheck = accountService.getProductById(id);
-        if(accountCheck.isPresent()){
-            Account existingAccount = accountCheck.get();
-            existingAccount.setEmail(formAccount.getEmail());
+        Account accountCheck = accountService.getAccountById(id);
+        if(accountCheck != null){
+            Account existingAccount = accountCheck;
             existingAccount.setUsername(formAccount.getUsername());
-            existingAccount.setPassword(formAccount.getPassword());
-            existingAccount.setFirstname(formAccount.getFirstname());
-            existingAccount.setLastname(formAccount.getLastname());
+            existingAccount.setFullname(formAccount.getFullname());
             existingAccount.setPhone(formAccount.getPhone());
             existingAccount.setGender(formAccount.getGender());
             existingAccount.setDate_of_birth(formAccount.getDate_of_birth());
             existingAccount.setImg(formAccount.getImg());
             existingAccount.setUpdated_at(new Date());
-            existingAccount.setDeleted_at(formAccount.getDeleted_at());
-            existingAccount.setRole_id(formAccount.getRole_id());
             accountService.update(existingAccount);
             return ResponseEntity.ok(existingAccount);
         }else {
@@ -110,5 +113,14 @@ public class AccountController {
     @DeleteMapping("/api/accounts/delete")
     public Account deleteAccount(@RequestParam("id")Integer id){
         return accountService.deleteAccoutById(id);
+    }
+
+    @PostMapping("/api/accounts/change")
+    public Boolean changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
+        if(!changePassword.isValidPasswordChange(changePasswordDTO)){
+            return false;
+        }
+        changePassword.changePassword(changePasswordDTO);
+        return true;
     }
 }
