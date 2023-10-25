@@ -17,7 +17,14 @@ import {
 } from '@floating-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Popover = ({ children, className, renderPopover, as: Element = 'div', initialOpen }) => {
+const Popover = ({
+  children,
+  className,
+  renderPopover,
+  as: Element = 'div',
+  initialOpen,
+  placement = 'bottom-end',
+}) => {
   const [open, setOpen] = useState(initialOpen || false);
   const arrowRef = useRef < HTMLElement > null;
   const data = useFloating({
@@ -26,6 +33,7 @@ const Popover = ({ children, className, renderPopover, as: Element = 'div', init
     middleware: [offset(10), flip(), shift(), arrow({ element: arrowRef })],
     whileElementsMounted: autoUpdate,
     transform: false,
+    placement,
   });
   const { refs, floatingStyles, context } = data;
   const hover = useHover(context, { handleClose: safePolygon() });
@@ -75,6 +83,7 @@ Popover.propTypes = {
   renderPopover: PropTypes.node,
   as: PropTypes.elementType,
   initialOpen: PropTypes.bool,
+  placement: PropTypes.any,
 };
 
 export default Popover;
