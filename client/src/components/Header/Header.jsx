@@ -294,7 +294,7 @@ const Header = () => {
 
             <div className="h-12 relative" onMouseOver={handleMouseOverCart} onMouseOut={handleMouseOutCart}>
               <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-4 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
-                {countProduct > 99 ? '99+' : countProduct}
+                {countProduct > 99 ? '99+' : todos.length}
               </div>
               <svg
                 className="w-[32px] h-[32px] text-gray-800 dark:text-white"
@@ -312,8 +312,8 @@ const Header = () => {
                 />
               </svg>
               {isCart && (
-                <div className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-80 bg-white">
-                  <CartListItem countProduct={countProduct} listItem={tempDataProduct} />
+                <div className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-96 bg-white">
+                  <CartListItem countProduct={todos.length} listItem={todos} />
                 </div>
               )}
             </div>

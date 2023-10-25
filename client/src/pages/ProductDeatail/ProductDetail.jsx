@@ -18,11 +18,12 @@ const ProductDetail = () => {
   const [galleries, setGalleries] = useState();
 
   const [state, dispath] = useStore();
-  const { todos, todoData } = state;
+  const { todos } = state;
 
   const getProductId = async (idProduct) => {
     let get = await productById(idProduct);
     if (get) {
+      console.log(get, 'get');
       setProduct(get);
       getGalleriess(idProduct);
     }
@@ -43,42 +44,20 @@ const ProductDetail = () => {
     }
   };
 
-  // Context
-
   useEffect(() => {
     getProductId(id);
+    console.log(product);
     getReview(id);
   }, [id]);
-
-  // const [quantitys, setQuantity] = useState(null);
-  // const handleClick = (event) => {
-  //   // console.log(event.target.className);
-  //   let handle = event.target.className.substring(64, 69);
-  //   let quantity = document.querySelector('.quantity');
-  //   let plusQuantity = parseInt(quantity.value);
-
-  //   if (handle == 'plus') {
-  //     if (plusQuantity > 0) {
-  //       plusQuantity++;
-  //       quantity.value = plusQuantity;
-  //     }
-  //   } else if (handle == 'mimus') {
-  //     if (quantity.value == 1) {
-  //       quantity.value = 1;
-  //     } else {
-  //       plusQuantity--;
-  //       quantity.value = plusQuantity;
-  //     }
-  //   }
-  // };
 
   const [quantity, setQuantity] = useState(1);
 
   const plusQuantity = useCallback(() => {
     setQuantity((plus) => {
-      return plus + 1;
+      return product.quantity > plus ? plus + 1 : product.quantity;
     });
-  }, []);
+  });
+
   const mimusQuantity = useCallback(() => {
     setQuantity((mimus) => {
       if (mimus == 1) {
@@ -160,6 +139,7 @@ const ProductDetail = () => {
       document.body.style.overflow = 'auto';
     }
   };
+
   console.log(todos, '<<<< todo');
 
   if (!product || !galleries) return null;
@@ -856,7 +836,53 @@ const ProductDetail = () => {
                     <span
                       style={{ color: '#F05D40' }}
                       onClick={() => {
-                        dispath(action.addTodoInput(id, product.name_product, color, size, quantity));
+                        if (todos.length == 0) {
+                          dispath(
+                            action.addTodoInput(
+                              id,
+                              product.name_product,
+                              color,
+                              size,
+                              quantity,
+                              product.img,
+                              'namshop',
+                              product.price,
+                              product.quantity,
+                            ),
+                          );
+                        } else {
+                          todos.findIndex((element) => {
+                            if (element.id == id) {
+                              dispath(
+                                action.addTodoInput(
+                                  id,
+                                  product.name_product,
+                                  color,
+                                  size,
+                                  quantity,
+                                  product.img,
+                                  'namshop',
+                                  product.price,
+                                  product.quantity,
+                                ),
+                              );
+                            } else {
+                              dispath(
+                                action.addTodoInput(
+                                  id,
+                                  product.name_product,
+                                  color,
+                                  size,
+                                  quantity,
+                                  product.img,
+                                  'namshop',
+                                  product.price,
+                                  product.quantity,
+                                ),
+                              );
+                            }
+                          });
+                        }
                       }}
                     >
                       Thêm vào giỏ hàng
