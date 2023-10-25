@@ -2,6 +2,7 @@ package com.poly.service;
 
 import com.poly.Utils.PasswordUtils;
 import com.poly.entity.Account;
+import com.poly.entity.ChangePasswordDTO;
 import com.poly.entity.Role;
 import com.poly.repo.AccountRepository;
 import com.poly.repo.RoleRepository;
@@ -19,7 +20,7 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
-    
+
     @Autowired
     RoleService roleService;
 
@@ -27,8 +28,8 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Optional<Account> getAccountByUsernameAndPassword(String username, String password){
-        return accountRepository.findAccountByUsernameAndPassword(username,password);
+    public Account getAccountByEmailAndPassword(String email, String password){
+        return accountRepository.findAccountByEmailAndPassword(email,password);
     }
     
     public Account register(String email, String password) {
@@ -46,8 +47,8 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Optional<Account> getProductById(Integer id){
-        return accountRepository.findByProductId(id);
+    public Account getAccountById(Integer id){
+        return accountRepository.findByAccountId(id);
     }
 
     public Account create(Account entity){
@@ -61,14 +62,18 @@ public class AccountService {
     public Account update(Account entity){
         entity.setUpdated_at(new Date());
         // mã hóa password ở đây
-        String password = entity.getPassword();
-        String hashPassword = PasswordUtils.hashPassword(password);
-        entity.setPassword(hashPassword);
+//        String password = entity.getPassword();
+//        String hashPassword = PasswordUtils.hashPassword(password);
+//        entity.setPassword(hashPassword);
         return accountRepository.save(entity);
     }
 
+    public Account changePassword(Integer id, String password){
+        return accountRepository.findAccountByIdAndPassword(id,password);
+    }
+
     public Account deleteAccoutById(Integer id){
-        Account account = accountRepository.findByProductId(id).orElse(null);
+        Account account = accountRepository.findByAccountId(id);
         Date currenDate = new Date();
         account.setDeleted_at(currenDate);
         return accountRepository.save(account);

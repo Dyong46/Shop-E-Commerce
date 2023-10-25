@@ -26,9 +26,7 @@ public class Account implements Serializable {
 
     private String password;
 
-    private String firstname;
-
-    private String lastname;
+    private String fullname;
 
     private String phone;
 
@@ -69,30 +67,25 @@ public class Account implements Serializable {
     @OneToMany(mappedBy = "account_id")
     private List<Review> reviews;
 
-    public Account(String email, String username, String password, String firstname, String lastname) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return Objects.equals(id, account.id) &&
-                Objects.equals(firstname, account.firstname) &&
-                Objects.equals(lastname, account.lastname);
-    }
-
     @Override
     public String toString() {
         return "Account{" +
-                "id= " + id +
-                ", firstname= " + firstname + '\'' +
-                ", lastname = " + lastname + '\'' +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender=" + gender +
+                ", date_of_birth=" + date_of_birth +
+                ", img='" + img + '\'' +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                ", deleted_at=" + deleted_at +
+                ", role_id=" + role_id +
+                ", addresses=" + addresses +
+                ", orders=" + orders +
+                ", reviews=" + reviews +
                 '}';
     }
 }

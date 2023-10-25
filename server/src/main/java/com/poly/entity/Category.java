@@ -18,8 +18,6 @@ public class Category implements Serializable {
 
     private String name;
 
-    private String img;
-
     private String description;
 
     @Temporal(TemporalType.DATE)
