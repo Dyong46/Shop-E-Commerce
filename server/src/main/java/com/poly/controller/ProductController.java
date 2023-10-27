@@ -11,35 +11,36 @@ import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/product")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
-    @GetMapping("/api/products")
+    @GetMapping("/")
     public List<Product> getAll(){
         return productService.getAllProduct();
     }
 
-    @GetMapping("/api/products/findbyname")
+    @GetMapping("/findbyname")
     public List<Product> getProductByName( @RequestParam("name") String name){
         return productService.getProductByName(name);
     }
-    @PostMapping("/api/products/save")
+    @PostMapping("/save")
     public Product postSave(@RequestBody Product entity){
         return productService.create(entity);
     }
 
-    @GetMapping("/api/products/findbyid")
+    @GetMapping("/findbyid")
     public Optional<Product> getProductById(@RequestParam("id") Integer id){
         return productService.getProductById(id);
     }
 
-    @PostMapping("/api/products/findbyprice")
+    @GetMapping("/findbyprice")
     public List<Product> getProductByPrice(@RequestParam("min")Integer priceMin, @RequestParam("max")Integer priceMax){
         return productService.findProductByPriceBetween(priceMin,priceMax);
     }
-    @PutMapping("/api/products/update")
+    @PutMapping("/update")
     public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
                                   @RequestBody Product productForm){
         Optional<Product> product_check =productService.getProductById(id);
@@ -58,7 +59,7 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/api/products/delete")
+    @DeleteMapping("/delete")
     public Product deleteProduct(@RequestParam("id")Integer id){
         return productService.deleteProductById(id);
     }

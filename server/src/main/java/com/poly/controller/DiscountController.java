@@ -11,28 +11,29 @@ import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/discount")
 public class DiscountController {
 
     @Autowired
     DiscountService discountService;
 
-    @GetMapping("/api/discount")
+    @GetMapping("/")
     public List<Discount> getAll(){
         return discountService.getAllDiscount();
     }
-    @GetMapping("/api/discount/finddiscountbyname")
+    @GetMapping("/finddiscountbyname")
     public Optional<Discount> getDiscountByName(@RequestParam("name")String name){
         return discountService.getDiscountByName(name);
     }
-    @GetMapping("/api/discount/finddiscountbyid")
+    @GetMapping("/finddiscountbyid")
     public Optional<Discount> getDiscountById(@RequestParam("id")Integer id){
         return discountService.getDiscountById(id);
     }
-    @PostMapping("/api/discount/save")
+    @PostMapping("/save")
     public Discount postSave(@RequestBody Discount entity){
         return discountService.create(entity);
     }
-    @PutMapping("/api/discount/update")
+    @PutMapping("/update")
     public ResponseEntity<Discount> updateDiscountById(@RequestParam("id")Integer id,
                                                        @RequestBody Discount formDiscount){
         Optional<Discount> discountCheck = discountService.getDiscountById(id);

@@ -12,33 +12,34 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/order")
 public class OrderController {
 
     @Autowired
     OrderService orderService;
 
-    @GetMapping("/api/order/getall")
+    @GetMapping("/")
     public List<Order> getAll() {
         return orderService.getAllOrder();
     }
 
-    @GetMapping("/api/order/getallbystatus")
+    @GetMapping("/getallbystatus")
     public List<Order> getAllOrderByStatus(@RequestParam("id") Integer id){
         return orderService.getAllOrderByStatus(id);
     }
 
-    @GetMapping("/api/order/getallorderbyid")
+    @GetMapping("/getallorderbyid")
     public List<Order> getAllOrderById(@RequestParam("id")Integer id,
                                             @RequestParam("status")String status){
         return orderService.getAllOrderById(id, status);
     }
 
-    @PostMapping("/api/order/save")
+    @PostMapping("/save")
     public Order postSave(@RequestBody Order entity){
         return orderService.create(entity);
     }
 
-    @PutMapping("/api/order/delete")
+    @PutMapping("/delete")
     public Order deleteOrder(@RequestParam("id") Integer id){
         return orderService.deleteOrder(id);
     }

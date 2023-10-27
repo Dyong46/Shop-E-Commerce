@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/account")
 public class AccountController {
 
     @Autowired
@@ -36,11 +37,11 @@ public class AccountController {
      * Get all account information
      * @return account
      */
-    @GetMapping("/api/accounts")
+    @GetMapping("")
     public List<Account> getAll() {
         return accountService.getAll(); 
     }
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public Account postLogin (Model model,
                              @RequestParam("email")String email,
                              @RequestParam("password")String password,
@@ -72,7 +73,7 @@ public class AccountController {
         }
     }
     
-    @PostMapping("/api/register") 
+    @PostMapping("/register")
     public Account postRegister(@RequestParam("email") String email,
     							@RequestParam("password") String password) {
         Account accountCheck = accountService.register(email, password);
@@ -83,15 +84,12 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/api/accounts/findbyid")
+    @GetMapping("/findbyid")
     public Account getAccountById(@RequestParam("id")Integer id){
         return accountService.getAccountById(id);
     }
-    @PostMapping("/api/accounts/save")
-    public Account postSavaAccount(@RequestBody Account entity){
-        return accountService.create(entity);
-    }
-    @PutMapping("/api/accounts/update")
+
+    @PutMapping("/update")
     public ResponseEntity<Account> updateAccountById(@RequestParam("id")Integer id,
                                                      @RequestBody Account formAccount){
         Account accountCheck = accountService.getAccountById(id);
@@ -110,12 +108,12 @@ public class AccountController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/api/accounts/delete")
+    @DeleteMapping("/delete")
     public Account deleteAccount(@RequestParam("id")Integer id){
         return accountService.deleteAccoutById(id);
     }
 
-    @PostMapping("/api/accounts/change")
+    @PostMapping("/change")
     public Boolean changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
         if(!changePassword.isValidPasswordChange(changePasswordDTO)){
             return false;
