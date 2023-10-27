@@ -4,4 +4,9 @@ const productGetAll = () => {
   return api.get(`/api/products`);
 };
 
-export { productGetAll };
+const productById = (id) => {
+  return api.get(`/api/products/findbyid?id=${id}`);
+};
+
+
+export { productGetAll, productById };

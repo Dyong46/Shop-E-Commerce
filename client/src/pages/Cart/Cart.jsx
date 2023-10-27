@@ -1,6 +1,31 @@
+import { useStore } from '~/Context';
 import './style.scss';
 import Footer from '~/components/Footer';
+import CartDetails from './component/CartDetail';
+import TotalCart from './component/TotalCart';
+
 const Cart = () => {
+  const [state] = useStore();
+
+  const { todos } = state;
+
+  const checkAllItem = () => {
+    const get = document.querySelector('.check-all');
+    const getItem = document.querySelectorAll('.check-item');
+    const getNameShop = document.querySelectorAll('.check-shop');
+    var s = true;
+    for (var i = 0; i < getItem.length; i++) {
+      if (get.checked) {
+        getItem[i].checked = get.checked;
+        getNameShop[i].checked = get.checked;
+      } else {
+        s = false;
+        getItem[i].checked = s;
+        getNameShop[i].checked = s;
+      }
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-around bg-header text-white">
@@ -8,20 +33,36 @@ const Cart = () => {
           <p className="flex">
             <a href="" className="mx-2">
               Kênh Người Bán
-            </a>{' '}
-            |{' '}
+            </a>
+            |
             <a href="" className="mx-2">
               Tải ứng dụng
-            </a>{' '}
-            | Kết nối{' '}
+            </a>
+            | Kết nối
             <a href="" className="mx-2">
-              <svg className="w-4 h-4 mt-1 text-gray-800 sl" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#F7462E" viewBox="0 -2 6 19">
-                <path fillRule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clipRule="evenodd"></path>
-                </svg>
-            </a>{' '}
+              <svg
+                className="w-4 h-4 mt-1 text-gray-800 sl"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="#F7462E"
+                viewBox="0 -2 6 19"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </a>
             <a href="">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 dark:text-orange sll mt-1" fill="#F7462E" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 dark:text-orange sll mt-1"
+                fill="#F7462E"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+              </svg>
             </a>
           </p>
         </div>
@@ -73,7 +114,7 @@ const Cart = () => {
           ></img>
           <span className="mx-2">User</span>
         </div>
-      </div>  
+      </div>
       <div className="flex justify-around mb-8">
         <div className="flex">
           <svg viewBox="0 -29 192 100" className="shopee-svg-icon icon-shopee-logo" fill="rgb(238, 77, 45)" width={140}>
@@ -103,11 +144,12 @@ const Cart = () => {
           </div>
         </div>
       </div>
+
       <div className="bg-s py-5">
         <div className="flex justify-center justify-content-center ">
           <div className="flex bg-white header-cart py-6">
             <div className="">
-              <input className="w-10 h-6 ml-9" type="checkbox" name="" id="" />
+              <input className="w-10 h-6 ml-9 check-all" onChange={checkAllItem} type="checkbox" name="" id="" />
             </div>
             <div className="wi">
               <p className="ml-3">Sản phẩm</p>
@@ -126,322 +168,11 @@ const Cart = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center justify-content-center mt-6">
-          <div className="bg-white header-cart py-9">
-            <div className="flex">
-              <div className="">
-                <input className="w-10 h-6 ml-9" type="checkbox" name="" id="" />
-              </div>
-              <div>SAGI ĐẶNG Tổng Kho Giày Dép</div>
-            </div>
-            <div className="flex justify-center mt-6">
-              <div className="flex border rounded-sm py-6 px-2 size">
-                <div className="">
-                  <input className="w-10 h-6 justify-content-center" type="checkbox" name="" id="" />
-                </div>
-                <div>
-                  <img
-                    className="w-20 justify-content-center"
-                    src="https://down-vn.img.susercontent.com/file/91dfde90e7c8c6d9caae5844e977ba54"
-                    alt=""
-                  />
-                </div>
-                <div className="w-80 ml-4">
-                  <p>Giày cv cổ thấp hình gấu dáng thể thao bata nữ ulzzang full box,</p>
-                  <img
-                    className="w-36"
-                    src="https://down-vn.img.susercontent.com/file/vn-50009109-6f900884a58f4d0a0e7b8a6cedee0a8d"
-                    alt=""
-                  />
-                </div>
-                <div className="w-60 text-gray-400">
-                  Phân Loại Hàng<select name="" id=""></select>
-                </div>
-                <div className="w-32 justify-content-center">₫89.000</div>
-                <div className="w-36">
-                  <div>
-                    <button className="border w-6">-</button>
-                    <input className="border w-12 text-center" type="text" name="" id="" placeholder="1" />
-                    <button className="border w-6">+</button>
-                  </div>
-                  <div>
-                    <p className="text-xs">Còn 5 sản phẩm</p>
-                  </div>
-                </div>
-                <div className="w-40">
-                  <p>₫267.000</p>
-                </div>
-                <div className="">
-                  <button>Xóa</button>
-                </div>
-              </div>
-            </div>
-            <div className="border-y-2 mt-5 flex px-12 py-5">
-              <div className="mr-5">
-                <svg fill="none" viewBox="0 -2 23 22" className="shopee-svg-icon L-deCr icon-voucher-line">
-                  <g filter="url(#voucher-filter0_d)">
-                    <mask id="a" fill="#fff">
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1 2h18v2.32a1.5 1.5 0 000 2.75v.65a1.5 1.5 0 000 2.75v.65a1.5 1.5 0 000 2.75V16H1v-2.12a1.5 1.5 0 000-2.75v-.65a1.5 1.5 0 000-2.75v-.65a1.5 1.5 0 000-2.75V2z"
-                      ></path>
-                    </mask>
-                    <path
-                      d="M19 2h1V1h-1v1zM1 2V1H0v1h1zm18 2.32l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zm0 .65l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zm0 .65l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zM19 16v1h1v-1h-1zM1 16H0v1h1v-1zm0-2.12l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zm0-.65l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zm0-.65l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zM19 1H1v2h18V1zm1 3.32V2h-2v2.32h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zm.6 1.56v-.65h-2v.65h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zm.6 1.56v-.65h-2v.65h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zM20 16v-2.13h-2V16h2zM1 17h18v-2H1v2zm-1-3.12V16h2v-2.12H0zm1.4.91a2.5 2.5 0 001.5-2.29h-2a.5.5 0 01-.3.46l.8 1.83zm1.5-2.29a2.5 2.5 0 00-1.5-2.3l-.8 1.84c.18.08.3.26.3.46h2zM0 10.48v.65h2v-.65H0zM.9 9.1a.5.5 0 01-.3.46l.8 1.83A2.5 2.5 0 002.9 9.1h-2zm-.3-.46c.18.08.3.26.3.46h2a2.5 2.5 0 00-1.5-2.3L.6 8.65zM0 7.08v.65h2v-.65H0zM.9 5.7a.5.5 0 01-.3.46l.8 1.83A2.5 2.5 0 002.9 5.7h-2zm-.3-.46c.18.08.3.26.3.46h2a2.5 2.5 0 00-1.5-2.3L.6 5.25zM0 2v2.33h2V2H0z"
-                      mask="url(#a)"
-                    ></path>
-                  </g>
-                  <path
-                    clipRule="evenodd"
-                    d="M6.49 14.18h.86v-1.6h-.86v1.6zM6.49 11.18h.86v-1.6h-.86v1.6zM6.49 8.18h.86v-1.6h-.86v1.6zM6.49 5.18h.86v-1.6h-.86v1.6z"
-                  ></path>
-                  <defs>
-                    <filter
-                      id="voucher-filter0_d"
-                      x="0"
-                      y="1"
-                      width="20"
-                      height="16"
-                      filterUnits="userSpaceOnUse"
-                      colorInterpolationFilters="sRGB"
-                    >
-                      <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      ></feColorMatrix>
-                      <feOffset></feOffset>
-                      <feGaussianBlur stdDeviation=".5"></feGaussianBlur>
-                      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"></feColorMatrix>
-                      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"></feBlend>
-                      <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"></feBlend>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
-              <div>
-                <p>Thêm mã giảm giá của Shop</p>
-              </div>
-            </div>
-            <div className=" flex px-12 mt-5">
-              <div className="mr-4">
-                <img
-                  width="24"
-                  height="20"
-                  src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/d9e992985b18d96aab90969636ebfd0e.png"
-                  alt="fs-icon"
-                ></img>
-              </div>
-              <div>
-                <p>
-                  Giảm ₫15.000 phí vận chuyển đơn tối thiểu ₫50.000; Giảm ₫25.000 phí vận chuyển đơn tối thiểu ₫99.000
-                  <a href="" className="text-blue-800">
-                    Tìm hiểu thêm
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center justify-content-center mt-6">
-          <div className="bg-white header-cart py-9">
-            <div className="flex">
-              <div className="">
-                <input className="w-10 h-6 ml-9" type="checkbox" name="" id="" />
-              </div>
-              <div>SAGI ĐẶNG Tổng Kho Giày Dép</div>
-            </div>
-            <div className="flex justify-center mt-6">
-              <div className="flex border rounded-sm py-6 px-2 size">
-                <div className="">
-                  <input className="w-10 h-6 justify-content-center" type="checkbox" name="" id="" />
-                </div>
-                <div>
-                  <img
-                    className="w-20 justify-content-center"
-                    src="https://down-vn.img.susercontent.com/file/91dfde90e7c8c6d9caae5844e977ba54"
-                    alt=""
-                  />
-                </div>
-                <div className="w-80 ml-4">
-                  <p>Giày cv cổ thấp hình gấu dáng thể thao bata nữ ulzzang full box,</p>
-                  <img
-                    className="w-36"
-                    src="https://down-vn.img.susercontent.com/file/vn-50009109-6f900884a58f4d0a0e7b8a6cedee0a8d"
-                    alt=""
-                  />
-                </div>
-                <div className="w-60 text-gray-400">
-                  Phân Loại Hàng<select name="" id=""></select>
-                </div>
-                <div className="w-32 justify-content-center">₫89.000</div>
-                <div className="w-36">
-                  <div>
-                    <button className="border w-6">-</button>
-                    <input className="border w-12 text-center" type="text" name="" id="" placeholder="1" />
-                    <button className="border w-6">+</button>
-                  </div>
-                  <div>
-                    <p className="text-xs">Còn 5 sản phẩm</p>
-                  </div>
-                </div>
-                <div className="w-40">
-                  <p>₫267.000</p>
-                </div>
-                <div className="">
-                  <button>Xóa</button>
-                </div>
-              </div>
-            </div>
-            <div className="border-y-2 mt-5 flex px-12 py-5">
-              <div className="mr-5">
-                <svg fill="none" viewBox="0 -2 23 22" className="shopee-svg-icon L-deCr icon-voucher-line">
-                  <g filter="url(#voucher-filter0_d)">
-                    <mask id="a" fill="#fff">
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1 2h18v2.32a1.5 1.5 0 000 2.75v.65a1.5 1.5 0 000 2.75v.65a1.5 1.5 0 000 2.75V16H1v-2.12a1.5 1.5 0 000-2.75v-.65a1.5 1.5 0 000-2.75v-.65a1.5 1.5 0 000-2.75V2z"
-                      ></path>
-                    </mask>
-                    <path
-                      d="M19 2h1V1h-1v1zM1 2V1H0v1h1zm18 2.32l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zm0 .65l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zm0 .65l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zM19 16v1h1v-1h-1zM1 16H0v1h1v-1zm0-2.12l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zm0-.65l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zm0-.65l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zM19 1H1v2h18V1zm1 3.32V2h-2v2.32h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zm.6 1.56v-.65h-2v.65h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zm.6 1.56v-.65h-2v.65h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zM20 16v-2.13h-2V16h2zM1 17h18v-2H1v2zm-1-3.12V16h2v-2.12H0zm1.4.91a2.5 2.5 0 001.5-2.29h-2a.5.5 0 01-.3.46l.8 1.83zm1.5-2.29a2.5 2.5 0 00-1.5-2.3l-.8 1.84c.18.08.3.26.3.46h2zM0 10.48v.65h2v-.65H0zM.9 9.1a.5.5 0 01-.3.46l.8 1.83A2.5 2.5 0 002.9 9.1h-2zm-.3-.46c.18.08.3.26.3.46h2a2.5 2.5 0 00-1.5-2.3L.6 8.65zM0 7.08v.65h2v-.65H0zM.9 5.7a.5.5 0 01-.3.46l.8 1.83A2.5 2.5 0 002.9 5.7h-2zm-.3-.46c.18.08.3.26.3.46h2a2.5 2.5 0 00-1.5-2.3L.6 5.25zM0 2v2.33h2V2H0z"
-                      mask="url(#a)"
-                    ></path>
-                  </g>
-                  <path
-                    clipRule="evenodd"
-                    d="M6.49 14.18h.86v-1.6h-.86v1.6zM6.49 11.18h.86v-1.6h-.86v1.6zM6.49 8.18h.86v-1.6h-.86v1.6zM6.49 5.18h.86v-1.6h-.86v1.6z"
-                  ></path>
-                  <defs>
-                    <filter
-                      id="voucher-filter0_d"
-                      x="0"
-                      y="1"
-                      width="20"
-                      height="16"
-                      filterUnits="userSpaceOnUse"
-                      colorInterpolationFilters="sRGB"
-                    >
-                      <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      ></feColorMatrix>
-                      <feOffset></feOffset>
-                      <feGaussianBlur stdDeviation=".5"></feGaussianBlur>
-                      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"></feColorMatrix>
-                      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"></feBlend>
-                      <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"></feBlend>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
-              <div>
-                <p>Thêm mã giảm giá của Shop</p>
-              </div>
-            </div>
-            <div className=" flex px-12 mt-5">
-              <div className="mr-4">
-                <img
-                  width="24"
-                  height="20"
-                  src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/d9e992985b18d96aab90969636ebfd0e.png"
-                  alt="fs-icon"
-                ></img>
-              </div>
-              <div>
-                <p>
-                  Giảm ₫15.000 phí vận chuyển đơn tối thiểu ₫50.000; Giảm ₫25.000 phí vận chuyển đơn tối thiểu ₫99.000
-                  <a href="" className="text-blue-800">
-                    Tìm hiểu thêm
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center justify-content-center mt-6 mb-5">
-          <div className="bg-white header-cart">
-            <div className="flex justify-end py-4">
-              <div className="mx-2">
-                <svg fill="none" viewBox="0 -2 23 22" className="shopee-svg-icon L-deCr icon-voucher-line">
-                  <g filter="url(#voucher-filter0_d)">
-                    <mask id="a" fill="#fff">
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M1 2h18v2.32a1.5 1.5 0 000 2.75v.65a1.5 1.5 0 000 2.75v.65a1.5 1.5 0 000 2.75V16H1v-2.12a1.5 1.5 0 000-2.75v-.65a1.5 1.5 0 000-2.75v-.65a1.5 1.5 0 000-2.75V2z"
-                      ></path>
-                    </mask>
-                    <path
-                      d="M19 2h1V1h-1v1zM1 2V1H0v1h1zm18 2.32l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zm0 .65l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zm0 .65l.4.92.6-.26v-.66h-1zm0 2.75h1v-.65l-.6-.26-.4.91zM19 16v1h1v-1h-1zM1 16H0v1h1v-1zm0-2.12l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zm0-.65l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zm0-.65l-.4-.92-.6.26v.66h1zm0-2.75H0v.65l.6.26.4-.91zM19 1H1v2h18V1zm1 3.32V2h-2v2.32h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zm.6 1.56v-.65h-2v.65h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zm.6 1.56v-.65h-2v.65h2zm-.9 1.38c0-.2.12-.38.3-.46l-.8-1.83a2.5 2.5 0 00-1.5 2.29h2zm.3.46a.5.5 0 01-.3-.46h-2c0 1.03.62 1.9 1.5 2.3l.8-1.84zM20 16v-2.13h-2V16h2zM1 17h18v-2H1v2zm-1-3.12V16h2v-2.12H0zm1.4.91a2.5 2.5 0 001.5-2.29h-2a.5.5 0 01-.3.46l.8 1.83zm1.5-2.29a2.5 2.5 0 00-1.5-2.3l-.8 1.84c.18.08.3.26.3.46h2zM0 10.48v.65h2v-.65H0zM.9 9.1a.5.5 0 01-.3.46l.8 1.83A2.5 2.5 0 002.9 9.1h-2zm-.3-.46c.18.08.3.26.3.46h2a2.5 2.5 0 00-1.5-2.3L.6 8.65zM0 7.08v.65h2v-.65H0zM.9 5.7a.5.5 0 01-.3.46l.8 1.83A2.5 2.5 0 002.9 5.7h-2zm-.3-.46c.18.08.3.26.3.46h2a2.5 2.5 0 00-1.5-2.3L.6 5.25zM0 2v2.33h2V2H0z"
-                      mask="url(#a)"
-                    ></path>
-                  </g>
-                  <path
-                    clipRule="evenodd"
-                    d="M6.49 14.18h.86v-1.6h-.86v1.6zM6.49 11.18h.86v-1.6h-.86v1.6zM6.49 8.18h.86v-1.6h-.86v1.6zM6.49 5.18h.86v-1.6h-.86v1.6z"
-                  ></path>
-                  <defs>
-                    <filter
-                      id="voucher-filter0_d"
-                      x="0"
-                      y="1"
-                      width="20"
-                      height="16"
-                      filterUnits="userSpaceOnUse"
-                      colorInterpolationFilters="sRGB"
-                    >
-                      <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      ></feColorMatrix>
-                      <feOffset></feOffset>
-                      <feGaussianBlur stdDeviation=".5"></feGaussianBlur>
-                      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0"></feColorMatrix>
-                      <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"></feBlend>
-                      <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"></feBlend>
-                    </filter>
-                  </defs>
-                </svg>
-              </div>
-              <div className="mr-14">
-                <p>Shopee Voucher</p>
-              </div>
-              <div className="mr-20">
-                <a href="" className="text-blue-800">
-                  Chọn Hoặc Nhập Mã
-                </a>
-              </div>
-            </div>
-            <div className="border-dashed border-2 flex justify-between py-3">
-              <div className="flex justify-center self-center">
-                <div>
-                  <input className="w-12 h-4" type="checkbox" name="" id="" />
-                </div>
-                <div>
-                  <a href="">Chọn Tất Cả (1)</a>
-                </div>
-                <div>
-                  <a href="">Xóa</a>
-                </div>
-              </div>
-              <div className="flex ">
-                <div className="flex justify-center self-center mr-6">
-                  <p className="flex">
-                    Tổng thanh toán (0 Sản phẩm): <p className="text-orange text-2xl">₫0</p>
-                  </p>
-                </div>
-                <div className="mr-5 border-2 border-orange-800 h-14 w-60 rounded-lg text-center bg text-white flex justify-center ">
-                  <p className="self-center">Mua Hàng </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {todos.map((res, index) => {
+          return <CartDetails key={res.id} cart={res} index={index} />;
+        })}
+
+        <TotalCart />
         <Footer />
       </div>
     </div>

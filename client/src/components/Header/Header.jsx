@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
+import path from '~/constants/path';
+import { useStore } from '~/Context';
 import CartListItem from './components/cart-list-item';
-
 
 let datasRight = [
   {
@@ -69,45 +69,30 @@ let datasRight = [
   },
 ];
 
-
 let datasLeft = ['Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
 
 let tempDataProduct = [
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-  { title: "hellooooo", image: "#", price: "1000" },
-]
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+  { title: 'hellooooo', image: '#', price: '1000' },
+];
 
 let countProduct = tempDataProduct.length;
 
 const Header = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isUser, setIsUser] = useState(false);
-  const [isCart, setIsCart] = useState(false);
+  const [state, dispath] = useStore();
+  const { todos } = state;
+  console.log(todos);
 
-  // const handleMouseOverTest = (which) => {
-  //   switch (which) {
-  //
-  //     case which == isHovering: {
-  //       setIsHovering(true); break;
-  //     }
-  //     case which == isUser: {
-  //       setIsHovering(true); break;
-  //     }
-  //     case which == isCart: {
-  //       setIsHovering(true); break;
-  //     }
-  //     case which == isCart: {
-  //       setIsHovering(true); break;
-  //     }
-  //   }
-  // };
+  const [isCart, setIsCart] = useState(false);
 
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -133,9 +118,6 @@ const Header = () => {
     setIsCart(false);
   };
 
-
-
-
   return (
     <div>
       <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white">
@@ -147,7 +129,7 @@ const Header = () => {
                 <button
                   className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
                   key={index}
-                  onClick={() => { }}
+                  onClick={() => {}}
                 >
                   {item}
                 </button>
@@ -182,27 +164,25 @@ const Header = () => {
             </div>
 
             <div className="flex justify-center align-center my-1">
-              {datasRight.map(
-                (item, index) => (
-                  <button
-                    className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
-                    key={index}
-                    onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
-                    onMouseOut={handleMouseOut}
-                    onClick={() => { }}
-                  >
-                    {item.icon}
-                    {item.title}
-                    <div className="mt-1">{item.iconEnd}</div>
-                  </button>
-                ),
-              )}
+              {datasRight.map((item, index) => (
+                <button
+                  className="py-2 px-3 flex align-center justify-center text-xs text-left hover:text-gray-200"
+                  key={index}
+                  onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
+                  onMouseOut={handleMouseOut}
+                  onClick={() => {}}
+                >
+                  {item.icon}
+                  {item.title}
+                  <div className="mt-1">{item.iconEnd}</div>
+                </button>
+              ))}
 
               <button
                 onMouseOver={handleMouseOverUser}
                 onMouseOut={handleMouseOutUser}
                 className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
-                onClick={() => { }}
+                onClick={() => {}}
               >
                 <div className="block h-4 w-4 mr-1 rounded-full bg-white">h</div>
                 User
@@ -297,28 +277,24 @@ const Header = () => {
                 </div>
               </form>
               <div className="flex flex-row mr-5">
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
                   Thông báo
                 </button>
               </div>
             </div>
 
-            <div className="h-12 relative"
-              onMouseOver={handleMouseOverCart}
-              onMouseOut={handleMouseOutCart}
-
-            >
+            <div className="h-12 relative" onMouseOver={handleMouseOverCart} onMouseOut={handleMouseOutCart}>
               <div className="absolute bg-white bottom-auto left-auto right-0 top-0 z-4 inline-block -translate-y-1/2 translate-x-2/4 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 whitespace-nowrap rounded-full bg-danger px-1.5 py-1 border-orange border-2 text-center align-baseline text-xs leading-none text-orange">
-                {countProduct > 99 ? '99+' : countProduct}
+                {countProduct > 99 ? '99+' : todos.length}
               </div>
               <svg
                 className="w-[32px] h-[32px] text-gray-800 dark:text-white"
@@ -336,17 +312,15 @@ const Header = () => {
                 />
               </svg>
               {isCart && (
-                <div
-                  className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-80 bg-white"
-                >
-                  <CartListItem countProduct={countProduct} listItem={tempDataProduct} />
+                <div className="absolute flex flex-col justify-start align-center right-0 top-10 z-10 w-96 bg-white">
+                  <CartListItem countProduct={todos.length} listItem={todos} />
                 </div>
               )}
             </div>
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

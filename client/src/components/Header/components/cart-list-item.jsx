@@ -11,7 +11,7 @@ const CartListItem = (props) => {
         {props.listItem
           .filter((product, idx) => idx < 5)
           .map((product, index) => (
-            <ItemCartHover key={index} title={product.title} image={product.image} price={product.price} />
+            <ItemCartHover key={index} title={product.nameproduct} image={product.img} price={product.price} />
           ))}
       </div>
       <div>

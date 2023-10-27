@@ -5,3 +5,8 @@ const removeSpecialCharacter = (str) =>
 export const generateNameId = ({ name, id }) => {
   return removeSpecialCharacter(name).replace(/\s/g, '-') + `-i-${id}`;
 };
+
+export const getIdFromNameId = (nameId) => {
+  const arr = nameId.split('-i-');
+  return arr[arr.length - 1];
+};
