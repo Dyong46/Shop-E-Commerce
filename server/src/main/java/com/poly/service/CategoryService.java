@@ -25,7 +25,6 @@ public class CategoryService {
 	public Category save(Category category) {
 		Category createCategory = new Category();
 		createCategory.setName(category.getName());
-		createCategory.setImg(category.getImg());
 		createCategory.setDescription(category.getDescription());
 		createCategory.setCreated_at(new Date());
 
@@ -40,7 +39,6 @@ public class CategoryService {
 
 		updateCategory.setId(id);
 		updateCategory.setName(category.getName());
-		updateCategory.setImg(category.getImg());
 		updateCategory.setDescription(category.getDescription());
 		updateCategory.setUpdated_at(new Date());
 
