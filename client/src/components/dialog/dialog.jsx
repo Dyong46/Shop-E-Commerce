@@ -1,5 +1,5 @@
 
-const VoucherDialog = (props) => {
+const Dialog = (props) => {
   const style = {
     minWidth: '600px',
     maxWidth: '700px',
@@ -37,4 +37,4 @@ const VoucherDialog = (props) => {
   );
 }
 
-export default VoucherDialog;
+export default Dialog;

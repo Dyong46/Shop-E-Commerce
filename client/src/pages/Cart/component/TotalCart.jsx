@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
-import VoucherDialog from '~/components/dialog/voucher';
+import Dialog from '~/components/dialog/dialog';
 import VoucherCard from './VoucherCard'
 import { Link } from 'react-router-dom';
 
@@ -37,7 +37,13 @@ const DialogBody = (props) => {
 
   return (
     <>
+      <div className="flex pt-2 pb-5">
+        <p className="mr-4 text-gray-500 text-sm">Mã Voucher</p>
+        <input type="text" className="grow peer h-full w-full rounded-[7px] border border-gray-300 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-gray-200 focus:border-2 focus:border-gray-400 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
+        <button className="ml-4 text-gray-300 text-sm">ÁP DỤNG</button>
+      </div>
       <div className="overflow-y-auto h-96">
+
 
         <div className="mb-2">Mã Miễn Phí Vận Chuyển</div>
 
@@ -106,7 +112,7 @@ const TotalCart = () => {
   return (
     <>
 
-      <VoucherDialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+      <Dialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
 
       {
         open ?
@@ -161,12 +167,9 @@ const TotalCart = () => {
               <p>Shopee Voucher</p>
             </div>
             <div className="mr-20">
-              <button onClick={handleClickToOpen}>
-                helloooo
-              </button>
-              <a className="text-blue-800">
+              <button onClick={handleClickToOpen} className="text-blue-800">
                 Chọn Hoặc Nhập Mã
-              </a>
+              </button>
             </div>
           </div>
           <div className="border-dashed border-2 flex justify-between py-3">
