@@ -9,7 +9,7 @@ const Dialog = (props) => {
 
     <dialog className="fixed top-36 z-20" open={props.open} onClose={props.handleToClose}>
       <div style={style} className="">
-        <div className="flex m-3">
+        <div className="flex px-4">
           <div className="">{props.name}</div>
           <div className="grow" />
           <div className="flex">

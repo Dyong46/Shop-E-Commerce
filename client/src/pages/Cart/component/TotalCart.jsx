@@ -54,7 +54,7 @@ const DialogBody = (props) => {
               return (<VoucherCard group={"voucher1"} idVoucher={item} img={props.img} />);
             })
         }
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mt-2">
           {
 
             showmore ?
@@ -73,7 +73,7 @@ const DialogBody = (props) => {
             })
         }
 
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mt-2">
           {
 
             showmoreVoucher ?

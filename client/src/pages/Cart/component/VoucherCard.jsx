@@ -6,7 +6,7 @@ const VoucherCard = (props) => {
   };
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col my-6">
       <div className="flex">
         <div style={imgStyle}>
           <img src={props.img} />
