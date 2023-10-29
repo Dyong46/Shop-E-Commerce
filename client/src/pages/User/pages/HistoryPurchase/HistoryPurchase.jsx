@@ -21,38 +21,37 @@ const purchaseTabs = [
   { status: purchasesStatus.cancelled, name: 'Đã hủy' },
 ];
 
-const purchaseTabsLink = purchaseTabs.map((tab) => (
-  <Link
-    key={tab.status}
-    to={{
-      pathname: path.historyPurchase,
-      search: createSearchParams({
-        status: String(tab.status),
-      }).toString(),
-    }}
-    className={classNames(
-      'flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center',
-      // {
-      //   'border-b-orange text-orange': status === tab.status,
-      //   'border-b-black/10 text-gray-900': status !== tab.status,
-      // }
-    )}
-  >
-    {tab.name}
-  </Link>
-));
-
 const HistoryPurchase = () => {
   const [carts] = useContext(CartContext);
   const [money] = useContext(PriceContext);
 
   const [component, setComponent] = useState(null);
   const [param, setParam] = useState(null);
+
   const get = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const param = urlParams.get('status');
     setParam(param);
   };
+
+  const purchaseTabsLink = purchaseTabs.map((tab) => (
+    <Link
+      key={tab.status}
+      to={{
+        pathname: path.historyPurchase,
+        search: createSearchParams({
+          status: String(tab.status),
+        }).toString(),
+      }}
+      className={classNames('flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center', {
+        'border-b-orange text-orange': tab.status == param,
+        'border-b-black/10 text-gray-900': param != tab.status,
+      })}
+    >
+      {tab.name}
+    </Link>
+  ));
+
   useEffect(() => {
     if (param === '1') {
       setComponent(<WaitForConfirmation />);
