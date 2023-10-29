@@ -4,26 +4,22 @@ import Products from './components/Products';
 import Voucher from './components/Voucher';
 import { useContext } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
+import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 
 const Order = () => {
   const [carts] = useContext(CartContext);
-  console.log(carts, 'order');
+  const [money] = useContext(PriceContext);
+  // console.log(carts, 'order');
   return (
     <div className="bg-gray-50 pt-7 pb-20">
       <Location />
       <div className="h-7"></div>
-      {carts.map((item) => {
-        return (
-          <>
-            <Products item={item} />
-            <div className="h-7"></div>
-          </>
-        );
-      })}
+      <Products cartitem={carts} />
+      <div className="h-7"></div>
 
       <Voucher />
       <div className="h-7"></div>
-      <Pay />
+      <Pay money={money} />
     </div>
   );
 };

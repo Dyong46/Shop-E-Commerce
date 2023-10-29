@@ -785,7 +785,58 @@ const ProductDetail = () => {
                     </span>
                   </div>
                 </div>
-                <div className="mt-8 flex">
+                <div
+                  className="mt-8 flex"
+                  onClick={() => {
+                    if (todos.length == 0) {
+                      dispath(
+                        action.addTodoInput(
+                          id,
+                          product.name_product,
+                          color,
+                          size,
+                          quantity,
+                          product.img,
+                          'namshop',
+                          product.price,
+                          product.quantity,
+                        ),
+                      );
+                    } else {
+                      todos.findIndex((element) => {
+                        if (element.id == id) {
+                          dispath(
+                            action.addTodoInput(
+                              id,
+                              product.name_product,
+                              color,
+                              size,
+                              quantity,
+                              product.img,
+                              'namshop',
+                              product.price,
+                              product.quantity,
+                            ),
+                          );
+                        } else {
+                          dispath(
+                            action.addTodoInput(
+                              id,
+                              product.name_product,
+                              color,
+                              size,
+                              quantity,
+                              product.img,
+                              'namshop',
+                              product.price,
+                              product.quantity,
+                            ),
+                          );
+                        }
+                      });
+                    }
+                  }}
+                >
                   <div
                     className="flex justify-center p-3 w-56 rounded-sm cursor-pointer"
                     style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
@@ -833,60 +884,7 @@ const ProductDetail = () => {
                         ></line>
                       </g>
                     </svg>
-                    <span
-                      style={{ color: '#F05D40' }}
-                      onClick={() => {
-                        if (todos.length == 0) {
-                          dispath(
-                            action.addTodoInput(
-                              id,
-                              product.name_product,
-                              color,
-                              size,
-                              quantity,
-                              product.img,
-                              'namshop',
-                              product.price,
-                              product.quantity,
-                            ),
-                          );
-                        } else {
-                          todos.findIndex((element) => {
-                            if (element.id == id) {
-                              dispath(
-                                action.addTodoInput(
-                                  id,
-                                  product.name_product,
-                                  color,
-                                  size,
-                                  quantity,
-                                  product.img,
-                                  'namshop',
-                                  product.price,
-                                  product.quantity,
-                                ),
-                              );
-                            } else {
-                              dispath(
-                                action.addTodoInput(
-                                  id,
-                                  product.name_product,
-                                  color,
-                                  size,
-                                  quantity,
-                                  product.img,
-                                  'namshop',
-                                  product.price,
-                                  product.quantity,
-                                ),
-                              );
-                            }
-                          });
-                        }
-                      }}
-                    >
-                      Thêm vào giỏ hàng
-                    </span>
+                    <span style={{ color: '#F05D40' }}>Thêm vào giỏ hàng</span>
                   </div>
                   <div
                     className="flex justify-center p-3 w-56 ml-5 rounded-sm cursor-pointer"

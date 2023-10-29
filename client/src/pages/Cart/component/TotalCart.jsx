@@ -77,7 +77,8 @@ const TotalCart = () => {
                   Tổng thanh toán ({carts.length} Sản phẩm): <p className="text-orange text-2xl">₫{money}</p>
                 </p>
               </div>
-              <Link to={'/order'}>
+
+              <Link to={carts.length == 0 ? '/cart' : '/order'}>
                 <div className="mr-5 border-2 border-orange-800 h-14 w-60 rounded-lg text-center bg text-white flex justify-center hover:cursor-pointer ">
                   <p className="self-center">Mua Hàng </p>
                 </div>

@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
+import PropTypes from 'prop-types';
 
-const Pay = () => {
+const Pay = ({ money }) => {
   return (
     <div className="container">
       <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow ">
@@ -46,15 +47,15 @@ const Pay = () => {
       </div>
       <div className="bg-[#fffefb] py-5 px-9 border-dotted border-b-2 border-gray rouned-sm shadow">
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ149.000</div>
+          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ{money}</div>
           <div className="">Tổng tiền hàng</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ14.000</div>
+          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ27.500</div>
           <div className="">Phí vận chuyển</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-orange text-2xl min-w-[140px] text-end">đ149.000</div>
+          <div className="text-orange text-2xl min-w-[140px] text-end">đ{money + 27500}</div>
           <div className="">Tổng thanh toán</div>
         </div>
       </div>
@@ -66,16 +67,21 @@ const Pay = () => {
               Điều khoản Shopee
             </Link>
           </div>
-          <Button
-            type="submit"
-            className="flex items-center justify-center bg-red-500 py-2 rounded-sm px-20  text-white hover:bg-red-600"
-          >
-            Đặt hàng
-          </Button>
+          <Link to={'/user/purchase'}>
+            <Button
+              type="submit"
+              className="flex items-center justify-center bg-red-500 py-2 rounded-sm px-20  text-white hover:bg-red-600"
+            >
+              Đặt hàng
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
   );
+};
+Pay.propTypes = {
+  money: PropTypes.number,
 };
 
 export default Pay;
