@@ -6,7 +6,19 @@ import { useContext } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 
 const Order = () => {
+
   const [carts] = useContext(CartContext);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickToOpen = () => {
+    setOpen(true);
+  };
+
+  const handleToClose = () => {
+    setOpen(false);
+  };
+
   console.log(carts, 'order');
   return (
     <div className="bg-gray-50 pt-7 pb-20">
