@@ -32,12 +32,12 @@ public class AccountService {
         return accountRepository.findAccountByEmailAndPassword(email,password);
     }
     
-    public Account register(String email, String password) {
+    public Account register(String email,String username ,String password) {
         Account account = new Account();
         account.setEmail(email);
+        account.setUsername(username);
         String hashPassword = PasswordUtils.hashPassword(password);
         account.setPassword(hashPassword);
-        account.setUsername(email);
 
         Date date = new Date();
         account.setCreated_at(date);

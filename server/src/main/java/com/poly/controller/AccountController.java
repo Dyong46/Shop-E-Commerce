@@ -33,6 +33,9 @@ public class AccountController {
     @Autowired
     ChangePassword changePassword;
 
+    @Autowired
+    SendMailController sendMailController;
+
     /**
      * Get all account information
      * @return account
@@ -75,11 +78,24 @@ public class AccountController {
     
     @PostMapping("/register")
     public Account postRegister(@RequestParam("email") String email,
+                                @RequestParam("username") String username,
     							@RequestParam("password") String password) {
-        Account accountCheck = accountService.register(email, password);
+        Account accountCheck = accountService.register(email,username,password);
         if (accountCheck == null) {
             return null;
         } else {
+            String subject = "Đăng ký tài khoản thành công";
+            String content = "Chào "+username +
+                    " Xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi! Chúng tôi rất vui mừng được chào đón bạn vào cộng đồng của chúng tôi.\n" +
+                    "\n" +
+                    "Tài khoản của bạn đã được tạo thành công, và bây giờ bạn có thể truy cập vào các dịch vụ và tiện ích đặc biệt dành riêng cho thành viên của chúng tôi. Chúng tôi hy vọng rằng bạn sẽ tận hưởng trải nghiệm mua sắm và các ưu đãi độc quyền mà chúng tôi mang lại.\n" +
+                    "\n" +
+                    "Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc cần hỗ trợ gì, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi luôn sẵn sàng giúp bạn.\n" +
+                    "\n" +
+                    "Một lần nữa, xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai và hy vọng bạn có những trải nghiệm thú vị và đáng nhớ tại cửa hàng của chúng tôi.\n" +
+                    "\n" +
+                    "Trân trọng,";
+            sendMailController.sendMail(email,subject,content);
             return accountCheck;
         }
     }
