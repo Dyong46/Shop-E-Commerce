@@ -11,25 +11,25 @@ const Pay = () => {
             <h1 className="mx-2 text-center text-lg">Phương thức thanh toán</h1>
           </div>
           <Button
-            Button
+            type="button"
             className="flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "
           >
             Ví Shopee
           </Button>
           <Button
-            Button
+            type="button"
             className="flex items-center justify-center px-2 py-2 outline-none border text-gray-300 border-gray-300 cursor-default rounded-sm "
           >
             Apple Pay
           </Button>
           <Button
-            Button
+            type="button"
             className="flex items-center justify-center px-2 py-2 outline-none border text-gray-300 border-gray-300 cursor-default rounded-sm "
           >
             Thẻ tín dụng/Ghi nợ
           </Button>
           <Button
-            Button
+            type="button"
             className="flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "
           >
             Thanh toán khi nhận hàng

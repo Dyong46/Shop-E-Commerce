@@ -62,6 +62,12 @@ const Profile = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      let avaterName = avatar
+      if(file) {
+        const form  = new FormData()
+        form.append('image', file)
+        const uploadRes = await
+      }
       console.log(data);
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
