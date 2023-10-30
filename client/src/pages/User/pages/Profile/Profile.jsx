@@ -7,6 +7,7 @@ import UserLayout from '../../layouts/UserLayout';
 import DateSelect from '../../components/DateSelect';
 
 function Info() {
+  console.log("");
   return (
     <Fragment>
       <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
