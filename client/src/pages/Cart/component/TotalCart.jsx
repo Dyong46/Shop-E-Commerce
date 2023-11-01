@@ -4,6 +4,7 @@ import { CartContext } from '~/Context/ContextCart/CartContext';
 import Dialog from '~/components/dialog/dialog';
 import VoucherCard from './VoucherCard'
 import { Link } from 'react-router-dom';
+import LocationCard from './locationCard';
 
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
@@ -88,6 +89,17 @@ const DialogBody = (props) => {
   )
 }
 
+const DialogBodyLocation = (props) => {
+  return (
+    <>
+      <div className="overflow-y-auto h-96">
+        <LocationCard />
+      </div>
+    </>
+
+  )
+}
+
 const TotalCart = () => {
   const [money] = useContext(PriceContext);
   const [carts] = useContext(CartContext);
@@ -108,11 +120,11 @@ const TotalCart = () => {
     pointerEvents: 'none',
 
   };
-
+  //<DialogBody data={arr} img={"#"} />
   return (
     <>
 
-      <Dialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+      <Dialog className="bg-sky-50" body={<DialogBodyLocation />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
 
       {
         open ?

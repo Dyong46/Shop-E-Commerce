@@ -20,7 +20,9 @@ const Location = () => {
           </p>
           <p className="mb-3 ml-3 font-normal text-gray-500 dark:text-gray-400">58 Trương Vĩnh Ký, Phường Tân Thành, Quận Tân Phú, TP. Hồ Chí Minh</p>
           <p className="text-xs font-bold ml-4 mt-1 dark:text-orange h-4 outline outline-1 outline-orange">Mặt Định</p>
-          <a href="#" className="text-base mx-5 text-blue-600">Thay đổi</a>
+          <button onClick={handleClickToOpen} className="text-base mx-5 text-blue-600">
+            Thay đổi
+          </button>
         </div>
       </div>
     </div>
