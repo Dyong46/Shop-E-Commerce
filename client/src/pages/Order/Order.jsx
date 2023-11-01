@@ -19,6 +19,17 @@ const Order = () => {
     setOpen(false);
   };
 
+  const DialogBodyLocation = (props) => {
+    return (
+      <>
+        <div className="overflow-y-auto h-96">
+          <LocationCard />
+        </div>
+      </>
+
+    )
+  }
+
   console.log(carts, 'order');
   return (
     <div className="bg-gray-50 pt-7 pb-20">

@@ -89,16 +89,6 @@ const DialogBody = (props) => {
   )
 }
 
-const DialogBodyLocation = (props) => {
-  return (
-    <>
-      <div className="overflow-y-auto h-96">
-        <LocationCard />
-      </div>
-    </>
-
-  )
-}
 
 const TotalCart = () => {
   const [money] = useContext(PriceContext);
