@@ -120,11 +120,11 @@ const TotalCart = () => {
     pointerEvents: 'none',
 
   };
-  //<DialogBody data={arr} img={"#"} />
+  //
   return (
     <>
 
-      <Dialog className="bg-sky-50" body={<DialogBodyLocation />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+      <Dialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
 
       {
         open ?
