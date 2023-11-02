@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findProductByName(String name_product);
 
     @Query("select o from  Product o where  o.id = :id AND o.deleted_at is null ")
-    Optional<Product> findProductById(Integer id);
+    Product findProductById(Integer id);
 
     @Query("select o from  Product o where  o.price = :price AND o.deleted_at is null ")
     Optional<Product> findProductByPrice(Long price);

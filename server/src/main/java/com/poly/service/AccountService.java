@@ -59,13 +59,16 @@ public class AccountService {
         return accountRepository.save(entity);
     }
 
-    public Account update(Account entity){
-        entity.setUpdated_at(new Date());
-        // mã hóa password ở đây
-//        String password = entity.getPassword();
-//        String hashPassword = PasswordUtils.hashPassword(password);
-//        entity.setPassword(hashPassword);
-        return accountRepository.save(entity);
+    public Account update(Account entity,Integer id){
+        Account account = getAccountById(id);
+        account.setUsername(entity.getUsername());
+        account.setFullname(entity.getFullname());
+        account.setPhone(entity.getPhone());
+        account.setGender(entity.getGender());
+        account.setDate_of_birth(entity.getDate_of_birth());
+        account.setImg(entity.getImg());
+        account.setUpdated_at(new Date());
+        return accountRepository.save(account);
     }
 
     public Account changePassword(Integer id, String password){

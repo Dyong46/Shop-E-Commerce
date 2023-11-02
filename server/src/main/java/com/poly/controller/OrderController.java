@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api/order-management")
 public class OrderController {
 
     @Autowired
@@ -20,23 +20,23 @@ public class OrderController {
 
     @Autowired
     SendMailController sendMailController;
-    @GetMapping("/")
+    @GetMapping("order")
     public List<Order> getAll() {
         return orderService.getAllOrder();
     }
 
-    @GetMapping("/getallbystatus")
-    public List<Order> getAllOrderByStatus(@RequestParam("id") Integer id){
+    @GetMapping("/status-id/{id}")
+    public List<Order> getAllOrderByStatus(@PathVariable("id") Integer id){
         return orderService.getAllOrderByStatus(id);
     }
 
-    @GetMapping("/getallorderbyid")
+    @GetMapping("/orderby-id/status-id")
     public List<Order> getAllOrderById(@RequestParam("id")Integer id,
                                             @RequestParam("status")String status){
         return orderService.getAllOrderById(id, status);
     }
 
-    @PostMapping("/save")
+    @PostMapping("/order")
     public Order postSave(@RequestBody Order entity){
         Order order = orderService.create(entity);
         String email = order.getAccount_id().getEmail();
@@ -54,8 +54,8 @@ public class OrderController {
         return order;
     }
 
-    @PutMapping("/delete")
-    public Order deleteOrder(@RequestParam("id") Integer id){
+    @PutMapping("/{id}")
+    public Order deleteOrder(@PathVariable("id") Integer id){
         return orderService.deleteOrder(id);
     }
 

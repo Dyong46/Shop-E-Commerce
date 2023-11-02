@@ -18,10 +18,10 @@ public class DiscountService {
     public List<Discount> getAllDiscount(){
         return discountRepository.findAll();
     }
-    public Optional<Discount> getDiscountByName(String name){
+    public Discount getDiscountByName(String name){
         return discountRepository.findDiscountByName(name);
     }
-    public Optional<Discount> getDiscountById(Integer id){
+    public Discount getDiscountById(Integer id){
         return discountRepository.findDiscountById(id);
     }
     public Discount create(Discount entity){
@@ -30,9 +30,13 @@ public class DiscountService {
         entity.setCreated_at(date);
         return discountRepository.save(entity);
     }
-    public Discount update(Discount entity){
-        Date date = new Date();
-        entity.setUpdated_at(date);
-        return discountRepository.save(entity);
+    public Discount update(Discount entity,Integer id){
+        Discount discount = getDiscountById(id);
+        discount.setName(entity.getName());
+        discount.setDescription(entity.getDescription());
+        discount.setDiscount_percent(entity.getDiscount_percent());
+        discount.setIs_active(entity.getIs_active());
+        discount.setUpdated_at(new Date());
+        return discountRepository.save(discount);
     }
 }

@@ -12,8 +12,8 @@ import java.util.Optional;
 public interface DiscountRepository extends JpaRepository<Discount, Integer> {
 
     @Query("select o from  Discount o where  o.name = :name")
-    Optional<Discount> findDiscountByName(String name);
+    Discount findDiscountByName(String name);
 
     @Query("select o from  Discount o where  o.id = :id")
-    Optional<Discount> findDiscountById(Integer id);
+    Discount findDiscountById(Integer id);
 }

@@ -14,7 +14,7 @@ public class SendMailController {
 
     @Autowired
     JavaMailSender javaMailSender;
-    @PostMapping("/api/sendmail")
+    @PostMapping("/api/send-mail")
     public String sendMail(@RequestParam("to")String to,
                            @RequestParam("subject")String subject,
                            @RequestParam("content")String content){

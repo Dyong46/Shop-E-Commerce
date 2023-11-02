@@ -11,56 +11,48 @@ import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/product-management")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
-    @GetMapping("/")
+    @GetMapping("/product")
     public List<Product> getAll(){
         return productService.getAllProduct();
     }
 
-    @GetMapping("/findbyname")
+    @GetMapping("/find-name")
     public List<Product> getProductByName( @RequestParam("name") String name){
         return productService.getProductByName(name);
     }
-    @PostMapping("/save")
+    @PostMapping("/product")
     public Product postSave(@RequestBody Product entity){
         return productService.create(entity);
     }
 
-    @GetMapping("/findbyid")
-    public Optional<Product> getProductById(@RequestParam("id") Integer id){
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") Integer id){
         return productService.getProductById(id);
     }
 
-    @GetMapping("/findbyprice")
+    @GetMapping("/find-price")
     public List<Product> getProductByPrice(@RequestParam("min")Integer priceMin, @RequestParam("max")Integer priceMax){
         return productService.findProductByPriceBetween(priceMin,priceMax);
     }
-    @PutMapping("/update")
-    public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Integer id,
                                   @RequestBody Product productForm){
-        Optional<Product> product_check =productService.getProductById(id);
-        if(product_check.isPresent()){
-            Product existingProduct = product_check.get();
-            existingProduct.setName_product(productForm.getName_product());
-            existingProduct.setDescription(productForm.getDescription());
-            existingProduct.setPrice(productForm.getPrice());
-            existingProduct.setImg(productForm.getImg());
-            existingProduct.setQuantity(productForm.getQuantity());
-            existingProduct.setUpdated_at(productForm.getUpdated_at());
-            existingProduct.setCategory_id(productForm.getCategory_id());
-            productService.save(existingProduct);
-            return ResponseEntity.ok(existingProduct);
+        Product product_check =productService.getProductById(id);
+        if(product_check != null){
+            productService.update(productForm,id);
+            return ResponseEntity.ok(productForm);
         }else {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/delete")
-    public Product deleteProduct(@RequestParam("id")Integer id){
+    @DeleteMapping("/{id}")
+    public Product deleteProduct(@PathVariable("id")Integer id){
         return productService.deleteProductById(id);
     }
 }

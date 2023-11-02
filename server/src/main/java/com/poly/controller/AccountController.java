@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping("/api/account-management")
 public class AccountController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class AccountController {
      * Get all account information
      * @return account
      */
-    @GetMapping("")
+    @GetMapping("/accounts")
     public List<Account> getAll() {
         return accountService.getAll(); 
     }
@@ -100,36 +100,28 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/findbyid")
-    public Account getAccountById(@RequestParam("id")Integer id){
+    @GetMapping("/{id}")
+    public Account getAccountById(@PathVariable("id")Integer id){
         return accountService.getAccountById(id);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Account> updateAccountById(@RequestParam("id")Integer id,
+    @PutMapping("/{id}")
+    public ResponseEntity<Account> updateAccountById(@PathVariable("id")Integer id,
                                                      @RequestBody Account formAccount){
         Account accountCheck = accountService.getAccountById(id);
         if(accountCheck != null){
-            Account existingAccount = accountCheck;
-            existingAccount.setUsername(formAccount.getUsername());
-            existingAccount.setFullname(formAccount.getFullname());
-            existingAccount.setPhone(formAccount.getPhone());
-            existingAccount.setGender(formAccount.getGender());
-            existingAccount.setDate_of_birth(formAccount.getDate_of_birth());
-            existingAccount.setImg(formAccount.getImg());
-            existingAccount.setUpdated_at(new Date());
-            accountService.update(existingAccount);
-            return ResponseEntity.ok(existingAccount);
+            accountService.update(formAccount,id);
+            return ResponseEntity.ok(formAccount);
         }else {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/delete")
-    public Account deleteAccount(@RequestParam("id")Integer id){
+    @DeleteMapping("/{id}")
+    public Account deleteAccount(@PathVariable("id")Integer id){
         return accountService.deleteAccoutById(id);
     }
 
-    @PostMapping("/change")
+    @PostMapping("/change-password")
     public Boolean changePassword(@RequestBody ChangePasswordDTO changePasswordDTO){
         if(!changePassword.isValidPasswordChange(changePasswordDTO)){
             return false;
