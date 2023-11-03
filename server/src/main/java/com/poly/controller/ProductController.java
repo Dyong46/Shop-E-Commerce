@@ -55,8 +55,8 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/cancel/{id}")
-    public Product cancelProduct(@PathVariable("id") Integer id) {
+    @DeleteMapping("/{id}")
+    public Product deleteProduct(@PathVariable("id") Integer id) {
         return productService.deleteProductById(id);
     }
 }

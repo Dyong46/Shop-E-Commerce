@@ -55,7 +55,7 @@ public class OrderController {
         return order;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/cancel/{id}")
     public Order cancelOrder(@PathVariable("id") Integer id) {
         return orderService.cancelOrder(id);
     }
