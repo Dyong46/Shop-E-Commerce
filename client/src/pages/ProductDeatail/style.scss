@@ -1,0 +1,30 @@
+
+.bg-pro{
+    background: rgb(245, 245, 245);
+}
+
+.like{
+    background: rgb(238, 77, 45);
+}
+.sizes{
+    width: 512px;
+}
+.shopee-rating-stars__primary-star{
+    color: rgb(238, 77, 45);
+}
+.bg-text{
+    background: #FAFAFA;
+}
+.icon-free-shipping-line{
+    background: white;
+}
+
+.box{
+    display:none;
+    position: absolute;
+    z-index: 1;
+}
+.box-trans:hover .box {
+    left: 750px;
+    display: block;
+}
