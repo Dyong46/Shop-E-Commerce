@@ -1,4 +1,4 @@
-package com.poly.Utils;
+package com.poly.utils;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

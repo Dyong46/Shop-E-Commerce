@@ -10,39 +10,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/categories")
 public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/api/category")
-    public List<Category> getAllCategory(){
+    @GetMapping()
+    public List<Category> getAllCategory() {
         return categoryService.getAllCategory();
     }
 
-    @GetMapping("/api/category/{id}") 
+    @GetMapping("/{id}")
     public Category getCategoryById(@PathVariable Integer id) {
-    	return categoryService.getCategoryById(id);
+        return categoryService.getCategoryById(id);
     }
 
-    @PostMapping("/api/category") 
+    @PostMapping()
     public Category create(@RequestBody Category category) {
-    	return categoryService.save(category);
+        return categoryService.save(category);
     }
 
-    @PutMapping("/api/category/{id}")
-    public Category update(@RequestBody Category category,@PathVariable Integer id) {
-    	return categoryService.update(category, id);
+    @PutMapping("/{id}")
+    public Category update(@RequestBody Category category, @PathVariable Integer id) {
+        return categoryService.update(category, id);
     }
 
-    @DeleteMapping("/api/category/{id}")
+    @DeleteMapping("/{id}")
     public Category delete(@PathVariable Integer id) {
-    	return categoryService.deleted(id);
+        return categoryService.deleted(id);
     }
 }

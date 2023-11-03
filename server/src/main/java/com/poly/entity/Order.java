@@ -22,6 +22,18 @@ public class Order implements Serializable {
 
     private Long total_amount;
 
+    private String fullname;
+
+    private String phone;
+
+    private String city;
+
+    private String district;
+
+    private String wards;
+
+    private String specific_address;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
