@@ -1,21 +1,23 @@
 package com.poly.controller;
 
-import com.poly.Utils.CookieUtils;
-import com.poly.Utils.PasswordUtils;
-import com.poly.Utils.SessionUtils;
+import com.poly.dto.ChangePassword;
 import com.poly.entity.Account;
 import com.poly.service.AccountService;
+import com.poly.service.ChangePasswordService;
+import com.poly.utils.CookieUtils;
+import com.poly.utils.PasswordUtils;
+import com.poly.utils.SessionUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     @Autowired
@@ -27,88 +29,113 @@ public class AccountController {
     @Autowired
     SessionUtils sessionUtils;
 
-    /**
-     * Get all account information
-     * @return account
-     */
-    @GetMapping("/api/accounts")
+    @Autowired
+    ChangePasswordService changePasswordService;
+
+    @Autowired
+    SendMailController sendMailController;
+
+    @GetMapping()
     public List<Account> getAll() {
-        return accountService.getAll(); 
+        return accountService.getAll();
     }
-    @PostMapping("/api/login")
-    public String postLogin (Model model,
-                             @RequestParam("username")String username,
-                             @RequestParam("password")String password,
-                             @RequestParam(value = "remember",required = false)Boolean remember){
-        // mã hóa mật khẩu tại đây vì mật khẩu hiện tại trong database chưa được mã hóa nên chưa thể sử dụng
+
+    @PostMapping("/login")
+    public Account login(Model model,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam(value = "remember", required = false) Boolean remember) {
+        // mã hóa mật khẩu tại đây vì mật khẩu hiện tại trong database chưa được mã hóa
+        // nên chưa thể sử dụng
         String hashPassword = PasswordUtils.hashPassword(password);
 
-        Optional<Account> accountCheck = accountService.getAccountByUsernameAndPassword(username,hashPassword);
-        if(accountCheck.isPresent()){
-            if (remember !=null){
-                cookieUtils.add("username",username,1);
-                cookieUtils.add("password",password,1);
-                sessionUtils.set("accountLogin",accountCheck.get());
-                cookieUtils.add("remember",Boolean.toString(remember),1);
-                cookieUtils.add("checkID",accountCheck.get().getId().toString(),1);
-                model.addAttribute("message","Login Success");
-                return "login";
-            }else {
-                sessionUtils.set("accountLogin",accountCheck.get());
-                model.addAttribute("message","Login Success");
+        Account accountCheck = accountService.getAccountByEmailAndPassword(email, hashPassword);
+        if (accountCheck != null) {
+            if (remember != null) {
+                cookieUtils.add("email", email, 1);
+                cookieUtils.add("password", hashPassword, 1);
+                sessionUtils.set("accountLogin", accountCheck);
+                cookieUtils.add("remember", Boolean.toString(remember), 1);
+                cookieUtils.add("checkID", accountCheck.getId().toString(), 1);
+                model.addAttribute("message", "Login Success");
+                System.out.println("login thành công");
+                return accountCheck;
+            } else {
+                sessionUtils.set("accountLogin", accountCheck);
+                System.out.println("login thành công");
+                model.addAttribute("message", "Login Success");
+                return accountCheck;
             }
-        }else {
-            model.addAttribute("message","Login Failed");
-            return "failed";
+        } else {
+            model.addAttribute("message", "Login Failed");
+            System.out.println("login failed");
+            return null;
         }
-        return "failed";
     }
-    
-    @PostMapping("/api/register") 
+
+    @PostMapping("/register")
     public Account postRegister(@RequestParam("email") String email,
-    							@RequestParam("password") String password) {
-        Account accountCheck = accountService.register(email, password);
+            @RequestParam("username") String username,
+            @RequestParam("password") String password) {
+        Account accountCheck = accountService.register(email, username, password);
         if (accountCheck == null) {
             return null;
         } else {
+            String subject = "Đăng ký tài khoản thành công";
+            String content = "Chào " + username +
+                    " Xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi! Chúng tôi rất vui mừng được chào đón bạn vào cộng đồng của chúng tôi.\n"
+                    +
+                    "\n" +
+                    "Tài khoản của bạn đã được tạo thành công, và bây giờ bạn có thể truy cập vào các dịch vụ và tiện ích đặc biệt dành riêng cho thành viên của chúng tôi. Chúng tôi hy vọng rằng bạn sẽ tận hưởng trải nghiệm mua sắm và các ưu đãi độc quyền mà chúng tôi mang lại.\n"
+                    +
+                    "\n" +
+                    "Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc cần hỗ trợ gì, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi luôn sẵn sàng giúp bạn.\n"
+                    +
+                    "\n" +
+                    "Một lần nữa, xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai và hy vọng bạn có những trải nghiệm thú vị và đáng nhớ tại cửa hàng của chúng tôi.\n"
+                    +
+                    "\n" +
+                    "Trân trọng,";
+            sendMailController.sendMail(email, subject, content);
             return accountCheck;
         }
     }
 
-    @GetMapping("/api/accounts/findbyid")
-    public Optional<Account> getAccountById(@RequestParam("id")Integer id){
-        return accountService.getProductById(id);
-    }
-    @PostMapping("/api/accounts/save")
-    public Account postSavaAccount(@RequestBody Account entity){
-        return accountService.create(entity);
-    }
-    @PutMapping("/api/accounts/update")
-    public ResponseEntity<Account> updateAccountById(@RequestParam("id")Integer id,
-                                                     @RequestBody Account formAccount){
-        Optional<Account> accountCheck = accountService.getProductById(id);
-        if(accountCheck.isPresent()){
-            Account existingAccount = accountCheck.get();
-            existingAccount.setEmail(formAccount.getEmail());
-            existingAccount.setUsername(formAccount.getUsername());
-            existingAccount.setPassword(formAccount.getPassword());
-            existingAccount.setFirstname(formAccount.getFirstname());
-            existingAccount.setLastname(formAccount.getLastname());
-            existingAccount.setPhone(formAccount.getPhone());
-            existingAccount.setGender(formAccount.getGender());
-            existingAccount.setDate_of_birth(formAccount.getDate_of_birth());
-            existingAccount.setImg(formAccount.getImg());
-            existingAccount.setUpdated_at(new Date());
-            existingAccount.setDeleted_at(formAccount.getDeleted_at());
-            existingAccount.setRole_id(formAccount.getRole_id());
-            accountService.update(existingAccount);
-            return ResponseEntity.ok(existingAccount);
-        }else {
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable("id") Integer id) {
+        Account account = accountService.getAccountById(id);
+        if (account == null) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(account);
     }
-    @DeleteMapping("/api/accounts/delete")
-    public Account deleteAccount(@RequestParam("id")Integer id){
-        return accountService.deleteAccoutById(id);
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Account> updateProfile(@PathVariable("id") Integer id,
+            @RequestBody Account formAccount) {
+        Account accountCheck = accountService.getAccountById(id);
+        if (accountCheck == null) {
+            return ResponseEntity.notFound().build();
+        }
+        Account account = accountService.update(formAccount, id);
+        return ResponseEntity.ok(account);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Account> deleteAccount(@PathVariable("id") Integer id) {
+        Account accountCheck = accountService.getAccountById(id);
+        if (accountCheck == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(accountService.deleteAccountById(id));
+    }
+
+    @PostMapping("/change-password")
+    public Boolean changePassword(@RequestBody ChangePassword changePasswordDTO) {
+        if (!changePasswordService.isValidPasswordChange(changePasswordDTO)) {
+            return false;
+        }
+        changePasswordService.changePassword(changePasswordDTO);
+        return true;
     }
 }
