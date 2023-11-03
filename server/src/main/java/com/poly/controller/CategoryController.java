@@ -12,13 +12,13 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/category-management")
+@RequestMapping("/api/categories")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("")
-    public List<Category> getAllCategory(){
-        return categoryService.getAllCatagory();
+    @GetMapping()
+    public List<Category> getAllCategory() {
+        return categoryService.getAllCategory();
     }
 }

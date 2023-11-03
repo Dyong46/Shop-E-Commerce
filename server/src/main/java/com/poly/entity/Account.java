@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity @Table(name = "[accounts]")

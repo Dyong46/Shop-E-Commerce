@@ -1,4 +1,4 @@
-package com.poly.Utils;
+package com.poly.utils;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,10 @@ public class SessionUtils {
     @Autowired
     HttpSession httpSession;
 
-    public<T> T get(String name) {
-        if(httpSession.getAttribute(name)!= null) {
-            return (T) httpSession.getAttribute(name);
+    public <T> T get(String name, Class<T> type) {
+        Object value = httpSession.getAttribute(name);
+        if (value != null && type.isInstance(value)) {
+            return type.cast(value);
         }
         return null;
     }
