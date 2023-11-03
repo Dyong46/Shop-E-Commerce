@@ -7,40 +7,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/discount-management")
+@RequestMapping("/api/discounts")
 public class DiscountController {
 
     @Autowired
     DiscountService discountService;
 
-    @GetMapping("/discounts")
-    public List<Discount> getAll(){
+    @GetMapping()
+    public List<Discount> getAll() {
         return discountService.getAllDiscount();
     }
-    @GetMapping("/find-name")
-    public Discount getDiscountByName(@RequestParam("name")String name){
+
+    @GetMapping("/name")
+    public Discount getDiscountByName(@RequestParam("name") String name) {
         return discountService.getDiscountByName(name);
     }
+
     @GetMapping("/{id}")
-    public Discount getDiscountById(@PathVariable("id")Integer id){
-        return discountService.getDiscountById(id);
+    public ResponseEntity<Discount> getDiscountById(@PathVariable("id") Integer id) {
+        Discount discount = discountService.getDiscountById(id);
+        if (discount == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(discount);
     }
-    @PostMapping("/discount")
-    public Discount postSave(@RequestBody Discount entity){
+
+    @PostMapping()
+    public Discount postSave(@RequestBody Discount entity) {
         return discountService.create(entity);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Discount> updateDiscountById(@PathVariable("id")Integer id,
-                                                       @RequestBody Discount formDiscount){
+    public ResponseEntity<Discount> updateDiscountById(@PathVariable("id") Integer id,
+            @RequestBody Discount formDiscount) {
         Discount discountCheck = discountService.getDiscountById(id);
-        if(discountCheck != null){
-            discountService.update(formDiscount,id);
-            return ResponseEntity.ok(formDiscount);
-        }else {
+        if (discountCheck != null) {
+            Discount discount = discountService.update(formDiscount, id);
+            return ResponseEntity.ok(discount);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
