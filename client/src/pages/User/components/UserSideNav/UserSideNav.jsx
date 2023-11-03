@@ -1,18 +1,21 @@
 import classNames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
+import { useStore } from '~/Context/Account';
+import path from '~/constants/path';
+import { getAvatarUrl } from '~/utils/utils';
 
 const UserSideNav = () => {
+  const [state] = useStore();
+  const { profile } = state;
+
   return (
     <div>
       <div className="flex items-center border-b border-b-gray-200 py-4">
-        <Link
-          to={'/user/profile'}
-          className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10"
-        >
-          <img src={''} alt="" className="h-full w-full object-cover" />
+        <Link to={path.profile} className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10">
+          <img src={getAvatarUrl(profile?.img)} alt="" className="h-full w-full object-cover" />
         </Link>
         <div className="flex-grow pl-4">
-          <div className="mb-1 truncate font-semibold text-gray-600">mthusayhi</div>
+          <div className="mb-1 truncate font-semibold text-gray-600">{profile?.username}</div>
           <Link to={'/user/profile'} className="flex items-center capitalize text-gray-500">
             <svg
               width={12}

@@ -7,45 +7,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/discounts")
 public class DiscountController {
 
     @Autowired
     DiscountService discountService;
 
-    @GetMapping("/api/discount")
-    public List<Discount> getAll(){
+    @GetMapping()
+    public List<Discount> getAll() {
         return discountService.getAllDiscount();
     }
-    @GetMapping("/api/discount/finddiscountbyname")
-    public Optional<Discount> getDiscountByName(@RequestParam("name")String name){
+
+    @GetMapping("/name")
+    public Discount getDiscountByName(@RequestParam("name") String name) {
         return discountService.getDiscountByName(name);
     }
-    @GetMapping("/api/discount/finddiscountbyid")
-    public Optional<Discount> getDiscountById(@RequestParam("id")Integer id){
-        return discountService.getDiscountById(id);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Discount> getDiscountById(@PathVariable("id") Integer id) {
+        Discount discount = discountService.getDiscountById(id);
+        if (discount == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(discount);
     }
-    @PostMapping("/api/discount/save")
-    public Discount postSave(@RequestBody Discount entity){
+
+    @PostMapping()
+    public Discount postSave(@RequestBody Discount entity) {
         return discountService.create(entity);
     }
-    @PutMapping("/api/discount/update")
-    public ResponseEntity<Discount> updateDiscountById(@RequestParam("id")Integer id,
-                                                       @RequestBody Discount formDiscount){
-        Optional<Discount> discountCheck = discountService.getDiscountById(id);
-        if(discountCheck.isPresent()){
-            Discount existingDiscount = discountCheck.get();
-            existingDiscount.setName(formDiscount.getName());
-            existingDiscount.setDescription(formDiscount.getDescription());
-            existingDiscount.setDiscount_percent(formDiscount.getDiscount_percent());
-            existingDiscount.setIs_active(formDiscount.getIs_active());
-            existingDiscount.setUpdated_at(formDiscount.getUpdated_at());
-            discountService.update(existingDiscount);
-            return ResponseEntity.ok(existingDiscount);
-        }else {
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Discount> updateDiscountById(@PathVariable("id") Integer id,
+            @RequestBody Discount formDiscount) {
+        Discount discountCheck = discountService.getDiscountById(id);
+        if (discountCheck != null) {
+            Discount discount = discountService.update(formDiscount, id);
+            return ResponseEntity.ok(discount);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
