@@ -7,59 +7,56 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
-    @GetMapping("/api/products")
-    public List<Product> getAll(){
+    @GetMapping()
+    public List<Product> getAll() {
         return productService.getAllProduct();
     }
 
-    @GetMapping("/api/products/findbyname")
-    public List<Product> getProductByName( @RequestParam("name") String name){
+    @GetMapping("/name")
+    public List<Product> getProductByName(@RequestParam("name") String name) {
         return productService.getProductByName(name);
     }
-    @PostMapping("/api/products/save")
-    public Product postSave(@RequestBody Product entity){
+
+    @PostMapping()
+    public Product postSave(@RequestBody Product entity) {
         return productService.create(entity);
     }
 
-    @GetMapping("/api/products/findbyid")
-    public Optional<Product> getProductById(@RequestParam("id") Integer id){
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") Integer id) {
         return productService.getProductById(id);
     }
 
-    @PostMapping("/api/products/findbyprice")
-    public List<Product> getProductByPrice(@RequestParam("min")Integer priceMin, @RequestParam("max")Integer priceMax){
-        return productService.findProductByPriceBetween(priceMin,priceMax);
+    @GetMapping("/price")
+    public List<Product> getProductByPrice(@RequestParam("min") Integer priceMin,
+            @RequestParam("max") Integer priceMax) {
+        return productService.findProductByPriceBetween(priceMin, priceMax);
     }
-    @PutMapping("/api/products/update")
-    public ResponseEntity<Product> getProductById(@RequestParam("id") Integer id,
-                                  @RequestBody Product productForm){
-        Optional<Product> product_check =productService.getProductById(id);
-        if(product_check.isPresent()){
-            Product existingProduct = product_check.get();
-            existingProduct.setName_product(productForm.getName_product());
-            existingProduct.setDescription(productForm.getDescription());
-            existingProduct.setPrice(productForm.getPrice());
-            existingProduct.setImg(productForm.getImg());
-            existingProduct.setQuantity(productForm.getQuantity());
-            existingProduct.setUpdated_at(productForm.getUpdated_at());
-            existingProduct.setCategory_id(productForm.getCategory_id());
-            productService.save(existingProduct);
-            return ResponseEntity.ok(existingProduct);
-        }else {
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(
+            @PathVariable("id") Integer id,
+            @RequestBody Product productForm) {
+        Product product_check = productService.getProductById(id);
+        if (product_check != null) {
+            Product product = productService.update(productForm, id);
+            return ResponseEntity.ok(product);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/api/products/delete")
-    public Product deleteProduct(@RequestParam("id")Integer id){
+
+    @DeleteMapping("/{id}")
+    public Product deleteProduct(@PathVariable("id") Integer id) {
         return productService.deleteProductById(id);
     }
 }
