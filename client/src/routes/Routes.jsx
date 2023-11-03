@@ -7,7 +7,6 @@ import Cart from '~/pages/Cart';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Order from '~/pages/Order';
-
 import Profile from '~/pages/User/pages/Profile';
 import OrderLayout from '~/layouts/OrderLayout';
 import ChangePassword from '~/pages/User/pages/ChangePassword';
@@ -26,7 +25,7 @@ export const publicRoutes = [
   { path: '/user/password', component: ChangePassword },
   { path: '/user/purchase', component: HistoryPurchase },
   { path: '/productdetail', component: ProductDetail, layout: Fragment },
-  { path: '/:idProduct', component: ProductDetail, layout: Fragment },
+  { path: '/:idProduct', component: ProductDetail },
 ];
 
 // Private Routes

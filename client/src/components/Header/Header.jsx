@@ -88,9 +88,8 @@ let countProduct = tempDataProduct.length;
 const Header = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isUser, setIsUser] = useState(false);
-  const [state, dispath] = useStore();
+  const [state] = useStore();
   const { todos } = state;
-  console.log(todos);
 
   const [isCart, setIsCart] = useState(false);
 
@@ -204,15 +203,15 @@ const Header = () => {
                   onMouseOut={handleMouseOutUser}
                   className="absolute flex flex-col justify-start align-center top-10 right-10 z-10 w-40 bg-white"
                 >
-                  <a href="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
+                  <Link to="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
                     Tài khoản của tôi
-                  </a>
-                  <a href="/order" className="text-black m-3 flex justify-start hover:text-orange">
+                  </Link>
+                  <Link to="/order" className="text-black m-3 flex justify-start hover:text-orange">
                     Đơn mua
-                  </a>
-                  <a href="/login" className="text-black m-3 flex justify-start hover:text-orange">
+                  </Link>
+                  <Link to="/login" className="text-black m-3 flex justify-start hover:text-orange">
                     Đăng xuất
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>

@@ -15,7 +15,7 @@ public class GalleryController {
     @Autowired
     GalleryService galleryService;
 
-    @GetMapping("/by-product/{productId}")
+    @GetMapping("/{productId}")
     public List<Gallery> getGalleryByProductId(@PathVariable Integer productId) {
         return galleryService.getGalleryByProductId(productId);
     }
