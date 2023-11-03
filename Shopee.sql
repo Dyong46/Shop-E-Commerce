@@ -21,8 +21,7 @@ CREATE TABLE [accounts] (
   [email] varchar(30) UNIQUE,
   [username] varchar(30) UNIQUE,
   [password] varchar(100),
-  [firstname] nvarchar(30),
-  [lastname] nvarchar(30),
+  [fullname] nvarchar(50),
   [phone] varchar(11),
   [gender] bit,
   [date_of_birth] date,
@@ -50,7 +49,6 @@ GO
 CREATE TABLE [categories] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [name] nvarchar(50),
-  [img] varchar(255),
   [description] nvarchar(255),
   [created_at] date,
   [updated_at] date,
@@ -110,6 +108,12 @@ CREATE TABLE [orders] (
   [created_at] date,
   [status_id] integer,
   [total_amount] bigint,
+  [fullname] nvarchar(50),
+  [phone] varchar(11),
+  [city] nvarchar(20),
+  [district] nvarchar(20),
+  [wards] nvarchar(20),
+  [specific_address] nvarchar(100),
   [account_id] integer,
   [discount_id] integer
 )
@@ -164,13 +168,13 @@ VALUES ('admin', N'Quản trị viên'),
 GO 
 
 -- Chèn dữ liệu mới vào bảng account
-INSERT INTO accounts ([email],  [username],  [password],  [firstname],  [lastname],  [phone],  [gender],  [date_of_birth],  [img], [created_at],  [updated_at],  [role_id])
+INSERT INTO accounts ([email],  [username],  [password],  [fullname],  [phone],  [gender],  [date_of_birth],  [img], [created_at],  [updated_at],  [role_id])
 VALUES
-	('minhthu123@gmail.com',    'thu123',   'thu123',   N'Thư',   N'Minh',   '0341287223',   1,   '2003-02-01',   'https://i.pinimg.com/750x/42/6e/72/426e7248106e39fdbfecc84c08fca83c.jpg',  '2022-12-10',  '2023-09-01',  'admin'),
-	('vuthaiduong@gmail.com',	'duong123',	'duong123',	N'Dương',N'Vũ',		'0256456588',	0,	'2003-01-01',	'https://i.pinimg.com/564x/44/34/d6/4434d6fa92e52e36a2cabe468390f264.jpg',		'2019-01-01',	'2023-08-08','user'),
-	('vubinhminh@gmail.com',		'minh123',	'minh123',	N'Minh', N'Minh',	'0252488655',	0,	'2006-1-10',	'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',		'2020-02-02',	'2022-12-12','user'),
-	('vuthanhtrung@gmail.com',	'trung123',	'trung123', N'Trung',N'Vũ',		'0332414841',	0,	'2003-04-09',	'https://i.pinimg.com/736x/8c/8b/8a/8c8b8a236086a28253dda4bf407bb3bb.jpg',		'2019-05-17',	'2022-04-23','user'),
-	('nguyenhoangyen@gmail.com',	'yen123',	'yen123',	N'Yến',	N'Nguyễn',	'0211648711',	1,	'1999-04-24',	'https://i.pinimg.com/564x/b9/fb/93/b9fb93a07520a543e1b3c9a017d4b2da.jpg',		'2015-01-09',	'2020-10-10','user')
+	('minhthu123@gmail.com',    'thu123',   'thu123',   N'Minh Thư',   '0341287223',   1,   '2003-02-01',   'https://i.pinimg.com/750x/42/6e/72/426e7248106e39fdbfecc84c08fca83c.jpg',  '2022-12-10',  '2023-09-01',  'admin'),
+	('vuthaiduong@gmail.com',	'duong123',	'duong123',	N'Dương Vũ', '0256456588',	0,	'2003-01-01',	'https://i.pinimg.com/564x/44/34/d6/4434d6fa92e52e36a2cabe468390f264.jpg',		'2019-01-01',	'2023-08-08','user'),
+	('vubinhminh@gmail.com',		'minh123',	'minh123',	N'Minh','0252488655',	0,	'2006-1-10',	'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',		'2020-02-02',	'2022-12-12','user'),
+	('vuthanhtrung@gmail.com',	'trung123',	'trung123', N'Trung',		'0332414841',	0,	'2003-04-09',	'https://i.pinimg.com/736x/8c/8b/8a/8c8b8a236086a28253dda4bf407bb3bb.jpg',		'2019-05-17',	'2022-04-23','user'),
+	('nguyenhoangyen@gmail.com',	'yen123',	'yen123',	N'Yến',	'0211648711',	1,	'1999-04-24',	'https://i.pinimg.com/564x/b9/fb/93/b9fb93a07520a543e1b3c9a017d4b2da.jpg',		'2015-01-09',	'2020-10-10','user')
 GO
 
 -- Chèn dữ liệu mới vào bảng addresses
@@ -186,17 +190,17 @@ VALUES
 GO
 
 -- Chèn dữ liệu mới vào bảng categories
-INSERT INTO categories ( [name],  [img],  [description], [created_at], [updated_at], [deleted_at]) VALUES
-  (N'Điện thoại',					'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljzut462vh6ce8', N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
-  (N'Laptop',						'https://down-vn.img.susercontent.com/file/9337c8553ef1678d67ada680f4965838', N'Danh mục sản phẩm laptop',				'2023-03-08','2023-03-08',NULL),
-  (N'Quần áo nam form rộng',		'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lh3q2jlarhtff0', N'Danh mục sản phẩm quần áo nam',			 '2023-01-03', '2023-01-03', NULL),
-  (N'Quần áo nữ',					'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lkj1fk4w1v3cae', N'Danh mục sản phẩm quần áo nữ', '2023-01-04', '2023-01-04', NULL),
-  (N'Giày thể thao',				'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgol0f2qenlf40', N'Danh mục sản phẩm giày thể thao', '2023-01-05', '2023-01-05', NULL),
-  (N'Đồng hồ',						'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljfa6pdw6biq42', N'Danh mục sản phẩm đồng hồ', '2023-01-06', '2023-01-06', NULL),
-  (N'Túi xách',						'https://down-vn.img.susercontent.com/file/sg-11134201-22090-zw4ygfsnyuhvc3', N'Danh mục sản phẩm túi xách và balo', '2023-01-07', '2023-01-07', NULL),
-  (N'Phụ kiện điện thoại',			'https://down-vn.img.susercontent.com/file/sg-11134201-22120-477kvp0nhmlv97', N'Danh mục sản phẩm phụ kiện điện thoại', '2023-01-08', '2023-01-08', NULL),
-  (N'Phụ kiện nội thất',			'https://down-vn.img.susercontent.com/file/78dbc36ff4030351358fe7e0af5913ab', N'Danh mục sản phẩm nội thất', '2023-01-09', '2023-01-09', NULL),
-  (N'Máy ảnh',						'https://down-vn.img.susercontent.com/file/sg-11134201-7qves-lgomwh7kw53f15', N'Danh mục sản phẩm máy ảnh và máy quay phim', '2023-01-10', '2023-01-10', NULL);
+INSERT INTO categories ( [name],  [description], [created_at], [updated_at], [deleted_at]) VALUES
+  (N'Điện thoại',					 N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
+  (N'Laptop',						 N'Danh mục sản phẩm laptop',				'2023-03-08','2023-03-08',NULL),
+  (N'Quần áo nam form rộng',		 N'Danh mục sản phẩm quần áo nam',			 '2023-01-03', '2023-01-03', NULL),
+  (N'Quần áo nữ',					 N'Danh mục sản phẩm quần áo nữ', '2023-01-04', '2023-01-04', NULL),
+  (N'Giày thể thao',				 N'Danh mục sản phẩm giày thể thao', '2023-01-05', '2023-01-05', NULL),
+  (N'Đồng hồ',						 N'Danh mục sản phẩm đồng hồ', '2023-01-06', '2023-01-06', NULL),
+  (N'Túi xách',						 N'Danh mục sản phẩm túi xách và balo', '2023-01-07', '2023-01-07', NULL),
+  (N'Phụ kiện điện thoại',			 N'Danh mục sản phẩm phụ kiện điện thoại', '2023-01-08', '2023-01-08', NULL),
+  (N'Phụ kiện nội thất',			 N'Danh mục sản phẩm nội thất', '2023-01-09', '2023-01-09', NULL),
+  (N'Máy ảnh',						 N'Danh mục sản phẩm máy ảnh và máy quay phim', '2023-01-10', '2023-01-10', NULL);
 
   --Chèn dữ liệu mới vào bảng discount
 INSERT INTO discount ([name], [description], [discount_percent], [is_active], [created_at], [updated_at])
@@ -258,10 +262,10 @@ VALUES
 (N'Đã nhận')
 GO
 
-INSERT INTO orders (created_at, status_id, total_amount, account_id, discount_id)
+INSERT INTO orders (created_at, status_id, total_amount, account_id, fullname,  phone, city, district, wards, specific_address, discount_id)
 VALUES
-('2023-08-04', 1, 9500000, 1, null),
-('2023-08-04', 2, 13000000, 2, null)
+('2023-08-04', 1, 9500000, 1, N'Minh Thư', '0123456789', N'HCM', N'District 1', N'Abc', N'A123', null),
+('2023-08-04', 2, 13000000, 2, N'Minh Thư', '0123456789', N'HCM', N'District 1', N'Abc', N'A123',  null)
 GO
 
 INSERT INTO order_details (order_id, product_id, quantity, amount)

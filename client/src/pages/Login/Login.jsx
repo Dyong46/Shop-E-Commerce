@@ -1,35 +1,27 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import { login } from '~/servers/accountService';
 
 const Login = () => {
-  const [username, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    const apiUrl = `http://localhost:1203/api/login?username=${username}&password=${password}&remember=false`;
     try {
-      const res = await axios
-        .post(apiUrl)
-        .then()
-        .catch((error) => {
-          console.error('Error fetching data:', error);
-        });
-
-      if (res.data === 'login') {
+      const res = await login(email, password, true)
+      if (res.data) {
         navigate('/');
-
-        alert('Login successful!');
-        // You can perform additional actions like redirecting the user to another page.
+				toast.success('Login successful!');
       } else {
-        alert('Login failed. Please check your credentials.');
+        toast.error('Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Error during login:', error);
-      alert('Login failed. Please try again later.');
+      toast.error(error.message);
     }
   };
 
@@ -65,8 +57,6 @@ const Login = () => {
                   type="button"
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600 font-normal"
                   onClick={() => handleLogin()}
-                  // isLoading={loginMutation.isLoading}
-                  // disabled={loginMutation.isLoading}
                 >
                   Đăng nhập
                 </Button>

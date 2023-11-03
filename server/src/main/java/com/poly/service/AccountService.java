@@ -1,76 +1,23 @@
 package com.poly.service;
 
-import com.poly.Utils.PasswordUtils;
 import com.poly.entity.Account;
-import com.poly.entity.Role;
-import com.poly.repo.AccountRepository;
-import com.poly.repo.RoleRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.xml.crypto.Data;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class AccountService {
+public interface AccountService {
+    List<Account> getAll();
 
-    @Autowired
-    AccountRepository accountRepository;
-    
-    @Autowired
-    RoleService roleService;
+    Account getAccountByEmailAndPassword(String email, String password);
 
-    public List<Account> getAll() {
-        return accountRepository.findAll();
-    }
+    Account register(String email, String username, String password);
 
-    public Optional<Account> getAccountByUsernameAndPassword(String username, String password){
-        return accountRepository.findAccountByUsernameAndPassword(username,password);
-    }
-    
-    public Account register(String email, String password) {
-        Account account = new Account();
-        account.setEmail(email);
-        String hashPassword = PasswordUtils.hashPassword(password);
-        account.setPassword(hashPassword);
-        account.setUsername(email);
+    Account getAccountById(Integer id);
 
-        Date date = new Date();
-        account.setCreated_at(date);
+    Account create(Account entity);
 
-        Role role = roleService.findById("user");
-        account.setRole_id(role);
-        return accountRepository.save(account);
-    }
+    Account update(Account entity, Integer id);
 
-    public Optional<Account> getProductById(Integer id){
-        return accountRepository.findByProductId(id);
-    }
+    Account changePassword(Integer id, String password);
 
-    public Account create(Account entity){
-        entity.setCreated_at(new Date());
-        String password = entity.getPassword();
-        String hashPassword = PasswordUtils.hashPassword(password);
-        entity.setPassword(hashPassword);
-        return accountRepository.save(entity);
-    }
-
-    public Account update(Account entity){
-        entity.setUpdated_at(new Date());
-        // mã hóa password ở đây
-        String password = entity.getPassword();
-        String hashPassword = PasswordUtils.hashPassword(password);
-        entity.setPassword(hashPassword);
-        return accountRepository.save(entity);
-    }
-
-    public Account deleteAccoutById(Integer id){
-        Account account = accountRepository.findByProductId(id).orElse(null);
-        Date currenDate = new Date();
-        account.setDeleted_at(currenDate);
-        return accountRepository.save(account);
-    }
+    Account deleteAccountById(Integer id);
 }

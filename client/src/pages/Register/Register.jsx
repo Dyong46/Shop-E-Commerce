@@ -1,8 +1,9 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import { register } from '~/servers/accountService';
 
 const Register = () => {
 
@@ -24,14 +25,13 @@ const Register = () => {
       if (res.data !== null) {
         navigate('/');
 
-        alert('Login successful!');
-        // You can perform additional actions like redirecting the user to another page.
+        toast.success('Login successful!');
       } else {
-        alert('Login failed. Please check your credentials.');
+        toast.error('Register failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Error during login:', error);
-      alert('Login failed. Please try again later.');
+      toast.error(error.message);
     }
   };
 

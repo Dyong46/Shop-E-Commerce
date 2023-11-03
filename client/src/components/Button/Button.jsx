@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const Button = (props) => {
   const { className, isLoading, disabled, children, ...rest } = props;
   const newClassName = disabled ? className + ' cursor-not-allowed' : className;
@@ -25,6 +27,13 @@ const Button = (props) => {
       <span>{children}</span>
     </button>
   );
+};
+
+Button.propTypes = {
+  className: PropTypes.string,
+  isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  children: PropTypes.any,
 };
 
 export default Button;
