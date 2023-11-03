@@ -66,7 +66,6 @@ const Profile = () => {
       if(file) {
         const form  = new FormData()
         form.append('image', file)
-        const uploadRes = await
       }
       console.log(data);
     } catch (error) {
