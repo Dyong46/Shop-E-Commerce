@@ -7,23 +7,19 @@ import Input from '~/components/Input';
 const Register = () => {
 
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
 
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    const apiUrl = `http://localhost:1203/api/register?email=${username}&password=${password}`;
-    let res;
     try {
-      if (password === repassword) {
-        res = await axios
-          .post(apiUrl)
-          .then()
-          .catch((error) => {
-            console.error('Error fetching data:', error);
-          });
+      if (password !== repassword) {
+        toast.error('Your password in not match the RePasswords')
+        return
       }
+      const res = await register(username, email, password)
 
       if (res.data !== null) {
         navigate('/');
@@ -47,11 +43,20 @@ const Register = () => {
             <form className="rounded bg-white p-10 shadow-sm" noValidate>
               <div className="text-2xl">Đăng ký</div>
               <Input
+                name="username"
+                // register={register}
+                type="text"
+                className="mt-8"
+                onChange={(event) => setUsername(event.target.value)}
+                // errorMessage={errors.email?.message}
+                placeholder="Username"
+              />
+              <Input
                 name="email"
                 // register={register}
                 type="email"
                 className="mt-8"
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={(event) => setEmail(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
               />
