@@ -2,7 +2,6 @@ package com.poly.controller;
 
 import com.poly.entity.Address;
 import com.poly.service.AddressService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +14,17 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
-    @GetMapping("")
+    @GetMapping()
     public List<Address> getAllAddress() {
         return addressService.getAddressList();
     }
 
-    @GetMapping("/findbyuserid")
+    @GetMapping("/findByUserId")
     public List<Address> getAddressById(@RequestParam("id") Integer id) {
         return addressService.getAddressById(id);
     }
 
-    @PostMapping("/save")
+    @PostMapping()
     public Address createAddress(@RequestBody Address address) {
         return addressService.create(address);
     }
