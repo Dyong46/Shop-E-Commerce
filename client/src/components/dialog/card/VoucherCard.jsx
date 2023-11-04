@@ -33,7 +33,7 @@ const VoucherCard = (props) => {
         <p>Vui lòng chọn sản phẩm trong giỏ hàng để áp dụng Voucher này</p>
       </div>
 
-    </div >
+    </div>
   )
 }
 export default VoucherCard;
