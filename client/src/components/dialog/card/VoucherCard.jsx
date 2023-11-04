@@ -1,4 +1,6 @@
 const VoucherCard = (props) => {
+  let data = props.data;
+
   const imgStyle = {
     width: '100px',
     height: '100px',
@@ -9,11 +11,11 @@ const VoucherCard = (props) => {
     <div className="flex flex-col my-6">
       <div className="flex">
         <div style={imgStyle}>
-          <img src={props.img} />
+          <img src="~/assets/images/voucher_img.png" alt="Girl in a jacket" />
         </div>
         <div className="flex flex-col grow">
-          <p className="font-medium">Giảm tối đa ₫25k</p>
-          <p className='text-gray-600'>Đơn Tối Thiểu ₫25k</p>
+          <p className="font-medium">Giảm tối đa {data.discount_percent}%</p>
+          <p className='text-gray-600'>{data.description}</p>
           <div className="w-24">
             <p className="text-xs font-bold mt-1  dark:text-orange h-4 outline outline-1 outline-orange">
               Chỉ có trên live
@@ -21,7 +23,7 @@ const VoucherCard = (props) => {
           </div>
           <div className="pt-2 text-orange text-xs">Sắp hết hạn: còn 1 ngày</div>
         </div>
-        <input type="radio" name={props.group} value={props.idVoucher} />
+        <input type="radio" name={props.group} value={data.id} />
       </div>
       <div className="text-orange text-sm flex">
         <div className=" mx-1">
@@ -31,7 +33,7 @@ const VoucherCard = (props) => {
         <p>Vui lòng chọn sản phẩm trong giỏ hàng để áp dụng Voucher này</p>
       </div>
 
-    </div>
+    </div >
   )
 }
 export default VoucherCard;

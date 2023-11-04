@@ -2,7 +2,8 @@ import { useContext, useState } from 'react';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import Dialog from '~/components/dialog/dialog';
-import VoucherCard from '~/components/dialog/card/VoucherCard'
+import VoucherCard from '~/components/dialog/card/VoucherCard';
+import LocationCard from '~/components/dialog/card/LocationCard';
 import { Link } from 'react-router-dom';
 import { getAllDiscount } from '~/servers/discountService';
 import { stringify } from 'postcss';
@@ -47,29 +48,26 @@ const DialogBody = (props) => {
       <div className="overflow-y-auto h-96">
 
         <div className="mb-2">Mã Miễn Phí Vận Chuyển</div>
-
         {
-          props.data[0].slice(0, showmore ? props.data[0].length : 2)
-            .map((item) => {
-              return (<VoucherCard group={"voucher1"} idVoucher={item} img={props.img} />);
+          props.data.slice(0, showmore ? props.data.length : 3)
+            .map((item, index) => {
+              return (<VoucherCard group={"voucher"} key={index} data={item} />);
             })
         }
+
         <div className="flex flex-col justify-center mt-2">
           {
-
             showmore ?
               <ButtonHide handle={handleShowmore} /> :
               <ButtonShowmore handle={handleShowmore} />
           }
-
         </div>
-
 
         {/* <div className="mt-10 mb-2">Giảm Giá & Hoàn Xu</div> */}
         {/* { */}
         {/*   props.data[1].slice(0, showmoreVoucher ? props.data[1].length : 2) */}
         {/*     .map((item) => { */}
-        {/*       return (<VoucherCard group={"voucher2"} idVoucher={item} img={props.img} />); */}
+        {/*       return (<VoucherCard group={"voucher2"} img={props.img} />); */}
         {/*     }) */}
         {/* } */}
         {/**/}
@@ -84,7 +82,6 @@ const DialogBody = (props) => {
         {/* </div> */}
       </div>
     </>
-
   )
 }
 
@@ -92,23 +89,18 @@ const DialogBody = (props) => {
 const TotalCart = () => {
   const [money] = useContext(PriceContext);
   const [carts] = useContext(CartContext);
+  const [discounts, setDiscounts] = useState([]);
 
   const [open, setOpen] = useState(false);
 
-  let arr = [['1', '2', '3'], ['1', '2', '3', '1', '2',]];
-
-  let temp = [];
   const getAll = async () => {
-    let discounts = [];
     try {
-      await getAllDiscount().then(data => discounts.push(data)).catch(err =>
-        toast.error(err.message));
+      const discounts = await getAllDiscount();
+      setDiscounts(discounts);
     } catch (error) {
       console.error('Error loading discount: ', error);
       toast.error(error.message);
     }
-
-    return discounts;
   };
 
   const handleClickToOpen = () => {
@@ -122,18 +114,13 @@ const TotalCart = () => {
 
   const style = {
     pointerEvents: 'none',
-
   };
-  console.log(getAll());
 
   return (
     <>
-
-      <Dialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"}   />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
-
+      <Dialog className="bg-sky-50" body={<DialogBody data={discounts} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
       {
         open ?
-
           <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full'></div> :
           <div className=''></div>
       }

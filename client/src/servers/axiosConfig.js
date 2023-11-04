@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:1203',
+  baseURL: 'http://localhost:1203/',
 });
 
 instance.interceptors.response.use(
-  function (response) {
+  function(response) {
     return response.data ? response.data : { success: response.success };
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   },
 );
