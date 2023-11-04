@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import UserSideNav from '../../components/UserSideNav';
 
 const UserLayout = ({ children }) => {
@@ -14,6 +14,10 @@ const UserLayout = ({ children }) => {
       </div>
     </div>
   );
+};
+
+UserLayout.propTypes = {
+  children: PropTypes.node,
 };
 
 export default UserLayout;

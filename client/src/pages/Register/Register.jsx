@@ -1,8 +1,39 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import { register } from '~/servers/accountService';
 
 const Register = () => {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [repassword, setRepassword] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleRegister = async () => {
+		try {
+			if (password !== repassword) {
+				toast.error('Your password in not match the RePasswords')
+				return
+			}
+			const res = await register('duong', username, password)
+
+      if (res.data !== null) {
+        navigate('/');
+
+        toast.success('Login successful!');
+      } else {
+        toast.error('Register failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="bg-orange">
       <div className="container">
@@ -15,6 +46,7 @@ const Register = () => {
                 // register={register}
                 type="email"
                 className="mt-8"
+                onChange={(event) => setUsername(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
               />
@@ -22,6 +54,7 @@ const Register = () => {
                 name="password"
                 // register={register}
                 type="password"
+                onChange={(event) => setPassword(event.target.value)}
                 className="mt-2"
                 classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.password?.message}
@@ -31,8 +64,9 @@ const Register = () => {
 
               <Input
                 name="confirm_password"
-                // register={register}
                 type="password"
+                // register={register}
+                onChange={(event) => setRepassword(event.target.value)}
                 className="mt-2"
                 classNameEye="absolute top-[9px] right-[13px] h-6 w-6 cursor-pointer"
                 // errorMessage={errors.confirm_password?.message}
@@ -42,9 +76,10 @@ const Register = () => {
 
               <div className="mt-2">
                 <Button
+                  type="Button"
+                  onClick={() => handleRegister()}
                   className="flex w-full items-center justify-center bg-red-500 py-3 px-2 text-sm uppercase text-white hover:bg-red-600"
-                  //   isLoading={registerAccountMutation.isLoading}
-                  //   disabled={registerAccountMutation.isLoading}
+                //   isLoading={registerAccountMutation.isLoading}
                 >
                   Đăng ký
                 </Button>

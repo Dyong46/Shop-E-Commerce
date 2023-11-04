@@ -33,7 +33,6 @@ const ProductDetail = () => {
     let res = await reviewProduct(idProduct);
     if (res) {
       setReviews(res);
-      // console.log(res);
     }
   };
 
@@ -140,12 +139,9 @@ const ProductDetail = () => {
     }
   };
 
-  console.log(todos, '<<<< todo');
-
   if (!product || !galleries) return null;
   return (
     <div>
-      <Header state={todos} />
       <div className="flex flex-col bg-pro justify-center">
         <div className="flex justify-center">
           <div className="bg-white max-w-6xl mt-5 flex flex-auto flex-row px-4 py-4">

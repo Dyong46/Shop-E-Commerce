@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Input = ({
   errorMessage,
@@ -63,6 +64,17 @@ const Input = ({
       <div className={classNameError}>{errorMessage}</div>
     </div>
   );
+};
+
+Input.propTypes = {
+  errorMessage: PropTypes.string,
+  className: PropTypes.string,
+  name: PropTypes.string,
+  register: PropTypes.func,
+  rules: PropTypes.array,
+  classNameInput: PropTypes.string,
+  classNameError: PropTypes.string,
+  classNameEye: PropTypes.string,
 };
 
 export default Input;

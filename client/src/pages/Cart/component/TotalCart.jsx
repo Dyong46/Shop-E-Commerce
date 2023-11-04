@@ -73,9 +73,9 @@ const TotalCart = () => {
             </div>
             <div className="flex ">
               <div className="flex justify-center self-center mr-6">
-                <p className="flex">
+                <div className="flex">
                   Tổng thanh toán ({carts.length} Sản phẩm): <p className="text-orange text-2xl">₫{money}</p>
-                </p>
+                </div>
               </div>
 
               <Link to={carts.length == 0 ? '/cart' : '/order'}>

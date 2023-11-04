@@ -1,4 +1,5 @@
 import { forwardRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 export const InputNumber = forwardRef(function InputNumberInner(
   {
@@ -37,5 +38,14 @@ export const InputNumber = forwardRef(function InputNumberInner(
     </div>
   );
 });
+
+InputNumber.propTypes = {
+  errorMessage: PropTypes.string,
+  className: PropTypes.string,
+  classNameInput: PropTypes.string,
+  classNameError: PropTypes.string,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+};
 
 export default InputNumber;
