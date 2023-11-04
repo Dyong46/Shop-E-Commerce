@@ -2,14 +2,14 @@ import Location from './components/Location';
 import Pay from './components/Pay';
 import Products from './components/Products';
 import Voucher from './components/Voucher';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 
 const Order = () => {
 
   const [carts] = useContext(CartContext);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickToOpen = () => {
     setOpen(true);
@@ -19,35 +19,37 @@ const Order = () => {
     setOpen(false);
   };
 
-  const DialogBodyLocation = (props) => {
-    return (
-      <>
-        <div className="overflow-y-auto h-96">
-          <LocationCard />
-        </div>
-      </>
-
-    )
-  }
-
-  console.log(carts, 'order');
   return (
-    <div className="bg-gray-50 pt-7 pb-20">
-      <Location />
-      <div className="h-7"></div>
-      {carts.map((item) => {
-        return (
-          <>
-            <Products item={item} />
-            <div className="h-7"></div>
-          </>
-        );
-      })}
+    <>
 
-      <Voucher />
-      <div className="h-7"></div>
-      <Pay />
-    </div>
+      <Dialog className="bg-sky-50" body={<LocationCard />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+
+      {
+        open ?
+
+          <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full'></div> :
+          <div className=''></div>
+      }
+
+      <div className="bg-gray-50 pt-7 pb-20">
+        <Location openDialog={handleClickToOpen} />
+        <div className="h-7"></div>
+        {carts.map((item) => {
+          return (
+            <>
+              <Products item={item} />
+              <div className="h-7"></div>
+            </>
+          );
+        })}
+
+        <Voucher />
+        <div className="h-7"></div>
+        <Pay />
+      </div>
+
+    </>
+
   );
 };
 

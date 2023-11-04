@@ -13,9 +13,10 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const res = await login(email, password, true)
-      if (res.data) {
+      console.log(res);
+      if (res) {
         navigate('/');
-				toast.success('Login successful!');
+        toast.success('Login successful!');
       } else {
         toast.error('Login failed. Please check your credentials.');
       }

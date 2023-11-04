@@ -6,7 +6,7 @@ import Input from '~/components/Input';
 import { register } from '~/servers/accountService';
 
 const Register = () => {
-
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
@@ -19,7 +19,7 @@ const Register = () => {
 				toast.error('Your password in not match the RePasswords')
 				return
 			}
-			const res = await register('duong', username, password)
+			const res = await register(email, username, password)
 
       if (res.data !== null) {
         navigate('/');
@@ -42,11 +42,19 @@ const Register = () => {
             <form className="rounded bg-white p-10 shadow-sm" noValidate>
               <div className="text-2xl">Đăng ký</div>
               <Input
+                name="username"
+                type="text"
+                className="mt-8"
+                onChange={(event) => setUsername(event.target.value)}
+                // errorMessage={errors.email?.message}
+                placeholder="Username"
+              />
+              <Input
                 name="email"
                 // register={register}
                 type="email"
                 className="mt-8"
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={(event) => setEmail(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
               />

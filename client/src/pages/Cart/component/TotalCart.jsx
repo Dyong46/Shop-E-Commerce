@@ -2,9 +2,10 @@ import { useContext, useState } from 'react';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import Dialog from '~/components/dialog/dialog';
-import VoucherCard from './VoucherCard'
+import VoucherCard from '~/components/dialog/card/VoucherCard'
 import { Link } from 'react-router-dom';
-import LocationCard from './locationCard';
+import { getAllDiscount } from '~/servers/discountService';
+import { stringify } from 'postcss';
 
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
@@ -45,9 +46,7 @@ const DialogBody = (props) => {
       </div>
       <div className="overflow-y-auto h-96">
 
-
         <div className="mb-2">Mã Miễn Phí Vận Chuyển</div>
-
 
         {
           props.data[0].slice(0, showmore ? props.data[0].length : 2)
@@ -66,23 +65,23 @@ const DialogBody = (props) => {
         </div>
 
 
-        <div className="mt-10 mb-2">Giảm Giá & Hoàn Xu</div>
-        {
-          props.data[1].slice(0, showmoreVoucher ? props.data[1].length : 2)
-            .map((item) => {
-              return (<VoucherCard group={"voucher2"} idVoucher={item} img={props.img} />);
-            })
-        }
-
-        <div className="flex flex-col justify-center mt-2">
-          {
-
-            showmoreVoucher ?
-              <ButtonHide handle={handleShowmoreVoucher} /> :
-              <ButtonShowmore handle={handleShowmoreVoucher} />
-          }
-
-        </div>
+        {/* <div className="mt-10 mb-2">Giảm Giá & Hoàn Xu</div> */}
+        {/* { */}
+        {/*   props.data[1].slice(0, showmoreVoucher ? props.data[1].length : 2) */}
+        {/*     .map((item) => { */}
+        {/*       return (<VoucherCard group={"voucher2"} idVoucher={item} img={props.img} />); */}
+        {/*     }) */}
+        {/* } */}
+        {/**/}
+        {/* <div className="flex flex-col justify-center mt-2"> */}
+        {/*   { */}
+        {/**/}
+        {/*     showmoreVoucher ? */}
+        {/*       <ButtonHide handle={handleShowmoreVoucher} /> : */}
+        {/*       <ButtonShowmore handle={handleShowmoreVoucher} /> */}
+        {/*   } */}
+        {/**/}
+        {/* </div> */}
       </div>
     </>
 
@@ -98,8 +97,23 @@ const TotalCart = () => {
 
   let arr = [['1', '2', '3'], ['1', '2', '3', '1', '2',]];
 
+  let temp = [];
+  const getAll = async () => {
+    let discounts = [];
+    try {
+      await getAllDiscount().then(data => discounts.push(data)).catch(err =>
+        toast.error(err.message));
+    } catch (error) {
+      console.error('Error loading discount: ', error);
+      toast.error(error.message);
+    }
+
+    return discounts;
+  };
+
   const handleClickToOpen = () => {
     setOpen(true);
+    getAll();
   };
 
   const handleToClose = () => {
@@ -110,11 +124,12 @@ const TotalCart = () => {
     pointerEvents: 'none',
 
   };
-  //
+  console.log(getAll());
+
   return (
     <>
 
-      <Dialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+      <Dialog className="bg-sky-50" body={<DialogBody data={arr} img={"#"}   />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
 
       {
         open ?

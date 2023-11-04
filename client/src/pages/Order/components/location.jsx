@@ -1,6 +1,10 @@
+import LocationCard from "~/components/dialog/card/locationCard";
+import Dialog from "~/components/dialog/dialog";
 
-const Location = () => {
+const Location = (props) => {
   return <div>
+
+
     <div className="container">
       <div className="max-w p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-White-800 ">
         <div className="flex flex-row">
@@ -20,7 +24,7 @@ const Location = () => {
           </p>
           <p className="mb-3 ml-3 font-normal text-gray-500 dark:text-gray-400">58 Trương Vĩnh Ký, Phường Tân Thành, Quận Tân Phú, TP. Hồ Chí Minh</p>
           <p className="text-xs font-bold ml-4 mt-1 dark:text-orange h-4 outline outline-1 outline-orange">Mặt Định</p>
-          <button onClick={handleClickToOpen} className="text-base mx-5 text-blue-600">
+          <button onClick={props.openDialog} className="text-base mx-5 text-blue-600">
             Thay đổi
           </button>
         </div>
