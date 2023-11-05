@@ -143,12 +143,13 @@ const Pay = ({ money, cart }) => {
           <div className="text-orange text-2xl min-w-[140px] text-end">đ{money + 27500}</div>
           <div className="">Tổng thanh toán</div>
         </div>
+        i
       </div>
       <div className="bg-[#fffefb] py-5 px-9 rouned-sm shadow">
         <div className="flex justify-between items-center">
           <div className="text-orange">
             Nhấn &quot;Đặt hàng&quot; đồng nghĩa với việc bạn đồng ý tuân theo
-            <Link to="/" className="ms-1 text-purple-800">
+            <Link to="/" className="ms-1 text-blue-700">
               Điều khoản Shopee
             </Link>
           </div>
