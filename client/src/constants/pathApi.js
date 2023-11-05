@@ -1,5 +1,5 @@
 const pathApi = {
-  account: '/api/accounts',
+  account: 'api/accounts',
 	product: 'api/products',
 	order: 'api/orders',
 	discount: 'api/discounts',
