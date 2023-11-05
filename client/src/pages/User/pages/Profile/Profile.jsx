@@ -97,19 +97,6 @@ const Profile = () => {
     setFile(file);
   };
 
-  const getProfile = async () => {
-    let res = await getAccountById(1);
-    if (res && res.email) {
-      dispatch(actions.login(res));
-    } else {
-      throw new Error('Could not find');
-    }
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
   if (profile.id === null) return null;
   return (
     <UserLayout>
