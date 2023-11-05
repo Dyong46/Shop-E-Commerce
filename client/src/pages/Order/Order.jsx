@@ -19,7 +19,7 @@ const Order = () => {
 
       <Voucher />
       <div className="h-7"></div>
-      <Pay money={money} />
+      <Pay money={money} cart={carts} />
     </div>
   );
 };

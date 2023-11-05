@@ -3,14 +3,13 @@ import UserLayout from '../../layouts/UserLayout';
 import { Link, createSearchParams } from 'react-router-dom';
 import path from '~/constants/path';
 import classNames from 'classnames';
-import { CartContext } from '~/Context/ContextCart/CartContext';
-import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import WaitForConfirmation from './Layout/WaitForConfirmation';
 import WaitingForDelivery from './Layout/WaitingForDelivery';
 import AreDelivery from './Layout/AreDelivery';
 import Delivery from './Layout/Delivery';
 import Cancelled from './Layout/Cancelled';
+import { getAllOrder, getAllOrderDetails } from '~/servers/OrderService';
 
 const purchaseTabs = [
   { status: purchasesStatus.all, name: 'Tất cả' },
@@ -22,11 +21,10 @@ const purchaseTabs = [
 ];
 
 const HistoryPurchase = () => {
-  const [carts] = useContext(CartContext);
-  const [money] = useContext(PriceContext);
-
   const [component, setComponent] = useState(null);
   const [param, setParam] = useState(null);
+  const [order, setOrder] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const get = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -52,7 +50,24 @@ const HistoryPurchase = () => {
     </Link>
   ));
 
+  const getAllOrders = async () => {
+    // let getAll = await getAllOrder();
+    let getAllDetails = await getAllOrderDetails();
+    let tong = 0;
+    if (getAllDetails) {
+      // console.log(getAll, 'order');
+      // console.log(getAllDetails, 'details');
+      setOrder(getAllDetails);
+
+      getAllDetails.map((item) => {
+        tong += item.amount;
+      });
+      setTotal(tong);
+    }
+  };
+
   useEffect(() => {
+    getAllOrders();
     if (param === '1') {
       setComponent(<WaitForConfirmation />);
     } else if (param === '0') {
@@ -78,20 +93,24 @@ const HistoryPurchase = () => {
             </div>
             <div>
               <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
-                {carts.map((item, index) => {
+                {order.map((item, index) => {
                   return (
-                    <Link to={`/`} className="flex mt-5" key={index}>
+                    <Link to={'/user/purchase'} className="flex mt-5" key={index}>
                       <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
+                        <img
+                          className="h-20 w-20 object-cover"
+                          src={item.product_id.img}
+                          alt={'purchase.product.name'}
+                        />
                       </div>
                       <div className="ml-3 flex-grow overflow-hidden w-[200px]">
-                        <div className="truncate">{item.nameproduct}</div>
+                        <div className="truncate">{item.product_id.name_product}</div>
                         <div className="mt-3">x{item.quantity}</div>
                       </div>
                       {component}
                       <div className="ml-3 flex-shrink-0">
                         <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.price * item.quantity}</span>
+                        <span className="ml-2 truncate text-orange">₫{item.amount}</span>
                       </div>
                     </Link>
                   );
@@ -100,7 +119,7 @@ const HistoryPurchase = () => {
                 <div className="flex justify-end">
                   <div>
                     <span>Tổng giá tiền</span>
-                    <span className="ml-4 text-xl text-orange">₫{money}</span>
+                    <span className="ml-4 text-xl text-orange">₫{total}</span>
                   </div>
                 </div>
               </div>

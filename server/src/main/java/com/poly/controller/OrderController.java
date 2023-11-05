@@ -1,6 +1,8 @@
 package com.poly.controller;
 
 import com.poly.entity.Order;
+import com.poly.entity.OrderDetail;
+import com.poly.service.OrderDetailsService;
 import com.poly.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class OrderController {
     @Autowired
     SendMailController sendMailController;
 
+    @Autowired
+    OrderDetailsService orderDetailsService;
+
     @GetMapping()
     public List<Order> getAll() {
         return orderService.getAllOrder();
@@ -30,11 +35,12 @@ public class OrderController {
 
     @GetMapping("/status")
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,
+
             @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
     }
 
-    @PostMapping()
+    @PostMapping("/post")
     public Order postSave(@RequestBody Order entity) {
         Order order = orderService.create(entity);
         String email = order.getAccount_id().getEmail();
@@ -58,5 +64,16 @@ public class OrderController {
     @PutMapping("/cancel/{id}")
     public Order cancelOrder(@PathVariable("id") Integer id) {
         return orderService.cancelOrder(id);
+    }
+
+    @PostMapping("/postdetails")
+    public OrderDetail postDetails(@RequestBody OrderDetail orderDetail){
+
+        return orderDetailsService.createOrderDetails(orderDetail);
+    }
+
+    @GetMapping("/details")
+    public List<OrderDetail> getAllDetails(){
+        return orderDetailsService.getAll();
     }
 }

@@ -1,4 +1,3 @@
-import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 import './style.scss';
 import { memo, useCallback, useEffect, useState } from 'react';
@@ -45,7 +44,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     getProductId(id);
-    console.log(product);
+    // console.log(product);
     getReview(id);
   }, [id]);
 

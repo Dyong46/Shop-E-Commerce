@@ -2,7 +2,92 @@ import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
 
-const Pay = ({ money }) => {
+import { postOrderDetails, postOrders } from '~/servers/OrderService';
+import pathApi from '~/constants/pathApi';
+
+import { productGetAll } from '~/servers/productService';
+
+const Pay = ({ money, cart }) => {
+  const date = new Date();
+  const currentDate = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate;
+  const currentMonth = date.getMonth() + 1;
+  const currentYear = date.getFullYear();
+  const formatDate = currentYear + '-' + currentMonth + '-' + currentDate;
+
+  const order = {
+    created_at: formatDate,
+    status_id: {
+      id: 1,
+      status: 'Đang vận chuyển',
+    },
+    total_amount: parseInt(money),
+    fullname: 'Minh Thư',
+    phone: '0123456789',
+    city: 'HCM',
+    district: 'District 1',
+    wards: 'Abc',
+    specific_address: 'A123',
+    account_id: {
+      id: 3,
+      email: 'vubinhminh@gmail.com',
+      username: 'minh123',
+      password: 'minh123',
+      fullname: 'Minh',
+      phone: '0252488655',
+      gender: true,
+      date_of_birth: '2006-01-10',
+      img: 'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',
+      created_at: '2020-02-02',
+      updated_at: '2022-12-12',
+      deleted_at: null,
+      role_id: {
+        id: 'user',
+        name: 'Người dùng',
+      },
+    },
+    discount_id: null,
+  };
+
+  const post = async (order) => {
+    let orderDetails = {
+      quantity: null,
+      amount: null,
+      order_id: null,
+      product_id: null,
+    };
+    let myobj = {};
+    let mang = [];
+    let getProduct = await productGetAll();
+    cart.map((item) => {
+      orderDetails.quantity = item.quantity;
+      orderDetails.amount = item.quantity * item.price;
+      orderDetails.order_id = order;
+      getProduct.map((pr) => {
+        if (pr.id == item.id) {
+          orderDetails.product_id = pr;
+          myobj = { ...myobj, ...orderDetails };
+          mang.push(myobj);
+        }
+      });
+    });
+    console.log(mang);
+    mang.map((item) => {
+      postOrderDetail(`${pathApi.order + '/postdetails'}`, item);
+    });
+  };
+  const postOrderDetail = async (url, item) => {
+    let post = await postOrderDetails(url, item);
+    if (post) {
+      console.log(post);
+    }
+  };
+  const postOrder = async () => {
+    let postOrderss = await postOrders(`${pathApi.order + '/post'}`, order);
+    if (postOrderss) {
+      post(postOrderss);
+    }
+  };
+
   return (
     <div className="container">
       <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow ">
@@ -67,8 +152,9 @@ const Pay = ({ money }) => {
               Điều khoản Shopee
             </Link>
           </div>
-          <Link to={'/user/purchase'}>
+          <Link to={''}>
             <Button
+              onClick={postOrder}
               type="submit"
               className="flex items-center justify-center bg-red-500 py-2 rounded-sm px-20  text-white hover:bg-red-600"
             >
@@ -82,6 +168,7 @@ const Pay = ({ money }) => {
 };
 Pay.propTypes = {
   money: PropTypes.number,
+  cart: PropTypes.array,
 };
 
 export default Pay;

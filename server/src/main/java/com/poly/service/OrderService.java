@@ -1,6 +1,8 @@
 package com.poly.service;
 
 import com.poly.entity.Order;
+import com.poly.entity.OrderDetail;
+
 import java.util.List;
 
 public interface OrderService {
@@ -11,6 +13,8 @@ public interface OrderService {
     Order create(Order entity);
 
     Order cancelOrder(Integer id);
+
+
 
     List<Order> getAllOrderById(Integer id, String status);
 }
