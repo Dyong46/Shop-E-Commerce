@@ -50,7 +50,7 @@ const DialogBody = (props) => {
 
         <div className="mb-2">Mã Miễn Phí Vận Chuyển</div>
         {
-          props.data.slice(0, showmore ? props.data.length : 3)
+          props.data.slice(0, showmore ? props.data.length : 1)
             .map((item, index) => {
               return (<VoucherCard group={"voucher"} key={index} data={item} />);
             })
@@ -122,6 +122,10 @@ const Order = () => {
     setOpenVoucher(false);
   };
 
+  function close() {
+    handleToClose();
+    handleToCloseVoucher();
+  }
 
   return (
     <>
@@ -130,8 +134,7 @@ const Order = () => {
 
       {
         open || openVoucher ?
-
-          <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full'></div> :
+          <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full' onClick={close}></div> :
           <div className=''></div>
       }
 
