@@ -1,5 +1,7 @@
 import api from './axiosConfig';
 import pathApi from '~/constants/pathApi';
+import * as Bytescale from "@bytescale/sdk";
+import config from '~/constants/config';
 
 const getAllAccounts = () => {
   return api.get(`${pathApi.account}`);
@@ -33,14 +35,8 @@ const changePassword = (data) => {
 	return api.post(`${pathApi.account}/change-password`, data)
 }
 
-const uploadAvatar = (body) => {
-	const apiKey = '6d207e02198a847aa98d0a2a901485a5';
-	
-	return api.post(`http://freeimage.host/api/1/upload/?key=${apiKey}`, body, {
-		headers: {
-			'Content-Type': 'multipart/form-data'
-		}
-	})
-}
+const uploadManager = new Bytescale.UploadManager({
+	apiKey: config.apiKey
+});
 
-export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword, uploadAvatar };
+export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword, uploadManager };
