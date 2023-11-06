@@ -114,12 +114,16 @@ const TotalCart = () => {
     pointerEvents: 'none',
   };
 
+  function close() {
+    handleToClose();
+  }
+
   return (
     <>
       <Dialog className="bg-sky-50" body={<DialogBody data={discounts} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
       {
         open ?
-          <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full'></div> :
+          <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full' onClick={close}></div> :
           <div className=''></div>
       }
       <div style={open ? style : {}} className="flex justify-center justify-content-center mt-6 mb-5 ">
