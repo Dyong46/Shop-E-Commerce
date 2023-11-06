@@ -1,9 +1,11 @@
+import Dialog from '~/components/dialog/dialog';
 import Location from './components/Location';
 import Pay from './components/Pay';
 import Products from './components/Products';
 import Voucher from './components/Voucher';
 import { useContext, useState } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
+import LocationCard from '~/components/dialog/card/locationCard';
 
 const Order = () => {
 
