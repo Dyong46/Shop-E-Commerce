@@ -1,11 +1,12 @@
 import Footer from '~/components/Footer';
-import HeaderOrder from '~/components/Header/HeaderOrder';
+import Header from '~/components/Header';
 import PropTypes from 'prop-types';
+import TinyHeader from '~/components/Header/TinyHeader';
 
 const OrderLayout = ({ children }) => {
   return (
     <div>
-      <HeaderOrder />
+      <TinyHeader />
       {children}
       <Footer />
     </div>
