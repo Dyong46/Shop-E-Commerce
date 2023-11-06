@@ -14,12 +14,12 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-		try {
-			if (password !== repassword) {
-				toast.error('Your password in not match the RePasswords')
-				return
-			}
-			const res = await register(email, username, password)
+    try {
+      if (password !== repassword) {
+        toast.error('Your password in not match the RePasswords')
+        return
+      }
+      const res = await register(email, username, password)
 
       if (res.data !== null) {
         navigate('/');
@@ -53,7 +53,7 @@ const Register = () => {
                 name="email"
                 // register={register}
                 type="email"
-                className="mt-8"
+                className="mt-2"
                 onChange={(event) => setEmail(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"

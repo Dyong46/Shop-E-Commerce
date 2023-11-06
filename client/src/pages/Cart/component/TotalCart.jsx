@@ -3,10 +3,8 @@ import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import Dialog from '~/components/dialog/dialog';
 import VoucherCard from '~/components/dialog/card/VoucherCard';
-import LocationCard from '~/components/dialog/card/LocationCard';
 import { Link } from 'react-router-dom';
 import { getAllDiscount } from '~/servers/discountService';
-import { stringify } from 'postcss';
 
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
