@@ -3,7 +3,8 @@ const Dialog = (props) => {
   const style = {
     minWidth: '600px',
     maxWidth: '700px',
-    margin: '3px,'
+    margin: '3px,',
+    paddingTop: '10px'
   };
   return (
 
@@ -24,12 +25,18 @@ const Dialog = (props) => {
         <div className="m-3">{props.body}</div>
 
         <div className="flex m-3">
-          <div className="">{props.name}</div>
           <div className="grow" />
-          <button className="" onClick={props.handleToClose}
-            color="primary" autoFocus>
-            Close
-          </button>
+          <div>
+            <button className="w-24 mx-2 p-2 text-sm bg-orange text-white" onClick={props.handleToClose}
+              color="primary" autoFocus>
+              Xác Nhận
+            </button>
+
+            <button className="w-24 mx-2 p-2 text-sm border border-orange" onClick={props.handleToClose}
+              color="primary" autoFocus>
+              Close
+            </button>
+          </div>
         </div>
 
       </div>
