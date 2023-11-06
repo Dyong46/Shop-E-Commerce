@@ -125,7 +125,7 @@ const Order = () => {
 
   return (
     <>
-      <Dialog className="bg-sky-50" body={<LocationCard />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+      <Dialog className="bg-sky-50" body={<LocationCard />} name={'Chọn địa chỉ'} open={open} handleToClose={handleToClose} />
       <Dialog className="bg-sky-50" body={<DialogBody data={discounts} />} name={'Chọn Shopee Voucher'} open={openVoucher} handleToClose={handleToCloseVoucher} />
 
       {
