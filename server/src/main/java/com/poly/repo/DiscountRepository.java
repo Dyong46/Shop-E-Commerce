@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DiscountRepository extends JpaRepository<Discount, Integer> {
 
-    @Query("select o from  Discount o where  o.name = :name")
+    @Query("SELECT o FROM Discount o WHERE o.name LIKE '%' + :name + '%'")
     Discount findDiscountByName(String name);
 
     @Query("select o from  Discount o where  o.id = :id")

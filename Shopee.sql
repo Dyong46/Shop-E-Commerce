@@ -92,6 +92,7 @@ GO
 CREATE TABLE [reviews] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [comment] nvarchar(255),
+  [created_at] date,
   [account_id] integer,
   [product_id] integer
 )
@@ -248,12 +249,12 @@ GO
 
 -- Add Data
 
-INSERT INTO reviews (comment, account_id, product_id)
+INSERT INTO reviews (comment,created_at ,account_id, product_id)
 VALUES 
-(N'Tuyệt vời', 1, 1),
-(N'Chất lượng cao', 2, 2),
-(N'Rẻ', 3, 3),
-(N'Tuyệt vời', 1, 2)
+(N'Tuyệt vời','2023-08-04', 1, 1),
+(N'Chất lượng cao','2023-09-08', 2, 2),
+(N'Rẻ','2023-02-10', 3, 3),
+(N'Tuyệt vời','2023-08-15', 1, 2)
 GO
 
 INSERT INTO order_status (status)

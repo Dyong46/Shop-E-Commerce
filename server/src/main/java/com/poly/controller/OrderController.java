@@ -3,6 +3,7 @@ package com.poly.controller;
 import com.poly.entity.Order;
 import com.poly.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,26 @@ public class OrderController {
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,
             @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
+    }
+
+    @PostMapping("/pay")
+    public ResponseEntity<Order> payment(@RequestParam("order_id") Integer id){
+        Order orderCheck = orderService.getOrderById(id);
+        if(orderCheck == null){
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderService.setStatusPayment(id);
+        return ResponseEntity.ok(order);
+    }
+
+    @PostMapping("/complete")
+    public ResponseEntity<Order> completeOrder(@RequestParam("order_id") Integer id){
+        Order orderCheck = orderService.getOrderById(id);
+        if(orderCheck == null){
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderService.setStatusComplete(id);
+        return ResponseEntity.ok(order);
     }
 
     @PostMapping()

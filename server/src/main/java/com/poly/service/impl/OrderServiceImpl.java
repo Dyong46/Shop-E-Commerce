@@ -1,5 +1,6 @@
 package com.poly.service.impl;
 
+import com.poly.constant.StatusOrder;
 import com.poly.entity.Order;
 import com.poly.entity.OrderStatus;
 import com.poly.repo.OrderRepository;
@@ -22,6 +23,26 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrder(){
         return orderRepository.findAll();
+    }
+
+    @Override
+    public Order setStatusPayment(Integer id) {
+        Order order = getOrderById(id);
+        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN);
+        order.setStatus_id(orderStatus);
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order setStatusComplete(Integer id) {
+        Order order = getOrderById(id);
+        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_GIAO);
+        order.setStatus_id(orderStatus);
+        return orderRepository.save(order);
+    }
+    @Override
+    public Order getOrderById(Integer id) {
+        return orderRepository.getOrderById(id);
     }
 
     @Override
