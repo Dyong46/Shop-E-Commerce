@@ -34,7 +34,9 @@ const changePassword = (data) => {
 }
 
 const uploadAvatar = (body) => {
-	return api.post('https://api-ecom.duthanhduoc.com/user/upload-avatar', body, {
+	const apiKey = '6d207e02198a847aa98d0a2a901485a5';
+	
+	return api.post(`http://freeimage.host/api/1/upload/?key=${apiKey}`, body, {
 		headers: {
 			'Content-Type': 'multipart/form-data'
 		}

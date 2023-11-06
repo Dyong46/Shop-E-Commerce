@@ -68,8 +68,9 @@ const Profile = () => {
         const form  = new FormData()
         form.append('image', file)
 				const uploadRes = await uploadAvatar(form)
-				avatarName = uploadRes.data.data
-				setValue('avatar', avatarName)
+				console.log(uploadRes);
+				// avatarName = uploadRes.data.data
+				// setValue('avatar', avatarName)
       }
 			// const res = await updateAccount(profile.id, {
 			// 	...data
