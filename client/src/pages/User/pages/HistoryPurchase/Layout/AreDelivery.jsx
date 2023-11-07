@@ -11,4 +11,5 @@ const AreDelivery = () => {
     </div>
   );
 };
+
 export default AreDelivery;

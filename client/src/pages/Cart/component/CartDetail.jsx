@@ -164,7 +164,7 @@ const CartDetails = ({ cart, index }) => {
               <div className="">
                 <input
                   className="w-10 h-6 justify-content-center check-item"
-                  onChange={() => {
+                  onClick={() => {
                     getPriceProduct(index, cart.checked);
                   }}
                   type="checkbox"

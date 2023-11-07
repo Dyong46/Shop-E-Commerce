@@ -16,4 +16,8 @@ const getAllOrderDetails = () => {
 const postOrderDetails =(url,obj)=>{
     return api.post(url,obj)
 }
-export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails}
+
+const getOrderByAccount = (id) => {
+    return api.get(`${pathApi.order}`+'/details/'+`${id}`)
+}
+export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount}

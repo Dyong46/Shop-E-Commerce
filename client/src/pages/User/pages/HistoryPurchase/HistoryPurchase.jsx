@@ -9,7 +9,8 @@ import WaitingForDelivery from './Layout/WaitingForDelivery';
 import AreDelivery from './Layout/AreDelivery';
 import Delivery from './Layout/Delivery';
 import Cancelled from './Layout/Cancelled';
-import { getAllOrder, getAllOrderDetails } from '~/servers/OrderService';
+import { useStore } from '~/Context/Account';
+import { getOrderByAccount } from '~/servers/OrderService';
 
 const purchaseTabs = [
   { status: purchasesStatus.all, name: 'Tất cả' },
@@ -21,7 +22,8 @@ const purchaseTabs = [
 ];
 
 const HistoryPurchase = () => {
-  const [component, setComponent] = useState(null);
+  const [state] = useStore();
+  const { profile } = state;
   const [param, setParam] = useState(null);
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
@@ -52,7 +54,7 @@ const HistoryPurchase = () => {
 
   const getAllOrders = async () => {
     // let getAll = await getAllOrder();
-    let getAllDetails = await getAllOrderDetails();
+    let getAllDetails = await getOrderByAccount(profile.id);
     let tong = 0;
     if (getAllDetails) {
       // console.log(getAll, 'order');
@@ -60,7 +62,7 @@ const HistoryPurchase = () => {
       setOrder(getAllDetails);
 
       getAllDetails.map((item) => {
-        tong += item.amount;
+        tong += item.quantity * item.price;
       });
       setTotal(tong);
     }
@@ -68,19 +70,6 @@ const HistoryPurchase = () => {
 
   useEffect(() => {
     getAllOrders();
-    if (param === '1') {
-      setComponent(<WaitForConfirmation />);
-    } else if (param === '0') {
-      setComponent(null);
-    } else if (param === '2') {
-      setComponent(<WaitingForDelivery />);
-    } else if (param === '3') {
-      setComponent(<AreDelivery />);
-    } else if (param === '4') {
-      setComponent(<Delivery />);
-    } else if (param === '5') {
-      setComponent(<Cancelled />);
-    }
   }, [param]);
 
   return (
@@ -95,22 +84,18 @@ const HistoryPurchase = () => {
               <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
                 {order.map((item, index) => {
                   return (
-                    <Link to={'/user/purchase'} className="flex mt-5" key={index}>
+                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
                       <div className="flex-shrink-0">
-                        <img
-                          className="h-20 w-20 object-cover"
-                          src={item.product_id.img}
-                          alt={'purchase.product.name'}
-                        />
+                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
                       </div>
-                      <div className="ml-3 flex-grow overflow-hidden w-[200px]">
-                        <div className="truncate">{item.product_id.name_product}</div>
+                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
+                        <div className="truncate">{item.name_product}</div>
                         <div className="mt-3">x{item.quantity}</div>
                       </div>
-                      {component}
-                      <div className="ml-3 flex-shrink-0">
+                      <WaitForConfirmation order={item.id_order} param={param} />
+                      <div className="ml-3 flex-shrink-0 w-[100px]">
                         <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.amount}</span>
+                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
                       </div>
                     </Link>
                   );

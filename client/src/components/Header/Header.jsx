@@ -206,7 +206,7 @@ const Header = () => {
                   <Link to="/user/profile" className="text-black m-3 flex justify-start hover:text-orange">
                     Tài khoản của tôi
                   </Link>
-                  <Link to="/order" className="text-black m-3 flex justify-start hover:text-orange">
+                  <Link to="/user/purchase" className="text-black m-3 flex justify-start hover:text-orange">
                     Đơn mua
                   </Link>
                   <Link to="/login" className="text-black m-3 flex justify-start hover:text-orange">

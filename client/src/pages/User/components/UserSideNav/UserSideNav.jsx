@@ -64,7 +64,7 @@ const UserSideNav = () => {
           Đổi mật khẩu
         </NavLink>
         <NavLink
-          to={'/user/purchase'}
+          to={'/user/purchase?status=0'}
           className={({ isActive }) =>
             classNames('mt-4 flex items-center capitalize  transition-colors', {
               'text-orange': isActive,

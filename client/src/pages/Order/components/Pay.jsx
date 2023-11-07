@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
-
 import { postOrderDetails, postOrders } from '~/servers/OrderService';
 import pathApi from '~/constants/pathApi';
-
+import { useStore } from '~/Context/Account';
 import { productGetAll } from '~/servers/productService';
 
 const Pay = ({ money, cart }) => {
+  const [state] = useStore();
+  const { profile } = state;
   const date = new Date();
   const currentDate = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate;
   const currentMonth = date.getMonth() + 1;
@@ -21,30 +22,13 @@ const Pay = ({ money, cart }) => {
       status: 'Đang vận chuyển',
     },
     total_amount: parseInt(money),
-    fullname: 'Minh Thư',
+    fullname: profile.username,
     phone: '0123456789',
     city: 'HCM',
     district: 'District 1',
     wards: 'Abc',
     specific_address: 'A123',
-    account_id: {
-      id: 3,
-      email: 'vubinhminh@gmail.com',
-      username: 'minh123',
-      password: 'minh123',
-      fullname: 'Minh',
-      phone: '0252488655',
-      gender: true,
-      date_of_birth: '2006-01-10',
-      img: 'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',
-      created_at: '2020-02-02',
-      updated_at: '2022-12-12',
-      deleted_at: null,
-      role_id: {
-        id: 'user',
-        name: 'Người dùng',
-      },
-    },
+    account_id: profile,
     discount_id: null,
   };
 
