@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 
 const Pay = () => {
+  const [payWith, setPayWith] = useState('');
+
   return (
     <div className="container">
       <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow ">
@@ -12,7 +15,8 @@ const Pay = () => {
           </div>
           <Button
             type="button"
-            className="flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "
+            className={payWith === "shopeePay" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+            onClick={() => { setPayWith('shopeePay') }}
           >
             Ví Shopee
           </Button>
@@ -30,11 +34,18 @@ const Pay = () => {
           </Button>
           <Button
             type="button"
-            className="flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "
+            className={payWith === "recive" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+            onClick={() => { setPayWith('recive') }}
           >
             Thanh toán khi nhận hàng
           </Button>
-
+          <Button
+            type="button"
+            className={payWith === "vnPay" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+            onClick={() => { setPayWith('vnPay') }}
+          >
+            Thanh toán VNPay
+          </Button>
           {/* </div> */}
         </div>
         {/* <div className="col-span-6">
@@ -74,7 +85,7 @@ const Pay = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

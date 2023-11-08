@@ -160,7 +160,7 @@ const TinyHeader = () => {
               <button
                 onMouseOver={handleMouseOverUser}
                 onMouseOut={handleMouseOutUser}
-                className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
+                className="relative py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
                 onClick={() => { }}
               >
                 <div className="block h-4 w-4 mr-1 rounded-full bg-white">h</div>
