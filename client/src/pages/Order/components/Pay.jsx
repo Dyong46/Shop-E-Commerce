@@ -62,7 +62,7 @@ const Pay = () => {
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-gray-400 text-sm min-w-[140px] text-end">đ14.000</div>
-          <div className="">Phí vận chuyển</div>
+          <div className="">Phí vận chuiyển</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-orange text-2xl min-w-[140px] text-end">đ149.000</div>
@@ -73,7 +73,7 @@ const Pay = () => {
         <div className="flex justify-between items-center">
           <div className="text-orange">
             Nhấn &quot;Đặt hàng&quot; đồng nghĩa với việc bạn đồng ý tuân theo
-            <Link to="/" className="ms-1 text-purple-800">
+            <Link to="/" className="ms-1 text-blue-700">
               Điều khoản Shopee
             </Link>
           </div>

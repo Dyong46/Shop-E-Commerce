@@ -258,8 +258,10 @@ GO
 
 INSERT INTO order_status (status)
 VALUES
-(N'Đang vận chuyển'),
-(N'Đã nhận')
+(N'Cho xac nhan'),
+(N'Dang giao'),
+(N'Da giao'),
+(N'Da huy')
 GO
 
 INSERT INTO orders (created_at, status_id, total_amount, account_id, fullname,  phone, city, district, wards, specific_address, discount_id)

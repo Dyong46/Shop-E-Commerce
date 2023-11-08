@@ -4,7 +4,7 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
 import InputNumber from '~/components/InputNumber';
-import { getAccountById } from '~/servers/accountService';
+import { getAccountById, updateAccount, uploadAvatar } from '~/servers/accountService';
 import { actions, useStore } from '~/Context/Account';
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from '~/utils/utils';
 import UserLayout from '../../layouts/UserLayout';
@@ -12,6 +12,7 @@ import DateSelect from '../../components/DateSelect';
 import GenderRadio from '../../components/GenderRadio';
 import { userSchema } from '~/utils/rules';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
 
 const profileSchema = userSchema.pick(['name', 'username', 'phone', 'date_of_birth', 'avatar']);
 
@@ -62,12 +63,20 @@ const Profile = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      let avaterName = avatar
+      let avatarName = avatar
       if(file) {
         const form  = new FormData()
         form.append('image', file)
+				const uploadRes = await uploadAvatar(form)
+				avatarName = uploadRes.data.data
+				setValue('avatar', avatarName)
       }
+			// const res = await updateAccount(profile.id, {
+			// 	...data
+			// })
+			// console.log(res);
       console.log(data);
+			toast.success('Update account successful')
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
         const formError = error.response?.data.data;
@@ -87,19 +96,6 @@ const Profile = () => {
   const handleChangeFile = (file) => {
     setFile(file);
   };
-
-  const getProfile = async () => {
-    let res = await getAccountById(1);
-    if (res && res.email) {
-      dispatch(actions.login(res));
-    } else {
-      throw new Error('Could not find');
-    }
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
 
   if (profile.id === null) return null;
   return (

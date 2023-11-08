@@ -7,6 +7,7 @@ import UserLayout from '../../layouts/UserLayout';
 import { useStore } from '~/Context/Account';
 import { userSchema } from '~/utils/rules';
 import { isAxiosUnprocessableEntityError } from '~/utils/utils';
+import { changePassword } from '~/servers/accountService';
 
 const passwordSchema = userSchema.pick(['password', 'new_password', 'confirm_password']);
 
@@ -31,15 +32,20 @@ const ChangePassword = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      if ('thu123' === data.password) {
-        toast.success('Change password success');
-        reset();
-      } else {
-        setError('password', {
+			const res = await changePassword({
+				id: profile.id,
+				oldPassword: data.password,
+				newPassword: data.newPassword
+			})
+			if(res) {
+				toast.success('Change password success');
+				reset();
+			}else {
+				setError('password', {
           type: 'custom',
           message: 'Wrong password',
         });
-      }
+			}
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
         const formError = error.response?.data.data;
