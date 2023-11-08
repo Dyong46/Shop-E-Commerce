@@ -56,7 +56,7 @@ const Pay = () => {
         <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-orange text-2xl min-w-[140px] text-end">đ149.000</div>
           <div className="">Tổng thanh toán</div>
-        </div>i
+        </div>
       </div>
       <div className="bg-[#fffefb] py-5 px-9 rouned-sm shadow">
         <div className="flex justify-between items-center">
