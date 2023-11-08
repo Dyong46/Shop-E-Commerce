@@ -1,7 +1,8 @@
-import { LOGIN, CHANGE_PROFILE } from './constants';
+import { LOGIN, CHANGE_PROFILE, IS_AUTHENTICATED } from './constants';
 
 const initState = {
   profile: {},
+	isAuthenticated: false,
 };
 
 const reducer = (state, action) => {
@@ -16,6 +17,11 @@ const reducer = (state, action) => {
         ...state,
         profile: action.payload,
       };
+		case IS_AUTHENTICATED:
+			return {
+				...state,
+				isAuthenticated: action.payload,
+			}
   }
 };
 

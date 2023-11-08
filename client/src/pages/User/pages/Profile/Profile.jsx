@@ -4,7 +4,7 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
 import InputNumber from '~/components/InputNumber';
-import { getAccountById, updateAccount, uploadManager } from '~/servers/accountService';
+import { updateAccount, uploadManager } from '~/servers/accountService';
 import { actions, useStore } from '~/Context/Account';
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from '~/utils/utils';
 import UserLayout from '../../layouts/UserLayout';
