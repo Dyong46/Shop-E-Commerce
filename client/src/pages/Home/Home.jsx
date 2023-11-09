@@ -4,8 +4,11 @@ import Product from './components/Product';
 import SortProductList from './components/SortProductList';
 import { productGetAll } from '~/servers/productService';
 import { categoriesGetAll } from '~/servers/categoryService';
+import useQueryConfig from '~/hooks/useQueryConfig';
 
 const Home = () => {
+	const queryConfig = useQueryConfig();
+	
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
 
