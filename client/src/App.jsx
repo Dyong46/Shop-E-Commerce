@@ -6,10 +6,11 @@ import RegisterLayout from './layouts/RegisterLayout/RegisterLayout';
 import CartLayout from './layouts/CartLayout/CartLayout';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HelmetProvider } from 'react-helmet-async'
 
 function App() {
   return (
-    <>
+    <HelmetProvider>
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
@@ -50,7 +51,7 @@ function App() {
           pauseOnHover={false}
         />
       </div>
-    </>
+    </HelmetProvider>
   );
 }
 
