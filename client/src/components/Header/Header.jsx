@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import path from '~/constants/path';
 import { useStore } from '~/Context';
 import CartListItem from './components/cart-list-item';
 
@@ -128,7 +127,7 @@ const Header = () => {
                 <button
                   className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
                   key={index}
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   {item}
                 </button>
@@ -169,7 +168,7 @@ const Header = () => {
                   key={index}
                   onMouseOver={item.id == 'language' ? handleMouseOver : handleMouseOut}
                   onMouseOut={handleMouseOut}
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   {item.icon}
                   {item.title}
@@ -181,7 +180,7 @@ const Header = () => {
                 onMouseOver={handleMouseOverUser}
                 onMouseOut={handleMouseOutUser}
                 className="py-2 px-3 flex align-center text-xs text-left hover:text-gray-200"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 <div className="block h-4 w-4 mr-1 rounded-full bg-white">h</div>
                 User
@@ -216,6 +215,7 @@ const Header = () => {
               )}
             </div>
           </div>
+
           <div className="mt-4 flex flex-cols-12 align-center justify-center items-end gap-4">
             <Link to="/" className="col-span-2 pb-7">
               <svg viewBox="0 0 192 65" className="h-12 w-full fill-white">
@@ -276,16 +276,16 @@ const Header = () => {
                 </div>
               </form>
               <div className="flex flex-row mr-5">
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
-                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => {}}>
+                <button className="py-2 px-3 text-xs text-left hover:text-orange" onClick={() => { }}>
                   Thông báo
                 </button>
               </div>
