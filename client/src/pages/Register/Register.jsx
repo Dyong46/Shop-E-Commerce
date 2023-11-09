@@ -6,7 +6,7 @@ import Input from '~/components/Input';
 import { register } from '~/servers/accountService';
 
 const Register = () => {
-
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +44,6 @@ const Register = () => {
               <div className="text-2xl">Đăng ký</div>
               <Input
                 name="username"
-                // register={register}
                 type="text"
                 className="mt-8"
                 onChange={(event) => setUsername(event.target.value)}
@@ -55,7 +54,7 @@ const Register = () => {
                 name="email"
                 // register={register}
                 type="email"
-                className="mt-8"
+                className="mt-2"
                 onChange={(event) => setEmail(event.target.value)}
                 // errorMessage={errors.email?.message}
                 placeholder="Email"
