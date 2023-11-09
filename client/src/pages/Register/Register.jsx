@@ -53,27 +53,6 @@ const Register = () => {
 		}
 	})
 
-	// const handleRegister = async () => {
-	// 	try {
-	// 		if (password !== repassword) {
-	// 			toast.error('Your password in not match the RePasswords')
-	// 			return
-	// 		}
-	// 		const res = await register(username, email, password)
-
-	// 		if (res.data !== null) {
-	// 			navigate('/');
-
-	// 			toast.success('Login successful!');
-	// 		} else {
-	// 			toast.error('Register failed. Please check your credentials.');
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('Error during login:', error);
-	// 		toast.error(error.message);
-	// 	}
-	// };
-
 	return (
 		<div className="bg-orange">
 			<Helmet>
