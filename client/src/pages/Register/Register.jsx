@@ -8,7 +8,6 @@ import { register } from '~/servers/accountService';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
 
