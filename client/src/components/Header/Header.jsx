@@ -125,7 +125,7 @@ const Header = () => {
 			<div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white">
 				<div className="container">
 					<NavHeader />
-					<div className="flex justify-between">
+					{/* <div className="flex justify-between">
 						<div className="flex justify-center align-center my-1">
 							{datasLeft.map((item, index) => (
 								<button
@@ -218,7 +218,7 @@ const Header = () => {
 								</div>
 							)}
 						</div>
-					</div>
+					</div> */}
 					<div className="mt-4 flex flex-cols-12 align-center justify-center items-end gap-4">
 						<Link to="/" className="col-span-2 pb-7">
 							<svg viewBox="0 0 192 65" className="h-12 w-full fill-white">
