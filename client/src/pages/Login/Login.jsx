@@ -30,6 +30,7 @@ const Login = () => {
 			console.log(res);
 			if (res?.id && res?.email) {
 				dispatch(actions.setProfile(res));
+				dispatch(actions.setIsAuthenticated(true))
 				navigate('/');
 				toast.success('Login successful!');
 			} else {

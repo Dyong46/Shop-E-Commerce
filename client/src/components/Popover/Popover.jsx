@@ -13,9 +13,9 @@ import {
   useDismiss,
   useRole,
   useInteractions,
-  safePolygon,
-} from '@floating-ui/react';
-import { motion, AnimatePresence } from 'framer-motion';
+  safePolygon
+} from '@floating-ui/react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const Popover = ({
   children,
@@ -26,7 +26,7 @@ const Popover = ({
   placement = 'bottom-end',
 }) => {
   const [open, setOpen] = useState(initialOpen || false);
-  const arrowRef = useRef < HTMLElement > null;
+  const arrowRef = useRef(null);
   const data = useFloating({
     open,
     onOpenChange: setOpen,
@@ -42,6 +42,7 @@ const Popover = ({
   const role = useRole(context, { role: 'tooltip' });
   const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
   const id = useId();
+	
   return (
     <Element className={className} ref={refs.setReference} {...getReferenceProps()}>
       {children}
@@ -68,7 +69,7 @@ const Popover = ({
                   top: data.middlewareData.arrow?.y,
                 }}
               />
-              {console.log(renderPopover)}
+              {renderPopover}
             </motion.div>
           )}
         </AnimatePresence>
