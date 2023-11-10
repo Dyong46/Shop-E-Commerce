@@ -1,14 +1,16 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:1203',
+  baseURL: 'http://localhost:1203/',
+  urlVnPay: 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html',
+  urlVnPayApi: 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction',
 });
 
 instance.interceptors.response.use(
-  function (response) {
+  function(response) {
     return response.data ? response.data : { success: response.success };
   },
-  function (error) {
+  function(error) {
     return Promise.reject(error);
   },
 );

@@ -1,5 +1,6 @@
 import { range } from 'lodash';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const DateSelect = ({ value, onChange, errorMessage }) => {
   const [date, setDate] = useState({
@@ -79,6 +80,12 @@ const DateSelect = ({ value, onChange, errorMessage }) => {
       </div>
     </div>
   );
+};
+
+DateSelect.propTypes = {
+  value: PropTypes.object,
+  onChange: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 export default DateSelect;
