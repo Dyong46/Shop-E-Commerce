@@ -13,6 +13,7 @@ import ChangePassword from '~/pages/User/pages/ChangePassword';
 import HistoryPurchase from '~/pages/User/pages/HistoryPurchase';
 import { Fragment } from 'react';
 import ProductDetail from '~/pages/ProductDeatail';
+import Address from '~/pages/User/pages/Address';
 
 // Pulic routes
 export const publicRoutes = [
@@ -23,6 +24,7 @@ export const publicRoutes = [
   { path: '/user/profile', component: Profile },
   { path: '/order', component: Order, layout: OrderLayout },
   { path: '/user/password', component: ChangePassword },
+  { path: '/user/address', component: Address },
   { path: '/user/purchase', component: HistoryPurchase },
   { path: '/productdetail', component: ProductDetail, layout: Fragment },
   { path: '/:idProduct', component: ProductDetail },
