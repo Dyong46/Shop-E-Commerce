@@ -8,7 +8,7 @@ import { schema } from '~/utils/rules';
 import Input from '~/components/Input';
 import { actions, useStore } from '~/Context/Account';
 import { isAxiosUnprocessableEntityError } from '~/utils/utils';
-import { omit } from 'lodash';
+import omit from 'lodash/omit'
 import { Helmet } from 'react-helmet-async'
 import SocialLogin from '~/components/SocialLogin';
 
@@ -33,8 +33,10 @@ const Register = () => {
 			const res = await registerAuth(body)
 
 			if (res.data !== null) {
-				dispatch(actions)
+				dispatch(actions.setProfile(res));
+				dispatch(actions.setIsAuthenticated(true))
 				navigate('/');
+				toast.success('Register successful!');
 			} else {
 				toast.error('Register failed. Please check your credentials.');
 			}
