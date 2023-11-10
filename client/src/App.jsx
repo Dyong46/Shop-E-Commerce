@@ -5,10 +5,12 @@ import { Fragment } from 'react';
 import RegisterLayout from './layouts/RegisterLayout/RegisterLayout';
 import CartLayout from './layouts/CartLayout/CartLayout';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { HelmetProvider } from 'react-helmet-async'
 
 function App() {
   return (
-    <>
+    <HelmetProvider>
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
@@ -37,19 +39,19 @@ function App() {
             );
           })}
         </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </>
+    </HelmetProvider>
   );
 }
 

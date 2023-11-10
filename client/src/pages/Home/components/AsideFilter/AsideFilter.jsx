@@ -5,7 +5,6 @@ import path from '~/constants/path';
 import PropTypes from 'prop-types';
 
 const AsideFilter = ({ categories }) => {
-  // console.log(typeof categories, categories);
   return (
     <div className="py-4">
       <Link
