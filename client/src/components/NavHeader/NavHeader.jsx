@@ -88,7 +88,7 @@ const NavHeader = () => {
 						}
 					>
 						<div className='mr-2 h-6 w-6 flex-shrink-0'>
-							<img src={getAvatarUrl(profile?.avatar)} alt='avatar' className='h-full w-full rounded-full object-cover' />
+							<img src={getAvatarUrl(profile?.img)} alt='avatar' className='h-full w-full rounded-full object-cover' />
 						</div>
 						<div>{profile?.username}</div>
 					</Popover>

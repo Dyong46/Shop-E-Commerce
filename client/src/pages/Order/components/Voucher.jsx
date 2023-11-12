@@ -1,4 +1,4 @@
-const Voucher = () => {
+const Voucher = (props) => {
   return <div>
     <div className=" container ">
       <div className="max-w divide-y divide-dashed bg-white border border-gray-200 rounded-lg shadow dark:bg-White-800 ">
@@ -18,7 +18,9 @@ const Voucher = () => {
               </div>
             </div>
 
-            <div className=" w-full flex text-blue-700 flex-row-reverse">Chọn voucher</div>
+            <button onClick={props.openDialog} className="w-full flex text-blue-700 flex-row-reverse">
+              Chọn voucher
+            </button>
           </div>
           <div className="flex w-full p-6 columns-2">
             <div className="flex w-full">

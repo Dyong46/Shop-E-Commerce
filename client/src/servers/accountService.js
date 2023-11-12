@@ -27,7 +27,7 @@ const login = (email, password, remember) => {
 	return api.post(`${pathApi.account}/login?email=${email}&password=${password}&remember=${remember}`)
 }
 
-const register = (email, username, password) => {
+const register = ({email, username, password}) => {
 	return api.post(`${pathApi.account}/register?email=${email}&username=${username}&password=${password}`)
 }
 
