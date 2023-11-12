@@ -64,7 +64,6 @@ public class Account implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "account_id")
     private List<Review> reviews;
-
     @Override
     public String toString() {
         return "Account{" +

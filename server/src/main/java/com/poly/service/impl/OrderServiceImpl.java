@@ -36,10 +36,35 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order setStatusComplete(Integer id) {
         Order order = getOrderById(id);
-        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_GIAO);
+        System.out.println(order.getStatus_id().getId());
+        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
+        System.out.println(status.getId());
+        if(order.getStatus_id().getId().equals(status.getId())){
+            OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_GIAO);
+            order.setStatus_id(orderStatus);
+            System.out.println("success");
+        }else {
+            System.out.println("Can not set status");
+        }
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order setStatusShipping(Integer id) {
+        Order order = getOrderById(id);
+        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
         order.setStatus_id(orderStatus);
         return orderRepository.save(order);
     }
+
+    @Override
+    public Order setStatusCancel(Integer id) {
+        Order order = getOrderById(id);
+        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_HUY);
+        order.setStatus_id(orderStatus);
+        return orderRepository.save(order);
+    }
+
     @Override
     public Order getOrderById(Integer id) {
         return orderRepository.getOrderById(id);

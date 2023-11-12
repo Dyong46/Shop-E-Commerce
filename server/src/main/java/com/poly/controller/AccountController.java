@@ -35,9 +35,6 @@ public class AccountController {
     ChangePasswordService changePasswordService;
 
     @Autowired
-    SendMailController sendMailController;
-
-    @Autowired
     private EmailService emailService;
 
     @GetMapping()

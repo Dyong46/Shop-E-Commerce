@@ -4,9 +4,13 @@ import com.poly.entity.Product;
 import com.poly.repo.ProductRepository;
 import com.poly.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +18,26 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
+    @Override
+    public Page<Product> getAllProduct(HashMap<String, String> multipleParam){
+        Integer page;
+        Integer size;
+        if(multipleParam.get("page") == null) {
+            page = 0;
+        } else {
+            page = Integer.parseInt(multipleParam.get("page"));
+        }
+
+        if(multipleParam.get("size") == null) {
+            size=8;
+        } else {
+            size = Integer.parseInt(multipleParam.get("size"));
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findAll(pageable);
+    }
 
     @Override
     public List<Product> getAllProduct() {
@@ -77,5 +101,10 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
         return product;
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(Integer id) {
+        return productRepository.getProductsByCategory(id);
     }
 }

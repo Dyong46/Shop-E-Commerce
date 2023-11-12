@@ -1,8 +1,16 @@
 package com.poly.controller;
 
+import com.poly.Utils.ResponseBodyServer;
+import com.poly.constant.StatusOrder;
 import com.poly.entity.Order;
+import com.poly.entity.OrderStatus;
+import com.poly.repo.OrderRepository;
+import com.poly.service.EmailService;
 import com.poly.service.OrderService;
+import com.poly.service.OrderStatusService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +25,13 @@ public class OrderController {
     OrderService orderService;
 
     @Autowired
-    SendMailController sendMailController;
+    private EmailService emailService;
+
+    @Autowired
+    OrderStatusService orderStatusService;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @GetMapping()
     public List<Order> getAll() {
@@ -46,17 +60,47 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public ResponseEntity<Order> completeOrder(@RequestParam("order_id") Integer id){
+    public ResponseEntity<?> completeOrder(@RequestParam("order_id") Integer id) throws ChangeSetPersister.NotFoundException {
+        Order orderCheck = orderService.getOrderById(id);
+        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
+        ResponseBodyServer responseBodyServer;
+        if(orderCheck != null){
+            if(orderCheck.getStatus_id().getId().equals(status.getId())){
+                OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_GIAO);
+                orderCheck.setStatus_id(orderStatus);
+                orderRepository.save(orderCheck);
+                responseBodyServer = ResponseBodyServer.builder().statusCode(200).message("Successfully!").payload(orderCheck).build();
+            }else {
+                responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Can't set status because status might is shipping").payload(null).build();
+            }
+        }else {
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!"+orderCheck.getId()).payload(null).build();
+        }
+        return ResponseEntity.status(200).body(responseBodyServer);
+    }
+
+    @PostMapping("/shippping")
+    public ResponseEntity<Order> shippingOrder(@RequestParam("order_id") Integer id){
         Order orderCheck = orderService.getOrderById(id);
         if(orderCheck == null){
             return ResponseEntity.notFound().build();
         }
-        Order order = orderService.setStatusComplete(id);
+        Order order = orderService.setStatusShipping(id);
+        return ResponseEntity.ok(order);
+    }
+
+    @PostMapping("/cancel")
+    public ResponseEntity<Order> cancelStatusOrder(@RequestParam("order_id") Integer id){
+        Order orderCheck = orderService.getOrderById(id);
+        if(orderCheck == null){
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderService.setStatusCancel(id);
         return ResponseEntity.ok(order);
     }
 
     @PostMapping()
-    public Order postSave(@RequestBody Order entity) {
+    public Order postSave(@RequestBody Order entity) throws MessagingException {
         Order order = orderService.create(entity);
         String email = order.getAccount_id().getEmail();
         String username = order.getAccount_id().getUsername();
@@ -72,7 +116,7 @@ public class OrderController {
                 +
                 "\n" +
                 "Trân trọng";
-        sendMailController.sendMail(email, subject, context);
+        emailService.sendEmail(subject,email,context);
         return order;
     }
 
