@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Link, createSearchParams } from 'react-router-dom'
-import path from 'src/constants/path'
+import path from '~/constants/path'
 // import { QueryConfig } from '~/hooks/useQueryConfig'
 
 const RANGE = 2

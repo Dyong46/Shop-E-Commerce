@@ -1,11 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { actions, useStore } from '~/Context/Account';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import SocialLogin from '~/components/SocialLogin';
+import { AppContext } from '~/contexts/app.contexts';
 import { login } from '~/servers/accountService';
 import { schema } from '~/utils/rules';
 import { isAxiosUnprocessableEntityError } from '~/utils/utils';
@@ -13,8 +14,8 @@ import { isAxiosUnprocessableEntityError } from '~/utils/utils';
 const loginSchema = schema.pick(['email', 'password']);
 
 const Login = () => {
+	const { setIsAuthenticated, setProfile } = useContext(AppContext)
 	const navigate = useNavigate();
-	const [, dispatch] = useStore();
 
 	const {
 		register,
@@ -27,10 +28,9 @@ const Login = () => {
 	const onSubmit = handleSubmit(async (data) => {
 		try {
 			const res = await login(data.email, data.password, true);
-			console.log(res);
 			if (res?.id && res?.email) {
-				dispatch(actions.setProfile(res));
-				dispatch(actions.setIsAuthenticated(true))
+				setProfile(res)
+				setIsAuthenticated(true)
 				navigate('/');
 				toast.success('Login successful!');
 			} else {
