@@ -42,9 +42,9 @@ export const generateNameId = ({ name, id }) => {
 };
 
 export const getIdFromNameId = (nameId) => {
-  const arr = nameId.split('-i-');
-  return arr[arr.length - 1];
-};
+  const arr = nameId.split('-i-')
+  return arr[arr.length - 1]
+}
 
 export const getAvatarUrl = (avatarName) => {
   if (avatarName && avatarName.includes('http')) {
