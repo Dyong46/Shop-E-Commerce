@@ -8,12 +8,12 @@ import { AppContext } from './contexts/app.contexts';
 import Home from './pages/Home';
 import Order from './pages/Order';
 import Address from './pages/User/pages/Address';
+import UserLayout from './pages/User/layouts/UserLayout';
 
 // Pages
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
-// const UserLayout = lazy(() => import('./pages/User/layouts/UserLayout'));
 const Profile = lazy(() => import('./pages/User/pages/Profile'));
 const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'));
 const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'));
@@ -27,7 +27,6 @@ function ProtectedRoute() {
 
 function RejectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
-
   return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
 }
 
@@ -89,40 +88,44 @@ const UseRouteElement = () => {
           path: path.user,
           element: <MainLayout />,
           children: [
-
             {
-              path: path.profile,
-              element: (
-                <Suspense>
-                  <Profile />
-                </Suspense>
-              )
+              path: '',
+              element: <UserLayout />,
+              children: [
+                {
+                  path: path.profile,
+                  element: (
+                    <Suspense>
+                      <Profile />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.address,
+                  element: (
+                    <Suspense>
+                      <Address />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.changePassword,
+                  element: (
+                    <Suspense>
+                      <ChangePassword />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.historyPurchase,
+                  element: (
+                    <Suspense>
+                      <HistoryPurchase />
+                    </Suspense>
+                  )
+                }
+              ]
             },
-            {
-              path: path.address,
-              element: (
-                <Suspense>
-                  <Address />
-                </Suspense>
-              )
-            },
-            {
-              path: path.changePassword,
-              element: (
-                <Suspense>
-                  <ChangePassword />
-                </Suspense>
-              )
-            },
-            {
-              path: path.historyPurchase,
-              element: (
-                <Suspense>
-                  <HistoryPurchase />
-                </Suspense>
-              )
-            }
-
           ]
         }
       ],

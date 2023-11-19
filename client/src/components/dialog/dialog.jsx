@@ -1,17 +1,19 @@
+import PropTypes from 'prop-types'
 
+const style = {
+  minWidth: '600px',
+  maxWidth: '700px',
+  margin: '3px,',
+  paddingTop: '10px'
+};
 const Dialog = (props) => {
-  const style = {
-    minWidth: '600px',
-    maxWidth: '700px',
-    margin: '3px,',
-    paddingTop: '10px'
-  };
-  return (
+  const { open, handleToClose, name, body } = props
 
-    <dialog className="fixed top-36 z-20" open={props.open} onClose={props.handleToClose}>
+  return (
+    <dialog className="fixed top-36 z-20" open={open} onClose={handleToClose}>
       <div style={style} className="">
         <div className="flex px-4">
-          <div className="">{props.name}</div>
+          <div className="">{name}</div>
           <div className="grow" />
           <div className="flex">
             Hỗ Trợ
@@ -22,17 +24,17 @@ const Dialog = (props) => {
           </div>
         </div>
 
-        <div className="m-3">{props.body}</div>
+        <div className="m-3">{body}</div>
 
         <div className="flex m-3">
           <div className="grow" />
           <div>
-            <button className="w-24 mx-2 p-2 text-sm bg-orange text-white" onClick={props.handleToClose}
+            <button className="w-24 mx-2 p-2 text-sm bg-orange text-white" onClick={handleToClose}
               color="primary" autoFocus>
               Xác Nhận
             </button>
 
-            <button className="w-24 mx-2 p-2 text-sm border border-orange" onClick={props.handleToClose}
+            <button className="w-24 mx-2 p-2 text-sm border border-orange" onClick={handleToClose}
               color="primary" autoFocus>
               Close
             </button>
@@ -42,6 +44,13 @@ const Dialog = (props) => {
       </div>
     </dialog >
   );
+}
+
+Dialog.propTypes = {
+  open: PropTypes.bool,
+  handleToClose: PropTypes.func,
+  name: PropTypes.string,
+  body: PropTypes.node
 }
 
 export default Dialog;
