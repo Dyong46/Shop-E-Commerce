@@ -1,13 +1,15 @@
-import Dialog from '~/components/dialog/dialog';
+import Dialog from '~/components/dialog/Dialog';
 import Location from './components/Location';
 import Pay from './components/Pay';
 import Products from './components/Products';
 import Voucher from './components/Voucher';
 import { useContext, useState } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
-import LocationCard from '~/components/dialog/card/locationCard';
+import LocationCard from '~/components/dialog/card/LocationCard';
 import VoucherCard from '~/components/dialog/card/VoucherCard';
 import { getAllDiscount } from '~/servers/discountService';
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types'
 
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
@@ -23,21 +25,21 @@ const DialogBody = (props) => {
     return (
       <button className="flex" onClick={props.handle}>
         <p>Ẩn bớt</p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" id="up" x="0" y="0" version="1.1" viewBox="0 0 29 29" xml: space="preserve"><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="m8.5 17.5 6-6 6 6"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" id="up" x="0" y="0" version="1.1" viewBox="0 0 29 29" xmlSpace="preserve"><path fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" d="m8.5 17.5 6-6 6 6"></path></svg>
       </button>
     )
   }
 
   const [showmore, setShowmore] = useState(false);
-  const [showmoreVoucher, setShowmoreVoucher] = useState(false);
+  // const [showmoreVoucher, setShowmoreVoucher] = useState(false);
 
   const handleShowmore = () => {
     setShowmore(!showmore);
   };
 
-  const handleShowmoreVoucher = () => {
-    setShowmoreVoucher(!showmoreVoucher);
-  };
+  // const handleShowmoreVoucher = () => {
+  //   setShowmoreVoucher(!showmoreVoucher);
+  // };
 
   return (
     <>
@@ -157,5 +159,9 @@ const Order = () => {
     </>
   );
 };
+
+Order.propTypes = {
+  data: PropTypes.array
+}
 
 export default Order;
