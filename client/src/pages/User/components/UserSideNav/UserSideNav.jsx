@@ -50,6 +50,20 @@ const UserSideNav = () => {
           Tài khoản của tôi
         </NavLink>
         <NavLink
+          to={'/user/address'}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize  transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive,
+            })
+          }
+        >
+          <div className="mr-3 h-[22px] w-[22px]">
+            <img src="https://w7.pngwing.com/pngs/917/85/png-transparent-computer-icons-email-address-email-address-address-miscellaneous-text-mobile-phones.png" alt="" className="h-full w-full" />
+          </div>
+          Địa chỉ
+        </NavLink>
+        <NavLink
           to={'/user/password'}
           className={({ isActive }) =>
             classNames('mt-4 flex items-center capitalize  transition-colors', {
@@ -64,7 +78,7 @@ const UserSideNav = () => {
           Đổi mật khẩu
         </NavLink>
         <NavLink
-          to={'/user/purchase?status=0'}
+          to={'/user/purchase'}
           className={({ isActive }) =>
             classNames('mt-4 flex items-center capitalize  transition-colors', {
               'text-orange': isActive,

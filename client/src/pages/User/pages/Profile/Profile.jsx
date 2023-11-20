@@ -4,15 +4,16 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
 import InputNumber from '~/components/InputNumber';
-import { getAccountById, updateAccount, uploadAvatar } from '~/servers/accountService';
+import { updateAccount, uploadManager } from '~/servers/accountService';
 import { actions, useStore } from '~/Context/Account';
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from '~/utils/utils';
-import UserLayout from '../../layouts/UserLayout';
 import DateSelect from '../../components/DateSelect';
 import GenderRadio from '../../components/GenderRadio';
 import { userSchema } from '~/utils/rules';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
+import { setProfileToLS } from '~/utils/auth';
+import UserLayout from '../../layouts/UserLayout';
 
 const profileSchema = userSchema.pick(['name', 'username', 'phone', 'date_of_birth', 'avatar']);
 
@@ -53,7 +54,7 @@ const Profile = () => {
   useEffect(() => {
     if (profile) {
       setValue('username', profile.username || '');
-      setValue('name', profile.firstname || '');
+      setValue('name', profile.fullname || '');
       setValue('phone', profile.phone || '');
       setValue('avatar', profile.img || '');
       setValue('gender', profile.gender || true);
@@ -62,21 +63,22 @@ const Profile = () => {
   }, [profile, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log("DATA, ", data);
     try {
       let avatarName = avatar
-      if(file) {
-        const form  = new FormData()
-        form.append('image', file)
-				const uploadRes = await uploadAvatar(form)
-				avatarName = uploadRes.data.data
-				setValue('avatar', avatarName)
+      if (file) {
+        const uploadRes = await uploadManager.upload({ data: file });
+        avatarName = uploadRes.fileUrl
+        setValue('avatar', avatarName)
       }
-			// const res = await updateAccount(profile.id, {
-			// 	...data
-			// })
-			// console.log(res);
-      console.log(data);
-			toast.success('Update account successful')
+      const res = await updateAccount(profile.id, {
+        ...data,
+        fullname: data.name,
+        img: avatarName
+      })
+      dispatch(actions.setProfile(res))
+      setProfileToLS(res)
+      toast.success('Update account successful')
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
         const formError = error.response?.data.data;

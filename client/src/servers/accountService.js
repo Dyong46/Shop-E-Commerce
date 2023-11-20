@@ -1,5 +1,7 @@
 import api from './axiosConfig';
 import pathApi from '~/constants/pathApi';
+import * as Bytescale from "@bytescale/sdk";
+import config from '~/constants/config';
 
 const getAllAccounts = () => {
   return api.get(`${pathApi.account}`);
@@ -25,7 +27,7 @@ const login = (email, password, remember) => {
 	return api.post(`${pathApi.account}/login?email=${email}&password=${password}&remember=${remember}`)
 }
 
-const register = (email, username, password) => {
+const register = ({email, username, password}) => {
 	return api.post(`${pathApi.account}/register?email=${email}&username=${username}&password=${password}`)
 }
 
@@ -33,12 +35,8 @@ const changePassword = (data) => {
 	return api.post(`${pathApi.account}/change-password`, data)
 }
 
-const uploadAvatar = (body) => {
-	return api.post('https://api-ecom.duthanhduoc.com/user/upload-avatar', body, {
-		headers: {
-			'Content-Type': 'multipart/form-data'
-		}
-	})
-}
+const uploadManager = new Bytescale.UploadManager({
+	apiKey: config.apiKey
+});
 
-export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword, uploadAvatar };
+export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword, uploadManager };

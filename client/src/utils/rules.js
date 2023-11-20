@@ -71,6 +71,7 @@ const handleConfirmPasswordYup = (refString) => {
 };
 
 export const schema = yup.object({
+	username: yup.string().trim().required('Username người dùng là bắt buộc'),
   email: yup
     .string()
     .required('Email là bắt buộc')

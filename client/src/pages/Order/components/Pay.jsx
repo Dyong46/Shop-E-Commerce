@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
@@ -7,6 +8,7 @@ import { useStore } from '~/Context/Account';
 import { productGetAll } from '~/servers/productService';
 
 const Pay = ({ money, cart }) => {
+  const [payWith, setPayWith] = useState('');
   const [state] = useStore();
   const { profile } = state;
   const date = new Date();
@@ -82,7 +84,8 @@ const Pay = ({ money, cart }) => {
           </div>
           <Button
             type="button"
-            className="flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "
+            className={payWith === "shopeePay" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+            onClick={() => { setPayWith('shopeePay') }}
           >
             Ví Shopee
           </Button>
@@ -100,11 +103,18 @@ const Pay = ({ money, cart }) => {
           </Button>
           <Button
             type="button"
-            className="flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "
+            className={payWith === "recive" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+            onClick={() => { setPayWith('recive') }}
           >
             Thanh toán khi nhận hàng
           </Button>
-
+          <Button
+            type="button"
+            className={payWith === "vnPay" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+            onClick={() => { setPayWith('vnPay') }}
+          >
+            Thanh toán VNPay
+          </Button>
           {/* </div> */}
         </div>
         {/* <div className="col-span-6">
@@ -127,8 +137,7 @@ const Pay = ({ money, cart }) => {
           <div className="text-orange text-2xl min-w-[140px] text-end">đ{money + 27500}</div>
           <div className="">Tổng thanh toán</div>
         </div>
-        i
-      </div>
+      </div >
       <div className="bg-[#fffefb] py-5 px-9 rouned-sm shadow">
         <div className="flex justify-between items-center">
           <div className="text-orange">
@@ -148,7 +157,7 @@ const Pay = ({ money, cart }) => {
           </Link>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 Pay.propTypes = {

@@ -1,6 +1,6 @@
 import Footer from '~/components/Footer';
 import './style.scss';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getIdFromNameId } from '~/utils/utils';
 import { productById } from '~/servers/productService';
@@ -10,37 +10,37 @@ import Review from './components/Review';
 import { action, useStore } from '~/Context';
 
 const ProductDetail = () => {
-  const { idProduct } = useParams();
-  const id = getIdFromNameId(idProduct);
-  const [product, setProduct] = useState(null);
-  const [reviews, setReviews] = useState(null);
-  const [galleries, setGalleries] = useState();
+	const { nameId } = useParams()
+	const id = getIdFromNameId(nameId)
+	const [product, setProduct] = useState(null);
+	const [reviews, setReviews] = useState(null);
+	const [galleries, setGalleries] = useState();
 
-  const [state, dispath] = useStore();
-  const { todos } = state;
+	const [state, dispath] = useStore();
+	const { todos } = state;
 
-  const getProductId = async (idProduct) => {
-    let get = await productById(idProduct);
-    if (get) {
-      console.log(get, 'get');
-      setProduct(get);
-      getGalleriess(idProduct);
-    }
-  };
+	const getProductId = async (idProduct) => {
+		let get = await productById(idProduct);
+		if (get) {
+			console.log(get, 'get');
+			setProduct(get);
+			getGalleriess(idProduct);
+		}
+	};
 
-  const getReview = async (idProduct) => {
-    let res = await reviewProduct(idProduct);
-    if (res) {
-      setReviews(res);
-    }
-  };
+	const getReview = async (idProduct) => {
+		let res = await reviewProduct(idProduct);
+		if (res) {
+			setReviews(res);
+		}
+	};
 
-  const getGalleriess = async (idProduct) => {
-    let getGa = await getGalleries(idProduct);
-    if (getGa) {
-      setGalleries(getGa);
-    }
-  };
+	const getGalleriess = async (idProduct) => {
+		let getGa = await getGalleries(idProduct);
+		if (getGa) {
+			setGalleries(getGa);
+		}
+	};
 
   useEffect(() => {
     getProductId(id);
@@ -48,213 +48,213 @@ const ProductDetail = () => {
     getReview(id);
   }, [id]);
 
-  const [quantity, setQuantity] = useState(1);
+	const [quantity, setQuantity] = useState(1);
 
-  const plusQuantity = useCallback(() => {
-    setQuantity((plus) => {
-      return product.quantity > plus ? plus + 1 : product.quantity;
-    });
-  });
+	const plusQuantity = useCallback(() => {
+		setQuantity((plus) => {
+			return product.quantity > plus ? plus + 1 : product.quantity;
+		});
+	});
 
-  const mimusQuantity = useCallback(() => {
-    setQuantity((mimus) => {
-      if (mimus == 1) {
-        return 1;
-      } else {
-        return mimus - 1;
-      }
-    });
-  }, []);
+	const mimusQuantity = useCallback(() => {
+		setQuantity((mimus) => {
+			if (mimus == 1) {
+				return 1;
+			} else {
+				return mimus - 1;
+			}
+		});
+	}, []);
 
-  const [selectedDiv, setSelectedDiv] = useState(null);
-  const [color, setColor] = useState(null);
-  const handleClickModel = (divId, event) => {
-    // console.log(event.target.innerText);
-    if (selectedDiv === divId) {
-      setSelectedDiv(null); // Bỏ chọn nếu thẻ đã được chọn
-    } else {
-      setSelectedDiv(divId); // Chọn thẻ mới
-      setColor(event.target.innerText);
-    }
-  };
+	const [selectedDiv, setSelectedDiv] = useState(null);
+	const [color, setColor] = useState(null);
+	const handleClickModel = (divId, event) => {
+		// console.log(event.target.innerText);
+		if (selectedDiv === divId) {
+			setSelectedDiv(null); // Bỏ chọn nếu thẻ đã được chọn
+		} else {
+			setSelectedDiv(divId); // Chọn thẻ mới
+			setColor(event.target.innerText);
+		}
+	};
 
-  const [selectedSize, setSelectedSize] = useState(null);
-  const [size, setSize] = useState(null);
-  const handleClickSize = (sizeId, event) => {
-    // console.log(event.target);
-    if (selectedSize === sizeId) {
-      setSelectedSize(null); // Bỏ chọn nếu thẻ đã được chọn
-    } else {
-      setSelectedSize(sizeId); // Chọn thẻ mới
-      setSize(event.target.innerText);
-    }
-  };
+	const [selectedSize, setSelectedSize] = useState(null);
+	const [size, setSize] = useState(null);
+	const handleClickSize = (sizeId, event) => {
+		// console.log(event.target);
+		if (selectedSize === sizeId) {
+			setSelectedSize(null); // Bỏ chọn nếu thẻ đã được chọn
+		} else {
+			setSelectedSize(sizeId); // Chọn thẻ mới
+			setSize(event.target.innerText);
+		}
+	};
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleClickImage = (imageId, event) => {
-    if (selectedImage === imageId) {
-      setSelectedImage(null); // Bỏ chọn nếu thẻ đã được chọn
-      const setImage = document.querySelector('.sizes');
-      setImage.src = product.img;
-    } else {
-      setSelectedImage(imageId); // Chọn thẻ mới
-      const setImage = document.querySelector('.sizes');
-      setImage.src = event.target.getAttribute('src');
-    }
-  };
+	const [selectedImage, setSelectedImage] = useState(null);
+	const handleClickImage = (imageId, event) => {
+		if (selectedImage === imageId) {
+			setSelectedImage(null); // Bỏ chọn nếu thẻ đã được chọn
+			const setImage = document.querySelector('.sizes');
+			setImage.src = product.img;
+		} else {
+			setSelectedImage(imageId); // Chọn thẻ mới
+			const setImage = document.querySelector('.sizes');
+			setImage.src = event.target.getAttribute('src');
+		}
+	};
 
-  const [selectedComment, setSelectedComment] = useState(null);
-  const handleClickComment = (commentId, event) => {
-    if (selectedComment === commentId) {
-      setSelectedComment(null); // Bỏ chọn nếu thẻ đã được chọn
-    } else {
-      setSelectedComment(commentId); // Chọn thẻ mới
-      console.log(event.target);
-    }
-  };
+	const [selectedComment, setSelectedComment] = useState(null);
+	const handleClickComment = (commentId, event) => {
+		if (selectedComment === commentId) {
+			setSelectedComment(null); // Bỏ chọn nếu thẻ đã được chọn
+		} else {
+			setSelectedComment(commentId); // Chọn thẻ mới
+			console.log(event.target);
+		}
+	};
 
-  const showAddress = () => {
-    let get = document.querySelector('.address');
-    if (get.style.display === 'none') {
-      get.style.display = 'block';
-      // document.body.style.overflow = 'hidden';
-    } else {
-      get.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  };
-  const showNewAddress = () => {
-    let get = document.querySelector('.newAddress');
-    if (get.style.display === 'none') {
-      let getAd = document.querySelector('.address');
-      getAd.style.display = 'none';
-      get.style.display = 'block';
-      // document.body.style.overflow = 'hidden';
-    } else {
-      let getAd = document.querySelector('.address');
-      getAd.style.display = 'block';
-      get.style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-  };
+	const showAddress = () => {
+		let get = document.querySelector('.address');
+		if (get.style.display === 'none') {
+			get.style.display = 'block';
+			// document.body.style.overflow = 'hidden';
+		} else {
+			get.style.display = 'none';
+			document.body.style.overflow = 'auto';
+		}
+	};
+	const showNewAddress = () => {
+		let get = document.querySelector('.newAddress');
+		if (get.style.display === 'none') {
+			let getAd = document.querySelector('.address');
+			getAd.style.display = 'none';
+			get.style.display = 'block';
+			// document.body.style.overflow = 'hidden';
+		} else {
+			let getAd = document.querySelector('.address');
+			getAd.style.display = 'block';
+			get.style.display = 'none';
+			document.body.style.overflow = 'auto';
+		}
+	};
 
-  if (!product || !galleries) return null;
-  return (
-    <div>
-      <div className="flex flex-col bg-pro justify-center">
-        <div className="flex justify-center">
-          <div className="bg-white max-w-6xl mt-5 flex flex-auto flex-row px-4 py-4">
-            <div className="">
-              <img className="sizes" src={product.img} alt="" />
-              <div className="flex flex-row flex-auto">
-                {galleries.map((data) => (
-                  <div className="pr-2 pt-1 cursor-pointer" key={data.id}>
-                    <img
-                      className="w-24"
-                      src={data.img}
-                      alt=""
-                      onClick={(event) => {
-                        handleClickImage(data.id, event);
-                      }}
-                      style={{ border: selectedImage === data.id ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-auto flex-col ml-5">
-              <div className="flex">
-                <div className="like rounded text-center text-white w-28 mr-2 h-6">Yêu thích</div>
-                <span className="text-2xl -mt-2">{product.name_product}</span>
-              </div>
-              <div className="flex justify-between mt-3">
-                <div className="flex ">
-                  <span>5.0</span>
-                  <div className="flex ml-2">
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                  </div>
-                  <div className="ml-5">822 Đánh giá</div>
-                  <div className="ml-5">2.5k Đã bán</div>
-                </div>
+	if (!product || !galleries) return null;
+	return (
+		<div>
+			<div className="flex flex-col bg-pro justify-center">
+				<div className="flex justify-center">
+					<div className="bg-white max-w-6xl mt-5 flex flex-auto flex-row px-4 py-4">
+						<div className="">
+							<img className="sizes" src={product.img} alt="" />
+							<div className="flex flex-row flex-auto">
+								{galleries.map((data) => (
+									<div className="pr-2 pt-1 cursor-pointer" key={data.id}>
+										<img
+											className="w-24"
+											src={data.img}
+											alt=""
+											onClick={(event) => {
+												handleClickImage(data.id, event);
+											}}
+											style={{ border: selectedImage === data.id ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										/>
+									</div>
+								))}
+							</div>
+						</div>
+						<div className="flex flex-auto flex-col ml-5">
+							<div className="flex">
+								<div className="like rounded text-center text-white w-28 mr-2 h-6">Yêu thích</div>
+								<span className="text-2xl -mt-2">{product.name_product}</span>
+							</div>
+							<div className="flex justify-between mt-3">
+								<div className="flex ">
+									<span>5.0</span>
+									<div className="flex ml-2">
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+									</div>
+									<div className="ml-5">822 Đánh giá</div>
+									<div className="ml-5">2.5k Đã bán</div>
+								</div>
 
                 <div className="mr-20">Tố cáo</div>
               </div>
@@ -1006,226 +1006,226 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="p-3 text-xl" style={{ background: '#FAFAFA' }}>
-                MÔ TẢ SẢN PHẨM
-              </div>
-              <div className="grid grid-cols-2 p-3">
-                <div className="flex flex-col text-sm">
-                  <span>GIỚI THIỆU SẢN PHẨM</span>
-                  <span>- Dép thời trang nam nữ chất liệu EVA</span>
-                  <span>- Dép nữ, nam hàng loại 1 chuẩn ( cam kết không chuẩn hoàn tiền)</span>
-                  <span>- Dép quai lồi nam đầy đủ size từ 36 đến 43</span>
-                  <span>- Hàng chất lượng không bán hàng rẻ kém chất lượng</span>
-                  <span>CAM KẾT </span>
-                  <span>- 100% ảnh sản phẩm do Shop tự chụp và đính Logo. </span>
-                  <span>- Cam kết đổi trả nếu lỗi từ nhà sản xuất </span>
-                  <span>- Kiểu dáng ôm chân, thon gọn, thoải mái di chuyển mà không lo đau chân </span>
-                  <span>
-                    - Giao hàng tại nhà, Thanh toán tại nhà, nhanh chóng, tiện dụng CHAT TRỰC TIẾP VỚI NHÂN VIÊN{' '}
-                  </span>
-                  <span>- Gửi khách xem mẫu giày hiện có </span>
-                  <span>
-                    - Tư vấn các mẫu giày phù hợp với khách hàng Chúng tôi mong muốn bạn hạnh phúc khi mua hàng!{' '}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center my-3">
-          <div className="flex flex-col bg-white" style={{ width: '1155px' }}>
-            <div className="p-7">
-              <div className="p-3 text-xl" style={{ background: '#FAFAFA' }}>
-                ĐÁNH GIÁ SẢN PHẨM
-              </div>
-              <div className="flex mt-5" style={{ background: '#FFFBF8', border: '1px solid #FFAB80' }}>
-                <div className="p-8">
-                  <div className="text-orange text-2xl">
-                    <span className="text-3xl ">5.0</span> trên 5
-                  </div>
-                  <div className="flex mt-3">
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                    <svg
-                      width={18}
-                      fill="#EE4D2D"
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
-                    >
-                      <polygon
-                        points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeMiterlimit="10"
-                      ></polygon>
-                    </svg>
-                  </div>
-                </div>
-                <div className="">
-                  <div className="flex flex-wrap mt-6">
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(1, event);
-                      }}
-                      style={{ border: selectedComment === 1 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      Tất cả
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(2, event);
-                      }}
-                      style={{ border: selectedComment === 2 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      5 sao (1,3k)
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(3, event);
-                      }}
-                      style={{ border: selectedComment === 3 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      4 sao (135)
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(4, event);
-                      }}
-                      style={{ border: selectedComment === 4 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      3 sao (23)
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(5, event);
-                      }}
-                      style={{ border: selectedComment === 5 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      2 sao (21)
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(6, event);
-                      }}
-                      style={{ border: selectedComment === 6 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      1 sao (35)
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(7, event);
-                      }}
-                      style={{ border: selectedComment === 7 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      1 sao (35)
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(8, event);
-                      }}
-                      style={{ border: selectedComment === 8 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      Có bình luận (650)
-                    </div>
-                    <div
-                      className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
-                      onClick={(event) => {
-                        handleClickComment(9, event);
-                      }}
-                      style={{ border: selectedComment === 9 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
-                    >
-                      Có hình ảnh / Video (218)
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {reviews &&
-                reviews.length > 0 &&
-                reviews.map((review) => {
-                  return <Review review={review} key={review.id} />;
-                })}
-            </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
+							<div className="p-3 text-xl" style={{ background: '#FAFAFA' }}>
+								MÔ TẢ SẢN PHẨM
+							</div>
+							<div className="grid grid-cols-2 p-3">
+								<div className="flex flex-col text-sm">
+									<span>GIỚI THIỆU SẢN PHẨM</span>
+									<span>- Dép thời trang nam nữ chất liệu EVA</span>
+									<span>- Dép nữ, nam hàng loại 1 chuẩn ( cam kết không chuẩn hoàn tiền)</span>
+									<span>- Dép quai lồi nam đầy đủ size từ 36 đến 43</span>
+									<span>- Hàng chất lượng không bán hàng rẻ kém chất lượng</span>
+									<span>CAM KẾT </span>
+									<span>- 100% ảnh sản phẩm do Shop tự chụp và đính Logo. </span>
+									<span>- Cam kết đổi trả nếu lỗi từ nhà sản xuất </span>
+									<span>- Kiểu dáng ôm chân, thon gọn, thoải mái di chuyển mà không lo đau chân </span>
+									<span>
+										- Giao hàng tại nhà, Thanh toán tại nhà, nhanh chóng, tiện dụng CHAT TRỰC TIẾP VỚI NHÂN VIÊN{' '}
+									</span>
+									<span>- Gửi khách xem mẫu giày hiện có </span>
+									<span>
+										- Tư vấn các mẫu giày phù hợp với khách hàng Chúng tôi mong muốn bạn hạnh phúc khi mua hàng!{' '}
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="flex justify-center my-3">
+					<div className="flex flex-col bg-white" style={{ width: '1155px' }}>
+						<div className="p-7">
+							<div className="p-3 text-xl" style={{ background: '#FAFAFA' }}>
+								ĐÁNH GIÁ SẢN PHẨM
+							</div>
+							<div className="flex mt-5" style={{ background: '#FFFBF8', border: '1px solid #FFAB80' }}>
+								<div className="p-8">
+									<div className="text-orange text-2xl">
+										<span className="text-3xl ">5.0</span> trên 5
+									</div>
+									<div className="flex mt-3">
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+										<svg
+											width={18}
+											fill="#EE4D2D"
+											enableBackground="new 0 0 15 15"
+											viewBox="0 0 15 15"
+											x="0"
+											y="0"
+											className="shopee-svg-icon shopee-rating-stars__primary-star icon-rating-solid"
+										>
+											<polygon
+												points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeMiterlimit="10"
+											></polygon>
+										</svg>
+									</div>
+								</div>
+								<div className="">
+									<div className="flex flex-wrap mt-6">
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(1, event);
+											}}
+											style={{ border: selectedComment === 1 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											Tất cả
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(2, event);
+											}}
+											style={{ border: selectedComment === 2 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											5 sao (1,3k)
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(3, event);
+											}}
+											style={{ border: selectedComment === 3 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											4 sao (135)
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(4, event);
+											}}
+											style={{ border: selectedComment === 4 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											3 sao (23)
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(5, event);
+											}}
+											style={{ border: selectedComment === 5 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											2 sao (21)
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(6, event);
+											}}
+											style={{ border: selectedComment === 6 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											1 sao (35)
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(7, event);
+											}}
+											style={{ border: selectedComment === 7 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											1 sao (35)
+										</div>
+									</div>
+									<div className="flex">
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(8, event);
+											}}
+											style={{ border: selectedComment === 8 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											Có bình luận (650)
+										</div>
+										<div
+											className="p-1 px-4 mx-1 my-1 border border-orange bg-white hover:cursor-pointer"
+											onClick={(event) => {
+												handleClickComment(9, event);
+											}}
+											style={{ border: selectedComment === 9 ? '1px solid #EE4D2D' : '1px solid #EEE6E6' }}
+										>
+											Có hình ảnh / Video (218)
+										</div>
+									</div>
+								</div>
+							</div>
+							{reviews &&
+								reviews.length > 0 &&
+								reviews.map((review) => {
+									return <Review review={review} key={review.id} />;
+								})}
+						</div>
+					</div>
+				</div>
+			</div>
+			<Footer />
+		</div>
+	);
 };
 
-export default memo(ProductDetail);
+export default ProductDetail;

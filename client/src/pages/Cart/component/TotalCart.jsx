@@ -1,13 +1,132 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
+import Dialog from '~/components/dialog/dialog';
+import VoucherCard from '~/components/dialog/card/VoucherCard';
 import { Link } from 'react-router-dom';
+import { getAllDiscount } from '~/servers/discountService';
+
+const DialogBody = (props) => {
+  const ButtonShowmore = (props) => {
+    return (
+      <button className="flex" onClick={props.handle}>
+        <p>Xem thêm</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 101 101" id="down"><path d="m80.5 33-30 30-30-30c-.9-.9-2.5-.9-3.4 0s-.9 2.5 0 3.4L48.8 68c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7l31.7-31.7c.9-.9.9-2.5 0-3.4s-2.5-.9-3.4.1z"></path></svg>
+      </button>
+    )
+  }
+
+  const ButtonHide = (props) => {
+    return (
+      <button className="flex" onClick={props.handle}>
+        <p>Ẩn bớt</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" id="up" x="0" y="0" version="1.1" viewBox="0 0 29 29" xml: space="preserve"><path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="m8.5 17.5 6-6 6 6"></path></svg>
+      </button>
+    )
+  }
+
+  const [showmore, setShowmore] = useState(false);
+  const [showmoreVoucher, setShowmoreVoucher] = useState(false);
+
+  const handleShowmore = () => {
+    setShowmore(!showmore);
+  };
+
+  const handleShowmoreVoucher = () => {
+    setShowmoreVoucher(!showmoreVoucher);
+  };
+
+  return (
+    <>
+      <div className="flex pt-2 pb-5">
+        <p className="mr-4 text-gray-500 text-sm">Mã Voucher</p>
+        <input type="text" className="grow peer h-full w-full rounded-[7px] border border-gray-300 bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-gray-200 focus:border-2 focus:border-gray-400 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
+        <button className="ml-4 text-gray-300 text-sm">ÁP DỤNG</button>
+      </div>
+      <div className="overflow-y-auto h-96">
+
+        <div className="mb-2">Mã Miễn Phí Vận Chuyển</div>
+        {
+          props.data.slice(0, showmore ? props.data.length : 3)
+            .map((item, index) => {
+              return (<VoucherCard group={"voucher"} key={index} data={item} />);
+            })
+        }
+
+        <div className="flex flex-col justify-center mt-2">
+          {
+            showmore ?
+              <ButtonHide handle={handleShowmore} /> :
+              <ButtonShowmore handle={handleShowmore} />
+          }
+        </div>
+
+        {/* <div className="mt-10 mb-2">Giảm Giá & Hoàn Xu</div> */}
+        {/* { */}
+        {/*   props.data[1].slice(0, showmoreVoucher ? props.data[1].length : 2) */}
+        {/*     .map((item) => { */}
+        {/*       return (<VoucherCard group={"voucher2"} img={props.img} />); */}
+        {/*     }) */}
+        {/* } */}
+        {/**/}
+        {/* <div className="flex flex-col justify-center mt-2"> */}
+        {/*   { */}
+        {/**/}
+        {/*     showmoreVoucher ? */}
+        {/*       <ButtonHide handle={handleShowmoreVoucher} /> : */}
+        {/*       <ButtonShowmore handle={handleShowmoreVoucher} /> */}
+        {/*   } */}
+        {/**/}
+        {/* </div> */}
+      </div>
+    </>
+  )
+}
+
+
 const TotalCart = () => {
   const [money] = useContext(PriceContext);
   const [carts] = useContext(CartContext);
+  const [discounts, setDiscounts] = useState([]);
+
+  const [open, setOpen] = useState(false);
+
+  const getAll = async () => {
+    try {
+      const discounts = await getAllDiscount();
+      setDiscounts(discounts);
+    } catch (error) {
+      console.error('Error loading discount: ', error);
+      toast.error(error.message);
+    }
+  };
+
+  const handleClickToOpen = () => {
+    setOpen(true);
+    getAll();
+  };
+
+  const handleToClose = () => {
+    setOpen(false);
+  };
+
+  const style = {
+    pointerEvents: 'none',
+  };
+
+  function close() {
+    handleToClose();
+  }
+
   return (
     <>
-      <div className="flex justify-center justify-content-center mt-6 mb-5">
+      <Dialog className="bg-sky-50" body={<DialogBody data={discounts} />} name={'Chọn Shopee Voucher'} open={open} handleToClose={handleToClose} />
+      {
+        open ?
+          <div className='bg-gray-500 opacity-70 z-10 fixed top-0 bottom-0 left-0 right-0 w-full h-full' onClick={close}></div> :
+          <div className=''></div>
+      }
+      <div style={open ? style : {}} className="flex justify-center justify-content-center mt-6 mb-5 ">
         <div className="bg-white header-cart">
           <div className="flex justify-end py-4">
             <div className="mx-2">
@@ -54,9 +173,9 @@ const TotalCart = () => {
               <p>Shopee Voucher</p>
             </div>
             <div className="mr-20">
-              <a href="" className="text-blue-800">
+              <button onClick={handleClickToOpen} className="text-blue-800">
                 Chọn Hoặc Nhập Mã
-              </a>
+              </button>
             </div>
           </div>
           <div className="border-dashed border-2 flex justify-between py-3">
