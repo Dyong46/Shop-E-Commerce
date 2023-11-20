@@ -32,7 +32,6 @@ import { fetchAddress } from "~/servers/accountService";
 const Address = () => {
   const { profile } = useContext(AppContext)
   const [address, setAddress] = useState(null);
-
   useEffect(() => {
     const fetchDate = async () => {
       try {
