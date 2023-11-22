@@ -5,7 +5,6 @@ import com.poly.repo.ProductRepository;
 import com.poly.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -85,77 +83,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin) {
-//        List<Product> products = productRepository.getAllProduct();
-//
-//        products = filterByName(products, name);
-//        products = filterByCategory(products, category);
-//        products = filterByPriceRange(products, priceMin, priceMax);
-
-        PageRequest pageRequest = createPageRequest(page, limit, sortBy);
-
-        // Use the repository to fetch products with applied filters and pagination
-        Page<Product> productPage = productRepository.findFilteredProducts(name, category, priceMin, priceMax, pageRequest);
-
-        return productPage;
+    public Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin, String order) {
+        PageRequest pageRequest = createPageRequest(page, limit, sortBy, order);
+        return productRepository.findFilteredProducts(name, category, priceMin, priceMax, pageRequest);
     }
 
-    private List<Product> filterByName(List<Product> products, String name) {
-        if (name == null || name.isEmpty()) {
-            return products;
-        }
-
-        return products.stream()
-                .filter(product -> product.getName_product().toLowerCase().contains(name.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    private List<Product> filterByCategory(List<Product> products, String category) {
-        if (category == null || category.isEmpty()) {
-            return products;
-        }
-
-        return products.stream()
-                .filter(product -> product.getCategory_id() != null && product.getCategory_id().getName().equalsIgnoreCase(category))
-                .collect(Collectors.toList());
-    }
-
-    private PageRequest createPageRequest(int page, int limit, String sortBy) {
+    private PageRequest createPageRequest(int page, int limit, String sortBy, String order) {
+        Sort.Direction sortDirection = order.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort;
         switch (sortBy) {
-            case "price_asc":
-                sort = Sort.by(Sort.Direction.ASC, "price");
-                break;
-            case "price_desc":
-                sort = Sort.by(Sort.Direction.DESC, "price");
+            case "price":
+                sort = Sort.by(sortDirection, "price");
                 break;
             case "createdAt":
-                sort = Sort.by(Sort.Direction.ASC, "created_at");
+                sort = Sort.by(sortDirection, "created_at");
                 break;
             case "view":
-                sort = Sort.by(Sort.Direction.DESC, "created_at");
+                sort = Sort.by(sortDirection, "id");
                 break;
             case "sold":
-                sort = Sort.by(Sort.Direction.DESC, "quantity");
+                sort = Sort.by(sortDirection, "quantity");
                 break;
             default:
-                sort = Sort.by(Sort.Direction.ASC, "id");
+                sort = Sort.by(sortDirection, "created_at");
         }
 
         return PageRequest.of(page - 1, limit, sort);
-    }
-
-    public List<Product> filterByPriceRange(List<Product> products, Double priceMin, Double priceMax) {
-        if (priceMin == null && priceMax == null) {
-            return products;
-        }
-
-        return products.stream()
-                .filter(product -> {
-                    boolean greaterThanMin = priceMin == null || product.getPrice() >= priceMin;
-                    boolean lessThanMax = priceMax == null || product.getPrice() <= priceMax;
-                    return greaterThanMin && lessThanMax;
-                })
-                .collect(Collectors.toList());
     }
 }

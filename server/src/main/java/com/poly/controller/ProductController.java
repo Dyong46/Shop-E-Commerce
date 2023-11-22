@@ -66,11 +66,12 @@ public class ProductController {
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "limit", defaultValue = "20") int limit,
             @RequestParam(name = "sort_by", defaultValue = "createdAt") String sortBy,
+            @RequestParam(name = "order", defaultValue = "desc") String order,
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "price_max", required = false) Double priceMax,
             @RequestParam(name = "price_min", required = false) Double priceMin) {
         System.out.println(page +" "+ limit);
-        return productService.getFilteredProducts(page, limit, sortBy, name, category, priceMax, priceMin);
+        return productService.getFilteredProducts(page, limit, sortBy, name, category, priceMax, priceMin, order);
     }
 }

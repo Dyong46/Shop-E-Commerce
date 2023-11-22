@@ -25,5 +25,5 @@ public interface ProductService {
 
     Product deleteProductById(Integer id);
 
-    Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin);
+    Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin, String order);
 }
