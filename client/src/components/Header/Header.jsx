@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <div>
-      <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2 text-white">
+      <div className="bg-[linear-gradient(-180deg,#f53d2d,#f63)] py-2 text-white">
         <div className="container">
           <NavHeader />
           <div className='mt-4 grid grid-cols-12 items-end gap-4'>
@@ -101,7 +101,7 @@ const Header = () => {
                           </div>
                         </div>
                       ) : (
-                        <div className='flex h-[300px] w-[300px] flex-col items-center justify-center p-2'>
+                        <div className='flex h-[300px] w-[280px] flex-col items-center justify-center p-2'>
                           <img src={noproduct} alt='no purchase' className='h-24 w-24' />
                           <div className='mt-3 capitalize'>Chưa có sản phẩm</div>
                         </div>

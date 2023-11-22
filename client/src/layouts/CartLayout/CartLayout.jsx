@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types';
-import TinyHeader from '~/components/Header/TinyHeader';
+import TinyHeader from '~/components/TinyHeader';
+// import TinyHeader from '~/components/Header/TinyHeader';
 
 const CartLayout = ({ children }) => {
-	return (
-		<div>
-			<TinyHeader />
-			{children}
-		</div>
-	);
+  return (
+    <div>
+      <TinyHeader />
+      {children}
+    </div>
+  );
 };
 
 CartLayout.propTypes = {
-	children: PropTypes.element,
+  children: PropTypes.element,
 };
 
 export default CartLayout;

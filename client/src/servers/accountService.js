@@ -35,8 +35,12 @@ const changePassword = (data) => {
 	return api.post(`${pathApi.account}/change-password`, data)
 }
 
+const fetchAddress = ({id}) => {
+  return api.get(`${pathApi.address}/user?id=${id}`)
+}
+
 const uploadManager = new Bytescale.UploadManager({
 	apiKey: config.apiKey
 });
 
-export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword, uploadManager };
+export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword,fetchAddress, uploadManager };

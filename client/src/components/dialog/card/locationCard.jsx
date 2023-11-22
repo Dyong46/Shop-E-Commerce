@@ -1,20 +1,22 @@
+import PropTypes from 'prop-types'
+// const imgStyle = {
+//   width: '100px',
+//   height: '100px',
+//   marginRight: '5px'
+// };
 const LocationCard = (props) => {
-  const imgStyle = {
-    width: '100px',
-    height: '100px',
-    marginRight: '5px'
-  };
+  const { group, idVoucher, name, phone } = props
 
   return (
     <div className="flex my-6">
-      <input type="radio" name={props.group} value={props.idVoucher} />
+      <input type="radio" name={group} value={idVoucher} />
 
       <div className="flex flex-col grow ml-4">
         <div className="flex ">
           <p className="font-medium">Lê Như Hoang
-            {props.name}
+            {name}
           </p>
-          <p className="divider-title-location text-gray-500 px-3 ml-4 text-base ">{props.phone}</p>
+          <p className="divider-title-location text-gray-500 px-3 ml-4 text-base ">{phone}</p>
         </div>
 
         <p className=" text-gray-500">58 Trương Vĩnh Ký</p>
@@ -32,5 +34,12 @@ const LocationCard = (props) => {
 
     </div >
   )
+}
+
+LocationCard.propTypes = {
+  group: PropTypes.string,
+  idVoucher: PropTypes.number,
+  name: PropTypes.string,
+  phone: PropTypes.string
 }
 export default LocationCard;
