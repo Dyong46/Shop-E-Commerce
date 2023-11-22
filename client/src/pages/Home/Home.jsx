@@ -4,8 +4,13 @@ import Product from './components/Product';
 import SortProductList from './components/SortProductList';
 import { productGetAll } from '~/servers/productService';
 import { categoriesGetAll } from '~/servers/categoryService';
+import useQueryConfig from '~/hooks/useQueryConfig';
+import Pagination from '~/components/Pagination';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
+  const queryConfig = useQueryConfig();
+
   const [products, setProducts] = useState(null);
   const [categories, setCategories] = useState(null);
 
@@ -33,13 +38,17 @@ const Home = () => {
 
   return (
     <div className="bg-gray-200 py-6">
+      <Helmet>
+        <title>Shopee Việt Nam | Mua và Bán Trên Ứng Dụng Di Động hoặc Website</title>
+        <meta name='description' content='Trang chủ dự án Shopee' />
+      </Helmet>
       <div className="container">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-3">
-            <AsideFilter categories={categories} />
+            <AsideFilter queryConfig={queryConfig} categories={categories} />
           </div>
           <div className="col-span-9">
-            <SortProductList />
+            <SortProductList queryConfig={queryConfig} pageSize={2} />
             <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {products &&
                 products.length > 0 &&
@@ -51,6 +60,7 @@ const Home = () => {
                   );
                 })}
             </div>
+            <Pagination queryConfig={queryConfig} pageSize={2} />
           </div>
         </div>
       </div>

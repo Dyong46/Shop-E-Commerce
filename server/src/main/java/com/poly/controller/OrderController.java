@@ -4,9 +4,10 @@ import com.poly.Utils.ResponseBodyServer;
 import com.poly.constant.StatusOrder;
 import com.poly.dto.OrderDTO;
 import com.poly.entity.Order;
+import com.poly.entity.OrderDetail;
 import com.poly.entity.OrderStatus;
 import com.poly.repo.OrderRepository;
-import com.poly.service.EmailService;
+import com.poly.service.OrderDetailsService;
 import com.poly.service.OrderService;
 import com.poly.service.OrderStatusService;
 import jakarta.mail.MessagingException;
@@ -26,12 +27,14 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-
     @Autowired
     OrderStatusService orderStatusService;
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderDetailsService orderDetailsService;
 
     @GetMapping()
     public List<Order> getAll() {
@@ -45,6 +48,7 @@ public class OrderController {
 
     @GetMapping("/status")
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,
+
             @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
     }
@@ -133,5 +137,15 @@ public class OrderController {
     @PutMapping("/cancel/{id}")
     public Order cancelOrder(@PathVariable("id") Integer id) {
         return orderService.cancelOrder(id);
+    }
+
+    @PostMapping("/postdetails")
+    public OrderDetail postDetails(@RequestBody OrderDetail orderDetail){
+        return orderDetailsService.createOrderDetails(orderDetail);
+    }
+
+    @GetMapping("/details")
+    public List<OrderDetail> getAllDetails(){
+        return orderDetailsService.getAll();
     }
 }

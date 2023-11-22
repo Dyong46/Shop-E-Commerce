@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
+
 const Button = (props) => {
-  const { className, isLoading, disabled, children, ...rest } = props;
+  const { className, isLoading, disabled, children, onClick, ...rest } = props;
   const newClassName = disabled ? className + ' cursor-not-allowed' : className;
 
   return (
-    <button className={newClassName} disabled={disabled} {...rest}>
+    <button className={newClassName} disabled={disabled} {...rest} onClick={onClick}>
       {isLoading && (
         <svg
           aria-hidden="true"
@@ -25,6 +27,14 @@ const Button = (props) => {
       <span>{children}</span>
     </button>
   );
+};
+
+Button.propTypes = {
+  className: PropTypes.string,
+  isLoading: PropTypes.bool,
+  disabled: PropTypes.bool,
+  children: PropTypes.any,
+  onClick: PropTypes.func,
 };
 
 export default Button;

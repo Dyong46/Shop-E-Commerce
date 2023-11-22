@@ -1,14 +1,23 @@
 import Footer from '~/components/Footer';
 import Header from '~/components/Header';
+import PropTypes from 'prop-types';
+import { Outlet } from 'react-router-dom';
+import { memo } from 'react';
 
-const MainLayout = ({ children }) => {
+const MainLayoutInner = ({ children }) => {
   return (
     <div>
       <Header />
       {children}
+      <Outlet />
       <Footer />
     </div>
-  );
+  )
 };
 
-export default MainLayout;
+MainLayoutInner.propTypes = {
+  children: PropTypes.node,
+};
+
+const MainLayout = memo(MainLayoutInner)
+export default MainLayout

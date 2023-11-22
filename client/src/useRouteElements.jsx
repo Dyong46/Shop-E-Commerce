@@ -1,27 +1,40 @@
-import { useRoutes } from 'react-router-dom';
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import path from './constants/path';
-import { Fragment, Suspense, lazy } from 'react';
+import { Suspense, lazy, useContext } from 'react';
 
 // Layouts
 import { CartLayout, MainLayout, RegisterLayout } from './layouts';
+import { AppContext } from './contexts/app.contexts';
+import Home from './pages/Home';
+import Order from './pages/Order';
+import Address from './pages/User/pages/Address';
+import UserLayout from './pages/User/layouts/UserLayout';
 
 // Pages
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
-const UserLayout = lazy(() => import('./pages/User/layouts/UserLayout'));
 const Profile = lazy(() => import('./pages/User/pages/Profile'));
 const ChangePassword = lazy(() => import('./pages/User/pages/ChangePassword'));
 const HistoryPurchase = lazy(() => import('./pages/User/pages/HistoryPurchase'));
-const ProductDetail = lazy(() => import('./pages/Details'));
-const Product = lazy(() => import('./pages/Home/components/Product'));
+const ProductDetail = lazy(() => import('./pages/ProductDeatail'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+
+function ProtectedRoute() {
+  const { isAuthenticated } = useContext(AppContext)
+  return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
+}
+
+function RejectedRoute() {
+  const { isAuthenticated } = useContext(AppContext)
+  return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
+}
 
 const UseRouteElement = () => {
   const routeElements = useRoutes([
     {
       path: '',
-      element: <Fragment />,
+      element: <RejectedRoute />,
       children: [
         {
           path: '',
@@ -49,7 +62,7 @@ const UseRouteElement = () => {
     },
     {
       path: '',
-      element: <Fragment />,
+      element: <ProtectedRoute />,
       children: [
         {
           path: path.cart,
@@ -62,35 +75,59 @@ const UseRouteElement = () => {
           ),
         },
         {
+          path: path.order,
+          element: (
+            <CartLayout>
+              <Suspense>
+                <Order />
+              </Suspense>
+            </CartLayout>
+          ),
+        },
+        {
           path: path.user,
-          element: <UserLayout />,
+          element: <MainLayout />,
           children: [
             {
               path: '',
-              element: (
-                <Suspense>
-                  <Profile />
-                </Suspense>
-              ),
+              element: <UserLayout />,
+              children: [
+                {
+                  path: path.profile,
+                  element: (
+                    <Suspense>
+                      <Profile />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.address,
+                  element: (
+                    <Suspense>
+                      <Address />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.changePassword,
+                  element: (
+                    <Suspense>
+                      <ChangePassword />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.historyPurchase,
+                  element: (
+                    <Suspense>
+                      <HistoryPurchase />
+                    </Suspense>
+                  )
+                }
+              ]
             },
-            {
-              path: path.changePassword,
-              element: (
-                <Suspense>
-                  <ChangePassword />
-                </Suspense>
-              ),
-            },
-            {
-              path: path.historyPurchase,
-              element: (
-                <Suspense>
-                  <HistoryPurchase />
-                </Suspense>
-              ),
-            },
-          ],
-        },
+          ]
+        }
       ],
     },
     {
@@ -107,10 +144,10 @@ const UseRouteElement = () => {
         },
         {
           path: '',
-          // index: true,
+          index: true,
           element: (
             <Suspense>
-              <Product />
+              <Home />
             </Suspense>
           ),
         },

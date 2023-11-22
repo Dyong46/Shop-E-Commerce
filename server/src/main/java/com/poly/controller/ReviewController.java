@@ -23,4 +23,9 @@ public class ReviewController {
     public Review postReview(@RequestBody Review review){
         return reviewService.create(review);
     }
+
+    @GetMapping("/{productId}")
+    public List<Review> getReviewById(@PathVariable("productId") Integer productId) {
+        return reviewService.getReviewsByProductId(productId);
+    }
 }
