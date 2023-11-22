@@ -26,4 +26,9 @@ public class ReviewServiceImpl implements ReviewService {
         entity.setCreated_at(date);
         return reviewRepository.save(entity);
     }
+
+    @Override
+    public List<Review> getReviewsByProductId(Integer id) {
+        return reviewRepository.getReviewByProductId(id);
+    }
 }
