@@ -5,10 +5,7 @@ import path from '~/constants/path';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import WaitForConfirmation from './Layout/WaitForConfirmation';
-import WaitingForDelivery from './Layout/WaitingForDelivery';
-import AreDelivery from './Layout/AreDelivery';
-import Delivery from './Layout/Delivery';
-import Cancelled from './Layout/Cancelled';
+
 import { useStore } from '~/Context/Account';
 import { getOrderByAccount } from '~/servers/OrderService';
 

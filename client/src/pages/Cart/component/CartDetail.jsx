@@ -141,6 +141,14 @@ const CartDetails = ({ cart, index }) => {
     var s = 0;
 
     todos.map((item, index) => {
+      // for (var i = 0; i < get.length; i++) {
+      //   if (item.checkitem == true) {
+      //     get[index].checked == item.checkitem;
+      //   } else {
+      //     get[index].checked == item.checkitem;
+      //   }
+      // }
+
       if (index == parseInt(get[index].getAttribute('value'))) {
         if (item.checked == true) {
           s += item.price * item.quantity;
@@ -153,12 +161,12 @@ const CartDetails = ({ cart, index }) => {
     <>
       <div className="flex justify-center justify-content-center mt-6" key={cart.id}>
         <div className="bg-white header-cart py-9">
-          <div className="flex">
+          {/* <div className="flex">
             <div className="">
               <input className="w-10 h-6 ml-9 check-shop" type="checkbox" name="" id="" />
             </div>
             <div>{cart.nameshop}</div>
-          </div>
+          </div> */}
           <div className="flex justify-center mt-6">
             <div className="flex border rounded-sm py-6 px-2 size">
               <div className="">
@@ -240,7 +248,7 @@ const CartDetails = ({ cart, index }) => {
               </div>
             </div>
           </div>
-          <div className="border-y-2 mt-5 flex px-12 py-5">
+          {/* <div className="border-y-2 mt-5 flex px-12 py-5">
             <div className="mr-5">
               <svg fill="none" viewBox="0 -2 23 22" className="shopee-svg-icon L-deCr icon-voucher-line">
                 <g filter="url(#voucher-filter0_d)">
@@ -302,7 +310,7 @@ const CartDetails = ({ cart, index }) => {
                 </a>
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
@@ -312,5 +320,6 @@ const CartDetails = ({ cart, index }) => {
 CartDetails.propTypes = {
   cart: PropTypes.object,
   index: PropTypes.number,
+  checkitem: PropTypes.bool,
 };
 export default CartDetails;

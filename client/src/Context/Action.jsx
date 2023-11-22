@@ -4,7 +4,19 @@ export const setTodoInput = (payload) => ({
   payload,
 });
 
-export const addTodoInput = (id, name, color, size, quantity, image, nameshop, price, quantityInShop, checked) => ({
+export const addTodoInput = (
+  id,
+  name,
+  color,
+  size,
+  quantity,
+  image,
+  nameshop,
+  price,
+  quantityInShop,
+  checked,
+  checkitem,
+) => ({
   hola: ADD_TODO,
   id,
   name,
@@ -16,6 +28,7 @@ export const addTodoInput = (id, name, color, size, quantity, image, nameshop, p
   price,
   quantityInShop,
   checked,
+  checkitem,
 });
 
 export const upadateCart = (checked) => ({

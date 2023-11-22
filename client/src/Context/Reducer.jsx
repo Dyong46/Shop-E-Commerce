@@ -31,6 +31,7 @@ function reducer(state, action) {
               price: action.price,
               quantityInShop: action.quantityInShop,
               checked: false,
+              checkitem: false,
             },
           ],
         };
