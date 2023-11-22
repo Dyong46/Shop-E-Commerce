@@ -91,6 +91,7 @@ const DialogBody = (props) => {
 const Order = () => {
 
   const [carts] = useContext(CartContext);
+  console.log(carts);
 
   const [discounts, setDiscounts] = useState([]);
 
@@ -143,14 +144,8 @@ const Order = () => {
       <div className="bg-gray-50 pt-7 pb-20">
         <Location openDialog={handleClickToOpen} />
         <div className="h-7"></div>
-        {carts.map((item) => {
-          return (
-            <>
-              <Products item={item} />
-              <div className="h-7"></div>
-            </>
-          );
-        })}
+        <Products cartitem={carts} />
+        <div className="h-7"></div>
 
         <Voucher openDialog={handleClickToOpenVoucher} />
         <div className="h-7"></div>

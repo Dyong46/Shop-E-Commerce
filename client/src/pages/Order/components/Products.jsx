@@ -1,5 +1,10 @@
 import PropTypes from 'prop-types';
-const Products = ({ item }) => {
+import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
+import { CartContext } from '~/Context/ContextCart/CartContext';
+import { useContext } from 'react';
+const Products = ({ cartitem }) => {
+  const [carts] = useContext(CartContext);
+  const [money] = useContext(PriceContext);
   return (
     <div>
       <div className="container">
@@ -30,19 +35,23 @@ const Products = ({ item }) => {
               </div>
             </div>
 
-            <div className="grid grid-flow-row-dense grid-cols-3 grid-rows-1">
-              <div className="truncate">{item.nameproduct}</div>
-              <p className="mb-3 ml-3 font-normal text-gray-500 truncate dark:text-gray-400">
-                Loại: Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, quisquam. Illo magni vero
-                aperiam, fuga commodi debitis, eos fugiat earum at autem, libero architecto perspiciatis consequatur.
-                Fugiat voluptatibus illum officia.
-              </p>
-              <div className="flex gap-x-8 grid-cols-7 flex-row">
-                <div className="col-span-2 w-full">đ{item.price}</div>
-                <div className="col-span-2 w-full">{item.quantity}</div>
-                <div className="col-span-2 w-full">đ{item.price * item.quantity}</div>
-              </div>
-            </div>
+            {cartitem.map((item, index) => {
+              return (
+                <div className="grid grid-flow-row-dense grid-cols-3 grid-rows-1 mt-2" key={index}>
+                  <div className="truncate">{item.nameproduct}</div>
+                  <p className="mb-3 ml-3 font-normal text-gray-500 truncate dark:text-gray-400">
+                    Loại: Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat, quisquam. Illo magni vero
+                    aperiam, fuga commodi debitis, eos fugiat earum at autem, libero architecto perspiciatis
+                    consequatur. Fugiat voluptatibus illum officia.
+                  </p>
+                  <div className="flex gap-x-8 grid-cols-7 flex-row">
+                    <div className="col-span-2 w-full">đ{item.price}</div>
+                    <div className="col-span-2 w-full">{item.quantity}</div>
+                    <div className="col-span-2 w-full">đ{item.price * item.quantity}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="flex flex-col bg-teal-50 divide-y divide-dashed">
@@ -76,9 +85,9 @@ const Products = ({ item }) => {
             <div className="p-3 flex flex-row-reverse">
               <div className="flex">
                 <div className="pt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                  Tổng số tiền (1 sản phẩm):
+                  Tổng số tiền ({carts.lenght} sản phẩm):
                 </div>
-                <div className="mx-2 text-lg text-orange">₫47.500</div>
+                <div className="mx-2 text-lg text-orange">₫{money}</div>
               </div>
             </div>
           </div>
@@ -88,7 +97,7 @@ const Products = ({ item }) => {
   );
 };
 Products.propTypes = {
-  item: PropTypes.object,
+  cartitem: PropTypes.array,
 };
 
 export default Products;
