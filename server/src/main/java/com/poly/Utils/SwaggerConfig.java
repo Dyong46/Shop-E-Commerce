@@ -1,4 +1,4 @@
-package com.poly.utils;
+package com.poly.Utils;
 
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;

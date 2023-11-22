@@ -3,10 +3,13 @@ package com.poly.service;
 import com.poly.entity.Product;
 import org.springframework.data.domain.Page;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
+    Page<Product> getAllProduct(HashMap<String, String> multipleParam);
+
     List<Product> getAllProduct();
 
     Product getProductById(Integer id);
@@ -24,6 +27,8 @@ public interface ProductService {
     Product update(Product entity, Integer id);
 
     Product deleteProductById(Integer id);
+
+    List<Product> getProductsByCategory(Integer id);
 
     Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin, String order);
 }

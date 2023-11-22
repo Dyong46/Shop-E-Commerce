@@ -1,10 +1,20 @@
 package com.poly.controller;
 
+import com.poly.Utils.ResponseBodyServer;
+import com.poly.constant.StatusOrder;
+import com.poly.dto.OrderDTO;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
+import com.poly.entity.OrderStatus;
+import com.poly.repo.OrderRepository;
 import com.poly.service.OrderDetailsService;
 import com.poly.service.OrderService;
+import com.poly.service.OrderStatusService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +28,10 @@ public class OrderController {
     OrderService orderService;
 
     @Autowired
-    SendMailController sendMailController;
+    OrderStatusService orderStatusService;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @Autowired
     OrderDetailsService orderDetailsService;
@@ -40,26 +53,86 @@ public class OrderController {
         return orderService.getAllOrderById(id, status);
     }
 
-    @PostMapping("/post")
-    public Order postSave(@RequestBody Order entity) {
-        Order order = orderService.create(entity);
-        String email = order.getAccount_id().getEmail();
-        String username = order.getAccount_id().getUsername();
-        String subject = "Thư cảm ơn ";
-        String context = "Chào " + username +
-                " Xin chân thành cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi! Rất vui được phục vụ bạn và chúng tôi hy vọng rằng bạn đã có một trải nghiệm mua sắm thú vị và hài lòng với sản phẩm mà bạn đã chọn.\n"
-                +
-                "\n" +
-                "Chúng tôi đánh giá cao sự tin tưởng của bạn và cam kết cung cấp dịch vụ tốt nhất cho khách hàng. Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc phản hồi nào, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ sẵn lòng giúp đỡ bạn.\n"
-                +
-                "\n" +
-                "Một lần nữa, xin chân thành cảm ơn bạn đã lựa chọn mua hàng tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai.\n"
-                +
-                "\n" +
-                "Trân trọng";
-        sendMailController.sendMail(email, subject, context);
-        return order;
+    @PostMapping("/pay")
+    public ResponseEntity<Order> payment(@RequestParam("order_id") Integer id){
+        Order orderCheck = orderService.getOrderById(id);
+        if(orderCheck == null){
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderService.setStatusPayment(id);
+        return ResponseEntity.ok(order);
     }
+
+    @PostMapping("/pay-product")
+    public ResponseEntity<Order> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException{
+        try {
+            Order createdOrder = orderService.createOrder(entity);
+            return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/complete")
+    public ResponseEntity<?> completeOrder(@RequestParam("order_id") Integer id) throws ChangeSetPersister.NotFoundException {
+        Order orderCheck = orderService.getOrderById(id);
+        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
+        ResponseBodyServer responseBodyServer;
+        if(orderCheck != null){
+            if(orderCheck.getStatus_id().getId().equals(status.getId())){
+                OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_GIAO);
+                orderCheck.setStatus_id(orderStatus);
+                orderRepository.save(orderCheck);
+                responseBodyServer = ResponseBodyServer.builder().statusCode(200).message("Successfully!").payload(orderCheck).build();
+            }else {
+                responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Can't set status because status might is shipping").payload(null).build();
+            }
+        }else {
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!"+orderCheck.getId()).payload(null).build();
+        }
+        return ResponseEntity.status(200).body(responseBodyServer);
+    }
+
+    @PostMapping("/shippping")
+    public ResponseEntity<Order> shippingOrder(@RequestParam("order_id") Integer id){
+        Order orderCheck = orderService.getOrderById(id);
+        if(orderCheck == null){
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderService.setStatusShipping(id);
+        return ResponseEntity.ok(order);
+    }
+
+    @PostMapping("/cancel")
+    public ResponseEntity<Order> cancelStatusOrder(@RequestParam("order_id") Integer id){
+        Order orderCheck = orderService.getOrderById(id);
+        if(orderCheck == null){
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderService.setStatusCancel(id);
+        return ResponseEntity.ok(order);
+    }
+
+//    @PostMapping()
+//    public Order postSave(@RequestBody Order entity) throws MessagingException {
+//        Order order = orderService.create(entity);
+//        String email = order.getAccount_id().getEmail();
+//        String username = order.getAccount_id().getUsername();
+//        String subject = "Thư cảm ơn ";
+//        String context = "Chào " + username +
+//                " Xin chân thành cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi! Rất vui được phục vụ bạn và chúng tôi hy vọng rằng bạn đã có một trải nghiệm mua sắm thú vị và hài lòng với sản phẩm mà bạn đã chọn.\n"
+//                +
+//                "\n" +
+//                "Chúng tôi đánh giá cao sự tin tưởng của bạn và cam kết cung cấp dịch vụ tốt nhất cho khách hàng. Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc phản hồi nào, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ sẵn lòng giúp đỡ bạn.\n"
+//                +
+//                "\n" +
+//                "Một lần nữa, xin chân thành cảm ơn bạn đã lựa chọn mua hàng tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai.\n"
+//                +
+//                "\n" +
+//                "Trân trọng";
+//        emailService.sendEmail(subject,email,context);
+//        return order;
+//    }
 
     @PutMapping("/cancel/{id}")
     public Order cancelOrder(@PathVariable("id") Integer id) {
@@ -68,7 +141,6 @@ public class OrderController {
 
     @PostMapping("/postdetails")
     public OrderDetail postDetails(@RequestBody OrderDetail orderDetail){
-
         return orderDetailsService.createOrderDetails(orderDetail);
     }
 

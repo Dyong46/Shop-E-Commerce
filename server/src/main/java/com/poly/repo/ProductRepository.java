@@ -16,6 +16,12 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
     @Query("select o from Product o where o.deleted_at IS NULL")
     List<Product> getAllProduct();
+
+    Page<Product> findAll(Pageable pageable);
+
+    @Query("select o from Product o where o.category_id.id = :id")
+    List<Product> getProductsByCategory(Integer id);
+
     @Query("SELECT o FROM Product o WHERE o.name_product LIKE '%' + :name_product + '%' AND o.deleted_at IS NULL")
     List<Product> findProductByName(String name_product);
 

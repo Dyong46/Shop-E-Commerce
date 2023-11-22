@@ -1,8 +1,8 @@
-//package com.poly.service;
-//
-//import com.poly.entity.Account;
-//import jakarta.servlet.ServletContext;
-//
-//public interface EmailService {
-//    void sendEmail(ServletContext context, Account recipient,String type);
-//}
+package com.poly.service;
+
+import jakarta.mail.MessagingException;
+import java.util.concurrent.CompletableFuture;
+
+public interface EmailService {
+    public CompletableFuture<Void> sendEmail(String subject, String recipient, String content) throws MessagingException;
+}
