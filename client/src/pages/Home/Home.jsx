@@ -24,7 +24,7 @@ const Home = () => {
   const getProducts = async () => {
     let res = await productGetAll();
     if (res) {
-      setProducts(res);
+      setProducts(res.content);
     }
   };
 

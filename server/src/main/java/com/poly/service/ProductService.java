@@ -1,6 +1,5 @@
 package com.poly.service;
 
-import com.poly.entity.Category;
 import com.poly.entity.Product;
 import org.springframework.data.domain.Page;
 
@@ -31,4 +30,5 @@ public interface ProductService {
 
     List<Product> getProductsByCategory(Integer id);
 
+    Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin, String order);
 }
