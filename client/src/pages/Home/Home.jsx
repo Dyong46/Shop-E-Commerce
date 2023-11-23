@@ -19,7 +19,6 @@ const Home = () => {
     keepPreviousData: true,
     staleTime: 3 * 60 * 1000
   })
-  console.log(productsData);
 
   const { data: categoriesData } = useQuery({
     queryKey: ['categories'],

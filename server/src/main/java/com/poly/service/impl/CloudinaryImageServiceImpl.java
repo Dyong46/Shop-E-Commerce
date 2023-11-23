@@ -1,6 +1,7 @@
 package com.poly.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.poly.service.CloudinaryImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,10 @@ public class CloudinaryImageServiceImpl implements CloudinaryImageService {
     @Override
     public Map upload(MultipartFile file) {
         try {
-            Map data = cloudinary.uploader().upload(file.getBytes(),Map.of());
+            Map params = ObjectUtils.asMap(
+                    "folder", "myfolder/avatar"
+            );
+            Map data = cloudinary.uploader().upload(file.getBytes(), params);
             return data;
         }catch (IOException e) {
             throw new RuntimeException("Image upload fail !!");
