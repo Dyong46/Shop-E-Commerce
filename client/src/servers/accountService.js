@@ -1,7 +1,5 @@
 import api from './axiosConfig';
 import pathApi from '~/constants/pathApi';
-import * as Bytescale from "@bytescale/sdk";
-import config from '~/constants/config';
 
 const getAllAccounts = () => {
   return api.get(`${pathApi.account}`);
@@ -39,8 +37,4 @@ const fetchAddress = ({id}) => {
   return api.get(`${pathApi.address}/user?id=${id}`)
 }
 
-const uploadManager = new Bytescale.UploadManager({
-	apiKey: config.apiKey
-});
-
-export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword,fetchAddress, uploadManager };
+export { getAllAccounts, getAccountById, createAccount, updateAccount, deleteAccount, login, register, changePassword,fetchAddress };
