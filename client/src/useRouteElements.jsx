@@ -1,16 +1,16 @@
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import path from './constants/path';
 import { Suspense, lazy, useContext } from 'react';
+import { AppContext } from './contexts/app.contexts';
 
 // Layouts
 import { CartLayout, MainLayout, RegisterLayout } from './layouts';
-import { AppContext } from './contexts/app.contexts';
-import Home from './pages/Home';
-import Order from './pages/Order';
-import Address from './pages/User/pages/Address';
 import UserLayout from './pages/User/layouts/UserLayout';
 
 // Pages
+const Order = lazy(() => import('./pages/Order'));
+const Address = lazy(() => import('./pages/User/pages/Address'));
+const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));

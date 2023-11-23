@@ -30,5 +30,5 @@ public interface ProductService {
 
     List<Product> getProductsByCategory(Integer id);
 
-    Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin, String order);
+    Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Integer priceMax, Integer priceMin, String order);
 }
