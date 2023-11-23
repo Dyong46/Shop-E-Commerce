@@ -6,7 +6,8 @@ const pathApi = {
 	category: 'api/categories',
 	address: 'api/address',
 	review: 'api/reviews',
-	gallery: 'api/galleries'
+	gallery: 'api/galleries',
+  cloudinary: 'api/cloudinary'
 };
 
 export default pathApi;
