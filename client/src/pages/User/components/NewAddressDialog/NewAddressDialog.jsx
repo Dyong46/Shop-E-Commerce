@@ -7,6 +7,7 @@ import ModalDialog from "~/components/Modal";
 
 const NewAddressDialog = () => {
   const [open, setOpen] = useState(false);
+  const [location, setLocation] = useState("");
 
   return (
     <>
@@ -25,16 +26,54 @@ const NewAddressDialog = () => {
           <>
             <form>
               <div className="text-xl">Địa chỉ mới</div>
-              <div className="row">
-                <div className="col col-4">
+              <div className="col col-4">
+                <div className="flex space-x-5 justify-center">
                   <Input
-                    name="email"
+                    name="name"
                     // register={register}
-                    type="email"
-                    className="mt-8"
+                    type="text"
+                    className="mt-8 w-full"
                     // errorMessage={errors.email?.message}
-                    placeholder="Email"
+                    placeholder="Họ Và Tên"
                   />
+                  <Input
+                    name="phonenumber"
+                    // register={register}
+                    type="phonenumber"
+                    className="mt-8 w-full"
+                    // errorMessage={errors.email?.message}
+                    placeholder="Số Điện Thoại"
+                  />
+                </div>
+
+                <Input
+                  name="phonenumber"
+                  // register={register}
+                  type="phonenumber"
+                  className="mt-4 w-full"
+                  // errorMessage={errors.email?.message}
+                  placeholder="Tỉnh/ Thành phố, Quận/Huyện, Phường Xã"
+                />
+
+                <div>
+                  <p>Loại địa chỉ</p>
+
+                  <div className="flex space-x-2 mt-2">
+                    <Button
+                      type="button"
+                      className={location === "home" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+                      onClick={() => { setLocation('home') }}
+                    >
+                      Nhà Riêng
+                    </Button>
+                    <Button
+                      type="button"
+                      className={location === "office" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
+                      onClick={() => { setLocation('office') }}
+                    >
+                      Văn Phòng
+                    </Button>
+                  </div>
                 </div>
               </div>
               <div className="flex justify-end">
