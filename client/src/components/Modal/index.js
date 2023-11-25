@@ -1,3 +1,3 @@
-import Model from "./Model";
+import ModalDialog from "./ModelDialog";
 
-export default Model
+export default ModalDialog

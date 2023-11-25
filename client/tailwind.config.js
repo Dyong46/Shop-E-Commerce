@@ -2,7 +2,7 @@ import plugin from 'tailwindcss/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}','node_modules/flowbite-react/lib/esm/**/*.js'],
   corePlugins: {
     container: false,
   },
@@ -14,7 +14,8 @@ export default {
     },
   },
   plugins: [
-    plugin(function ({ addComponents, theme }) {
+    plugin(
+      function ({ addComponents, theme }) {
       addComponents({
         '.container': {
           maxWidth: theme('columns.7xl'),
@@ -26,5 +27,6 @@ export default {
       });
     }),
     import('@tailwindcss/line-clamp'),
+    import('flowbite/plugin'),
   ],
 };
