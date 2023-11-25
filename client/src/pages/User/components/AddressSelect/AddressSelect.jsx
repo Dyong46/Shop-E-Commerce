@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const AddressSelect = ({ value, onChange, errorMessage }) => {
   const [address, setAddress] = useState({
-    province: value?.provinces || undefined,
+    province: value?.province || undefined,
     district: value?.district || undefined,
     ward: value?.ward || undefined
   })
@@ -15,25 +15,25 @@ const AddressSelect = ({ value, onChange, errorMessage }) => {
         district: value?.district,
         ward: value?.ward
       });
+      console.log(address);
     }
   }, [value]);
 
   const handleChange = (event) => {
-    const { value: valueFromSelect, name } = event.target;
+    const { name, value } = event.target;
     const newAddress = {
-      province: value?.provinces || address.province,
-      district: value?.district || address.district,
-      ward: value?.ward || address.ward,
-      [name]: Number(valueFromSelect),
+      ...address,
+      [name]: value || address[name]
     };
     setAddress(newAddress);
-    onChange && onChange(new Date(newAddress.province, newAddress.district, newAddress.ward));
+    console.log(address);
+    onChange && onChange(newAddress);
   };
 
   return (
     <div className="mt-2">
-      <div className="grid">
-        <div className="col-span-3">
+      <div className="grid grid-cols-3 gap-4">
+        <div>
           <select
             onChange={handleChange}
             name="province"
@@ -45,7 +45,7 @@ const AddressSelect = ({ value, onChange, errorMessage }) => {
             {/* API province here */}
           </select>
         </div>
-        <div className="col-span-3">
+        <div>
           <select
             onChange={handleChange}
             name="district"
@@ -57,7 +57,7 @@ const AddressSelect = ({ value, onChange, errorMessage }) => {
             {/* API district here */}
           </select>
         </div>
-        <div className="col-span-3">
+        <div>
           <select
             onChange={handleChange}
             name="ward"

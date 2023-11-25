@@ -1,28 +1,23 @@
 import AddressCard from "../../components/AddressCard";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "~/contexts/app.contexts";
 import { fetchAddress } from "~/servers/accountService";
 import NewAddressDialog from "../../components/NewAddressDialog/NewAddressDialog";
+import { useQuery } from "@tanstack/react-query";
 
 const Address = () => {
-  const { profile } = useContext(AppContext)
-  const [address, setAddress] = useState(null);
+  const { profile, address, setAddress } = useContext(AppContext)
+
+  const { data: addressData } = useQuery({
+    queryKey: ['address', profile.id],
+    queryFn: () => {
+      return fetchAddress({ id: profile.id })
+    }
+  })
 
   useEffect(() => {
-    const fetchDate = async () => {
-      try {
-        const res = await fetchAddress({
-          id: profile.id,
-        })
-        if (res !== null) {
-          setAddress(res)
-        }
-      } catch (error) {
-        throw new Error(error)
-      }
-    }
-    fetchDate()
-  }, [profile.id])
+    setAddress(addressData)
+  }, [addressData, setAddress])
 
   return (
     <div className="rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20">
