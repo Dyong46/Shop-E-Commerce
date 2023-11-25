@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types'
+
 const VoucherCard = (props) => {
-  let data = props.data;
+  const { data, group } = props;
 
   const imgStyle = {
     width: '100px',
@@ -23,7 +25,7 @@ const VoucherCard = (props) => {
           </div>
           <div className="pt-2 text-orange text-xs">Sắp hết hạn: còn 1 ngày</div>
         </div>
-        <input type="radio" name={props.group} value={data.id} />
+        <input type="radio" name={group} value={data.id} />
       </div>
       <div className="text-orange text-sm flex">
         <div className=" mx-1">
@@ -36,4 +38,10 @@ const VoucherCard = (props) => {
     </div>
   )
 }
+
+VoucherCard.propTypes = {
+  data: PropTypes.object,
+  group: PropTypes.string
+}
+
 export default VoucherCard;

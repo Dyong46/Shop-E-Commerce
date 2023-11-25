@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
-import Dialog from '~/components/dialog/dialog';
+import Dialog from '~/components/dialog/Dialog';
 import VoucherCard from '~/components/dialog/card/VoucherCard';
 import { Link } from 'react-router-dom';
 import { getAllDiscount } from '~/servers/discountService';

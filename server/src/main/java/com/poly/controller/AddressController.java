@@ -19,7 +19,7 @@ public class AddressController {
         return addressService.getAddressList();
     }
 
-    @GetMapping("/findByUserId")
+    @GetMapping("/user")
     public List<Address> getAddressById(@RequestParam("id") Integer id) {
         return addressService.getAddressById(id);
     }

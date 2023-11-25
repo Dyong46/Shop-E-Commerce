@@ -1,12 +1,14 @@
 import classNames from 'classnames';
+import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useStore } from '~/Context/Account';
 import path from '~/constants/path';
+import { AppContext } from '~/contexts/app.contexts';
 import { getAvatarUrl } from '~/utils/utils';
+import location from '~/assets/images/location.png'
+import changePassword from '~/assets/images/reset-password.png'
 
 const UserSideNav = () => {
-  const [state] = useStore();
-  const { profile } = state;
+  const { profile } = useContext(AppContext)
 
   return (
     <div>
@@ -59,7 +61,7 @@ const UserSideNav = () => {
           }
         >
           <div className="mr-3 h-[22px] w-[22px]">
-            <img src="https://w7.pngwing.com/pngs/917/85/png-transparent-computer-icons-email-address-email-address-address-miscellaneous-text-mobile-phones.png" alt="" className="h-full w-full" />
+            <img src={location} alt="" className="h-full w-full" />
           </div>
           Địa chỉ
         </NavLink>
@@ -73,7 +75,7 @@ const UserSideNav = () => {
           }
         >
           <div className="mr-3 h-[22px] w-[22px]">
-            <img src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4" alt="" className="h-full w-full" />
+            <img src={changePassword} alt="" className="h-full w-full" />
           </div>
           Đổi mật khẩu
         </NavLink>

@@ -1,5 +1,5 @@
-import LocationCard from "~/components/dialog/card/locationCard";
-import Dialog from "~/components/dialog/dialog";
+import LocationCard from "~/components/dialog/card/LocationCard";
+import Dialog from "~/components/dialog/Dialog";
 
 const Location = (props) => {
   return <div>

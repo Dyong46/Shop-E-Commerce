@@ -1,5 +1,4 @@
 import { purchasesStatus } from '~/constants/purchase';
-import UserLayout from '../../layouts/UserLayout';
 import { Link, createSearchParams } from 'react-router-dom';
 import path from '~/constants/path';
 import classNames from 'classnames';
@@ -71,46 +70,44 @@ const HistoryPurchase = () => {
   }, [param]);
 
   return (
-    <UserLayout>
-      <div>
-        <div className="overflow-x-auto">
-          <div className="min-w-[700px]">
-            <div className="sticky top-0 flex rounded-t-sm shadow-sm" onClick={get}>
-              {purchaseTabsLink}
-            </div>
-            <div>
-              <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
-                {order.map((item, index) => {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
-                      <WaitForConfirmation order={item.id_order} param={param} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
-                    </Link>
-                  );
-                })}
+    <div>
+      <div className="overflow-x-auto">
+        <div className="min-w-[700px]">
+          <div className="sticky top-0 flex rounded-t-sm shadow-sm" onClick={get}>
+            {purchaseTabsLink}
+          </div>
+          <div>
+            <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
+              {order.map((item, index) => {
+                return (
+                  <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
+                    <div className="flex-shrink-0">
+                      <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
+                    </div>
+                    <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
+                      <div className="truncate">{item.name_product}</div>
+                      <div className="mt-3">x{item.quantity}</div>
+                    </div>
+                    <WaitForConfirmation order={item.id_order} param={param} />
+                    <div className="ml-3 flex-shrink-0 w-[100px]">
+                      <span className="truncate text-gray-500 line-through">₫999.000</span>
+                      <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
+                    </div>
+                  </Link>
+                );
+              })}
 
-                <div className="flex justify-end">
-                  <div>
-                    <span>Tổng giá tiền</span>
-                    <span className="ml-4 text-xl text-orange">₫{total}</span>
-                  </div>
+              <div className="flex justify-end">
+                <div>
+                  <span>Tổng giá tiền</span>
+                  <span className="ml-4 text-xl text-orange">₫{total}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </UserLayout>
+    </div>
   );
 };
 
