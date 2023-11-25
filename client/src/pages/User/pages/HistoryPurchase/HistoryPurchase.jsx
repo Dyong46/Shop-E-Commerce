@@ -21,6 +21,7 @@ const purchaseTabs = [
 const HistoryPurchase = () => {
   const [state] = useStore();
   const { profile } = state;
+  console.log(profile, 'profile');
   const [param, setParam] = useState(null);
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
@@ -51,7 +52,7 @@ const HistoryPurchase = () => {
 
   const getAllOrders = async () => {
     // let getAll = await getAllOrder();
-    let getAllDetails = await getOrderByAccount(profile.id);
+    let getAllDetails = await getOrderByAccount(6);
     let tong = 0;
     if (getAllDetails) {
       // console.log(getAll, 'order');

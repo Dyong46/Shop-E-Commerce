@@ -14,12 +14,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { setProfileToLS } from '~/utils/auth';
 import UserLayout from '../../layouts/UserLayout';
+import { AppContext } from '~/contexts/app.contexts';
 
 const profileSchema = userSchema.pick(['name', 'username', 'phone', 'date_of_birth', 'avatar']);
 
 const Profile = () => {
   const [state, dispatch] = useStore();
   const { profile } = state;
+  console.log(profile, 'pro');
 
   const [file, setFile] = useState();
 
@@ -63,22 +65,22 @@ const Profile = () => {
   }, [profile, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log("DATA, ", data);
+    console.log('DATA, ', data);
     try {
-      let avatarName = avatar
+      let avatarName = avatar;
       if (file) {
         const uploadRes = await uploadManager.upload({ data: file });
-        avatarName = uploadRes.fileUrl
-        setValue('avatar', avatarName)
+        avatarName = uploadRes.fileUrl;
+        setValue('avatar', avatarName);
       }
       const res = await updateAccount(profile.id, {
         ...data,
         fullname: data.name,
-        img: avatarName
-      })
-      dispatch(actions.setProfile(res))
-      setProfileToLS(res)
-      toast.success('Update account successful')
+        img: avatarName,
+      });
+      dispatch(actions.setProfile(res));
+      setProfileToLS(res);
+      toast.success('Update account successful');
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
         const formError = error.response?.data.data;
