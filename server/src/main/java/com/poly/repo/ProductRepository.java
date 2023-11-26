@@ -41,7 +41,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
     Page<Product> findFilteredProducts(
             @Param("name") String name,
             @Param("category") String category,
-            @Param("priceMin") Double priceMin,
-            @Param("priceMax") Double priceMax,
+            @Param("priceMin") Integer priceMin,
+            @Param("priceMax") Integer priceMax,
             Pageable pageable);
 }

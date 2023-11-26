@@ -48,7 +48,7 @@ GO
 
 CREATE TABLE [categories] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
-  [name] nvarchar(50),
+  [name] nvarchar(100),
   [description] nvarchar(255),
   [created_at] date,
   [updated_at] date,
@@ -191,7 +191,7 @@ VALUES
 GO
 
 -- Chèn dữ liệu mới vào bảng categories
-INSERT INTO categories ( [name],  [description], [created_at], [updated_at], [deleted_at]) VALUES
+INSERT INTO categories ([name],  [description], [created_at], [updated_at], [deleted_at]) VALUES
   (N'Điện thoại',					 N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
   (N'Laptop',						 N'Danh mục sản phẩm laptop',				'2023-03-08','2023-03-08',NULL),
   (N'Quần áo nam form rộng',		 N'Danh mục sản phẩm quần áo nam',			 '2023-01-03', '2023-01-03', NULL),
@@ -220,7 +220,12 @@ VALUES (N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác l
 	   (N'Gấu Bông MINISO We Bare Bears ',			N'Gấu Bông Lets Bare Bear Fun Pose Miniso cute mềm mại chính hãng',			350000,		50, 'https://down-vn.img.susercontent.com/file/4c312f44880fc1866ba97f9590bcb2d4', '2023-09-03', '2023-09-03', 7),
        (N'Đệm Ngồi Bệt',								N'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvg8-lg0m4pbe0u801e', '2023-09-03', '2023-09-03', 8),
 	   (N'Kem Nền Fit Me',							N'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lifr5pgus7o280', '2023-09-03', '2023-09-03', 9),
-       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10);
+       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Túi Vải',							N'Dạng form túi lớn',														50000,		20, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Túi Vải Lớn',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Áo thun',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Áo hoodie',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10);
 GO
 
 --Chèn dữ liệu mới vào bảng galery
@@ -276,3 +281,5 @@ VALUES
 (1, 1, 1, 9500000),
 (2, 1, 2, 13000000)
 GO
+
+select * from categories

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import config from '~/constants/config';
 import { toast } from 'react-toastify';
 
-const InputFile = ({ onChange }) => {
+const InputFile = ({ onChange, disabled }) => {
   const fileInputRef = useRef(null);
 
   const handleUpload = () => {
@@ -37,6 +37,7 @@ const InputFile = ({ onChange }) => {
         className="flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm"
         type="button"
         onClick={handleUpload}
+        disabled={disabled}
       >
         Chọn ảnh
       </button>
@@ -46,6 +47,7 @@ const InputFile = ({ onChange }) => {
 
 InputFile.propTypes = {
   onChange: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default InputFile;

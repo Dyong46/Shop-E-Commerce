@@ -115,9 +115,8 @@ public class ProductController {
             @RequestParam(name = "order", defaultValue = "desc") String order,
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "category", required = false) String category,
-            @RequestParam(name = "price_max", required = false) Double priceMax,
-            @RequestParam(name = "price_min", required = false) Double priceMin) {
-        System.out.println(page +" "+ limit);
+            @RequestParam(name = "price_max", required = false) Integer priceMax,
+            @RequestParam(name = "price_min", required = false) Integer priceMin) {
         return productService.getFilteredProducts(page, limit, sortBy, name, category, priceMax, priceMin, order);
     }
 }
