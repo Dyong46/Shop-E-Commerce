@@ -1,10 +1,10 @@
 import { createContext, useState } from "react";
-import { getAccessTokenFromLS, getProfileFromLS } from "~/utils/auth";
+import { getProfileFromLS } from "~/utils/auth";
 import PropTypes from 'prop-types'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const getInitialAppContext = () => ({
-  isAuthenticated1: Boolean(getAccessTokenFromLS()),
+  isAuthenticated: Boolean(getProfileFromLS()),
   setIsAuthenticated: () => null,
   profile: getProfileFromLS(),
   setProfile: () => null,
@@ -19,7 +19,7 @@ const initialAppContext = getInitialAppContext()
 
 export const AppContext = createContext(initialAppContext)
 
-const AppProvider = ({ children, defaultValue }) => {
+const AppProvider = ({ children, defaultValue = initialAppContext }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(defaultValue?.isAuthenticated)
   const [extendedPurchases, setExtendedPurchases] = useState(defaultValue?.extendedPurchases)
   const [profile, setProfile] = useState(defaultValue?.profile)
