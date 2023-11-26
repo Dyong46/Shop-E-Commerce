@@ -20,9 +20,12 @@ import Stack from "@mui/material/Stack";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -40,18 +43,49 @@ import { styled } from "@mui/material/styles";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
-import { useState } from "react";
+import { useState, useRef, useMemo } from "react";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const [open, setOpen] = useState(false);
 
+  const [file, setFile] = useState();
+  const [age, setAge] = useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  const fileInputRef = useRef(null);
+
   const img =
     "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
 
+  const previewImage = useMemo(() => {
+    return file ? URL.createObjectURL(file) : "";
+  }, [file]);
+
   const handleClose = () => {
     setOpen(!open);
+  };
+
+  const handleUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const onFileChange = (event) => {
+    const fileFromLocal = event.target.files?.[0];
+
+    fileInputRef.current?.setAttribute("value", "");
+
+    if (fileFromLocal) {
+      console.error("......");
+    } else {
+      onChange && onChange(fileFromLocal);
+
+      setFile(event.terget.files);
+    }
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -99,15 +133,8 @@ function Tables() {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
               >
-                <DialogTitle id="alert-dialog-title">
-                  {"Use Google's location service?"}
-                </DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"Create new product"}</DialogTitle>
                 <DialogContent>
-                  <DialogContentText>
-                    {
-                      "To subscribe to this website, please enter your email address here. We will send updates occasionally."
-                    }
-                  </DialogContentText>
                   <Stack pt={4}>
                     <Stack direction="row" sx={{ width: "100%" }} spacing={10}>
                       <Stack>
@@ -115,20 +142,51 @@ function Tables() {
                           <MDInput label="Name" />
                         </MDBox>
                         <MDBox pt={2}>
-                          <MDInput label="Price" />
+                          <MDInput label="Price" type="number" />
+                        </MDBox>
+                        <MDBox sx={{ minWidth: 120 }} pt={2}>
+                          <FormControl fullWidth sx={{ minHeight: 50 }}>
+                            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                            <Select
+                              sx={{ minHeight: 45 }}
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={age}
+                              label="Age"
+                              onChange={handleChange}
+                            >
+                              <MenuItem value={1}>Điện thoại</MenuItem>
+                              <MenuItem value={2}>Laptop</MenuItem>
+                              <MenuItem value={3}>Quần áo nam</MenuItem>
+                            </Select>
+                          </FormControl>
                         </MDBox>
                       </Stack>
-                      <Stack justifyContent="end">
+                      <Stack>
                         <img
                           style={{ width: 200 }}
-                          srcSet={`${img}`}
-                          src={`${img}`}
+                          srcSet={`${img ?? previewImage}`}
+                          src={`${img ?? previewImage}`}
                           loading="lazy"
                         />
-                        <MDButton variant="contained" startIcon={<CloudUploadIcon />}>
-                          {"Upload Image"}
-                          <VisuallyHiddenInput type="file" />
+                        <MDButton
+                          variant="contained"
+                          onClick={handleUpload}
+                          startIcon={<CloudUploadIcon />}
+                        >
+                          Upload Image
                         </MDButton>
+                        <input
+                          className="hidden"
+                          type="file"
+                          accept=".jpg,.jpeg,.png"
+                          ref={fileInputRef}
+                          onChange={onFileChange}
+                          onClick={(event) => {
+                            event.target.value = null;
+                          }}
+                          hidden
+                        />
                       </Stack>
                     </Stack>
                     <MDInput label="Description" mt={2} minRows={2} multiline />
