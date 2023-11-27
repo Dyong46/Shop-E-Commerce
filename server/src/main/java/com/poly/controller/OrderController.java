@@ -1,7 +1,9 @@
 package com.poly.controller;
 
+import com.poly.dto.OrderAccount;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
+import com.poly.service.OrderAccService;
 import com.poly.service.OrderDetailsService;
 import com.poly.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class OrderController {
 
     @Autowired
     OrderDetailsService orderDetailsService;
+
+    @Autowired
+    OrderAccService orderAccService;
 
     @GetMapping()
     public List<Order> getAll() {
@@ -76,4 +81,15 @@ public class OrderController {
     public List<OrderDetail> getAllDetails(){
         return orderDetailsService.getAll();
     }
+
+    @GetMapping("/details/{idacc}/{status}")
+    public List<OrderAccount> getOrderByAccAndStatus(@PathVariable("idacc") Integer idacc,@PathVariable("status") Integer status){
+        return orderAccService.getOrderByAccAndStatus(idacc,status);
+    }
+    @GetMapping("/details/{idacc}")
+    public List<OrderAccount> getOrderByAcc(@PathVariable("idacc") Integer idacc){
+        return orderAccService.getOrderByAcc(idacc);
+    }
+
+
 }
