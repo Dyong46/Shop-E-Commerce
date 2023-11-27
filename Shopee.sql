@@ -48,7 +48,7 @@ GO
 
 CREATE TABLE [categories] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
-  [name] nvarchar(50),
+  [name] nvarchar(100),
   [description] nvarchar(255),
   [created_at] date,
   [updated_at] date,
@@ -92,6 +92,7 @@ GO
 CREATE TABLE [reviews] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [comment] nvarchar(255),
+  [created_at] date,
   [account_id] integer,
   [product_id] integer
 )
@@ -170,11 +171,11 @@ GO
 -- Chèn dữ liệu mới vào bảng account
 INSERT INTO accounts ([email],  [username],  [password],  [fullname],  [phone],  [gender],  [date_of_birth],  [img], [created_at],  [updated_at],  [role_id])
 VALUES
-	('minhthu123@gmail.com',    'thu123',   'thu123',   N'Minh Thư',   '0341287223',   1,   '2003-02-01',   'https://i.pinimg.com/750x/42/6e/72/426e7248106e39fdbfecc84c08fca83c.jpg',  '2022-12-10',  '2023-09-01',  'admin'),
-	('vuthaiduong@gmail.com',	'duong123',	'duong123',	N'Dương Vũ', '0256456588',	0,	'2003-01-01',	'https://i.pinimg.com/564x/44/34/d6/4434d6fa92e52e36a2cabe468390f264.jpg',		'2019-01-01',	'2023-08-08','user'),
-	('vubinhminh@gmail.com',		'minh123',	'minh123',	N'Minh','0252488655',	0,	'2006-1-10',	'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',		'2020-02-02',	'2022-12-12','user'),
-	('vuthanhtrung@gmail.com',	'trung123',	'trung123', N'Trung',		'0332414841',	0,	'2003-04-09',	'https://i.pinimg.com/736x/8c/8b/8a/8c8b8a236086a28253dda4bf407bb3bb.jpg',		'2019-05-17',	'2022-04-23','user'),
-	('nguyenhoangyen@gmail.com',	'yen123',	'yen123',	N'Yến',	'0211648711',	1,	'1999-04-24',	'https://i.pinimg.com/564x/b9/fb/93/b9fb93a07520a543e1b3c9a017d4b2da.jpg',		'2015-01-09',	'2020-10-10','user')
+	('admin@gmail.com',    'admin123',   '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',   N'Minh Thư',   '0341287223',   1,   '2003-02-01',   'https://i.pinimg.com/750x/42/6e/72/426e7248106e39fdbfecc84c08fca83c.jpg',  '2022-12-10',  '2023-09-01',  'admin'),
+	('user@gmail.com',	'user123',	'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',	N'User 123', '0256456588',	0,	'2003-01-01',	'https://i.pinimg.com/564x/44/34/d6/4434d6fa92e52e36a2cabe468390f264.jpg',		'2019-01-01',	'2023-08-08','user'),
+	('minthu1203@gmail.com',		'mthusayhi123',	'71f4f6a4107717d7290a7af99563eb534f41c44c50f055835f97b8abec26393d',	N'Minh Thư','0252488655',	0,	'2006-1-10',	'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',		'2020-02-02',	'2022-12-12','user'),
+	('vuthanhtrung@gmail.com',	'trung123',	'69596fe31f8b339800ca34029a2dc3aa14710b616b043e896e091db62203edf4', N'Trung',		'0332414841',	0,	'2003-04-09',	'https://i.pinimg.com/736x/8c/8b/8a/8c8b8a236086a28253dda4bf407bb3bb.jpg',		'2019-05-17',	'2022-04-23','user'),
+	('nguyenhoangyen@gmail.com',	'yen123',	'c6b83ce863d571f7a51291d06a872ac070a8f9c95666cc39d44ef8571c3c65a6',	N'Yến',	'0211648711',	1,	'1999-04-24',	'https://i.pinimg.com/564x/b9/fb/93/b9fb93a07520a543e1b3c9a017d4b2da.jpg',		'2015-01-09',	'2020-10-10','user')
 GO
 
 -- Chèn dữ liệu mới vào bảng addresses
@@ -190,7 +191,7 @@ VALUES
 GO
 
 -- Chèn dữ liệu mới vào bảng categories
-INSERT INTO categories ( [name],  [description], [created_at], [updated_at], [deleted_at]) VALUES
+INSERT INTO categories ([name],  [description], [created_at], [updated_at], [deleted_at]) VALUES
   (N'Điện thoại',					 N'Danh mục sản phẩm điện thoại di động', '2023-01-01', '2023-01-01', NULL),
   (N'Laptop',						 N'Danh mục sản phẩm laptop',				'2023-03-08','2023-03-08',NULL),
   (N'Quần áo nam form rộng',		 N'Danh mục sản phẩm quần áo nam',			 '2023-01-03', '2023-01-03', NULL),
@@ -219,7 +220,12 @@ VALUES (N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác l
 	   (N'Gấu Bông MINISO We Bare Bears ',			N'Gấu Bông Lets Bare Bear Fun Pose Miniso cute mềm mại chính hãng',			350000,		50, 'https://down-vn.img.susercontent.com/file/4c312f44880fc1866ba97f9590bcb2d4', '2023-09-03', '2023-09-03', 7),
        (N'Đệm Ngồi Bệt',								N'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvg8-lg0m4pbe0u801e', '2023-09-03', '2023-09-03', 8),
 	   (N'Kem Nền Fit Me',							N'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lifr5pgus7o280', '2023-09-03', '2023-09-03', 9),
-       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10);
+       (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Túi Vải',							N'Dạng form túi lớn',														50000,		20, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Túi Vải Lớn',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Áo thun',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Áo hoodie',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10);
 GO
 
 --Chèn dữ liệu mới vào bảng galery
@@ -248,12 +254,12 @@ GO
 
 -- Add Data
 
-INSERT INTO reviews (comment, account_id, product_id)
+INSERT INTO reviews (comment,created_at ,account_id, product_id)
 VALUES 
-(N'Tuyệt vời', 1, 1),
-(N'Chất lượng cao', 2, 2),
-(N'Rẻ', 3, 3),
-(N'Tuyệt vời', 1, 2)
+(N'Tuyệt vời','2023-08-04', 1, 1),
+(N'Chất lượng cao','2023-09-08', 2, 2),
+(N'Rẻ','2023-02-10', 3, 3),
+(N'Tuyệt vời','2023-08-15', 1, 2)
 GO
 
 INSERT INTO order_status (status)
@@ -275,3 +281,5 @@ VALUES
 (1, 1, 1, 9500000),
 (2, 1, 2, 13000000)
 GO
+
+select * from categories

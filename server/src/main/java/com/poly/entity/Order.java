@@ -50,6 +50,6 @@ public class Order implements Serializable {
     private Discount discount_id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "order_id")
+    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
 }

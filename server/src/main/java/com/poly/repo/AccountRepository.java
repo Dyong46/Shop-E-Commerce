@@ -13,7 +13,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
     Account findAccountByEmailAndPassword(String email, String password);
     
     @Query("select o from Account o where o.email = :email AND o.deleted_at IS NULL")
-    Optional<Account> findByEmail(String email);
+    Account findByEmail(String email);
 
     @Query("select o from  Account o where  o.id = :id AND o.deleted_at is null ")
     Account findByAccountId(Integer id);

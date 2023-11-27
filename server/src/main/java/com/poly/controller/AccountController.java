@@ -4,15 +4,18 @@ import com.poly.dto.ChangePassword;
 import com.poly.entity.Account;
 import com.poly.service.AccountService;
 import com.poly.service.ChangePasswordService;
-import com.poly.utils.CookieUtils;
-import com.poly.utils.PasswordUtils;
-import com.poly.utils.SessionUtils;
+import com.poly.service.EmailService;
+import com.poly.Utils.CookieUtils;
+import com.poly.Utils.PasswordUtils;
+import com.poly.Utils.SessionUtils;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.mail.MessagingException;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -33,7 +36,7 @@ public class AccountController {
     ChangePasswordService changePasswordService;
 
     @Autowired
-    SendMailController sendMailController;
+    private EmailService emailService;
 
     @GetMapping()
     public List<Account> getAll() {
@@ -76,7 +79,7 @@ public class AccountController {
     @PostMapping("/register")
     public Account postRegister(@RequestParam("email") String email,
             @RequestParam("username") String username,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password)throws MessagingException {
         Account accountCheck = accountService.register(email, username, password);
         if (accountCheck == null) {
             return null;
@@ -96,7 +99,8 @@ public class AccountController {
                     +
                     "\n" +
                     "Trân trọng,";
-            sendMailController.sendMail(email, subject, content);
+                emailService.sendEmail(subject,email,content);
+            System.out.println("success mail");
             return accountCheck;
         }
     }

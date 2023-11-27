@@ -1,48 +1,35 @@
-//package com.poly.service.impl;
-//
-//import com.poly.Utils.SendEmailUtils;
-//import com.poly.entity.Account;
-//
-//import jakarta.servlet.ServletContext;
-//
-//public class EmailServiceImpl implements  {
-//    private static final String EMAIL_WELCOME_SUBJECT = "Welcome to Shopee Entertaiment";
-//    private static final String EMAIL_FORGOT_PASSWORD = "Online Shopee - New Password";
-//    private static final String EMAIL_BUY_PRODUCT = "Online Shopee - Thank you";
-//    @Override
-//    public void sendEmail(ServletContext context, Account recipient, String type) {
-//        String host = context.getInitParameter("host");
-//        String port = context.getInitParameter("port");
-//        String user = context.getInitParameter("user");
-//        System.out.println(user);
-//        String pass = context.getInitParameter("pass");
-//        System.out.println(pass);
-//
-//        try {
-//            String content = null;
-//            String subject = null;
-//
-//            switch (type) {
-//                case "welcome":
-//                    subject = EMAIL_WELCOME_SUBJECT;
-//                    content = "Dear " + recipient.getUsername() + " I have you have a good time!";
-//                    break;
-//                case "forgot":
-//                    subject = EMAIL_FORGOT_PASSWORD;
-//                    content = "Dear " + recipient.getUsername() + ", your new password here: " + recipient.getPassword();
-//                    break;
-//                case "thank":
-//                    subject = EMAIL_BUY_PRODUCT;
-//                    content = "Dear " + recipient.getUsername() + ", Thank you for trusting and purchasing our products : ";
-//                    break;
-//                default:
-//                    subject = "Shopee Entertainment";
-//                    content = "Maybe this email is wrong, don't care about it";
-//                    break;
-//            }
-//            SendEmailUtils.sendEmail(host, port, user, pass, recipient.getEmail(), subject, content);
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-//}
+package com.poly.service.impl;
+
+import com.poly.service.EmailService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
+
+@Service
+public class EmailServiceImpl implements EmailService {
+
+    private final JavaMailSender javaMailSender;
+
+    public EmailServiceImpl(JavaMailSender javaMailSender){
+        this.javaMailSender = javaMailSender;
+    }
+
+    @Override
+    public CompletableFuture<Void> sendEmail(String subject, String recipient, String content) throws MessagingException {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message,true);
+            helper.setSubject(subject);
+            helper.setTo(recipient);
+            helper.setText(content);
+            javaMailSender.send(message);
+            return CompletableFuture.completedFuture(null);
+        }catch (MessagingException ex){
+            return CompletableFuture.failedFuture(ex);
+        }
+    }
+}

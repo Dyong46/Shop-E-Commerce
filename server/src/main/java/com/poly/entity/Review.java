@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -16,6 +17,9 @@ public class Review implements Serializable {
     private Integer id;
 
     private String comment;
+
+    @Temporal(TemporalType.DATE)
+    private Date created_at;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "account_id", referencedColumnName = "id")

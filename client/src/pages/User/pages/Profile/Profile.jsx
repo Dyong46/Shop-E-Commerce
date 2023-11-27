@@ -4,7 +4,7 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 import InputFile from '~/components/InputFile';
 import InputNumber from '~/components/InputNumber';
-import { updateAccount, uploadManager } from '~/servers/accountService';
+import { updateAccount } from '~/servers/accountService';
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from '~/utils/utils';
 import DateSelect from '../../components/DateSelect';
 import GenderRadio from '../../components/GenderRadio';
@@ -13,12 +13,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { setProfileToLS } from '~/utils/auth';
 import { AppContext } from '~/contexts/app.contexts';
+import { upload } from '~/servers/cloudinaryService';
 
 const profileSchema = userSchema.pick(['name', 'username', 'phone', 'date_of_birth', 'avatar']);
 
 const Profile = () => {
   const { profile, setProfile } = useContext(AppContext);
   const [file, setFile] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const previewImage = useMemo(() => {
     return file ? URL.createObjectURL(file) : '';
@@ -60,12 +62,12 @@ const Profile = () => {
   }, [profile, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('DATA, ', data);
+    setIsLoading(true);
     try {
       let avatarName = avatar;
       if (file) {
-        const uploadRes = await uploadManager.upload({ data: file });
-        avatarName = uploadRes.fileUrl;
+        const uploadRes = await upload({ image: file });
+        avatarName = uploadRes.url;
         setValue('avatar', avatarName);
       }
       const res = await updateAccount(profile.id, {
@@ -89,6 +91,8 @@ const Profile = () => {
           });
         }
       }
+    } finally {
+      setIsLoading(false);
     }
   });
 
@@ -176,8 +180,10 @@ const Profile = () => {
               <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right" />
               <div className="sm:w-[80%] sm:pl-5">
                 <Button
-                  className="flex h-9 items-center rounded-sm bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
+                  className="flex h-9 items-center rounded-sm bg-orange px-10 text-center text-sm text-white hover:bg-orange/80"
                   type="submit"
+                  isLoading={isLoading}
+                  disabled={isLoading}
                 >
                   Lưu
                 </Button>
@@ -193,7 +199,7 @@ const Profile = () => {
                   className="h-full w-full rounded-full object-cover"
                 />
               </div>
-              <InputFile onChange={handleChangeFile} />
+              <InputFile onChange={handleChangeFile} disabled={isLoading} />
               <div className="mt-3 text-gray-400">
                 <div>Dụng lượng file tối đa 1 MB</div>
                 <div>Định dạng:.JPEG, .PNG</div>
