@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 
-const WaitForConfirmation = ({ order, param }) => {
+const WaitForConfirmation = ({ order, param, statused }) => {
+  const huydon = 'Huy don hang';
   const onClickStatus = () => {
-    console.log(console.log(order, param));
+    console.log(order, param, statused);
   };
   if (param == 1) {
     return (
       <div>
         <div className="flex-grow flex overflow-hidden">
           <div
-            onClick={onClickStatus}
+            onClick={onClickStatus()}
             className="flex justify-center items-center border w-[120px] h-[30px] text-center bg-orange text-white mr-5"
           >
             Hủy đơn hàng
@@ -70,7 +71,8 @@ const WaitForConfirmation = ({ order, param }) => {
 };
 
 WaitForConfirmation.propTypes = {
-  order: PropTypes.object,
+  order: PropTypes.number,
   param: PropTypes.string,
+  statused: PropTypes.string,
 };
 export default WaitForConfirmation;
