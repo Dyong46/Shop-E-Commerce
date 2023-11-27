@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getDistrict, getProvices, getWard } from '~/servers/vietnamProvincesService';
 
 const AddressSelect = ({ value, onChange, errorMessage }) => {
   const [address, setAddress] = useState({
@@ -8,53 +10,97 @@ const AddressSelect = ({ value, onChange, errorMessage }) => {
     ward: value?.ward || undefined
   })
 
+  // Cập nhật lại address khi value thay đổi
   useEffect(() => {
     if (value) {
       setAddress({
-        province: value?.provinces,
+        province: value?.province,
         district: value?.district,
         ward: value?.ward
       });
-      console.log(address);
     }
   }, [value]);
+
+
+  const { data: provinces } = useQuery({
+    queryKey: ['province'],
+    queryFn: () => {
+      return getProvices();
+    }
+  })
+  const [districts, setDistricts] = useState(null);
+  const [wards, setWards] = useState(null)
+
+  const getdistricts = useMutation({
+    mutationFn: () => getDistrict(address.province),
+    onSuccess: (res) => {
+      setDistricts(res.districts)
+    }
+  })
+  const getWards = useMutation({
+    mutationFn: () => getWard(address.district),
+    onSuccess: (res) => {
+      setWards(res.wards)
+    }
+  })
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     const newAddress = {
       ...address,
-      [name]: value || address[name]
+      [name]: value
     };
     setAddress(newAddress);
-    console.log(address);
     onChange && onChange(newAddress);
   };
 
+  // hadle provice and call api district
+  const handleChangeProvice = (event) => {
+    handleChange(event)
+    setDistricts(null)
+    setWards(null)
+    if (address.province) {
+      getdistricts.mutate()
+    }
+  }
+
+  // handle district and call api ward
+  const handleChangeDistrict = (event) => {
+    handleChange(event)
+    setWards(null)
+    if (address.district) {
+      getWards.mutate()
+    }
+  }
+
   return (
-    <div className="mt-2">
+    <>
       <div className="grid grid-cols-3 gap-4">
         <div>
           <select
-            onChange={handleChange}
+            onChange={handleChangeProvice}
             name="province"
             className="h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange"
             value={value?.province || address.province}
           >
-            <option>Tỉnh/ Thành phố</option>
-            <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
-            {/* API province here */}
+            <option value="">Tỉnh/ Thành phố</option>
+            {provinces && provinces.map((province) => (
+              <option key={province.codename} value={province.code}>{province.name}</option>
+            ))}
           </select>
         </div>
         <div>
           <select
-            onChange={handleChange}
+            onChange={handleChangeDistrict}
             name="district"
             className="h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange"
             value={value?.district || address.district}
+            disabled={!districts}
           >
-            <option>Quận/ Huyện</option>
-            <option value="Quận 1">Quận 1</option>
-            {/* API district here */}
+            <option value={undefined}>Quận/ Huyện</option>
+            {districts && districts.map((district) => (
+              <option key={district.codename} value={district.code}>{district.name}</option>
+            ))}
           </select>
         </div>
         <div>
@@ -62,16 +108,18 @@ const AddressSelect = ({ value, onChange, errorMessage }) => {
             onChange={handleChange}
             name="ward"
             className="h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange"
-            value={undefined}
+            value={value?.ward || address.ward}
+            disabled={!wards}
           >
-            <option>Phường/ Xã</option>
-            <option value="Đ. Cách Mạng Tháng 8">Đ. Cách Mạng Tháng 8</option>
-            {/* API address here */}
+            <option value={undefined}>Phường/ Xã</option>
+            {wards && wards.map((ward) => (
+              <option key={ward.codename} value={ward.code}>{ward.name}</option>
+            ))}
           </select>
         </div>
       </div>
       <div className="mt-1 min-h-[1.25rem] text-sm text-red-600">{errorMessage}</div>
-    </div>
+    </>
   );
 }
 

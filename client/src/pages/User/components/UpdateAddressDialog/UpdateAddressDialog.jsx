@@ -1,6 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "~/components/Button";
 import Input from "~/components/Input";
 import ModalDialog from "~/components/Modal";
@@ -10,10 +8,11 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 import InputNumber from "~/components/InputNumber";
 import { isAxiosUnprocessableEntityError } from "~/utils/utils";
 import { toast } from "react-toastify";
-import { addAddress } from "~/servers/addressService";
 import { AppContext } from "~/contexts/app.contexts";
+import { updateAddress } from "~/servers/addressService";
+import PropTypes from 'prop-types'
 
-const NewAddressDialog = () => {
+const UpdateAddressDialog = ({ body }) => {
   const { profile } = useContext(AppContext)
   const [open, setOpen] = useState(false);
 
@@ -32,11 +31,25 @@ const NewAddressDialog = () => {
     formState: { errors },
     handleSubmit,
     setError,
+    setValue
   } = methods;
+
+  useEffect(() => {
+    if (body) {
+      setValue('fullname', body.fullname || ''),
+        setValue('phone', body.phone || ''),
+        setValue('address', {
+          province: body.city,
+          district: body.district,
+          ward: body.wards
+        } || {}),
+        setValue('detailAddress', body.specific_address || '')
+    }
+  }, [body, setValue])
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const res = await addAddress({
+      const res = await updateAddress({
         fullname: data.fullname,
         phone: data.phone,
         city: data.address.province,
@@ -66,13 +79,7 @@ const NewAddressDialog = () => {
 
   return (
     <>
-      <Button
-        className="flex items-center justify-center bg-red-500 py-2 px-4 rounded-sm text-white hover:bg-red font-normal"
-        onClick={() => setOpen(true)}
-      >
-        <FontAwesomeIcon icon={faPlus} className="me-2" />
-        Thêm địa chỉ mới
-      </Button>
+      <Button className="text-blue-600 me-2" onClick={() => setOpen(true)}>Cập nhật</Button>
       <ModalDialog
         className=""
         show={open}
@@ -81,7 +88,7 @@ const NewAddressDialog = () => {
           <>
             <FormProvider {...methods}>
               <form onSubmit={onSubmit}>
-                <div className="text-xl">Địa chỉ mới</div>
+                <div className="text-xl">Cập nhật địa chỉ</div>
                 <div className="flex space-x-5 justify-center">
                   <Input
                     name="fullname"
@@ -147,7 +154,11 @@ const NewAddressDialog = () => {
         }
       />
     </ >
-  );
+  )
 }
 
-export default NewAddressDialog;
+UpdateAddressDialog.propTypes = {
+  body: PropTypes.object
+}
+
+export default UpdateAddressDialog;

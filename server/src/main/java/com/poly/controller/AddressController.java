@@ -39,9 +39,9 @@ public class AddressController {
         addressService.delete(id);
     }
 
-    @PutMapping("/changeDefault/{id}")
-    public Address changeDefault(@PathVariable Integer id) {
-        return addressService.changeDefault(id);
+    @PutMapping("/user/{id}/{idAddress}")
+    public Address changeDefault(@PathVariable Integer id, @PathVariable Integer idAddress) {
+        return addressService.changeDefault(id, idAddress);
     }
 
 }
