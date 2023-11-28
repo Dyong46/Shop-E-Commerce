@@ -156,6 +156,10 @@ public class OrderController {
         return orderService.cancelOrder(id);
     }
 
+    @PostMapping("/post")
+    public Order postorder(@RequestBody Order order){
+        return orderService.postOrder(order);
+    }
     @PostMapping("/postdetails")
     public OrderDetail postDetails(@RequestBody OrderDetail orderDetail) {
         return orderDetailsService.createOrderDetails(orderDetail);

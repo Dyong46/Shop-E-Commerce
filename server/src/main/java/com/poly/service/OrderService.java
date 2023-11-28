@@ -28,4 +28,6 @@ public interface OrderService {
     List<Order> getAllOrderById(Integer id, String status);
 
     Order createOrder(OrderDTO orderRequestDTO);
+
+    Order postOrder(Order order);
 }

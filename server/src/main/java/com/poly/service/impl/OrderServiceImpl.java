@@ -133,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order cancelOrder(Integer id){
         Order order = orderRepository.findByOrderById(id).orElse(null);
-        OrderStatus orderStatus = orderStatusService.findOrderbyId(3);
+        OrderStatus orderStatus = orderStatusService.findOrderbyId(4);
         order.setStatus_id(orderStatus);
         return orderRepository.save(order);
     }
@@ -199,5 +199,10 @@ public class OrderServiceImpl implements OrderService {
         }
             Order resp = orderRepository.save(order);
             return resp;
+    }
+
+    @Override
+    public Order postOrder(Order order){
+        return orderRepository.save(order);
     }
 }
