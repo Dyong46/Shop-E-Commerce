@@ -1,16 +1,21 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
+import { setStatus } from '~/servers/OrderService';
 
-const WaitForConfirmation = ({ order, param, statused }) => {
-  const huydon = 'Huy don hang';
-  const onClickStatus = () => {
-    console.log(order, param, statused);
+const WaitForConfirmation = ({ order, param }) => {
+  const onClickStatus = async () => {
+    let set = await setStatus(order);
+    if (set) {
+      console.log(set, 'set');
+    }
   };
+
   if (param == 1) {
     return (
       <div>
         <div className="flex-grow flex overflow-hidden">
           <div
-            onClick={onClickStatus()}
+            onClick={onClickStatus}
             className="flex justify-center items-center border w-[120px] h-[30px] text-center bg-orange text-white mr-5"
           >
             Hủy đơn hàng

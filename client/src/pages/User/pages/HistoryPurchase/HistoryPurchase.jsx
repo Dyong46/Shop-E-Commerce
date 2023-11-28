@@ -11,7 +11,6 @@ import { getOrderByAccount, getOrderByAccountStatus } from '~/servers/OrderServi
 const purchaseTabs = [
   { status: purchasesStatus.all, name: 'Tất cả' },
   { status: purchasesStatus.waitForConfirmation, name: 'Chờ xác nhận' },
-  { status: purchasesStatus.waitForGetting, name: 'Chờ lấy hàng' },
   { status: purchasesStatus.inProgress, name: 'Đang giao' },
   { status: purchasesStatus.delivered, name: 'Đã giao' },
   { status: purchasesStatus.cancelled, name: 'Đã hủy' },
@@ -60,13 +59,11 @@ const HistoryPurchase = () => {
     let getAll = await getOrderByAccount(profile.id);
     if (getAll) {
       setOrder(getAll);
-      console.log(getAll, 'getall');
 
       getAll.map((item) => {
         tong += item.quantity * item.price;
         setTotal(tong);
         setOrder(getAll);
-        console.log(item.status);
       });
     }
   };
@@ -74,16 +71,14 @@ const HistoryPurchase = () => {
   useEffect(() => {
     if (param == 0) {
       getAllOrderAcc();
-    } else if (param == 2) {
-      getAllOrders(profile.id, 1);
     } else if (param == 1) {
-      getAllOrders(profile.id, 3);
+      getAllOrders(profile.id, 1);
     } else if (param == 3) {
-      getAllOrders(profile.id, 4);
+      getAllOrders(profile.id, 2);
     } else if (param == 4) {
-      getAllOrders(profile.id, 5);
+      getAllOrders(profile.id, 3);
     } else if (param == 5) {
-      getAllOrders(profile.id, 6);
+      getAllOrders(profile.id, 4);
     }
   }, [param]);
 
@@ -107,23 +102,6 @@ const HistoryPurchase = () => {
                         <div className="truncate">{item.name_product}</div>
                         <div className="mt-3">x{item.quantity}</div>
                       </div>
-                      <WaitForConfirmation order={item.id_order} param={param} statused={item.status} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
-                    </Link>
-                  );
-                } else if (param == 1) {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
                       <WaitForConfirmation order={item.id_order} param={param} />
                       <div className="ml-3 flex-shrink-0 w-[100px]">
                         <span className="truncate text-gray-500 line-through">₫999.000</span>
@@ -131,7 +109,7 @@ const HistoryPurchase = () => {
                       </div>
                     </Link>
                   );
-                } else if (param == 2) {
+                } else if (param == 1) {
                   return (
                     <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
                       <div className="flex-shrink-0">
@@ -183,26 +161,22 @@ const HistoryPurchase = () => {
                     </Link>
                   );
                 } else if (param == 5) {
-                  if (order.length == 0) {
-                    return <img key={0} src="https://newnet.vn/themes/newnet/assets/img/empty-cart.png" alt="" />;
-                  } else {
-                    return (
-                      <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                        <div className="flex-shrink-0">
-                          <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                        </div>
-                        <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                          <div className="truncate">{item.name_product}</div>
-                          <div className="mt-3">x{item.quantity}</div>
-                        </div>
-                        <WaitForConfirmation order={item.id_order} param={param} />
-                        <div className="ml-3 flex-shrink-0 w-[100px]">
-                          <span className="truncate text-gray-500 line-through">₫999.000</span>
-                          <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                        </div>
-                      </Link>
-                    );
-                  }
+                  return (
+                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
+                      <div className="flex-shrink-0">
+                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
+                      </div>
+                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
+                        <div className="truncate">{item.name_product}</div>
+                        <div className="mt-3">x{item.quantity}</div>
+                      </div>
+                      <WaitForConfirmation order={item.id_order} param={param} />
+                      <div className="ml-3 flex-shrink-0 w-[100px]">
+                        <span className="truncate text-gray-500 line-through">₫999.000</span>
+                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
+                      </div>
+                    </Link>
+                  );
                 }
               })}
 

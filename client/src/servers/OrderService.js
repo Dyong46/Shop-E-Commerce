@@ -22,4 +22,8 @@ const getOrderByAccount = (id) => {
 const getOrderByAccountStatus = (id,status) => {
     return api.get(`${pathApi.order}`+'/details/'+`${id}`+"/"+`${status}`)
 }
-export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus}
+
+const setStatus = (idorder)=> {
+    return api.put(`${pathApi.order}`+'/cancel/'+`${idorder}`)
+}
+export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatus}
