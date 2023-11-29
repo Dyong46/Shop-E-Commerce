@@ -1,19 +1,21 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import { setStatusCancel, setStatusDone } from '~/servers/OrderService';
 
 const WaitForConfirmation = ({ order, param }) => {
+  const navigate = useNavigate();
   const onClickStatus = async () => {
     let set = await setStatusCancel(order);
     if (set) {
-      window.location.href = 'http://localhost:8086/user/purchase?status=4';
+      navigate('/user/purchase?status=4');
     }
   };
 
   const onClickStatusDone = async () => {
     let set = await setStatusDone(order);
     if (set) {
-      window.location.href = 'http://localhost:8086/user/purchase?status=3';
+      navigate('/user/purchase?status=3');
     }
   };
 

@@ -13,8 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
-
-    private Long totalAmount;
     private String fullname;
     private String phone;
     private String city;
