@@ -20,12 +20,11 @@ const purchaseTabs = [
 
 const HistoryPurchase = () => {
   const { profile } = useContext(AppContext);
-  const queryParams = useQueryParams()
-  const status = Number(queryParams.status) || purchasesStatus.all
+  const queryParams = useQueryParams();
+  const status = Number(queryParams.status) || purchasesStatus.all;
 
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
-  console.log(order);
 
   const purchaseTabsLink = purchaseTabs.map((tab) => (
     <Link
@@ -33,12 +32,12 @@ const HistoryPurchase = () => {
       to={{
         pathname: path.historyPurchase,
         search: createSearchParams({
-          status: String(tab.status)
-        }).toString()
+          status: String(tab.status),
+        }).toString(),
       }}
       className={classNames('flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center', {
         'border-b-orange text-orange': status === tab.status,
-        'border-b-black/10 text-gray-900': status !== tab.status
+        'border-b-black/10 text-gray-900': status !== tab.status,
       })}
     >
       {tab.name}
@@ -84,35 +83,34 @@ const HistoryPurchase = () => {
     <div>
       <div className="overflow-x-auto">
         <div className="min-w-[700px]">
-          <div className="sticky top-0 flex rounded-t-sm shadow-sm">
-            {purchaseTabsLink}
-          </div>
+          <div className="sticky top-0 flex rounded-t-sm shadow-sm">{purchaseTabsLink}</div>
           <div>
             <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
               {order?.map((item, index) => (
-                <div
-                  className="flex mt-5" key={index}
-                >
+                <div className="flex mt-5" key={index}>
                   <div className="flex-shrink-0">
                     <img className="h-20 w-20 object-cover" src={item.img} alt={item.name_product} />
                   </div>
                   <div className="ml-3 flex-grow overflow-hidden">
                     <Link
                       to={`${path.home}${generateNameId({ name: item.name_product, id: item.id_product })}`}
-                      className="truncate hover:text-gray-500">{item.name_product}
+                      className="truncate hover:text-gray-500"
+                    >
+                      {item.name_product}
                     </Link>
                     <div className="mt-3">x{item.quantity}</div>
                   </div>
                   <div className="ml-3 flex-shrink-0">
-                    <div className='mb-2 text-end'>
-                      <span className="truncate text-gray-500 line-through">₫{(item.quantity * item.price) + 100000}</span>
+                    <div className="mb-2 text-end">
+                      <span className="truncate text-gray-500 line-through">
+                        ₫{item.quantity * item.price + 100000}
+                      </span>
                       <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
                     </div>
                     <WaitForConfirmation order={item.id_order} param={status} />
                   </div>
                 </div>
-              )
-              )}
+              ))}
 
               <div className="flex justify-end">
                 <div>

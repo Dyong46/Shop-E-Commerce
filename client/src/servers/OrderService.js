@@ -26,4 +26,8 @@ const getOrderByAccountStatus = (id,status) => {
 const setStatus = (idorder)=> {
     return api.put(`${pathApi.order}`+'/cancel/'+`${idorder}`)
 }
-export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatus}
+
+const setStatusDone = (idorder) => {
+    return api.post(`${pathApi.order}`+'/complete?order_id='+`${idorder}`)
+}
+export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatus,setStatusDone}
