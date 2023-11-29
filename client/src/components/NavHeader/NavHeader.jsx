@@ -6,6 +6,7 @@ import { getAvatarUrl } from '~/utils/utils';
 import { AppContext } from '~/contexts/app.contexts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { clearLS } from '~/utils/auth';
 
 const datasLeft = ['Kênh người bán', 'Tải ứng dụng', 'Kết nối'];
 
@@ -15,6 +16,7 @@ const NavHeader = () => {
   const handleLogout = () => {
     setProfile(null)
     setIsAuthenticated(false)
+    clearLS()
   }
 
   return (

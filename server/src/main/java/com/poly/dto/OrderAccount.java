@@ -1,4 +1,4 @@
-package com.poly.entity;
+package com.poly.dto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
-import com.poly.entity.Category;
+
 
 @Data
 @NoArgsConstructor
@@ -27,4 +27,7 @@ public class OrderAccount implements Serializable {
     private Integer category_id;
     private Integer id_account;
     private String name_account;
+    private Integer status_id;
+    private String status;
+    private Integer id_order;
 }
