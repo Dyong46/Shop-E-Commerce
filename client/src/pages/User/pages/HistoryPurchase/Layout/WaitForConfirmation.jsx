@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import Button from '~/components/Button';
 import { setStatus } from '~/servers/OrderService';
 
 const WaitForConfirmation = ({ order, param }) => {
+  console.log(param);
   const onClickStatus = async () => {
     let set = await setStatus(order);
     if (set) {
@@ -14,13 +15,13 @@ const WaitForConfirmation = ({ order, param }) => {
     return (
       <div>
         <div className="flex-grow flex overflow-hidden">
-          <div
+          <Button
             onClick={onClickStatus}
-            className="flex justify-center items-center border w-[120px] h-[30px] text-center bg-orange text-white mr-5"
+            className="border py-2 px-4 text-center bg-orange text-white mr-5"
           >
             Hủy đơn hàng
-          </div>
-          <div className="flex justify-center items-center text-orange border border-orange w-[120px] h-[30px]">
+          </Button>
+          <div className=" text-orange border border-orange py-2 px-4">
             Đang xác nhận
           </div>
         </div>
@@ -29,15 +30,15 @@ const WaitForConfirmation = ({ order, param }) => {
   } else if (param == 2) {
     return (
       <div>
-        <div className="flex-grow flex overflow-hidden">
-          <div
+        <div className="flex-grow flex overflow-hidden justify-end">
+          <Button
             onClick={onClickStatus}
-            className="flex justify-center items-center border w-[120px] h-[30px] text-center bg-orange text-white mr-5"
+            className="border py-2 px-4 text-center bg-orange text-white mr-5"
           >
             Hủy đơn hàng
-          </div>
-          <div className="flex justify-center items-center text-orange border border-orange w-[120px] h-[30px]">
-            Đang lấy hàng
+          </Button>
+          <div className=" text-orange border border-orange py-2 px-4">
+            Đang giao hàng
           </div>
         </div>
       </div>
@@ -47,22 +48,12 @@ const WaitForConfirmation = ({ order, param }) => {
       <div>
         <div className="flex-grow flex overflow-hidden">
           <div className="flex justify-center items-center text-orange border border-orange w-[120px] h-[30px]">
-            Đang giao hàng
-          </div>
-        </div>
-      </div>
-    );
-  } else if (param == 4) {
-    return (
-      <div>
-        <div className="flex-grow flex overflow-hidden">
-          <div className="flex justify-center items-center text-orange border border-orange w-[120px] h-[30px]">
             Đã giao
           </div>
         </div>
       </div>
     );
-  } else if (param == 5) {
+  } else if (param == 4) {
     return (
       <div>
         <div className="flex-grow flex overflow-hidden">
@@ -77,7 +68,7 @@ const WaitForConfirmation = ({ order, param }) => {
 
 WaitForConfirmation.propTypes = {
   order: PropTypes.number,
-  param: PropTypes.string,
+  param: PropTypes.number,
   statused: PropTypes.string,
 };
 export default WaitForConfirmation;

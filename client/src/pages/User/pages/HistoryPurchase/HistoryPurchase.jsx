@@ -7,6 +7,8 @@ import WaitForConfirmation from './Layout/WaitForConfirmation';
 import { AppContext } from '~/contexts/app.contexts';
 import { useContext } from 'react';
 import { getOrderByAccount, getOrderByAccountStatus } from '~/servers/OrderService';
+import useQueryParams from '~/hooks/useQueryParams';
+import { generateNameId } from '~/utils/utils';
 
 const purchaseTabs = [
   { status: purchasesStatus.all, name: 'Tất cả' },
@@ -18,16 +20,12 @@ const purchaseTabs = [
 
 const HistoryPurchase = () => {
   const { profile } = useContext(AppContext);
+  const queryParams = useQueryParams()
+  const status = Number(queryParams.status) || purchasesStatus.all
 
-  const [param, setParam] = useState(null);
   const [order, setOrder] = useState([]);
   const [total, setTotal] = useState(0);
-
-  const get = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const param = urlParams.get('status');
-    setParam(param);
-  };
+  console.log(order);
 
   const purchaseTabsLink = purchaseTabs.map((tab) => (
     <Link
@@ -35,12 +33,12 @@ const HistoryPurchase = () => {
       to={{
         pathname: path.historyPurchase,
         search: createSearchParams({
-          status: String(tab.status),
-        }).toString(),
+          status: String(tab.status)
+        }).toString()
       }}
       className={classNames('flex flex-1 items-center justify-center border-b-2 bg-white py-4 text-center', {
-        'border-b-orange text-orange': tab.status == param,
-        'border-b-black/10 text-gray-900': param != tab.status,
+        'border-b-orange text-orange': status === tab.status,
+        'border-b-black/10 text-gray-900': status !== tab.status
       })}
     >
       {tab.name}
@@ -69,129 +67,63 @@ const HistoryPurchase = () => {
   };
 
   useEffect(() => {
-    if (param == 0) {
+    if (status == 0) {
       getAllOrderAcc();
-    } else if (param == 1) {
+    } else if (status == 1) {
       getAllOrders(profile.id, 1);
-    } else if (param == 3) {
+    } else if (status == 2) {
       getAllOrders(profile.id, 2);
-    } else if (param == 4) {
+    } else if (status == 3) {
       getAllOrders(profile.id, 3);
-    } else if (param == 5) {
+    } else if (status == 4) {
       getAllOrders(profile.id, 4);
     }
-  }, [param]);
+  }, [status]);
 
   return (
     <div>
       <div className="overflow-x-auto">
         <div className="min-w-[700px]">
-          <div className="sticky top-0 flex rounded-t-sm shadow-sm" onClick={get}>
+          <div className="sticky top-0 flex rounded-t-sm shadow-sm">
             {purchaseTabsLink}
           </div>
           <div>
             <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
-              {order.map((item, index) => {
-                if (param == 0) {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
-                      <WaitForConfirmation order={item.id_order} param={param} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
+              {order?.map((item, index) => (
+                <div
+                  className="flex mt-5" key={index}
+                >
+                  <div className="flex-shrink-0">
+                    <img className="h-20 w-20 object-cover" src={item.img} alt={item.name_product} />
+                  </div>
+                  <div className="ml-3 flex-grow overflow-hidden">
+                    <Link
+                      to={`${path.home}${generateNameId({ name: item.name_product, id: item.id_product })}`}
+                      className="truncate hover:text-gray-500">{item.name_product}
                     </Link>
-                  );
-                } else if (param == 1) {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
-                      <WaitForConfirmation order={item.id_order} param={param} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
-                    </Link>
-                  );
-                } else if (param == 3) {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
-                      <WaitForConfirmation order={item.id_order} param={param} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
-                    </Link>
-                  );
-                } else if (param == 4) {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
-                      <WaitForConfirmation order={item.id_order} param={param} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
-                    </Link>
-                  );
-                } else if (param == 5) {
-                  return (
-                    <Link to={'/user/purchase?status=' + `${param}`} className="flex mt-5" key={index}>
-                      <div className="flex-shrink-0">
-                        <img className="h-20 w-20 object-cover" src={item.img} alt={'purchase.product.name'} />
-                      </div>
-                      <div className="ml-3 flex-grow overflow-hidden max-w-[500px]">
-                        <div className="truncate">{item.name_product}</div>
-                        <div className="mt-3">x{item.quantity}</div>
-                      </div>
-                      <WaitForConfirmation order={item.id_order} param={param} />
-                      <div className="ml-3 flex-shrink-0 w-[100px]">
-                        <span className="truncate text-gray-500 line-through">₫999.000</span>
-                        <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                      </div>
-                    </Link>
-                  );
-                }
-              })}
+                    <div className="mt-3">x{item.quantity}</div>
+                  </div>
+                  <div className="ml-3 flex-shrink-0">
+                    <div className='mb-2 text-end'>
+                      <span className="truncate text-gray-500 line-through">₫{(item.quantity * item.price) + 100000}</span>
+                      <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
+                    </div>
+                    <WaitForConfirmation order={item.id_order} param={status} />
+                  </div>
+                </div>
+              )
+              )}
 
               <div className="flex justify-end">
                 <div>
                   <span>Tổng giá tiền</span>
                   {order.map((item, index) => {
-                    if (param == 0 || param == 1 || param == 2 || param == 3 || param == 4) {
-                      if (index == 0) {
-                        return (
-                          <span className="ml-4 text-xl text-orange" key={index}>
-                            ₫{total}
-                          </span>
-                        );
-                      }
+                    if (index == 0) {
+                      return (
+                        <span className="ml-4 text-xl text-orange" key={index}>
+                          ₫{total}
+                        </span>
+                      );
                     }
                   })}
                 </div>
