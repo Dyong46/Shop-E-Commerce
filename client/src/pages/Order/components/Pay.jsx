@@ -1,35 +1,35 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
 import { postOrderDetails, postOrders } from '~/servers/OrderService';
 import pathApi from '~/constants/pathApi';
-import { useStore } from '~/Context/Account';
+import { AppContext } from '~/contexts/app.contexts';
 import { productGetAll } from '~/servers/productService';
 
 const Pay = ({ money, cart }) => {
   const [payWith, setPayWith] = useState('');
-  const [state] = useStore();
-  const { profile } = state;
+
+  const { profile } = useContext(AppContext);
   const date = new Date();
-  const currentDate = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate;
+  const currentDate = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   const currentMonth = date.getMonth() + 1;
   const currentYear = date.getFullYear();
   const formatDate = currentYear + '-' + currentMonth + '-' + currentDate;
 
   const order = {
     created_at: formatDate,
-    status_id: {
-      id: 1,
-      status: 'Đang vận chuyển',
-    },
     total_amount: parseInt(money),
-    fullname: profile.username,
-    phone: '0123456789',
+    fullname: profile.fullname,
+    phone: profile.phone,
     city: 'HCM',
     district: 'District 1',
     wards: 'Abc',
     specific_address: 'A123',
+    status_id: {
+      id: 1,
+      status: 'Cho xac nhan',
+    },
     account_id: profile,
     discount_id: null,
   };
@@ -48,7 +48,7 @@ const Pay = ({ money, cart }) => {
       orderDetails.quantity = item.quantity;
       orderDetails.amount = item.quantity * item.price;
       orderDetails.order_id = order;
-      getProduct.map((pr) => {
+      getProduct.content.map((pr) => {
         if (pr.id == item.id) {
           orderDetails.product_id = pr;
           myobj = { ...myobj, ...orderDetails };
@@ -56,7 +56,6 @@ const Pay = ({ money, cart }) => {
         }
       });
     });
-    console.log(mang);
     mang.map((item) => {
       postOrderDetail(`${pathApi.order + '/postdetails'}`, item);
     });
@@ -84,8 +83,14 @@ const Pay = ({ money, cart }) => {
           </div>
           <Button
             type="button"
-            className={payWith === "shopeePay" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
-            onClick={() => { setPayWith('shopeePay') }}
+            className={
+              payWith === 'shopeePay'
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
+            }
+            onClick={() => {
+              setPayWith('shopeePay');
+            }}
           >
             Ví Shopee
           </Button>
@@ -103,15 +108,27 @@ const Pay = ({ money, cart }) => {
           </Button>
           <Button
             type="button"
-            className={payWith === "recive" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
-            onClick={() => { setPayWith('recive') }}
+            className={
+              payWith === 'recive'
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
+            }
+            onClick={() => {
+              setPayWith('recive');
+            }}
           >
             Thanh toán khi nhận hàng
           </Button>
           <Button
             type="button"
-            className={payWith === "vnPay" ? "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm " : "flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm "}
-            onClick={() => { setPayWith('vnPay') }}
+            className={
+              payWith === 'vnPay'
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
+            }
+            onClick={() => {
+              setPayWith('vnPay');
+            }}
           >
             Thanh toán VNPay
           </Button>
@@ -137,7 +154,7 @@ const Pay = ({ money, cart }) => {
           <div className="text-orange text-2xl min-w-[140px] text-end">đ{money + 27500}</div>
           <div className="">Tổng thanh toán</div>
         </div>
-      </div >
+      </div>
       <div className="bg-[#fffefb] py-5 px-9 rouned-sm shadow">
         <div className="flex justify-between items-center">
           <div className="text-orange">
@@ -157,7 +174,7 @@ const Pay = ({ money, cart }) => {
           </Link>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 Pay.propTypes = {

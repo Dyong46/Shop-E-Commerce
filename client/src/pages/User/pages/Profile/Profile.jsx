@@ -18,7 +18,7 @@ import { upload } from '~/servers/cloudinaryService';
 const profileSchema = userSchema.pick(['name', 'username', 'phone', 'date_of_birth', 'avatar']);
 
 const Profile = () => {
-  const { profile, setProfile } = useContext(AppContext)
+  const { profile, setProfile } = useContext(AppContext);
   const [file, setFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,22 +62,22 @@ const Profile = () => {
   }, [profile, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      let avatarName = avatar
+      let avatarName = avatar;
       if (file) {
         const uploadRes = await upload({ image: file });
-        avatarName = uploadRes.url
-        setValue('avatar', avatarName)
+        avatarName = uploadRes.url;
+        setValue('avatar', avatarName);
       }
       const res = await updateAccount(profile.id, {
         ...data,
         fullname: data.name,
-        img: avatarName
-      })
-      setProfile(res)
-      setProfileToLS(res)
-      toast.success('Update account successful')
+        img: avatarName,
+      });
+      setProfile(res);
+      setProfileToLS(res);
+      toast.success('Update account successful');
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
         const formError = error.response?.data.data;
@@ -92,7 +92,7 @@ const Profile = () => {
         }
       }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   });
 
