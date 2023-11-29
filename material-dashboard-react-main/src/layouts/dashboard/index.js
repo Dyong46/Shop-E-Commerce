@@ -26,6 +26,7 @@ import Footer from "examples/Footer";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import { Link, useNavigate } from "react-router-dom";
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
@@ -37,72 +38,78 @@ import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+  const navigate = useNavigate();
+
+  const onClick = (category) => {
+    // navigate("/tables", { category });
+  };
+  const categorys = [
+    {
+      text: "chờ xác nhận",
+      icon: "verified",
+    },
+    {
+      text: "Chờ Lấy Hàng",
+      icon: "shoppingCartCheckoutIcon ",
+    },
+    {
+      text: "Đã Xử Lý",
+      icon: "checkCircleIcon ",
+    },
+    {
+      text: "Đơn Huỷ",
+      icon: "cancel",
+    },
+    {
+      text: "Trả Hàng/Hoàn Tiền Chờ Xử Lý",
+      icon: "restore",
+    },
+    {
+      text: "Sản Phẩm Bị Tạm Khoá",
+      icon: "watchOffIcon",
+    },
+    {
+      text: "Sản Phâm Hết Hàng",
+      icon: "removeCircle",
+    },
+    {
+      text: "Chương Trình Khuyến Mãi Chờ Xử Lý",
+      icon: "redeemIcon",
+    },
+  ];
+
+  function statusUI() {
+    const elements = [];
+    for (var i of categorys) {
+      elements.push(
+        <Grid item xs={12} md={6} lg={3}>
+          <MDBox mb={1.5}>
+            <ComplexStatisticsCard
+              color="dark"
+              icon={i.icon}
+              title={i.text}
+              count={281}
+              percentage={{
+                color: "success",
+                amount: "+55%",
+                label: "than lask week",
+              }}
+            />
+          </MDBox>
+        </Grid>
+      );
+    }
+    return elements;
+  }
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid>
+          {statusUI()}
         </Grid>
+
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
