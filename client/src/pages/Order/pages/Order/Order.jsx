@@ -1,8 +1,8 @@
 import Dialog from '~/components/dialog/Dialog';
-import Location from './components/Location';
-import Pay from './components/Pay';
-import Products from './components/Products';
-import Voucher from './components/Voucher';
+import Location from '../../components/Location';
+import Pay from '../../components/Pay';
+import Products from '../../components/Products';
+import Voucher from '../../components/Voucher';
 import { useContext, useState } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import LocationCard from '~/components/dialog/card/LocationCard';
@@ -12,9 +12,10 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types'
 
 const DialogBody = (props) => {
+  const {handle} = props
   const ButtonShowmore = (props) => {
     return (
-      <button className="flex" onClick={props.handle}>
+      <button className="flex" onClick={handle}>
         <p>Xem thêm</p>
         <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 101 101" id="down"><path d="m80.5 33-30 30-30-30c-.9-.9-2.5-.9-3.4 0s-.9 2.5 0 3.4L48.8 68c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7l31.7-31.7c.9-.9.9-2.5 0-3.4s-2.5-.9-3.4.1z"></path></svg>
       </button>
@@ -101,6 +102,7 @@ const Order = () => {
   const getAll = async () => {
     try {
       const discounts = await getAllDiscount();
+      console.log(discounts);
       setDiscounts(discounts);
     } catch (error) {
       console.error('Error loading discount: ', error);
@@ -148,7 +150,7 @@ const Order = () => {
         <div className="h-7"></div>
 
         <Voucher openDialog={handleClickToOpenVoucher} />
-        <div className="h-7"></div>
+        {/* <div className="h-7"></div> */}
         <Pay />
       </div>
     </>
