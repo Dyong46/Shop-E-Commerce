@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -50,38 +50,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order setStatusPayment(Integer id) {
-        Order order = getOrderById(id);
-        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN);
-        order.setStatus_id(orderStatus);
-        return orderRepository.save(order);
-    }
-
-    @Override
-    public Order setStatusComplete(Integer id) {
-        Order order = getOrderById(id);
-        System.out.println(order.getStatus_id().getId());
-        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
-        System.out.println(status.getId());
-        if(order.getStatus_id().getId().equals(status.getId())){
-            OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_GIAO);
-            order.setStatus_id(orderStatus);
-            System.out.println("success");
-        }else {
-            System.out.println("Can not set status");
-        }
-        return orderRepository.save(order);
-    }
-
-    @Override
-    public Order setStatusShipping(Integer id) {
-        Order order = getOrderById(id);
-        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
-        order.setStatus_id(orderStatus);
-        return orderRepository.save(order);
-    }
-
-    @Override
     public Order setStatusCancel(Integer id) {
         Order order = getOrderById(id);
         OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DA_HUY);
@@ -100,37 +68,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order create(OrderDTO entity) throws MessagingException {
-//        Order order = new Order();
-//        String email = order.getAccount_id().getEmail();
-//        String username = order.getAccount_id().getUsername();
-//        String subject = "Thư cảm ơn ";
-//        String context = "Chào " + username +
-//                " Xin chân thành cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi! Rất vui được phục vụ bạn và chúng tôi hy vọng rằng bạn đã có một trải nghiệm mua sắm thú vị và hài lòng với sản phẩm mà bạn đã chọn.\n"
-//                +
-//                "\n" +
-//                "Chúng tôi đánh giá cao sự tin tưởng của bạn và cam kết cung cấp dịch vụ tốt nhất cho khách hàng. Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc phản hồi nào, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ sẵn lòng giúp đỡ bạn.\n"
-//                +
-//                "\n" +
-//                "Một lần nữa, xin chân thành cảm ơn bạn đã lựa chọn mua hàng tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai.\n"
-//                +
-//                "\n" +
-//                "Trân trọng";
-//        emailService.sendEmail(subject,email,context);
-//        OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN);
-//        order.setStatus_id(orderStatus);
-//        order.setCreated_at(new Date());
-//        Product existingProduct = productService.getProductById(entity.getDetail().getProduct_id().getId());
-//        Integer quantity = entity.getDetail().getQuantity();
-//        if(existingProduct != null){
-//            Integer newQuantity = existingProduct.getQuantity() - quantity;
-//            existingProduct.setQuantity(newQuantity);
-//            productRepository.save(existingProduct);
-//        }
-        return null;
-    }
-
-    @Override
     public Order cancelOrder(Integer id){
         Order order = orderRepository.findByOrderById(id).orElse(null);
         OrderStatus orderStatus = orderStatusService.findOrderbyId(3);
@@ -145,11 +82,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order createOrder(OrderDTO orderRequestDTO) {
+    public Order createOrder(OrderDTO orderRequestDTO) throws MessagingException{
         Long totalPrice = (long) 0;
         Order order = new Order();
         order.setCreated_at(new Date());
-//        order.setTotal_amount(orderRequestDTO.getTotalAmount());
         order.setFullname(orderRequestDTO.getFullname());
         order.setPhone(orderRequestDTO.getPhone());
         order.setCity(orderRequestDTO.getCity());
@@ -159,12 +95,10 @@ public class OrderServiceImpl implements OrderService {
         order.setAccount_id(accountService.getAccountById(orderRequestDTO.getAccountId()));
         order.setStatus_id(orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN));
 
-        // Set order details
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (OrderDetailDTO detailDTO : orderRequestDTO.getOrderDetails()) {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setQuantity(detailDTO.getQuantity());
-//            orderDetail.setAmount(detailDTO.getAmount());
             orderDetail.setOrder_id(order);
 
             // Fetch product by ID and set it
@@ -182,7 +116,6 @@ public class OrderServiceImpl implements OrderService {
             totalPrice = total + totalPrice;
             // handel quantity
             Integer newQuantity = product.getQuantity()-quantity;
-//            orderDetail.setQuantity(quantity);
             product.setQuantity(newQuantity);
             productRepository.save(product);
             orderDetail.setProduct_id(product);
@@ -198,6 +131,21 @@ public class OrderServiceImpl implements OrderService {
             order.setTotal_amount(totalPrice*(100-discount.getDiscount_percent())/100);
         }
             Order resp = orderRepository.save(order);
+        String email = order.getAccount_id().getEmail();
+        String username = order.getAccount_id().getUsername();
+        String subject = "Thư cảm ơn ";
+        String context = "Chào " + username +
+                " Xin chân thành cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi! Rất vui được phục vụ bạn và chúng tôi hy vọng rằng bạn đã có một trải nghiệm mua sắm thú vị và hài lòng với sản phẩm mà bạn đã chọn.\n"
+                +
+                "\n" +
+                "Chúng tôi đánh giá cao sự tin tưởng của bạn và cam kết cung cấp dịch vụ tốt nhất cho khách hàng. Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc phản hồi nào, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ sẵn lòng giúp đỡ bạn.\n"
+                +
+                "\n" +
+                "Một lần nữa, xin chân thành cảm ơn bạn đã lựa chọn mua hàng tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai.\n"
+                +
+                "\n" +
+                "Trân trọng";
+            emailService.sendEmail(subject,email,context);
             return resp;
     }
 }
