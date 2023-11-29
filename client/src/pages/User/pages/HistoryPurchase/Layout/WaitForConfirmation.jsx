@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import Button from '~/components/Button';
-import { setStatus, setStatusDone } from '~/servers/OrderService';
+import { setStatusCancel, setStatusDone } from '~/servers/OrderService';
 
 const WaitForConfirmation = ({ order, param }) => {
   const onClickStatus = async () => {
-    let set = await setStatus(order);
+    let set = await setStatusCancel(order);
     if (set) {
       window.location.href = 'http://localhost:8086/user/purchase?status=4';
     }

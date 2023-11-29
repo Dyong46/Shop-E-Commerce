@@ -23,11 +23,11 @@ const getOrderByAccountStatus = (id,status) => {
     return api.get(`${pathApi.order}`+'/details/'+`${id}`+"/"+`${status}`)
 }
 
-const setStatus = (idorder)=> {
-    return api.put(`${pathApi.order}`+'/cancel/'+`${idorder}`)
+const setStatusCancel = (idorder)=> {
+    return api.put(`${pathApi.order}`+'/cancel?order_id='+`${idorder}`)
 }
 
 const setStatusDone = (idorder) => {
     return api.post(`${pathApi.order}`+'/complete?order_id='+`${idorder}`)
 }
-export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatus,setStatusDone}
+export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatusCancel,setStatusDone}
