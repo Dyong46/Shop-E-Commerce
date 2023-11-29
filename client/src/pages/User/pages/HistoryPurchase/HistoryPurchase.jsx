@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import WaitForConfirmation from './Layout/WaitForConfirmation';
 
 import { useStore } from '~/Context/Account';
-import { getOrderByAccount } from '~/servers/OrderService';
+import { getOrderByAccount } from '~/servers/orderService';
 
 const purchaseTabs = [
   { status: purchasesStatus.all, name: 'Tất cả' },

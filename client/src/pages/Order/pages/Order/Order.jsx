@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types'
 
 const DialogBody = (props) => {
-  const {handle} = props
+  const { handle } = props
   const ButtonShowmore = (props) => {
     return (
       <button className="flex" onClick={handle}>
@@ -32,15 +32,10 @@ const DialogBody = (props) => {
   }
 
   const [showmore, setShowmore] = useState(false);
-  // const [showmoreVoucher, setShowmoreVoucher] = useState(false);
 
   const handleShowmore = () => {
     setShowmore(!showmore);
   };
-
-  // const handleShowmoreVoucher = () => {
-  //   setShowmoreVoucher(!showmoreVoucher);
-  // };
 
   return (
     <>
@@ -66,24 +61,6 @@ const DialogBody = (props) => {
               <ButtonShowmore handle={handleShowmore} />
           }
         </div>
-
-        {/* <div className="mt-10 mb-2">Giảm Giá & Hoàn Xu</div> */}
-        {/* { */}
-        {/*   props.data[1].slice(0, showmoreVoucher ? props.data[1].length : 2) */}
-        {/*     .map((item) => { */}
-        {/*       return (<VoucherCard group={"voucher2"} img={props.img} />); */}
-        {/*     }) */}
-        {/* } */}
-        {/**/}
-        {/* <div className="flex flex-col justify-center mt-2"> */}
-        {/*   { */}
-        {/**/}
-        {/*     showmoreVoucher ? */}
-        {/*       <ButtonHide handle={handleShowmoreVoucher} /> : */}
-        {/*       <ButtonShowmore handle={handleShowmoreVoucher} /> */}
-        {/*   } */}
-        {/**/}
-        {/* </div> */}
       </div>
     </>
   )
@@ -148,10 +125,9 @@ const Order = () => {
         <div className="h-7"></div>
         <Products cartitem={carts} />
         <div className="h-7"></div>
-
         <Voucher openDialog={handleClickToOpenVoucher} />
-        {/* <div className="h-7"></div> */}
-        <Pay />
+        <div className="h-7"></div>
+        <Pay cart={carts} />
       </div>
     </>
   );
