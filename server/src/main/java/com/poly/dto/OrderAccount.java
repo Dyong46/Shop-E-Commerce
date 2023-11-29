@@ -27,4 +27,7 @@ public class OrderAccount implements Serializable {
     private Integer category_id;
     private Integer id_account;
     private String name_account;
+    private Integer status_id;
+    private String status;
+    private Integer id_order;
 }

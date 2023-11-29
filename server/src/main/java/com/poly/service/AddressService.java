@@ -39,9 +39,11 @@ public class AddressService {
         return addressRepository.existsById(id);
     }
 
-    public Address changeDefault(Integer id) {
-        Address addressDefault = addressRepository.findAddressDefault();
+    public Address changeDefault(Integer id, Integer idAddress) {
+        Address addressDefault = addressRepository.findAddressDefaultById(id);
         addressDefault.setIs_default(false);
+        addressRepository.save(addressDefault);
+
         Address address = addressRepository.findById(id).orElse(null);
         if(address == null) return null;
         address.setIs_default(true);

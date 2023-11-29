@@ -110,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Double priceMax, Double priceMin, String order) {
+    public Page<Product> getFilteredProducts(int page, int limit, String sortBy, String name, String category, Integer priceMax, Integer priceMin, String order) {
         PageRequest pageRequest = createPageRequest(page, limit, sortBy, order);
         return productRepository.findFilteredProducts(name, category, priceMin, priceMax, pageRequest);
     }

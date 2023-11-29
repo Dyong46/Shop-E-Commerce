@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order cancelOrder(Integer id){
         Order order = orderRepository.findByOrderById(id).orElse(null);
-        OrderStatus orderStatus = orderStatusService.findOrderbyId(3);
+        OrderStatus orderStatus = orderStatusService.findOrderbyId(4);
         order.setStatus_id(orderStatus);
         return orderRepository.save(order);
     }
@@ -147,5 +147,10 @@ public class OrderServiceImpl implements OrderService {
                 "Trân trọng";
             emailService.sendEmail(subject,email,context);
             return resp;
+    }
+
+    @Override
+    public Order postOrder(Order order){
+        return orderRepository.save(order);
     }
 }
