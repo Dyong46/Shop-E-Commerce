@@ -94,14 +94,30 @@ export const schema = yup.object({
     message: 'Giá không phù hợp',
     test: testPriceMinMax,
   }),
-  name: yup.string().trim().required('Tên người dùng là bắt buộc'),
+  name: yup
+    .string()
+    .required('Tên là bắt buộc')
+    .min(5, 'Độ dài từ 5 - 50 ký tự')
+    .max(50, 'Độ dài từ 6 - 50 ký tự')
+    .matches(/^[a-zA-Z0-9\s!@#$%^&*()_+{}\\[\]:;<>,.?~\\/-]*$/, 'Tên không được chứa ký tự đặc biệt'),
 });
 
 export const userSchema = yup.object({
-  name: yup.string().max(160, 'Độ dài tối đa là 160 ký tự'),
-  email: yup.string().max(50, 'Độ dài tối đa là 50 ký tự'),
+  name: yup.string()
+    .required('Tên là bắt buộc')
+    .min(5, 'Độ dài từ 5 - 50 ký tự')
+    .max(50, 'Độ dài từ 6 - 50 ký tự')
+    .matches(/^[a-zA-Z0-9\s!@#$%^&*()_+{}\\[\]:;<>,.?~\\/-]*$/, 'Tên không được chứa ký tự đặc biệt'),
+  email: yup
+    .string()
+    .required('Email là bắt buộc')
+    .email('Email không đúng định dạng')
+    .min(5, 'Độ dài từ 5 - 160 ký tự')
+    .max(160, 'Độ dài từ 5 - 160 ký tự'),
   username: yup.string().max(50, 'Độ dài tối đa là 50 ký tự'),
-  phone: yup.string().max(20, 'Độ dài tối đa là 20 ký tự'),
+  phone: yup
+    .string()
+    .length(20, 'Độ dài 11 số'),
   avatar: yup.string().max(1000, 'Độ dài tối đa là 1000 ký tự'),
   date_of_birth: yup.date().max(new Date(), 'Hãy chọn một ngày trong quá khứ'),
   password: schema.fields['password'],
