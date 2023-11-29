@@ -32,32 +32,30 @@ const WaitForConfirmation = ({ order, param }) => {
       <div>
         <div className="flex-grow flex overflow-hidden justify-end">
           <Button
-            onClick={onClickStatus}
-            className="border py-2 px-4 text-center bg-orange text-white mr-5"
+            className="border py-2 px-4 text-center bg-orange text-white"
           >
-            Hủy đơn hàng
+            Đã nhận
           </Button>
-          <div className=" text-orange border border-orange py-2 px-4">
-            Đang giao hàng
-          </div>
         </div>
       </div>
     );
   } else if (param == 3) {
     return (
       <div>
-        <div className="flex-grow flex overflow-hidden">
-          <div className="flex justify-center items-center text-orange border border-orange w-[120px] h-[30px]">
-            Đã giao
-          </div>
+        <div className="flex-grow flex overflow-hidden justify-end">
+          <Button
+            className="border py-2 px-4 text-center bg-orange text-white"
+          >
+            Nhận xét sản phẩm
+          </Button>
         </div>
       </div>
     );
   } else if (param == 4) {
     return (
       <div>
-        <div className="flex-grow flex overflow-hidden">
-          <div className="flex justify-center items-center text-orange border border-orange w-[120px] h-[30px]">
+        <div className="flex-grow flex overflow-hidden justify-end">
+          <div className=" text-orange border border-orange py-2 px-4">
             Đã hủy
           </div>
         </div>
