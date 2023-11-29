@@ -53,24 +53,14 @@ public class OrderController {
         return orderService.getAllOrderByStatus(id);
     }
 
+    // Đang có vấn đề
     @GetMapping("/status")
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,
-
             @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
     }
 
-    @PostMapping("/pay")
-    public ResponseEntity<Order> payment(@RequestParam("order_id") Integer id) {
-        Order orderCheck = orderService.getOrderById(id);
-        if (orderCheck == null) {
-            return ResponseEntity.notFound().build();
-        }
-        Order order = orderService.setStatusPayment(id);
-        return ResponseEntity.ok(order);
-    }
-
-    @PostMapping("/pay-product")
+    @PostMapping()
     public ResponseEntity<Order> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException {
         try {
             Order createdOrder = orderService.createOrder(entity);
@@ -80,7 +70,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/complete")
+    @PutMapping("/complete")
     public ResponseEntity<?> completeOrder(@RequestParam("order_id") Integer id)
             throws ChangeSetPersister.NotFoundException {
         Order orderCheck = orderService.getOrderById(id);
@@ -104,17 +94,7 @@ public class OrderController {
         return ResponseEntity.status(200).body(responseBodyServer);
     }
 
-    @PostMapping("/shippping")
-    public ResponseEntity<Order> shippingOrder(@RequestParam("order_id") Integer id) {
-        Order orderCheck = orderService.getOrderById(id);
-        if (orderCheck == null) {
-            return ResponseEntity.notFound().build();
-        }
-        Order order = orderService.setStatusShipping(id);
-        return ResponseEntity.ok(order);
-    }
-
-    @PostMapping("/cancel")
+    @PutMapping("/cancel")
     public ResponseEntity<Order> cancelStatusOrder(@RequestParam("order_id") Integer id) {
         Order orderCheck = orderService.getOrderById(id);
         if (orderCheck == null) {
@@ -124,17 +104,6 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
-
-
-    @PutMapping("/cancel/{id}")
-    public Order cancelOrder(@PathVariable("id") Integer id) {
-        return orderService.cancelOrder(id);
-    }
-
-    @PostMapping("/post")
-    public Order postorder(@RequestBody Order order){
-        return orderService.postOrder(order);
-    }
     @PostMapping("/postdetails")
     public OrderDetail postDetails(@RequestBody OrderDetail orderDetail) {
         return orderDetailsService.createOrderDetails(orderDetail);
