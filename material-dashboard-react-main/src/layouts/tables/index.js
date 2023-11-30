@@ -47,7 +47,7 @@ import projectsTableData from "layouts/tables/data/projectsTableData";
 import { useState, useRef, useMemo } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
 
-function Tables() {
+function Orders() {
   const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const [open, setOpen] = useState(false);
@@ -143,110 +143,19 @@ function Tables() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
+        <Grid>
           <Stack>
             <MDBox sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
+                <Tab label="chờ xác nhận" {...a11yProps(0)} />
+                <Tab label="Chờ Lấy Hàng" {...a11yProps(1)} />
+                <Tab label="Đã Xử Lý" {...a11yProps(2)} />
+                <Tab label="Đơn Huỷ" {...a11yProps(3)} />
               </Tabs>
             </MDBox>
             <CustomTabPanel value={value} index={0}>
               <Grid item xs={12}>
                 <Card>
-                  <MDBox
-                    mx={2}
-                    mt={-3}
-                    py={3}
-                    px={2}
-                    variant="gradient"
-                    bgColor="info"
-                    borderRadius="lg"
-                    coloredShadow="info"
-                    direction="row"
-                  >
-                    <Stack direction="row" spacing={4}>
-                      <MDTypography variant="h6" color="white" pt={1}>
-                        Authors Table
-                      </MDTypography>
-                      <MDButton variant="contained" color="white" onClick={handleClose}>
-                        + Add Product
-                      </MDButton>
-                    </Stack>
-                  </MDBox>
-                  <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">{"Create new product"}</DialogTitle>
-                    <DialogContent>
-                      <Stack pt={4}>
-                        <Stack direction="row" sx={{ width: "100%" }} spacing={10}>
-                          <Stack>
-                            <MDBox>
-                              <MDInput label="Name" />
-                            </MDBox>
-                            <MDBox pt={2}>
-                              <MDInput label="Price" type="number" />
-                            </MDBox>
-                            <MDBox sx={{ minWidth: 120 }} pt={2}>
-                              <FormControl fullWidth sx={{ minHeight: 50 }}>
-                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                                <Select
-                                  sx={{ minHeight: 45 }}
-                                  labelId="demo-simple-select-label"
-                                  id="demo-simple-select"
-                                  value={age}
-                                  label="Age"
-                                  onChange={handleChangeAge}
-                                >
-                                  <MenuItem value={1}>Điện thoại</MenuItem>
-                                  <MenuItem value={2}>Laptop</MenuItem>
-                                  <MenuItem value={3}>Quần áo nam</MenuItem>
-                                </Select>
-                              </FormControl>
-                            </MDBox>
-                          </Stack>
-                          <Stack>
-                            <img
-                              style={{ width: 200 }}
-                              srcSet={`${img ?? previewImage}`}
-                              src={`${img ?? previewImage}`}
-                              loading="lazy"
-                            />
-                            <MDButton
-                              variant="contained"
-                              onClick={handleUpload}
-                              startIcon={<CloudUploadIcon />}
-                            >
-                              Upload Image
-                            </MDButton>
-                            <input
-                              className="hidden"
-                              type="file"
-                              accept=".jpg,.jpeg,.png"
-                              ref={fileInputRef}
-                              onChange={onFileChange}
-                              onClick={(event) => {
-                                event.target.value = null;
-                              }}
-                              hidden
-                            />
-                          </Stack>
-                        </Stack>
-                        <MDInput label="Description" mt={2} minRows={2} multiline />
-                      </Stack>
-                    </DialogContent>
-                    <DialogActions>
-                      <MDButton onClick={handleClose}>Disagree</MDButton>
-                      <MDButton onClick={handleClose} autoFocus>
-                        Agree
-                      </MDButton>
-                    </DialogActions>
-                  </Dialog>
                   <MDBox pt={3}>
                     <DataTable
                       table={{ columns, rows }}
@@ -262,20 +171,6 @@ function Tables() {
             <CustomTabPanel value={value} index={1}>
               <Grid item xs={12}>
                 <Card>
-                  <MDBox
-                    mx={2}
-                    mt={-3}
-                    py={3}
-                    px={2}
-                    variant="gradient"
-                    bgColor="info"
-                    borderRadius="lg"
-                    coloredShadow="info"
-                  >
-                    <MDTypography variant="h6" color="white">
-                      Projects Table
-                    </MDTypography>
-                  </MDBox>
                   <MDBox pt={3}>
                     <DataTable
                       table={{ columns: pColumns, rows: pRows }}
@@ -289,7 +184,34 @@ function Tables() {
               </Grid>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              Item Three
+              <Grid item xs={12}>
+                <Card>
+                  <MDBox pt={3}>
+                    <DataTable
+                      table={{ columns: pColumns, rows: pRows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
+                </Card>
+              </Grid>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={3}>
+              <Grid item xs={12}>
+                <Card>
+                  <MDBox pt={3}>
+                    <DataTable
+                      table={{ columns: pColumns, rows: pRows }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder
+                    />
+                  </MDBox>
+                </Card>
+              </Grid>
             </CustomTabPanel>
           </Stack>
         </Grid>
@@ -299,4 +221,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Orders;

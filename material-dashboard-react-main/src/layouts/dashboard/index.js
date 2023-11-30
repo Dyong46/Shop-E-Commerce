@@ -60,22 +60,6 @@ function Dashboard() {
       text: "Đơn Huỷ",
       icon: "cancel",
     },
-    {
-      text: "Trả Hàng/Hoàn Tiền Chờ Xử Lý",
-      icon: "restore",
-    },
-    {
-      text: "Sản Phẩm Bị Tạm Khoá",
-      icon: "watchOffIcon",
-    },
-    {
-      text: "Sản Phâm Hết Hàng",
-      icon: "removeCircle",
-    },
-    {
-      text: "Chương Trình Khuyến Mãi Chờ Xử Lý",
-      icon: "redeemIcon",
-    },
   ];
 
   function statusUI() {
@@ -151,6 +135,7 @@ function Dashboard() {
             </Grid>
           </Grid>
         </MDBox>
+
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
