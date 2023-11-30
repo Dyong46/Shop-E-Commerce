@@ -42,14 +42,20 @@ import DataTable from "examples/Tables/DataTable";
 import { styled } from "@mui/material/styles";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import cancelTableData from "layouts/tables/data/cancelTableData";
+import watingTableData from "layouts/tables/data/watingTableData";
+import watingAcceptTableData from "layouts/tables/data/watingAcceptTableData";
+
 import { useState, useRef, useMemo } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
 
 function Orders() {
-  const { columns, rows } = authorsTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns: wColumns, rows: wRows } = watingTableData();
+  const { columns: waColumns, rows: waRows } = watingAcceptTableData();
+  const { columns: cColumns, rows: cRows } = cancelTableData();
+
   const [open, setOpen] = useState(false);
 
   const [file, setFile] = useState();
@@ -158,7 +164,7 @@ function Orders() {
                 <Card>
                   <MDBox pt={3}>
                     <DataTable
-                      table={{ columns, rows }}
+                      table={{ columns: waColumns, rows: waRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
@@ -173,7 +179,7 @@ function Orders() {
                 <Card>
                   <MDBox pt={3}>
                     <DataTable
-                      table={{ columns: pColumns, rows: pRows }}
+                      table={{ columns: wColumns, rows: wRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
@@ -203,7 +209,7 @@ function Orders() {
                 <Card>
                   <MDBox pt={3}>
                     <DataTable
-                      table={{ columns: pColumns, rows: pRows }}
+                      table={{ columns: cColumns, rows: cRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
