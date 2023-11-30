@@ -9,34 +9,35 @@ import path from "~/constants/path";
 const nameSchema = schema.pick(['name'])
 
 const UseSearchProducts = () => {
-	const queryConfig = useQueryConfig()
+  const queryConfig = useQueryConfig()
 
-	const { register, handleSubmit } = useForm({
-		defaultValues: {
-			name: ''
-		},
-		resolver: yupResolver(nameSchema)
-	})
-	const navigate = useNavigate()
-	const onSubmitSearch = handleSubmit((data) => {
-		const config = queryConfig.order
-			? omit(
-				{
-					...queryConfig,
-					name: data.name
-				},
-				['order', 'sort_by']
-			)
-			: {
-				...queryConfig,
-				name: data.name
-			}
-		navigate({
-			pathname: path.home,
-			search: createSearchParams(config).toString()
-		})
-	})
-	return { onSubmitSearch, register }
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      name: ''
+    },
+    resolver: yupResolver(nameSchema)
+  })
+  const navigate = useNavigate()
+  const onSubmitSearch = handleSubmit((data) => {
+    console.log(data);
+    const config = queryConfig.order
+      ? omit(
+        {
+          ...queryConfig,
+          name: data.name
+        },
+        ['order', 'sort_by']
+      )
+      : {
+        ...queryConfig,
+        name: data.name
+      }
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(config).toString()
+    })
+  })
+  return { onSubmitSearch, register }
 }
 
 export default UseSearchProducts;
