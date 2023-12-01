@@ -16,7 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.mail.MessagingException;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @CrossOrigin("*")
 @RestController
@@ -84,23 +88,33 @@ public class AccountController {
         if (accountCheck == null) {
             return null;
         } else {
-            String subject = "Đăng ký tài khoản thành công";
-            String content = "Chào " + username +
-                    " Xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi! Chúng tôi rất vui mừng được chào đón bạn vào cộng đồng của chúng tôi.\n"
-                    +
-                    "\n" +
-                    "Tài khoản của bạn đã được tạo thành công, và bây giờ bạn có thể truy cập vào các dịch vụ và tiện ích đặc biệt dành riêng cho thành viên của chúng tôi. Chúng tôi hy vọng rằng bạn sẽ tận hưởng trải nghiệm mua sắm và các ưu đãi độc quyền mà chúng tôi mang lại.\n"
-                    +
-                    "\n" +
-                    "Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc cần hỗ trợ gì, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi luôn sẵn sàng giúp bạn.\n"
-                    +
-                    "\n" +
-                    "Một lần nữa, xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai và hy vọng bạn có những trải nghiệm thú vị và đáng nhớ tại cửa hàng của chúng tôi.\n"
-                    +
-                    "\n" +
-                    "Trân trọng,";
-                emailService.sendEmail(subject,email,content);
-            System.out.println("success mail");
+            ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+            emailExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String subject = "Đăng ký tài khoản thành công";
+                        String content = "Chào " + username +
+                                " Xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi! Chúng tôi rất vui mừng được chào đón bạn vào cộng đồng của chúng tôi.\n"
+                                +
+                                "\n" +
+                                "Tài khoản của bạn đã được tạo thành công, và bây giờ bạn có thể truy cập vào các dịch vụ và tiện ích đặc biệt dành riêng cho thành viên của chúng tôi. Chúng tôi hy vọng rằng bạn sẽ tận hưởng trải nghiệm mua sắm và các ưu đãi độc quyền mà chúng tôi mang lại.\n"
+                                +
+                                "\n" +
+                                "Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc cần hỗ trợ gì, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi luôn sẵn sàng giúp bạn.\n"
+                                +
+                                "\n" +
+                                "Một lần nữa, xin chân thành cảm ơn bạn đã đăng ký tài khoản tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai và hy vọng bạn có những trải nghiệm thú vị và đáng nhớ tại cửa hàng của chúng tôi.\n"
+                                +
+                                "\n" +
+                                "Trân trọng,";
+                        emailService.sendEmail(subject,email,content);
+                        System.out.println("success mail");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
             return accountCheck;
         }
     }

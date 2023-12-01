@@ -45,6 +45,7 @@ public class AccountServiceImpl implements AccountService {
 
         Role role = roleService.findById("user");
         account.setRole_id(role);
+        System.out.println("thread");
         return accountRepository.save(account);
     }
 

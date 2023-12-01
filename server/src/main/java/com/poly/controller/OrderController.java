@@ -88,7 +88,7 @@ public class OrderController {
                         .message("Can't set status because status might is shipping").payload(null).build();
             }
         } else {
-            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + orderCheck.getId())
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + id)
                     .payload(null).build();
         }
         return ResponseEntity.status(200).body(responseBodyServer);
