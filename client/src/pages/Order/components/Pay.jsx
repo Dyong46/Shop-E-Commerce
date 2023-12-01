@@ -7,7 +7,7 @@ import pathApi from '~/constants/pathApi';
 import { AppContext } from '~/contexts/app.contexts';
 import { productGetAll } from '~/servers/productService';
 
-const Pay = ({ money, cart }) => {
+const Pay = ({ money, cart, address, discounts }) => {
   const [payWith, setPayWith] = useState('');
 
   const { profile } = useContext(AppContext);
@@ -20,18 +20,18 @@ const Pay = ({ money, cart }) => {
   const order = {
     created_at: formatDate,
     total_amount: parseInt(money),
-    fullname: profile.fullname,
-    phone: profile.phone,
-    city: 'HCM',
-    district: 'District 1',
-    wards: 'Abc',
-    specific_address: 'A123',
+    fullname: address.fullname,
+    phone: address.phone,
+    city: address.city,
+    district: address.district,
+    wards: address.wards,
+    specific_address: address.specific_address,
     status_id: {
       id: 1,
       status: 'Cho xac nhan',
     },
     account_id: profile,
-    discount_id: null,
+    discount_id: discounts.id,
   };
 
   const post = async (order) => {
@@ -67,7 +67,7 @@ const Pay = ({ money, cart }) => {
     }
   };
   const postOrder = async () => {
-    let postOrderss = await postOrders(`${pathApi.order + '/post'}`, order);
+    let postOrderss = await postOrders(`${pathApi.order}`, order);
     if (postOrderss) {
       post(postOrderss);
     }
@@ -180,6 +180,8 @@ const Pay = ({ money, cart }) => {
 Pay.propTypes = {
   money: PropTypes.number,
   cart: PropTypes.array,
+  discounts: PropTypes.object,
+  address: PropTypes.object,
 };
 
 export default Pay;
