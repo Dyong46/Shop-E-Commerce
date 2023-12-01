@@ -28,6 +28,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 
+import { useQuery } from "@tanstack/react-query";
+import useQueryConfig from "hooks/useQueryConfig";
+import { productGetAll } from "servers/productService";
+
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -52,12 +56,21 @@ function Products() {
   const { columns: pColumns, rows: pRows } = projectsTableData();
   const [open, setOpen] = useState(false);
 
+  const queryConfig = useQueryConfig();
   const [file, setFile] = useState();
   const [age, setAge] = useState("");
 
   const handleChangeAge = (event) => {
     setAge(event.target.value);
   };
+
+  // const { data: productsData } = useQuery({
+  //   queryFn: () => {
+  //     return productGetAll();
+  //   },
+  // });
+  //
+  // console.log("data: ", productsData);
 
   const fileInputRef = useRef(null);
 

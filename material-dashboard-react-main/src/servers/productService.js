@@ -1,5 +1,5 @@
 import api from "./axiosConfig";
-import pathApi from "~/constants/pathApi";
+import pathApi from "constrants/pathApi";
 
 const productGetAll = () => {
   return api.get(`${pathApi.product}`);

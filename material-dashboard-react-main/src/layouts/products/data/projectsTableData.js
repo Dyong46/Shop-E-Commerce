@@ -17,6 +17,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Icon from "@mui/material/Icon";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "~/servers/productService";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";

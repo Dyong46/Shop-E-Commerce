@@ -6,10 +6,10 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  function(response) {
+  function (response) {
     return response.data;
   },
-  function(error) {
+  function (error) {
     return Promise.reject(error);
   }
 );
