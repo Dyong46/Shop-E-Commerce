@@ -13,14 +13,14 @@ const Pay = ({ money, cart, address, discounts }) => {
   const handleOrder = async () => {
     try {
       await postOrders({
-        fullname: profile.fullname,
-        phone: profile.phone,
-        city: 'TP. HCM',
-        district: 'Quan 1',
-        wards: '123a',
-        specificAddress: '123a',
+        fullname: address.fullname,
+        phone: address.phone,
+        city: address.city,
+        district: address.district,
+        wards: address.wards,
+        specificAddress: address.specific_address,
         accountId: profile.id,
-        discountId: null,
+        discountId: discounts.id,
         orderDetails: cart.map((item) => {
           return {
             quantity: item.quantity,

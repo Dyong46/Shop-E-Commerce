@@ -80,10 +80,7 @@ const Location = (props) => {
 Location.propTypes = {
   address_default: PropTypes.array,
   status: PropTypes.bool,
-};
-
-Location.propTypes = {
-  openDialog: PropTypes.fuc,
+  openDialog: PropTypes.func,
 };
 
 export default Location;

@@ -13,7 +13,6 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { addressGetAllByAccount } from '~/servers/addressService';
 import { AppContext } from '~/contexts/app.contexts';
-
 import { DiscountContext } from '~/Context/Discount/DiscountContext';
 import { AddressContext } from '~/Context/Address/AddressContext';
 
@@ -131,18 +130,28 @@ const Order = () => {
     }
   };
   const { profile } = useContext(AppContext);
+  console.log(profile, 'profile');
+
   const [address, setAddress] = useState([]);
-  const getAddressByAcc = async () => {
-    let get = await addressGetAllByAccount(profile.id);
-    if (get) {
-      setAddress(get);
+  // const getAddressByAcc = async () => {
+  //   let get = await addressGetAllByAccount(profile.id);
+  //   if (get) {
+  //     console.log(get, 'address');
+  //   }
+  // };
+
+  const getAddress = async () => {
+    try {
+      const get = await addressGetAllByAccount(profile.id);
+      console.log(get, 'ader');
+    } catch (error) {
+      console.log(error);
     }
   };
-  console.log(addres, 'add');
-  console.log(discounts.id, 'dis');
 
   useEffect(() => {
-    getAddressByAcc();
+    // getAddressByAcc();
+    getAddress();
     getAll();
   }, []);
 

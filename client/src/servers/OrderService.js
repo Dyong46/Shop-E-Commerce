@@ -6,7 +6,7 @@ const getAllOrder = () => {
 }
 
 const postOrders = (order) => {
-    return api.post(`${pathApi.order}/pay-product`, order)
+    return api.post(`${pathApi.order}`, order)
 }
 
 const getAllOrderDetails = () => {

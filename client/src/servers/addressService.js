@@ -9,6 +9,7 @@ const addressGetAll = () => {
 const addressGetAllByAccount = (idaccount) => {
   return api.get(`${pathApi.address}`+'/user?id='+`${idaccount}`);
 };
+
 const addAddress = (address) => {
   console.log(address);
   return null
