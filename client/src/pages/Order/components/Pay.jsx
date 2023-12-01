@@ -6,70 +6,34 @@ import { postOrderDetails, postOrders } from '~/servers/OrderService';
 import pathApi from '~/constants/pathApi';
 import { AppContext } from '~/contexts/app.contexts';
 import { productGetAll } from '~/servers/productService';
+import { toast } from 'react-toastify';
 
 const Pay = ({ money, cart, address, discounts }) => {
   const [payWith, setPayWith] = useState('');
-
   const { profile } = useContext(AppContext);
-  const date = new Date();
-  const currentDate = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  const currentMonth = date.getMonth() + 1;
-  const currentYear = date.getFullYear();
-  const formatDate = currentYear + '-' + currentMonth + '-' + currentDate;
 
-  const order = {
-    created_at: formatDate,
-    total_amount: parseInt(money),
-    fullname: address.fullname,
-    phone: address.phone,
-    city: address.city,
-    district: address.district,
-    wards: address.wards,
-    specific_address: address.specific_address,
-    status_id: {
-      id: 1,
-      status: 'Cho xac nhan',
-    },
-    account_id: profile,
-    discount_id: discounts.id,
-  };
-
-  const post = async (order) => {
-    let orderDetails = {
-      quantity: null,
-      amount: null,
-      order_id: null,
-      product_id: null,
-    };
-    let myobj = {};
-    let mang = [];
-    let getProduct = await productGetAll();
-    cart.map((item) => {
-      orderDetails.quantity = item.quantity;
-      orderDetails.amount = item.quantity * item.price;
-      orderDetails.order_id = order;
-      getProduct.content.map((pr) => {
-        if (pr.id == item.id) {
-          orderDetails.product_id = pr;
-          myobj = { ...myobj, ...orderDetails };
-          mang.push(myobj);
-        }
+  const handleOrder = async () => {
+    try {
+      await postOrders({
+        fullname: address.fullname,
+        phone: address.phone,
+        city: address.city,
+        district: address.district,
+        wards: address.wards,
+        specificAddress: address.spespecific_address,
+        accountId: profile.id,
+        discountId: discounts.id,
+        orderDetails: cart.map((item) => {
+          return {
+            quantity: item.quantity,
+            productId: item.id,
+          };
+        }),
       });
-    });
-    mang.map((item) => {
-      postOrderDetail(`${pathApi.order + '/postdetails'}`, item);
-    });
-  };
-  const postOrderDetail = async (url, item) => {
-    let post = await postOrderDetails(url, item);
-    if (post) {
-      console.log(post);
-    }
-  };
-  const postOrder = async () => {
-    let postOrderss = await postOrders(`${pathApi.order}`, order);
-    if (postOrderss) {
-      post(postOrderss);
+      toast.success('Thanh toán thành công');
+    } catch (error) {
+      toast.success('Thanh toán thất bại');
+      throw new error();
     }
   };
 
@@ -165,7 +129,7 @@ const Pay = ({ money, cart, address, discounts }) => {
           </div>
           <Link to={''}>
             <Button
-              onClick={postOrder}
+              onClick={handleOrder}
               type="submit"
               className="flex items-center justify-center bg-red-500 py-2 rounded-sm px-20  text-white hover:bg-red-600"
             >
