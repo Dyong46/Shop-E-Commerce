@@ -2,10 +2,8 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
-import { postOrderDetails, postOrders } from '~/servers/OrderService';
-import pathApi from '~/constants/pathApi';
+import { postOrders } from '~/servers/OrderService';
 import { AppContext } from '~/contexts/app.contexts';
-import { productGetAll } from '~/servers/productService';
 import { toast } from 'react-toastify';
 
 const Pay = ({ money, cart, address, discounts }) => {
@@ -15,14 +13,14 @@ const Pay = ({ money, cart, address, discounts }) => {
   const handleOrder = async () => {
     try {
       await postOrders({
-        fullname: address.fullname,
-        phone: address.phone,
-        city: address.city,
-        district: address.district,
-        wards: address.wards,
-        specificAddress: address.spespecific_address,
+        fullname: profile.fullname,
+        phone: profile.phone,
+        city: 'TP. HCM',
+        district: 'Quan 1',
+        wards: '123a',
+        specificAddress: '123a',
         accountId: profile.id,
-        discountId: discounts.id,
+        discountId: null,
         orderDetails: cart.map((item) => {
           return {
             quantity: item.quantity,
@@ -39,8 +37,7 @@ const Pay = ({ money, cart, address, discounts }) => {
 
   return (
     <div className="container">
-      <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow ">
-        {/* <div className="col-span-6"> */}
+      <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow">
         <div className="flex items-center flex-wrap grid-flow-row gap-x-3">
           <div className="flex flex-shrink-0 items-center justify-center pr-3 ">
             <h1 className="mx-2 text-center text-lg">Phương thức thanh toán</h1>
@@ -49,7 +46,7 @@ const Pay = ({ money, cart, address, discounts }) => {
             type="button"
             className={
               payWith === 'shopeePay'
-                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300  text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
@@ -74,7 +71,7 @@ const Pay = ({ money, cart, address, discounts }) => {
             type="button"
             className={
               payWith === 'recive'
-                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
@@ -87,7 +84,7 @@ const Pay = ({ money, cart, address, discounts }) => {
             type="button"
             className={
               payWith === 'vnPay'
-                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
@@ -96,14 +93,7 @@ const Pay = ({ money, cart, address, discounts }) => {
           >
             Thanh toán VNPay
           </Button>
-          {/* </div> */}
         </div>
-        {/* <div className="col-span-6">
-          <div className="flex items-center justify-end">
-            <div className="me-20">Thanh toán khi nhận hàng</div>
-            <button className=" text-blue-700  uppercase">Thay đổi</button>
-          </div>
-        </div> */}
       </div>
       <div className="bg-[#fffefb] py-5 px-9 border-dotted border-b-2 border-gray rouned-sm shadow">
         <div className="flex flex-row-reverse items-center mb-4">
@@ -111,11 +101,11 @@ const Pay = ({ money, cart, address, discounts }) => {
           <div className="">Tổng tiền hàng</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ27.500</div>
+          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ0</div>
           <div className="">Phí vận chuyển</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-orange text-2xl min-w-[140px] text-end">đ{money + 27500}</div>
+          <div className="text-orange text-2xl min-w-[140px] text-end">đ{money}</div>
           <div className="">Tổng thanh toán</div>
         </div>
       </div>

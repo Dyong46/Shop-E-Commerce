@@ -5,8 +5,8 @@ const getAllOrder = () => {
     return api.get(`${pathApi.order}`)
 }
 
-const postOrders = (url,obj) => {
-    return api.post(url,obj)
+const postOrders = (order) => {
+    return api.post(`${pathApi.order}/pay-product`, order)
 }
 
 const getAllOrderDetails = () => {

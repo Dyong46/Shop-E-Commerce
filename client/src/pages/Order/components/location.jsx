@@ -82,4 +82,8 @@ Location.propTypes = {
   status: PropTypes.bool,
 };
 
+Location.propTypes = {
+  openDialog: PropTypes.fuc,
+};
+
 export default Location;
