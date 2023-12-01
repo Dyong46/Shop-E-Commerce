@@ -19,7 +19,6 @@ const UseSearchProducts = () => {
   })
   const navigate = useNavigate()
   const onSubmitSearch = handleSubmit((data) => {
-    console.log(data);
     const config = queryConfig.order
       ? omit(
         {

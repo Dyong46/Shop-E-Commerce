@@ -71,7 +71,12 @@ const handleConfirmPasswordYup = (refString) => {
 };
 
 export const schema = yup.object({
-	username: yup.string().trim().required('Username người dùng là bắt buộc'),
+	username: yup
+    .string()
+    .trim().required('Username người dùng là bắt buộc')
+    .min(5, 'Độ dài từ 6 - 20 ký tự')
+    .max(20, 'Độ dài từ 6 - 20 ký tự')
+    .matches(/^[a-zA-Z0-9]+$/, 'Username không được chứa kí tự đặc biệt'),
   email: yup
     .string()
     .required('Email là bắt buộc')
