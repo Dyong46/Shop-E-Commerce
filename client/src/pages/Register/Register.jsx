@@ -35,8 +35,8 @@ const Register = () => {
       if (res.data !== null) {
         dispatch(actions.setProfile(res));
         dispatch(actions.setIsAuthenticated(true))
-        navigate('/');
-        toast.success('Register successful!');
+        navigate('/login');
+        toast.success('Đăng ký thành công! Vui lòng đăng nhập!!!');
       } else {
         toast.error('Register failed. Please check your credentials.');
       }
