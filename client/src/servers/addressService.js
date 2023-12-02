@@ -5,6 +5,11 @@ const addressGetAll = () => {
   return api.get(`${pathApi.address}`);
 };
 
+
+const addressGetAllByAccount = (idaccount) => {
+  return api.get(`${pathApi.address}`+'/user?id='+`${idaccount}`);
+};
+
 const addAddress = (address) => {
   console.log(address);
   return null
@@ -22,4 +27,4 @@ const changeDefaultAddress = (id) => {
   return api.put(`${pathApi.address}/changeDefault/${id}`)
 }
 
-export { addressGetAll, addAddress, deleteAddress, updateAddress, changeDefaultAddress};
+export { addressGetAll,addressGetAllByAccount, addAddress, deleteAddress, updateAddress, changeDefaultAddress};
