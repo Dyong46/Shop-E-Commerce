@@ -80,7 +80,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrderById(Integer id, String status){
-        return orderRepository.getAllOrderById(id, status);
+        List<Order> allOrder = orderRepository.getAllOrderById(id, status);
+        allOrder.forEach(item -> {
+            item.getOrderDetails().forEach(product -> {
+                System.out.println(product.getId());
+            });
+        });
+        return allOrder;
     }
 
     @Override
@@ -113,8 +119,7 @@ public class OrderServiceImpl implements OrderService {
             }
             Integer quantity = detailDTO.getQuantity();
             if (product.getQuantity() < quantity){
-                responseBodyServer = ResponseBodyServer.builder().statusCode(500)
-                        .message("số lượng sản phẩm trong giở hàng không được lớn hơn số lượng tồn").payload(null).build();
+                throw new Exception("Product quantity in your cart must be smaller than quantity in stock");
             }
 
             Integer price = product.getPrice();
