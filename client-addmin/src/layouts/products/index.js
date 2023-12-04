@@ -50,6 +50,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import projectsTableData from "./data/projectsTableData.js";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
+import { upload } from "servers/cloudinaryService.js";
 
 function Products() {
   const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -121,16 +122,22 @@ function Products() {
     }
   };
 
+  const imageFile = watch("img");
+
   const onSubmit = handleSubmit(async (data) => {
     const payload = { ...data, img: file };
     console.log("data: ", payload);
     try {
-      // let avatarName = avatar;
-      // if (file) {
-      //   const uploadRes = await upload({ image: file });
-      //   avatarName = uploadRes.url;
-      //   setValue('avatar', avatarName);
-      // }
+      let imgFile = imageFile;
+      if (file) {
+        console.log(file);
+        const uploadRes = await upload({ image: file });
+
+        setValue("img", uploadRes);
+        imgFile = uploadRes.url;
+      }
+
+      console.log(imgFile);
       // const res = await updateAccount(profile.id, {
       //   ...data,
       //   fullname: data.name,

@@ -7,6 +7,7 @@ const pathApi = {
   address: "api/address",
   review: "api/reviews",
   gallery: "api/galleries",
+  cloudinary: "api/cloudinary",
 };
 
 export default pathApi;
