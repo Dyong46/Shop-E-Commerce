@@ -17,6 +17,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Icon from "@mui/material/Icon";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -27,7 +29,6 @@ import MDProgress from "components/MDProgress";
 // Images
 import { useEffect, useState } from "react";
 import { productGetAll } from "servers/productService";
-import { Box } from "@mui/material";
 
 export default function data() {
   const [products, setProduct] = useState([]);
@@ -44,6 +45,10 @@ export default function data() {
       console.error(error);
     }
   }, []);
+
+  // const updateProduct = () => {
+  //
+  // }
 
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -66,7 +71,7 @@ export default function data() {
   );
 
   const rows = Array.isArray(products.content) // Check if products is an array
-    ? products.content.map((product) => ({
+    ? products.content.map((product, index) => ({
         project: (
           <Project
             image={product.img} // replace with the actual property from your product object
@@ -84,15 +89,21 @@ export default function data() {
           </MDTypography>
         ),
         completion: (
-          <Box sx={{ textAlign: "left" }}>
-            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              {product.description}
-            </MDTypography>
-          </Box>
+          <MDTypography
+            component="a"
+            href="#"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+            sx={{ textAlign: "left" }}
+          >
+            {product.description} {/* replace with the actual property from your product object */}
+          </MDTypography>
         ),
         action: (
           <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
+            <Icon onClick={() => {}}>edit</Icon>
+            <Icon onClick={() => {}}>delete</Icon>
           </MDTypography>
         ),
       }))
