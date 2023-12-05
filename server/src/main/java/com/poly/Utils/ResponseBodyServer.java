@@ -1,4 +1,4 @@
-package com.poly.Utils;
+package com.poly.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
