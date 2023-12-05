@@ -1,6 +1,8 @@
 package com.poly.service.impl;
 
+import com.poly.entity.Category;
 import com.poly.entity.Product;
+import com.poly.repo.CategoryRepository;
 import com.poly.repo.ProductRepository;
 import com.poly.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public Page<Product> getAllProduct(HashMap<String, String> multipleParam){
@@ -64,6 +68,8 @@ public class ProductServiceImpl implements ProductService {
     public Product create(Product entity) {
         Date date = new Date();
         entity.setCreated_at(date);
+        Category category = categoryRepository.findById(entity.getCategory_id().getId()).orElse(null) ;
+        entity.setCategory_id(category);
         return productRepository.save(entity);
     }
 

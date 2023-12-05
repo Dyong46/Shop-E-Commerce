@@ -29,13 +29,25 @@ import MDProgress from "components/MDProgress";
 // Images
 import { useEffect, useState } from "react";
 import { productGetAll } from "servers/productService";
+import { removeProduct } from "servers/productService";
 
 export default function data() {
   const [products, setProduct] = useState([]);
+  const [idProduct, setIdProduct] = useState("");
+  const [open, setOpen] = useState(false);
 
   const getAllProduct = async () => {
     const res = await productGetAll();
     setProduct(res);
+  };
+
+  const remove = async (id) => {
+    await removeProduct(id);
+  };
+
+  const handleEdit = (id) => {
+    setOpen(true);
+    setIdProduct(id);
   };
 
   useEffect(() => {
@@ -45,10 +57,6 @@ export default function data() {
       console.error(error);
     }
   }, []);
-
-  // const updateProduct = () => {
-  //
-  // }
 
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -102,8 +110,8 @@ export default function data() {
         ),
         action: (
           <MDTypography component="a" href="#" color="text">
-            <Icon onClick={() => {}}>edit</Icon>
-            <Icon onClick={() => {}}>delete</Icon>
+            <Icon onClick={() => handleEdit(product.id)}>edit</Icon>
+            <Icon onClick={() => remove(product.id)}>delete</Icon>
           </MDTypography>
         ),
       }))
@@ -118,5 +126,7 @@ export default function data() {
       { Header: "Chỉnh sửa", accessor: "action", align: "center" },
     ],
     rows: rows,
+    idProduct: idProduct,
+    open: open,
   };
 }

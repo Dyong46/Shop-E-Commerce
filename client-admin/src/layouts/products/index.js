@@ -29,9 +29,9 @@ import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 
 import { useForm, Controller } from "react-hook-form";
-import { userSchema } from "utils/rules";
+import { userSchema, isAxiosUnprocessableEntityError } from "utils/rules";
 
-import { productGetAll } from "servers/productService";
+import { productGetAll, updateProduct } from "servers/productService";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -51,15 +51,18 @@ import projectsTableData from "./data/projectsTableData.js";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
 import { upload } from "servers/cloudinaryService.js";
+import { createProduct } from "servers/productService.js";
+import { productById } from "servers/productService.js";
+import { categoriesGetAll } from "servers/categoryService.js";
 
 function Products() {
-  const { columns: pColumns, rows: pRows } = projectsTableData();
   const [open, setOpen] = useState(false);
 
   const [file, setFile] = useState();
   const [age, setAge] = useState("");
-  const [products, setProduct] = useState([]);
+  const [categorys, setCategorys] = useState([]);
 
+  const { columns: pColumns, rows: pRows, idProduct: pId } = projectsTableData();
   const profileSchema = userSchema.pick([
     "title",
     "price",
@@ -71,10 +74,12 @@ function Products() {
 
   const methods = useForm({
     defaultValues: {
-      name: "",
+      name_product: "",
       img: "",
-      date_of_birth: new Date(),
       description: "",
+      quantity: "",
+      price: "",
+      category_id: "",
     },
     resolver: yupResolver(profileSchema),
   });
@@ -85,6 +90,7 @@ function Products() {
     control,
     setValues,
     watch,
+    reset,
     setError,
     formState: { errors },
   } = methods;
@@ -102,7 +108,7 @@ function Products() {
   //   return file ? URL.createObjectURL(file) : "";
   // }, [file]);
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setOpen(!open);
   };
 
@@ -122,6 +128,46 @@ function Products() {
     }
   };
 
+  const handleOpenUpdate = async () => {
+    console.log(pId);
+    const product = await productById(pId);
+    console.log("product by id", product);
+
+    if (product) {
+      reset({
+        name_product: product?.name_product || "",
+        img: product?.img || "",
+        description: product?.description || "",
+        price: product?.price || "",
+        quantity: product?.quantity || "",
+        "category_id.id": product?.category_id.id || "",
+      });
+
+      // setValue("name_product", product.name_product || "");
+      // setValue("description", product.description || "");
+      // setValue("price", product.phone || "");
+      // setValue("img", product.img || "");
+      // setValue("quantity", product.quantity || "");
+      // setValue("category_id.id", product.category_id.id || "");
+    }
+  };
+
+  useEffect(() => {
+    if (pId) {
+      setOpen(!open);
+      handleOpenUpdate();
+    }
+  }, [pId]);
+
+  const getAllCategories = async () => {
+    const res = await categoriesGetAll();
+    setCategorys(res);
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   const imageFile = watch("img");
 
   const onSubmit = handleSubmit(async (data) => {
@@ -129,36 +175,26 @@ function Products() {
     console.log("data: ", payload);
     try {
       let imgFile = imageFile;
-      if (file) {
-        console.log(file);
-        const uploadRes = await upload({ image: file });
-
-        setValue("img", uploadRes);
-        imgFile = uploadRes.url;
-      }
+      // if (file) {
+      //   console.log(file);
+      //   const uploadRes = await upload({ image: file });
+      //
+      //   imgFile = uploadRes.url;
+      // }
+      setValue("img", "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8");
 
       console.log(imgFile);
-      // const res = await updateAccount(profile.id, {
-      //   ...data,
-      //   fullname: data.name,
-      //   img: avatarName,
-      // });
-      // setProfile(res);
-      // setProfileToLS(res);
+
+      if (pId) {
+        await updateProduct(pId, data);
+      } else {
+        const res = await createProduct({
+          ...data,
+          img: "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8",
+        });
+      }
     } catch (error) {
       console.log(error);
-      // if (isAxiosUnprocessableEntityError(error)) {
-      //   const formError = error.response?.data.data;
-      //   console.log(formError);
-      //   if (formError) {
-      //     Object.keys(formError).forEach((key) => {
-      //       setError(key, {
-      //         message: formError[key],
-      //         type: 'Server',
-      //       });
-      //     });
-      //   }
-      // }
     }
   });
 
@@ -256,9 +292,9 @@ function Products() {
                             <MDBox>
                               <Controller
                                 control={control}
-                                name="name"
+                                name="name_product"
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                                  <MDInput label="Name" onChange={onChange} />
+                                  <MDInput label="Name" value={value || ""} onChange={onChange} />
                                 )}
                               />
                             </MDBox>
@@ -267,7 +303,20 @@ function Products() {
                                 control={control}
                                 name="price"
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                                  <MDInput label="Price" onChange={onChange} />
+                                  <MDInput label="Price" value={value || ""} onChange={onChange} />
+                                )}
+                              />
+                            </MDBox>
+                            <MDBox pt={2}>
+                              <Controller
+                                control={control}
+                                name="quantity"
+                                render={({ field: { onChange, onBlur, value, ref } }) => (
+                                  <MDInput
+                                    label="Quantity"
+                                    value={value || ""}
+                                    onChange={onChange}
+                                  />
                                 )}
                               />
                             </MDBox>
@@ -276,7 +325,7 @@ function Products() {
                                 <InputLabel id="demo-simple-select-label">Category</InputLabel>
                                 <Controller
                                   control={control}
-                                  name="category"
+                                  name="category_id.id"
                                   render={({ field: { onChange, onBlur, value, ref } }) => (
                                     <Select
                                       sx={{ minHeight: 45 }}
@@ -286,9 +335,13 @@ function Products() {
                                       label="Age"
                                       onChange={onChange}
                                     >
-                                      <MenuItem value="dt">Điện thoại</MenuItem>
-                                      <MenuItem value="lt">Laptop</MenuItem>
-                                      <MenuItem value="qa">Quần áo nam</MenuItem>
+                                      {categorys.map((category) => {
+                                        return (
+                                          <MenuItem key={category.id} value={category.id}>
+                                            {category.name}
+                                          </MenuItem>
+                                        );
+                                      })}
                                     </Select>
                                   )}
                                 />
@@ -332,6 +385,7 @@ function Products() {
                               label="Description"
                               mt={2}
                               minRows={2}
+                              value={value || ""}
                               multiline
                               onChange={onChange}
                             />

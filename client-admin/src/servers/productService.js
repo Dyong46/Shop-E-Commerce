@@ -17,4 +17,8 @@ const updateProduct = (id, product) => {
   return api.put(`${pathApi.product}/${id}`, product);
 };
 
-export { productGetAll, productById };
+const removeProduct = (id) => {
+  return api.delete(`${pathApi.product}/${id}`);
+};
+
+export { productGetAll, updateProduct, productById, createProduct, removeProduct };
