@@ -2,7 +2,9 @@ package com.poly.controller;
 
 import com.poly.entity.Address;
 import com.poly.service.AddressService;
+import com.poly.utils.ResponseBodyServer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,17 +32,24 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public Address update(@PathVariable Integer id, @RequestBody Address address) {
+    public Address update(@PathVariable Integer id, @RequestBody Address address) throws Exception {
         return addressService.update(id, address);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAddress(@PathVariable Integer id) {
-        addressService.delete(id);
+    public ResponseEntity<?> deleteAddress(@PathVariable Integer id) {
+        ResponseBodyServer responseBodyServer;
+        try {
+            addressService.delete(id);
+            responseBodyServer = ResponseBodyServer.builder().statusCode(200).message("Successfully!").build();
+        }catch (Exception e) {
+            responseBodyServer = ResponseBodyServer.builder().statusCode(400).message(e.getMessage()).build();
+        }
+        return ResponseEntity.status(responseBodyServer.getStatusCode()).body(responseBodyServer);
     }
 
     @PutMapping("/user/{id}/{idAddress}")
-    public Address changeDefault(@PathVariable Integer id, @PathVariable Integer idAddress) {
+    public Address changeDefault(@PathVariable Integer id, @PathVariable Integer idAddress) throws Exception {
         return addressService.changeDefault(id, idAddress);
     }
 

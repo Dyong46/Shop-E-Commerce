@@ -11,8 +11,10 @@ import { toast } from "react-toastify";
 import { AppContext } from "~/contexts/app.contexts";
 import { updateAddress } from "~/servers/addressService";
 import PropTypes from 'prop-types'
+import { useQueryClient } from "@tanstack/react-query";
 
 const UpdateAddressDialog = ({ body }) => {
+  const queryClient = useQueryClient();
   const { profile } = useContext(AppContext)
   const [open, setOpen] = useState(false);
 
@@ -49,7 +51,7 @@ const UpdateAddressDialog = ({ body }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const res = await updateAddress({
+      const res = await updateAddress(body.id, {
         fullname: data.fullname,
         phone: data.phone,
         city: data.address.province,
@@ -60,6 +62,8 @@ const UpdateAddressDialog = ({ body }) => {
       })
       if (res && res.id) {
         toast.success('Update account successful')
+        setOpen(false)
+        await queryClient.invalidateQueries(['address']);
       }
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
@@ -120,7 +124,7 @@ const UpdateAddressDialog = ({ body }) => {
                   render={({ field }) => (
                     <AddressSelect
                       errorMessage={errors.address?.message}
-                      value={field.value}
+                      value={field.value || {}}
                       onChange={field.onChange}
                     />
                   )}
