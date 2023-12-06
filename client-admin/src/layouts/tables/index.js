@@ -56,58 +56,6 @@ function Orders() {
   const { columns: waColumns, rows: waRows } = watingAcceptTableData();
   const { columns: cColumns, rows: cRows } = cancelTableData();
 
-  const [open, setOpen] = useState(false);
-
-  const [file, setFile] = useState();
-  const [age, setAge] = useState("");
-
-  const handleChangeAge = (event) => {
-    setAge(event.target.value);
-  };
-
-  const fileInputRef = useRef(null);
-
-  const img =
-    "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
-
-  const previewImage = useMemo(() => {
-    return file ? URL.createObjectURL(file) : "";
-  }, [file]);
-
-  const handleClose = () => {
-    setOpen(!open);
-  };
-
-  const handleUpload = () => {
-    fileInputRef.current?.click();
-  };
-
-  const onFileChange = (event) => {
-    const fileFromLocal = event.target.files?.[0];
-
-    fileInputRef.current?.setAttribute("value", "");
-
-    if (fileFromLocal) {
-      console.error("......");
-    } else {
-      onChange && onChange(fileFromLocal);
-
-      setFile(event.terget.files);
-    }
-  };
-
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -133,12 +81,7 @@ function Orders() {
       </div>
     );
   }
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-2`,
-      "aria-controls": `simple-tabpanel-2`,
-    };
-  }
+
   CustomTabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.number.isRequired,
@@ -153,10 +96,10 @@ function Orders() {
           <Stack>
             <MDBox sx={{ borderBottom: 1, borderColor: "divider" }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="chờ xác nhận" {...a11yProps(0)} />
-                <Tab label="Chờ Lấy Hàng" {...a11yProps(1)} />
-                <Tab label="Đã Xử Lý" {...a11yProps(2)} />
-                <Tab label="Đơn Huỷ" {...a11yProps(3)} />
+                <Tab label="chờ xác nhận" />
+                <Tab label="Đang giao" />
+                <Tab label="Đã giao" />
+                <Tab label="Đơn Huỷ" />
               </Tabs>
             </MDBox>
             <CustomTabPanel value={value} index={0}>
@@ -164,7 +107,7 @@ function Orders() {
                 <Card>
                   <MDBox pt={3}>
                     <DataTable
-                      table={{ columns: waColumns, rows: waRows }}
+                      table={{ columns: wColumns, rows: wRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}
@@ -179,7 +122,7 @@ function Orders() {
                 <Card>
                   <MDBox pt={3}>
                     <DataTable
-                      table={{ columns: wColumns, rows: wRows }}
+                      table={{ columns: waColumns, rows: waRows }}
                       isSorted={false}
                       entriesPerPage={false}
                       showTotalEntries={false}

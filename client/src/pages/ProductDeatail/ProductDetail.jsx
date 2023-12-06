@@ -8,8 +8,6 @@ import { reviewProduct } from '~/servers/reviewService';
 import { getGalleries } from '~/servers/galleriesService';
 import Review from './components/Review';
 import { action, useStore } from '~/Context';
-import { Helmet } from 'react-helmet-async';
-import { convert } from 'html-to-text';
 
 const ProductDetail = () => {
   const { nameId } = useParams();
@@ -24,6 +22,7 @@ const ProductDetail = () => {
   const getProductId = async (idProduct) => {
     let get = await productById(idProduct);
     if (get) {
+      console.log(get, 'get');
       setProduct(get);
       getGalleriess(idProduct);
     }
@@ -142,17 +141,6 @@ const ProductDetail = () => {
   if (!product || !galleries) return null;
   return (
     <div>
-      <Helmet>
-        <title>{product.name_product}</title>
-        <meta
-          name='description'
-          content={convert(product.description, {
-            limits: {
-              maxInputLength: 150
-            }
-          })}
-        />
-      </Helmet>
       <div className="flex flex-col bg-pro justify-center">
         <div className="flex justify-center">
           <div className="bg-white max-w-6xl mt-5 flex flex-auto flex-row px-4 py-4">

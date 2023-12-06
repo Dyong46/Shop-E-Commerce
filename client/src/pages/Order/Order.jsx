@@ -3,7 +3,7 @@ import Location from './components/Location';
 import Pay from './components/Pay';
 import Products from './components/Products';
 import Voucher from './components/Voucher';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import LocationCard from '~/components/dialog/card/LocationCard';
@@ -11,10 +11,6 @@ import VoucherCard from '~/components/dialog/card/VoucherCard';
 import { getAllDiscount } from '~/servers/discountService';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { addressGetAllByAccount } from '~/servers/addressService';
-import { AppContext } from '~/contexts/app.contexts';
-import { DiscountContext } from '~/Context/Discount/DiscountContext';
-import { AddressContext } from '~/Context/Address/AddressContext';
 
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
@@ -113,47 +109,21 @@ const DialogBody = (props) => {
 const Order = () => {
   const [carts] = useContext(CartContext);
   const [money] = useContext(PriceContext);
-  const [discounts] = useContext(DiscountContext);
-  const [addres] = useContext(AddressContext);
-  const [discountss, setDiscountss] = useState([]);
+
+  const [discounts, setDiscounts] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
-  const [setad, setAd] = useState(false);
 
   const getAll = async () => {
     try {
       const discounts = await getAllDiscount();
-      setDiscountss(discounts);
+      setDiscounts(discounts);
     } catch (error) {
       console.error('Error loading discount: ', error);
       toast.error(error.message);
     }
   };
-  const { profile } = useContext(AppContext);
-  console.log(profile, 'profile');
-
-  const [address, setAddress] = useState([]);
-  // const getAddressByAcc = async () => {
-  //   let get = await addressGetAllByAccount(profile.id);
-  //   if (get) {
-  //     console.log(get, 'address');
-  //   }
-  // };
-
-  const getAddress = async () => {
-    try {
-      const get = await addressGetAllByAccount(profile.id);
-      console.log(get, 'ader');
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    // getAddressByAcc();
-    getAddress();
-    getAll();
-  }, []);
 
   const handleClickToOpen = () => {
     setOpen(true);
@@ -161,7 +131,6 @@ const Order = () => {
 
   const handleToClose = () => {
     setOpen(false);
-    setAd(true);
   };
 
   const handleClickToOpenVoucher = () => {
@@ -182,14 +151,14 @@ const Order = () => {
     <>
       <Dialog
         className="bg-sky-50"
-        body={<LocationCard address={address} status={setad} />}
+        body={<LocationCard />}
         name={'Chọn địa chỉ'}
         open={open}
         handleToClose={handleToClose}
       />
       <Dialog
         className="bg-sky-50"
-        body={<DialogBody data={discountss} />}
+        body={<DialogBody data={discounts} />}
         name={'Chọn Shopee Voucher'}
         open={openVoucher}
         handleToClose={handleToCloseVoucher}
@@ -205,14 +174,14 @@ const Order = () => {
       )}
 
       <div className="bg-gray-50 pt-7 pb-20">
-        <Location address_default={address} openDialog={handleClickToOpen} status={setad} />
+        <Location openDialog={handleClickToOpen} />
         <div className="h-7"></div>
         <Products cartitem={carts} />
         <div className="h-7"></div>
 
         <Voucher openDialog={handleClickToOpenVoucher} />
         <div className="h-7"></div>
-        <Pay cart={carts} money={money} address={addres} discounts={discounts} />
+        <Pay cart={carts} money={money} />
       </div>
     </>
   );

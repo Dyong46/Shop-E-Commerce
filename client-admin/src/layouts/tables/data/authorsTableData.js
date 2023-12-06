@@ -27,6 +27,12 @@ import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
 export default function data() {
+  const getProductWatting = async () => {
+    const res = await getOrderByStatus(2);
+    console.log("da giao", res);
+  };
+
+  getProductWatting();
   const Author = ({ image, name, email }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" />

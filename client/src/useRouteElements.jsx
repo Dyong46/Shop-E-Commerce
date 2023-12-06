@@ -8,7 +8,7 @@ import { CartLayout, MainLayout, RegisterLayout } from './layouts';
 import UserLayout from './pages/User/layouts/UserLayout';
 
 // Pages
-const Order = lazy(() => import('./pages/Order/pages/Order'));
+const Order = lazy(() => import('./pages/Order'));
 const Address = lazy(() => import('./pages/User/pages/Address'));
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));

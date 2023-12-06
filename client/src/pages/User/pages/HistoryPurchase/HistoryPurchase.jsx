@@ -93,7 +93,7 @@ const HistoryPurchase = () => {
                   </div>
                   <div className="ml-3 flex-grow overflow-hidden">
                     <Link
-                      to={`${path.home}`}
+                      to={`${path.home}${generateNameId({ name: item.name_product, id: item.id_product })}`}
                       className="truncate hover:text-gray-500"
                     >
                       {item.name_product}

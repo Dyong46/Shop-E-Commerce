@@ -9,38 +9,32 @@ import { PriceProvider } from '~/Context/ContextCart/PriceCartContext.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CartProvider } from './Context/ContextCart/CartContext.jsx';
 import AppProvider from './contexts/app.contexts';
-import { AddressProvider } from './Context/Address/AddressContext.jsx';
-import { DiscountContext, DiscountProvider } from './Context/Discount/DiscountContext.jsx';
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 0,
-    },
-  },
-});
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+			retry: 0
+		}
+	}
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <StoreProvider>
-          <AccountProvider>
-            <AddressProvider>
-              <DiscountProvider>
-                <CartProvider>
-                  <PriceProvider>
-                    <AppProvider>
-                      <App />
-                    </AppProvider>
-                  </PriceProvider>
-                </CartProvider>
-              </DiscountProvider>
-            </AddressProvider>
-          </AccountProvider>
-        </StoreProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+	<React.StrictMode>
+		<BrowserRouter>
+			<QueryClientProvider client={queryClient}>
+				<StoreProvider>
+					<AccountProvider>
+						<CartProvider>
+							<PriceProvider>
+								<AppProvider>
+									<App />
+								</AppProvider>
+							</PriceProvider>
+						</CartProvider>
+					</AccountProvider>
+				</StoreProvider>
+			</QueryClientProvider>
+		</BrowserRouter>
+	</React.StrictMode>,
 );

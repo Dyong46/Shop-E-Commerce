@@ -8,7 +8,7 @@
 
 Coded by www.creative-tim.com
 
- =======================================r=================
+j=======================================r=================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
@@ -28,10 +28,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 
-import { useQuery } from "@tanstack/react-query";
-import useQueryConfig from "hooks/useQueryConfig";
-import { productGetAll } from "servers/productService";
+import { useForm, Controller } from "react-hook-form";
+import { userSchema, isAxiosUnprocessableEntityError } from "utils/rules";
 
+import { productGetAll, updateProduct } from "servers/productService";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -44,20 +44,56 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { styled } from "@mui/material/styles";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // Data
 import projectsTableData from "./data/projectsTableData.js";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
+import { upload } from "servers/cloudinaryService.js";
+import { createProduct } from "servers/productService.js";
+import { productById } from "servers/productService.js";
+import { categoriesGetAll } from "servers/categoryService.js";
 
 function Products() {
-  const { columns: pColumns, rows: pRows } = projectsTableData();
   const [open, setOpen] = useState(false);
 
-  const queryConfig = useQueryConfig();
   const [file, setFile] = useState();
   const [age, setAge] = useState("");
-  const [products, setProduct] = useState([]);
+  const [categorys, setCategorys] = useState([]);
+
+  const { columns: pColumns, rows: pRows, idProduct: pId } = projectsTableData();
+  const profileSchema = userSchema.pick([
+    "title",
+    "price",
+    "category",
+    "date_create",
+    "img",
+    "description",
+  ]);
+
+  const methods = useForm({
+    defaultValues: {
+      name_product: "",
+      img: "",
+      description: "",
+      quantity: "",
+      price: "",
+      category_id: "",
+    },
+    resolver: yupResolver(profileSchema),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValues,
+    watch,
+    reset,
+    setError,
+    formState: { errors },
+  } = methods;
 
   const handleChangeAge = (event) => {
     setAge(event.target.value);
@@ -68,11 +104,11 @@ function Products() {
   const img =
     "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
 
-  const previewImage = useMemo(() => {
-    return file ? URL.createObjectURL(file) : "";
-  }, [file]);
+  // const previewImage = useMemo(() => {
+  //   return file ? URL.createObjectURL(file) : "";
+  // }, [file]);
 
-  const handleClose = () => {
+  const handleClose = async () => {
     setOpen(!open);
   };
 
@@ -81,18 +117,86 @@ function Products() {
   };
 
   const onFileChange = (event) => {
-    const fileFromLocal = event.target.files?.[0];
+    const fileFromLocal = event.target.files[0];
 
     fileInputRef.current?.setAttribute("value", "");
 
-    if (fileFromLocal) {
+    if (!fileFromLocal) {
       console.error("......");
     } else {
-      onChange && onChange(fileFromLocal);
-
-      setFile(event.terget.files);
+      setFile(event.target.files);
     }
   };
+
+  const handleOpenUpdate = async () => {
+    console.log(pId);
+    const product = await productById(pId);
+    console.log("product by id", product);
+
+    if (product) {
+      reset({
+        name_product: product?.name_product || "",
+        img: product?.img || "",
+        description: product?.description || "",
+        price: product?.price || "",
+        quantity: product?.quantity || "",
+        "category_id.id": product?.category_id.id || "",
+      });
+
+      // setValue("name_product", product.name_product || "");
+      // setValue("description", product.description || "");
+      // setValue("price", product.phone || "");
+      // setValue("img", product.img || "");
+      // setValue("quantity", product.quantity || "");
+      // setValue("category_id.id", product.category_id.id || "");
+    }
+  };
+
+  useEffect(() => {
+    if (pId) {
+      setOpen(!open);
+      handleOpenUpdate();
+    }
+  }, [pId]);
+
+  const getAllCategories = async () => {
+    const res = await categoriesGetAll();
+    setCategorys(res);
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
+  const imageFile = watch("img");
+
+  const onSubmit = handleSubmit(async (data) => {
+    const payload = { ...data, img: file };
+    console.log("data: ", payload);
+    try {
+      let imgFile = imageFile;
+      // if (file) {
+      //   console.log(file);
+      //   const uploadRes = await upload({ image: file });
+      //
+      //   imgFile = uploadRes.url;
+      // }
+      setValue("img", "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8");
+
+      console.log(imgFile);
+
+      if (pId) {
+        await updateProduct(pId, data);
+      } else {
+        const res = await createProduct({
+          ...data,
+          img: "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -131,6 +235,7 @@ function Products() {
       </div>
     );
   }
+
   function a11yProps(index) {
     return {
       id: `simple-tab-2`,
@@ -158,8 +263,8 @@ function Products() {
                   px={2}
                   variant="gradient"
                   bgColor="info"
-                  borderRadius="lg"
                   coloredShadow="info"
+                  borderRadius="lg"
                   direction="row"
                 >
                   <Stack direction="row" spacing={4}>
@@ -171,78 +276,130 @@ function Products() {
                     </MDButton>
                   </Stack>
                 </MDBox>
+
                 <Dialog
                   open={open}
                   onClose={handleClose}
                   aria-labelledby="alert-dialog-title"
                   aria-describedby="alert-dialog-description"
                 >
-                  <DialogTitle id="alert-dialog-title">{"Create new product"}</DialogTitle>
-                  <DialogContent>
-                    <Stack pt={4}>
-                      <Stack direction="row" sx={{ width: "100%" }} spacing={10}>
-                        <Stack>
-                          <MDBox>
-                            <MDInput label="Name" />
-                          </MDBox>
-                          <MDBox pt={2}>
-                            <MDInput label="Price" type="number" />
-                          </MDBox>
-                          <MDBox sx={{ minWidth: 120 }} pt={2}>
-                            <FormControl fullWidth sx={{ minHeight: 50 }}>
-                              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                              <Select
-                                sx={{ minHeight: 45 }}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={age}
-                                label="Age"
-                                onChange={handleChangeAge}
-                              >
-                                <MenuItem value={1}>Điện thoại</MenuItem>
-                                <MenuItem value={2}>Laptop</MenuItem>
-                                <MenuItem value={3}>Quần áo nam</MenuItem>
-                              </Select>
-                            </FormControl>
-                          </MDBox>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <DialogTitle id="alert-dialog-title">{"Create new product"}</DialogTitle>
+                    <DialogContent>
+                      <Stack pt={4}>
+                        <Stack direction="row" sx={{ width: "100%" }} spacing={10}>
+                          <Stack>
+                            <MDBox>
+                              <Controller
+                                control={control}
+                                name="name_product"
+                                render={({ field: { onChange, onBlur, value, ref } }) => (
+                                  <MDInput label="Name" value={value || ""} onChange={onChange} />
+                                )}
+                              />
+                            </MDBox>
+                            <MDBox pt={2}>
+                              <Controller
+                                control={control}
+                                name="price"
+                                render={({ field: { onChange, onBlur, value, ref } }) => (
+                                  <MDInput label="Price" value={value || ""} onChange={onChange} />
+                                )}
+                              />
+                            </MDBox>
+                            <MDBox pt={2}>
+                              <Controller
+                                control={control}
+                                name="quantity"
+                                render={({ field: { onChange, onBlur, value, ref } }) => (
+                                  <MDInput
+                                    label="Quantity"
+                                    value={value || ""}
+                                    onChange={onChange}
+                                  />
+                                )}
+                              />
+                            </MDBox>
+                            <MDBox sx={{ minWidth: 120 }} pt={2}>
+                              <FormControl fullWidth sx={{ minHeight: 50 }}>
+                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                                <Controller
+                                  control={control}
+                                  name="category_id.id"
+                                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                                    <Select
+                                      sx={{ minHeight: 45 }}
+                                      labelId="demo-simple-select-label"
+                                      id="demo-simple-select"
+                                      value={value || ""}
+                                      label="Age"
+                                      onChange={onChange}
+                                    >
+                                      {categorys.map((category) => {
+                                        return (
+                                          <MenuItem key={category.id} value={category.id}>
+                                            {category.name}
+                                          </MenuItem>
+                                        );
+                                      })}
+                                    </Select>
+                                  )}
+                                />
+                              </FormControl>
+                            </MDBox>
+                          </Stack>
+                          <Stack>
+                            <img
+                              style={{ width: 200 }}
+                              srcSet={`${img ?? previewImage}`}
+                              src={`${img ?? previewImage}`}
+                              loading="lazy"
+                            />
+                            <MDButton
+                              variant="contained"
+                              onClick={handleUpload}
+                              startIcon={<CloudUploadIcon />}
+                            >
+                              Upload Image
+                            </MDButton>
+                            <input
+                              className="hidden"
+                              value={file?.name || null}
+                              type="file"
+                              accept=".jpg,.jpeg,.png"
+                              ref={fileInputRef}
+                              onChange={onFileChange}
+                              onClick={(event) => {
+                                event.target.value = null;
+                              }}
+                              hidden
+                            />
+                          </Stack>
                         </Stack>
-                        <Stack>
-                          <img
-                            style={{ width: 200 }}
-                            srcSet={`${img ?? previewImage}`}
-                            src={`${img ?? previewImage}`}
-                            loading="lazy"
-                          />
-                          <MDButton
-                            variant="contained"
-                            onClick={handleUpload}
-                            startIcon={<CloudUploadIcon />}
-                          >
-                            Upload Image
-                          </MDButton>
-                          <input
-                            className="hidden"
-                            type="file"
-                            accept=".jpg,.jpeg,.png"
-                            ref={fileInputRef}
-                            onChange={onFileChange}
-                            onClick={(event) => {
-                              event.target.value = null;
-                            }}
-                            hidden
-                          />
-                        </Stack>
+
+                        <Controller
+                          control={control}
+                          name="description"
+                          render={({ field: { onChange, onBlur, value, ref } }) => (
+                            <MDInput
+                              label="Description"
+                              mt={2}
+                              minRows={2}
+                              value={value || ""}
+                              multiline
+                              onChange={onChange}
+                            />
+                          )}
+                        />
                       </Stack>
-                      <MDInput label="Description" mt={2} minRows={2} multiline />
-                    </Stack>
-                  </DialogContent>
-                  <DialogActions>
-                    <MDButton onClick={handleClose}>Disagree</MDButton>
-                    <MDButton onClick={handleClose} autoFocus>
-                      Agree
-                    </MDButton>
-                  </DialogActions>
+                    </DialogContent>
+                    <DialogActions>
+                      <MDButton onClick={handleClose}>Disagree</MDButton>
+                      <button type="submit">Agree</button>
+                    </DialogActions>
+                  </form>
                 </Dialog>
+
                 <MDBox pt={3}>
                   <DataTable
                     table={{ columns: pColumns, rows: pRows }}

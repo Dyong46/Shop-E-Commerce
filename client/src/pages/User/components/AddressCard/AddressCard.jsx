@@ -61,7 +61,7 @@ const AddressCard = ({ address }) => {
       </div>
       {address.is_default && (
         <div>
-          <span className="px-1 py-1 border border-red-500 text-red-500 text-sm">Mặc định</span>
+          <span className="px-1 py border border-red-500 text-red-500 text-sm">Mặc định</span>
         </div>
       )}
     </div>

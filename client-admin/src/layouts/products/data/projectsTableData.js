@@ -17,6 +17,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Icon from "@mui/material/Icon";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -27,14 +29,25 @@ import MDProgress from "components/MDProgress";
 // Images
 import { useEffect, useState } from "react";
 import { productGetAll } from "servers/productService";
-import { Box } from "@mui/material";
+import { removeProduct } from "servers/productService";
 
 export default function data() {
   const [products, setProduct] = useState([]);
+  const [idProduct, setIdProduct] = useState("");
+  const [open, setOpen] = useState(false);
 
   const getAllProduct = async () => {
     const res = await productGetAll();
     setProduct(res);
+  };
+
+  const remove = async (id) => {
+    await removeProduct(id);
+  };
+
+  const handleEdit = (id) => {
+    setOpen(true);
+    setIdProduct(id);
   };
 
   useEffect(() => {
@@ -66,7 +79,7 @@ export default function data() {
   );
 
   const rows = Array.isArray(products.content) // Check if products is an array
-    ? products.content.map((product) => ({
+    ? products.content.map((product, index) => ({
         project: (
           <Project
             image={product.img} // replace with the actual property from your product object
@@ -84,15 +97,21 @@ export default function data() {
           </MDTypography>
         ),
         completion: (
-          <Box sx={{ textAlign: "left" }}>
-            <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-              {product.description}
-            </MDTypography>
-          </Box>
+          <MDTypography
+            component="a"
+            href="#"
+            variant="caption"
+            color="text"
+            fontWeight="medium"
+            sx={{ textAlign: "left" }}
+          >
+            {product.description} {/* replace with the actual property from your product object */}
+          </MDTypography>
         ),
         action: (
           <MDTypography component="a" href="#" color="text">
-            <Icon>more_vert</Icon>
+            <Icon onClick={() => handleEdit(product.id)}>edit</Icon>
+            <Icon onClick={() => remove(product.id)}>delete</Icon>
           </MDTypography>
         ),
       }))
@@ -107,5 +126,7 @@ export default function data() {
       { Header: "Chỉnh sửa", accessor: "action", align: "center" },
     ],
     rows: rows,
+    idProduct: idProduct,
+    open: open,
   };
 }

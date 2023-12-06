@@ -5,11 +5,6 @@ const addressGetAll = () => {
   return api.get(`${pathApi.address}`);
 };
 
-
-const addressGetAllByAccount = (idaccount) => {
-  return api.get(`${pathApi.address}`+'/user?id='+`${idaccount}`);
-};
-
 const addAddress = (address) => {
   return api.post(`${pathApi.address}`, address)
 }
@@ -26,4 +21,4 @@ const changeDefaultAddress = (idAccount, idAddress) => {
   return api.put(`${pathApi.address}/user/${idAccount}/${idAddress}`)
 }
 
-export { addressGetAll,addressGetAllByAccount, addAddress, deleteAddress, updateAddress, changeDefaultAddress};
+export { addressGetAll, addAddress, deleteAddress, updateAddress, changeDefaultAddress};

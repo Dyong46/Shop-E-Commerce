@@ -71,12 +71,7 @@ const handleConfirmPasswordYup = (refString) => {
 };
 
 export const schema = yup.object({
-	username: yup
-    .string()
-    .trim().required('Username người dùng là bắt buộc')
-    .min(5, 'Độ dài từ 6 - 20 ký tự')
-    .max(20, 'Độ dài từ 6 - 20 ký tự')
-    .matches(/^[a-zA-Z0-9]+$/, 'Username không được chứa kí tự đặc biệt'),
+	username: yup.string().trim().required('Username người dùng là bắt buộc'),
   email: yup
     .string()
     .required('Email là bắt buộc')
@@ -104,16 +99,9 @@ export const schema = yup.object({
 
 export const userSchema = yup.object({
   name: yup.string().max(160, 'Độ dài tối đa là 160 ký tự'),
-  email: yup
-    .string()
-    .required('Email là bắt buộc')
-    .email('Email không đúng định dạng')
-    .min(5, 'Độ dài từ 5 - 160 ký tự')
-    .max(160, 'Độ dài từ 5 - 160 ký tự'),
+  email: yup.string().max(50, 'Độ dài tối đa là 50 ký tự'),
   username: yup.string().max(50, 'Độ dài tối đa là 50 ký tự'),
-  phone: yup
-    .string()
-    .length(11, 'Độ dài 11 số'),
+  phone: yup.string().max(20, 'Độ dài tối đa là 20 ký tự'),
   avatar: yup.string().max(1000, 'Độ dài tối đa là 1000 ký tự'),
   date_of_birth: yup.date().max(new Date(), 'Hãy chọn một ngày trong quá khứ'),
   password: schema.fields['password'],
