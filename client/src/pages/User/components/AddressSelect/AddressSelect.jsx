@@ -2,22 +2,29 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getDistrict, getProvices, getWard } from '~/servers/vietnamProvincesService';
+import { generateNameId, getIdFromNameId } from '~/utils/utils';
 
 const AddressSelect = ({ value, onChange, errorMessage }) => {
   const [address, setAddress] = useState({
-    province: value?.province || undefined,
-    district: value?.district || undefined,
-    ward: value?.ward || undefined
+    province: value?.province || "",
+    district: value?.district || "",
+    ward: value?.ward || ""
   })
 
   // Cập nhật lại address khi value thay đổi
   useEffect(() => {
-    if (value) {
+    if (Object.keys(value).length) {
       setAddress({
         province: value?.province,
         district: value?.district,
         ward: value?.ward
       });
+      if (value.district) {
+        getdistricts.mutate()
+      }
+      if (value.ward) {
+        getWards.mutate()
+      }
     }
   }, [value]);
 
@@ -32,88 +39,95 @@ const AddressSelect = ({ value, onChange, errorMessage }) => {
   const [wards, setWards] = useState(null)
 
   const getdistricts = useMutation({
-    mutationFn: () => getDistrict(address.province),
+    mutationFn: () => getDistrict(getIdFromNameId(address.province)),
     onSuccess: (res) => {
       setDistricts(res.districts)
     }
   })
   const getWards = useMutation({
-    mutationFn: () => getWard(address.district),
+    mutationFn: () => getWard(getIdFromNameId(address.district)),
     onSuccess: (res) => {
       setWards(res.wards)
     }
   })
 
-  const handleChange = (event) => {
+  const handleChange = (event, param) => {
     const { name, value } = event.target;
-    const newAddress = {
+    let newAddress = {
       ...address,
       [name]: value
     };
     setAddress(newAddress);
+    console.log(1111, newAddress);
     onChange && onChange(newAddress);
+    if (param === "provice") {
+      setDistricts(null)
+      setWards(null)
+      if (value !== "") {
+        getdistricts.mutate()
+        newAddress = {
+          province: value,
+          district: "",
+          ward: ""
+        }
+        onChange && onChange(newAddress);
+      } else {
+        newAddress = {
+          province: "",
+          district: "",
+          ward: ""
+        }
+        onChange && onChange(newAddress);
+      }
+    } else if (param === "district") {
+      setWards(null)
+      if (value !== "") {
+        getWards.mutate()
+      }
+    }
   };
-
-  // hadle provice and call api district
-  const handleChangeProvice = (event) => {
-    handleChange(event)
-    setDistricts(null)
-    setWards(null)
-    if (address.province) {
-      getdistricts.mutate()
-    }
-  }
-
-  // handle district and call api ward
-  const handleChangeDistrict = (event) => {
-    handleChange(event)
-    setWards(null)
-    if (address.district) {
-      getWards.mutate()
-    }
-  }
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
         <div>
           <select
-            onChange={handleChangeProvice}
+            onChange={(event) => handleChange(event, "provice")}
             name="province"
             className="h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange"
             value={value?.province || address.province}
           >
             <option value="">Tỉnh/ Thành phố</option>
             {provinces && provinces.map((province) => (
-              <option key={province.codename} value={province.code}>{province.name}</option>
+              <option key={province.codename} value={generateNameId({ name: province.name, id: province.code })}>{province.name}</option>
             ))}
           </select>
         </div>
         <div>
           <select
-            onChange={handleChangeDistrict}
+            onChange={(event) => handleChange(event, "district")}
             name="district"
             className="h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange"
             value={value?.district || address.district}
             disabled={!districts}
           >
-            <option value={undefined}>Quận/ Huyện</option>
+            <option value="">Quận/ Huyện</option>
             {districts && districts.map((district) => (
-              <option key={district.codename} value={district.code}>{district.name}</option>
+              <option key={district.codename} value={generateNameId({ name: district.name, id: district.code })}>{district.name}</option>
             ))}
           </select>
         </div>
         <div>
           <select
-            onChange={handleChange}
+            onChange={(event) => handleChange(event, "ward")}
             name="ward"
             className="h-10 w-full cursor-pointer rounded-sm border border-black/10 px-3 hover:border-orange"
             value={value?.ward || address.ward}
             disabled={!wards}
           >
-            <option value={undefined}>Phường/ Xã</option>
+            <option value="">Phường/ Xã</option>
             {wards && wards.map((ward) => (
-              <option key={ward.codename} value={ward.code}>{ward.name}</option>
+              <option key={ward.codename} value={generateNameId({ name: ward.name, id: ward.code })}>{ward.name}</option>
             ))}
           </select>
         </div>

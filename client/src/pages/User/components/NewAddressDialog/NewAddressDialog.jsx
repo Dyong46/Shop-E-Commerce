@@ -12,8 +12,10 @@ import { isAxiosUnprocessableEntityError } from "~/utils/utils";
 import { toast } from "react-toastify";
 import { addAddress } from "~/servers/addressService";
 import { AppContext } from "~/contexts/app.contexts";
+import { useQueryClient } from "@tanstack/react-query";
 
 const NewAddressDialog = () => {
+  const queryClient = useQueryClient();
   const { profile } = useContext(AppContext)
   const [open, setOpen] = useState(false);
 
@@ -32,6 +34,7 @@ const NewAddressDialog = () => {
     formState: { errors },
     handleSubmit,
     setError,
+    reset
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
@@ -47,6 +50,9 @@ const NewAddressDialog = () => {
       })
       if (res && res.id) {
         toast.success('Update account successful')
+        setOpen(false)
+        reset()
+        await queryClient.invalidateQueries(['address']);
       }
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
@@ -113,7 +119,7 @@ const NewAddressDialog = () => {
                   render={({ field }) => (
                     <AddressSelect
                       errorMessage={errors.address?.message}
-                      value={field.value}
+                      value={field.value || {}}
                       onChange={field.onChange}
                     />
                   )}

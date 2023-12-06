@@ -9,10 +9,10 @@ const Address = () => {
   const { profile, address, setAddress } = useContext(AppContext)
 
   const { data: addressData } = useQuery({
-    queryKey: ['address', profile.id],
+    queryKey: ['address'],
     queryFn: () => {
       return fetchAddress({ id: profile.id })
-    }
+    },
   })
 
   useEffect(() => {

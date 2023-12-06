@@ -25,15 +25,21 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address create(Address address) {
+        Address addressDefault = addressRepository.findAddressDefaultById(address.getAccount_id().getId());
+        address.setIs_default(addressDefault == null);
         return addressRepository.save(address);
     }
 
     @Override
-    public Address update(Integer id, Address address){
-        if(existsById(id)) {
-            return addressRepository.save(address);
-        }
-        return null;
+    public Address update(Integer id, Address address) throws Exception {
+        Address tempAddress = addressRepository.findById(id).orElse(null);
+        if(tempAddress == null) throw new Exception("Can't find address");
+        tempAddress.setPhone(address.getPhone());
+        tempAddress.setCity(address.getCity());
+        tempAddress.setDistrict(address.getDistrict());
+        tempAddress.setWards(address.getWards());
+        tempAddress.setSpecific_address(address.getSpecific_address());
+        return addressRepository.save(tempAddress);
     }
 
     @Override
@@ -43,20 +49,18 @@ public class AddressServiceImpl implements AddressService {
         else if(address.getIs_default()) throw new Exception("Can't delete default account");
         addressRepository.deleteById(id);
     }
-
     @Override
     public Boolean existsById(Integer id) {
         return addressRepository.existsById(id);
     }
-
     @Override
-    public Address changeDefault(Integer id, Integer idAddress) {
+    public Address changeDefault(Integer id, Integer idAddress) throws Exception {
         Address addressDefault = addressRepository.findAddressDefaultById(id);
+        if(addressDefault == null) throw new Exception("Can't find default address");
         addressDefault.setIs_default(false);
         addressRepository.save(addressDefault);
-
-        Address address = addressRepository.findById(id).orElse(null);
-        if(address == null) return null;
+        Address address = addressRepository.findById(idAddress).orElse(null);
+        if(address == null) throw new Exception("Can't find default address");
         address.setIs_default(true);
         return addressRepository.save(address);
     }

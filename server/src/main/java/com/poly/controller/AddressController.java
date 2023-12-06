@@ -32,7 +32,7 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public Address update(@PathVariable Integer id, @RequestBody Address address) {
+    public Address update(@PathVariable Integer id, @RequestBody Address address) throws Exception {
         return addressService.update(id, address);
     }
 
@@ -49,7 +49,7 @@ public class AddressController {
     }
 
     @PutMapping("/user/{id}/{idAddress}")
-    public Address changeDefault(@PathVariable Integer id, @PathVariable Integer idAddress) {
+    public Address changeDefault(@PathVariable Integer id, @PathVariable Integer idAddress) throws Exception {
         return addressService.changeDefault(id, idAddress);
     }
 

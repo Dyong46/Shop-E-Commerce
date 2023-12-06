@@ -38,12 +38,20 @@ const removeSpecialCharacter = (str) =>
   str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, '');
 
 export const generateNameId = ({ name, id }) => {
+  if(!name || !id) return "";
   return removeSpecialCharacter(name).replace(/\s/g, '-') + `-i-${id}`;
 };
 
 export const getIdFromNameId = (nameId) => {
+  if(!nameId) return "";
   const arr = nameId.split('-i-')
   return arr[arr.length - 1]
+}
+
+export const getNameFromNameId = (nameId) => {
+  if(!nameId) return "";
+  const name = nameId.split('-i-')[0];
+  return name.replace(/-/g, ' ');
 }
 
 export const getAvatarUrl = (avatarName) => {

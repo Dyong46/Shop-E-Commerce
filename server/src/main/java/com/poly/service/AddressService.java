@@ -11,11 +11,11 @@ public interface AddressService {
 
     Address create(Address address);
 
-    Address update(Integer id, Address address);
+    Address update(Integer id, Address address) throws Exception;
 
     void delete(Integer id) throws Exception;
 
     Boolean existsById(Integer id);
 
-    Address changeDefault(Integer id, Integer idAddress);
+    Address changeDefault(Integer id, Integer idAddress) throws Exception;
 }
