@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import Footer from '~/components/Footer';
 import TinyHeader from '~/components/TinyHeader';
 // import TinyHeader from '~/components/Header/TinyHeader';
 
@@ -7,6 +8,7 @@ const CartLayout = ({ children }) => {
     <div>
       <TinyHeader />
       {children}
+      <Footer />
     </div>
   );
 };

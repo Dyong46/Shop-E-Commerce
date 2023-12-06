@@ -50,6 +50,7 @@ const UpdateAddressDialog = ({ body }) => {
   }, [body, setValue])
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
     try {
       const res = await updateAddress(body.id, {
         fullname: data.fullname,

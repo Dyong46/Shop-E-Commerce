@@ -1,16 +1,18 @@
 import { useStore } from '~/Context';
 import './style.scss';
-import Footer from '~/components/Footer';
 import CartDetails from './component/CartDetail';
 import TotalCart from './component/TotalCart';
 import { Link } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
+import path from '~/constants/path';
+import emptyCart from '~/assets/images/empty-cart.png';
+
 const Cart = () => {
   const [state] = useStore();
   const [pr, setPr] = useState(0);
   const [status, setStatus] = useState();
-  const [carts, setCarts] = useContext(CartContext);
+  const [, setCarts] = useContext(CartContext);
   const { todos } = state;
   var tong = 0;
   var mang = [];
@@ -44,27 +46,20 @@ const Cart = () => {
     }
   };
 
-  if (todos.length == 0) {
-    return (
-      <>
-        <div className="relative">
-          <div className="flex justify-center">
-            <img src="https://newnet.vn/themes/newnet/assets/img/empty-cart.png" alt="" />
+  return (
+    <>
+      {todos.length == 0 ? (
+        <div className="flex flex-col items-center justify-center h-[600px]">
+          <div className="h-[200px] mb-10">
+            <img src={emptyCart} alt="Empty cart" className="h-[100%]" />
           </div>
-          <Link to={'/'}>
-            <div className="flex justify-center items-center mb-10 absolute bottom-[50px] left-[44%] cursor-pointer">
-              <div className="w-46 h-12 border border-orange rounded-[10px] p-3 bg-orange text-white">
-                MUA HÀNG NGAY NÀO
-              </div>
+          <Link to={path.home}>
+            <div className="flex justify-center items-center">
+              <div className="rounded-sm py-2 px-4 bg-orange text-white hover:bg-red-400">Trở về trang chủ</div>
             </div>
           </Link>
         </div>
-        <Footer />
-      </>
-    );
-  } else {
-    return (
-      <div>
+      ) : (
         <div className="bg-s py-5">
           <div className="flex justify-center justify-content-center ">
             <div className="flex bg-white header-cart py-6">
@@ -94,11 +89,10 @@ const Cart = () => {
 
           {/* {status == true ? <TotalCart pr={pr} /> : <TotalCart />} */}
           <TotalCart price={status == true ? pr : 0} status={status} />
-          <Footer />
         </div>
-      </div>
-    );
-  }
+      )}
+    </>
+  );
 };
 
 export default Cart;

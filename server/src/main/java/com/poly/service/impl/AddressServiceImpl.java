@@ -34,6 +34,7 @@ public class AddressServiceImpl implements AddressService {
     public Address update(Integer id, Address address) throws Exception {
         Address tempAddress = addressRepository.findById(id).orElse(null);
         if(tempAddress == null) throw new Exception("Can't find address");
+        tempAddress.setFullname(address.getFullname());
         tempAddress.setPhone(address.getPhone());
         tempAddress.setCity(address.getCity());
         tempAddress.setDistrict(address.getDistrict());

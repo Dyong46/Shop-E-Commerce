@@ -1,11 +1,10 @@
 import Dialog from '~/components/dialog/Dialog';
-import Location from './components/Location';
-import Pay from './components/Pay';
-import Products from './components/Products';
-import Voucher from './components/Voucher';
+import Location from '../../components/Location';
+import Pay from '../../components/Pay';
+import Products from '../../components/Products';
+import Voucher from '../../components/Voucher';
 import { useContext, useState, useEffect } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
-import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import LocationCard from '~/components/dialog/card/LocationCard';
 import VoucherCard from '~/components/dialog/card/VoucherCard';
 import { getAllDiscount } from '~/servers/discountService';
@@ -15,6 +14,7 @@ import { addressGetAllByAccount } from '~/servers/addressService';
 import { AppContext } from '~/contexts/app.contexts';
 import { DiscountContext } from '~/Context/Discount/DiscountContext';
 import { AddressContext } from '~/Context/Address/AddressContext';
+import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
@@ -115,11 +115,12 @@ const Order = () => {
   const [money] = useContext(PriceContext);
   const [discounts] = useContext(DiscountContext);
   const [addres] = useContext(AddressContext);
-  const [discountss, setDiscountss] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [openVoucher, setOpenVoucher] = useState(false);
   const [setad, setAd] = useState(false);
 
+  const [discountss, setDiscountss] = useState([]);
   const getAll = async () => {
     try {
       const discounts = await getAllDiscount();
@@ -130,20 +131,11 @@ const Order = () => {
     }
   };
   const { profile } = useContext(AppContext);
-  console.log(profile, 'profile');
-
   const [address, setAddress] = useState([]);
-  // const getAddressByAcc = async () => {
-  //   let get = await addressGetAllByAccount(profile.id);
-  //   if (get) {
-  //     console.log(get, 'address');
-  //   }
-  // };
-
   const getAddress = async () => {
     try {
       const get = await addressGetAllByAccount(profile.id);
-      console.log(get, 'ader');
+      setAddress(get);
     } catch (error) {
       console.log(error);
     }
