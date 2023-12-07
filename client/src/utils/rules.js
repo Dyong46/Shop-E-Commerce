@@ -103,20 +103,35 @@ export const schema = yup.object({
 });
 
 export const userSchema = yup.object({
-  name: yup.string().max(160, 'Độ dài tối đa là 160 ký tự'),
+  name: yup.string().required("Tên không được để trống").max(160, 'Độ dài tối đa là 160 ký tự'),
   email: yup
     .string()
     .required('Email là bắt buộc')
     .email('Email không đúng định dạng')
     .min(5, 'Độ dài từ 5 - 160 ký tự')
     .max(160, 'Độ dài từ 5 - 160 ký tự'),
-  username: yup.string().max(50, 'Độ dài tối đa là 50 ký tự'),
+  username: yup.string()
+  .required("Username không được để trống").max(50, 'Độ dài tối đa là 50 ký tự'),
   phone: yup
     .string()
-    .length(11, 'Độ dài 11 số'),
+    .min(10, 'Số điện thoại không hợp lệ')
+    .max(11, 'Số điện thoại không hợp lệ'),
   avatar: yup.string().max(1000, 'Độ dài tối đa là 1000 ký tự'),
   date_of_birth: yup.date().max(new Date(), 'Hãy chọn một ngày trong quá khứ'),
   password: schema.fields['password'],
   new_password: schema.fields['password'],
   confirm_password: handleConfirmPasswordYup('new_password'),
 });
+
+export const addressSchema = yup.object({
+  fullname: yup.string().required("Tên không được để trống").max(160, 'Độ dài tối đa là 160 ký tự'),
+  phone: yup
+    .string()
+    .min(10, 'Số điện thoại không hợp lệ')
+    .max(11, 'Số điện thoại không hợp lệ'),
+  address: yup.mixed().test('isValidAddress', 'Vui lòng chọn đầy đủ thông tin địa chỉ', function(value) {
+    const { province, district, ward } = value || {};
+    return province !== '' && district !== '' && ward !== '';
+  }),
+  detail_address: yup.string().required("Địa chỉ không được để trống").max(160, 'Độ dài tối đa là 160 ký tự'),
+})

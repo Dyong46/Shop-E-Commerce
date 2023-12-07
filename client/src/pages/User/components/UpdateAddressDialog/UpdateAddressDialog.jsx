@@ -12,6 +12,10 @@ import { AppContext } from "~/contexts/app.contexts";
 import { updateAddress } from "~/servers/addressService";
 import PropTypes from 'prop-types'
 import { useQueryClient } from "@tanstack/react-query";
+import { addressSchema } from "~/utils/rules";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const addressUserSchema = addressSchema.pick(['fullname', 'phone', 'address', 'detail_address']);
 
 const UpdateAddressDialog = ({ body }) => {
   const queryClient = useQueryClient();
@@ -23,8 +27,9 @@ const UpdateAddressDialog = ({ body }) => {
       fullname: '',
       phone: '',
       address: null,
-      detailAddress: '',
+      detail_address: '',
     },
+    resolver: yupResolver(addressUserSchema)
   });
 
   const {
@@ -45,7 +50,7 @@ const UpdateAddressDialog = ({ body }) => {
           district: body.district,
           ward: body.wards
         } || {}),
-        setValue('detailAddress', body.specific_address || '')
+        setValue('detail_address', body.specific_address || '')
     }
   }, [body, setValue])
 
@@ -133,15 +138,17 @@ const UpdateAddressDialog = ({ body }) => {
 
                 <TextArea
                   register={register}
-                  name="detailAddress"
+                  name="detail_address"
                   className="w-full"
                   placeholder="Địa chỉ cụ thể"
-                  errorMessage={errors.detail?.message}
+                  errorMessage={errors.detail_address?.message}
                 />
 
                 <div className="flex justify-end">
                   <Button
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false)
+                    }}
                     className="flex items-center justify-center rounded-sm py-2 text-black hover:bg-gray-100 font-normal me-3 w-[150px]"
                   >
                     Trở lại
