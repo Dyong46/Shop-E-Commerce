@@ -132,10 +132,16 @@ const Order = () => {
   };
   const { profile } = useContext(AppContext);
   const [address, setAddress] = useState([]);
+  const [addressDefault, setAddressDefault] = useState([]);
   const getAddress = async () => {
     try {
       const get = await addressGetAllByAccount(profile.id);
       setAddress(get);
+      get.map((item) => {
+        if (item.is_default == true) {
+          setAddressDefault(item);
+        }
+      });
     } catch (error) {
       console.log(error);
     }

@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CartProvider } from './Context/ContextCart/CartContext.jsx';
 import AppProvider from './contexts/app.contexts';
 import { AddressProvider } from './Context/Address/AddressContext.jsx';
-import { DiscountContext, DiscountProvider } from './Context/Discount/DiscountContext.jsx';
+import { DiscountProvider } from './Context/Discount/DiscountContext.jsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {

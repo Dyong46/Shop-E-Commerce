@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AddressContext } from '~/Context/Address/AddressContext';
 
 // const imgStyle = {
@@ -8,8 +8,9 @@ import { AddressContext } from '~/Context/Address/AddressContext';
 //   marginRight: '5px'
 // };
 const LocationCard = (props) => {
-  const { group, idVoucher } = props;
+  const { group, idVoucher, addDefault } = props;
   const [check, setCheck] = useState(true);
+
   const [addres, setAdres] = useContext(AddressContext);
 
   const tooggle = (value, item) => {
@@ -78,5 +79,6 @@ LocationCard.propTypes = {
   name: PropTypes.string,
   phone: PropTypes.string,
   address: PropTypes.array,
+  addDefault: PropTypes.object,
 };
 export default LocationCard;
