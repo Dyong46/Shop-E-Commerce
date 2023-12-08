@@ -136,8 +136,8 @@ const Pay = ({ money, cart, address, discounts }) => {
 Pay.propTypes = {
   money: PropTypes.number,
   cart: PropTypes.array,
-  discounts: PropTypes.object,
-  address: PropTypes.object,
+  discounts: PropTypes.array,
+  address: PropTypes.any,
 };
 
 export default Pay;

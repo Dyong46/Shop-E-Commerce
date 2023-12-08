@@ -1,4 +1,8 @@
-# Shopee-Clone
+# Shopee-Clone - Thương mại điện tử
+
+Đây là dự án được thực hiện bởi nhóm 1 mã lớp PRO2112.03.
+Các thành viên bao gồm: Vũ Thái Dương, Phạm Trần Minh Thư, Trương Thanh Toàn, Nguyễn Thành Nam, Lê Như Hoàng
+Với sự dẫn dắt của giảng viên hướng dẫn: Giảng viên Cao Hoàng Phúc
 
 Dự án Shopee-Clone là một phiên bản tương tự trang Shopee, một nền tảng thương mại điện tử nổi tiếng. Dự án này sử dụng ReactJS cho phía frontend và Spring Boot cho phía backend. Mục tiêu của dự án là cung cấp một trải nghiệm mua sắm trực tuyến tương tự với các tính năng chính như hiển thị sản phẩm, thêm vào giỏ hàng, thanh toán và quản lý đơn hàng.
 
@@ -36,9 +40,9 @@ Dự án Shopee-Clone là một phiên bản tương tự trang Shopee, một n�
 
 ## Công cụ và kỹ thuật
 
-**Frontend**: Reactjs, Axios
+**Frontend**: Reactjs, Axios, TailwindCSS, ReactQuery, ReachHookForm, ...
 
-**Backend**: Spring Boot, RESTApi
+**Backend**: Spring Boot, Spring Secutiry, Swagger, JPA Hibernate, ...
 
 **Database**: MS SQL Server
 

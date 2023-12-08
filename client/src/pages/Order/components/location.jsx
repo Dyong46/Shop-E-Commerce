@@ -49,7 +49,7 @@ const Location = (props) => {
               <h1 className="mx-2 text-center text-xl pb-2">Địa chỉ nhận hàng</h1>
             </div>
             <div className="flex flex-row">
-              {props.address_default.map((item) => {
+              {props.address_default.map((item, index) => {
                 if (item.is_default == true) {
                   return (
                     <>

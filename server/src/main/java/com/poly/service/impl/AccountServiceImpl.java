@@ -3,6 +3,7 @@ package com.poly.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.poly.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import com.poly.entity.Role;
 import com.poly.repo.AccountRepository;
 import com.poly.service.AccountService;
 import com.poly.service.RoleService;
-import com.poly.Utils.PasswordUtils;
 
 @Service
 public class AccountServiceImpl implements AccountService {

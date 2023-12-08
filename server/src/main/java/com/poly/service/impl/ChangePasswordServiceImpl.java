@@ -4,7 +4,7 @@ import com.poly.dto.ChangePassword;
 import com.poly.entity.Account;
 import com.poly.repo.AccountRepository;
 import com.poly.service.ChangePasswordService;
-import com.poly.Utils.PasswordUtils;
+import com.poly.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

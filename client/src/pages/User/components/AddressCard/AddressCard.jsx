@@ -5,13 +5,21 @@ import { toast } from 'react-toastify';
 import { changeDefaultAddress } from '~/servers/addressService';
 import UpdateAddressDialog from '../UpdateAddressDialog';
 import DeleteAddressDialog from '../DeleteAddressDialog';
+import { getNameFromNameId } from '~/utils/utils';
+import { useContext } from 'react';
+import { AppContext } from '~/contexts/app.contexts';
+import { useQueryClient } from '@tanstack/react-query';
 
 const AddressCard = ({ address }) => {
+  const queryClient = useQueryClient();
+  const { profile } = useContext(AppContext)
   const handleChangeDefault = async () => {
     try {
-      await changeDefaultAddress(address.id)
-      toast.success("Change default success")
+      await changeDefaultAddress(profile.id, address.id)
+      toast.success("Change default address success")
+      await queryClient.invalidateQueries(['address']);
     } catch (error) {
+      console.log(error.response.message);
       toast.error("Change default error")
     }
   }
@@ -37,7 +45,7 @@ const AddressCard = ({ address }) => {
             {address.specific_address}
           </div>
           <div className="flex">
-            {address.city}, {address.district}, {address.wards}
+            {getNameFromNameId(address.city)}, {getNameFromNameId(address.district)}, {getNameFromNameId(address.wards)}
           </div>
         </div>
         <div>
