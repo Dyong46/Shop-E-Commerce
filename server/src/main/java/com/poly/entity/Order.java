@@ -49,7 +49,6 @@ public class Order implements Serializable {
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Discount discount_id;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails;
 }

@@ -37,9 +37,9 @@ CREATE TABLE [addresses] (
   [id] integer PRIMARY KEY IDENTITY(1, 1),
   [fullname] nvarchar(50),
   [phone] varchar(11),
-  [city] nvarchar(20),
-  [district] nvarchar(20),
-  [wards] nvarchar(20),
+  [city] nvarchar(100),
+  [district] nvarchar(100),
+  [wards] nvarchar(100),
   [specific_address] nvarchar(100),
   [is_default] bit,
   [account_id] integer
@@ -181,8 +181,8 @@ GO
 -- Chèn dữ liệu mới vào bảng addresses
 INSERT INTO addresses ([fullname],  [phone],  [city],  [district],  [wards],  [specific_address],  [is_default],  [account_id])
 VALUES
-	(N'Phạm Trần Minh Thư',		'0247259910',	N'Thành phố HCM',	N'Quận 1',	N'Phường 1',	N'123 Khu phố 1',	1,	1),
-	(N'Nguyễn Ngọc Bảo Anh',	'0123599522',	N'Thành phố HCM',	N'Quận 2',	N'Phường 2',	N'Đường số 8',		0,	1),
+	(N'Phạm Trần Minh Thư',		'0247259910',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'123 Khu phố 1',	1,	1),
+	(N'Nguyễn Ngọc Bảo Anh',	'0123599522',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-12-i-761',	N'Phường-Trung-Mỹ-Tây-i-26785',	N'123 Khu phố 1',		0,	1),
 	(N'Nguyễn Hoàng Duy',	'0575114554',	N'Thành phố HCM',	N'Quận 3',	N'Phường 3',	N'Khu phố 3',		1,	2),
 	(N'Nguyễn Bảo Ngọc',		'0235799112',	N'Thành phố HCM',	N'Quận 4',	N'Phường 4',	N'Khu phố 4',	1,	3),
 	(N'Trương Kiều Oanh',	'0974757373',	N'Thành phố HCM',	N'Quận 5',	N'Phường 5',	N'Khu phố 5',		1,	4),

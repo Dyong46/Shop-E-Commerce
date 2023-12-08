@@ -12,8 +12,14 @@ import { isAxiosUnprocessableEntityError } from "~/utils/utils";
 import { toast } from "react-toastify";
 import { addAddress } from "~/servers/addressService";
 import { AppContext } from "~/contexts/app.contexts";
+import { useQueryClient } from "@tanstack/react-query";
+import { addressSchema } from "~/utils/rules";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const addressUserSchema = addressSchema.pick(['fullname', 'phone', 'address', 'detail_address']);
 
 const NewAddressDialog = () => {
+  const queryClient = useQueryClient();
   const { profile } = useContext(AppContext)
   const [open, setOpen] = useState(false);
 
@@ -22,8 +28,9 @@ const NewAddressDialog = () => {
       fullname: '',
       phone: '',
       address: null,
-      detailAddress: '',
+      detail_address: '',
     },
+    resolver: yupResolver(addressUserSchema)
   });
 
   const {
@@ -32,6 +39,7 @@ const NewAddressDialog = () => {
     formState: { errors },
     handleSubmit,
     setError,
+    reset
   } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
@@ -47,6 +55,9 @@ const NewAddressDialog = () => {
       })
       if (res && res.id) {
         toast.success('Update account successful')
+        setOpen(false)
+        reset()
+        await queryClient.invalidateQueries(['address']);
       }
     } catch (error) {
       if (isAxiosUnprocessableEntityError(error)) {
@@ -113,7 +124,7 @@ const NewAddressDialog = () => {
                   render={({ field }) => (
                     <AddressSelect
                       errorMessage={errors.address?.message}
-                      value={field.value}
+                      value={field.value || {}}
                       onChange={field.onChange}
                     />
                   )}
@@ -121,15 +132,18 @@ const NewAddressDialog = () => {
 
                 <TextArea
                   register={register}
-                  name="detailAddress"
+                  name="detail_address"
                   className="w-full"
                   placeholder="Địa chỉ cụ thể"
-                  errorMessage={errors.detail?.message}
+                  errorMessage={errors.detail_address?.message}
                 />
 
                 <div className="flex justify-end">
                   <Button
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      reset()
+                      setOpen(false)
+                    }}
                     className="flex items-center justify-center rounded-sm py-2 text-black hover:bg-gray-100 font-normal me-3 w-[150px]"
                   >
                     Trở lại
