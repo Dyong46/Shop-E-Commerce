@@ -68,6 +68,30 @@ public class OrderController {
         }
     }
 
+    @PutMapping("/shipping")
+    public ResponseEntity<?> shippingOrder(@RequestParam("order_id") Integer id)
+                    throws ChangeSetPersister.NotFoundException{
+        Order order = orderService.getOrderById(id);
+        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN);
+        ResponseBodyServer responseBodyServer;
+        if(order != null){
+            if(order.getStatus_id().equals(status)){
+                OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
+                order.setStatus_id(orderStatus);
+                orderRepository.save(order);
+                responseBodyServer = ResponseBodyServer.builder().statusCode(200).message("Successfully!")
+                        .payload(order).build();
+            }else {
+                responseBodyServer = ResponseBodyServer.builder().statusCode(404)
+                        .message("Can't set status because status might is shipping").payload(null).build();
+            }
+        }else {
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + order.getId())
+                    .payload(null).build();
+        }
+        return ResponseEntity.status(200).body(responseBodyServer);
+    }
+
     @PutMapping("/complete")
     public ResponseEntity<?> completeOrder(@RequestParam("order_id") Integer id)
             throws ChangeSetPersister.NotFoundException {
