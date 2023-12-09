@@ -59,12 +59,13 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Order> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException {
+    public ResponseEntity<?> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException{
         try {
             Order createdOrder = orderService.createOrder(entity);
-            return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -110,10 +111,10 @@ public class OrderController {
                         .message("Can't set status because status might is shipping").payload(null).build();
             }
         } else {
-            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + orderCheck.getId())
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + id)
                     .payload(null).build();
         }
-        return ResponseEntity.status(200).body(responseBodyServer);
+        return ResponseEntity.status(responseBodyServer.getStatusCode()).body(responseBodyServer);
     }
 
     @PutMapping("/cancel")

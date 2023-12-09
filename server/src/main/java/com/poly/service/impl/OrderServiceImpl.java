@@ -1,5 +1,6 @@
 package com.poly.service.impl;
 
+import com.poly.Utils.ResponseBodyServer;
 import com.poly.constant.StatusOrder;
 import com.poly.dto.OrderDTO;
 import com.poly.dto.OrderDetailDTO;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 @Service
@@ -77,12 +80,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrderById(Integer id, String status){
-        return orderRepository.getAllOrderById(id, status);
+        List<Order> allOrder = orderRepository.getAllOrderById(id, status);
+        allOrder.forEach(item -> {
+            item.getOrderDetails().forEach(product -> {
+                System.out.println(product.getId());
+            });
+        });
+        return allOrder;
     }
 
     @Override
     @Transactional
-    public Order createOrder(OrderDTO orderRequestDTO) throws MessagingException{
+    public Order createOrder(OrderDTO orderRequestDTO) throws Exception {
         Long totalPrice = (long) 0;
         Order order = new Order();
         order.setCreated_at(new Date());
@@ -100,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setQuantity(detailDTO.getQuantity());
             orderDetail.setOrder_id(order);
-
+            ResponseBodyServer responseBodyServer;
             // Fetch product by ID and set it
             Product product = new Product();
             try {
@@ -109,6 +118,10 @@ public class OrderServiceImpl implements OrderService {
                 ex.printStackTrace();
             }
             Integer quantity = detailDTO.getQuantity();
+            if (product.getQuantity() < quantity){
+                throw new Exception("Product quantity in your cart must be smaller than quantity in stock");
+            }
+
             Integer price = product.getPrice();
             Long total = Long.valueOf(quantity * price);
             // handel price
@@ -131,21 +144,31 @@ public class OrderServiceImpl implements OrderService {
             order.setTotal_amount(totalPrice*(100-discount.getDiscount_percent())/100);
         }
             Order resp = orderRepository.save(order);
-        String email = order.getAccount_id().getEmail();
-        String username = order.getAccount_id().getUsername();
-        String subject = "Thư cảm ơn ";
-        String context = "Chào " + username +
-                " Xin chân thành cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi! Rất vui được phục vụ bạn và chúng tôi hy vọng rằng bạn đã có một trải nghiệm mua sắm thú vị và hài lòng với sản phẩm mà bạn đã chọn.\n"
-                +
-                "\n" +
-                "Chúng tôi đánh giá cao sự tin tưởng của bạn và cam kết cung cấp dịch vụ tốt nhất cho khách hàng. Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc phản hồi nào, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ sẵn lòng giúp đỡ bạn.\n"
-                +
-                "\n" +
-                "Một lần nữa, xin chân thành cảm ơn bạn đã lựa chọn mua hàng tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai.\n"
-                +
-                "\n" +
-                "Trân trọng";
-            emailService.sendEmail(subject,email,context);
+        ExecutorService emailExecutor = Executors.newSingleThreadExecutor();
+        emailExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String email = order.getAccount_id().getEmail();
+                    String username = order.getAccount_id().getUsername();
+                    String subject = "Thư cảm ơn ";
+                    String context = "Chào " + username +
+                            " Xin chân thành cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi! Rất vui được phục vụ bạn và chúng tôi hy vọng rằng bạn đã có một trải nghiệm mua sắm thú vị và hài lòng với sản phẩm mà bạn đã chọn.\n"
+                            +
+                            "\n" +
+                            "Chúng tôi đánh giá cao sự tin tưởng của bạn và cam kết cung cấp dịch vụ tốt nhất cho khách hàng. Nếu bạn có bất kỳ câu hỏi, đề xuất hoặc phản hồi nào, hãy xin vui lòng liên hệ với chúng tôi. Đội ngũ chăm sóc khách hàng của chúng tôi sẽ sẵn lòng giúp đỡ bạn.\n"
+                            +
+                            "\n" +
+                            "Một lần nữa, xin chân thành cảm ơn bạn đã lựa chọn mua hàng tại cửa hàng của chúng tôi. Rất mong được phục vụ bạn trong tương lai.\n"
+                            +
+                            "\n" +
+                            "Trân trọng";
+                    emailService.sendEmail(subject,email,context);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
             return resp;
     }
 
