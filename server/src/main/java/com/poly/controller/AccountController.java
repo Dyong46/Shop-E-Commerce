@@ -5,11 +5,10 @@ import com.poly.entity.Account;
 import com.poly.service.AccountService;
 import com.poly.service.ChangePasswordService;
 import com.poly.service.EmailService;
-import com.poly.Utils.CookieUtils;
-import com.poly.Utils.PasswordUtils;
-import com.poly.Utils.SessionUtils;
 
-
+import com.poly.utils.CookieUtils;
+import com.poly.utils.PasswordUtils;
+import com.poly.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;

@@ -2,81 +2,42 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
-import { postOrderDetails, postOrders } from '~/servers/OrderService';
-import pathApi from '~/constants/pathApi';
+import { postOrders } from '~/servers/OrderService';
 import { AppContext } from '~/contexts/app.contexts';
-import { productGetAll } from '~/servers/productService';
+import { toast } from 'react-toastify';
 
-const Pay = ({ money, cart }) => {
+const Pay = ({ money, cart, address, discounts }) => {
   const [payWith, setPayWith] = useState('');
-
   const { profile } = useContext(AppContext);
-  const date = new Date();
-  const currentDate = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  const currentMonth = date.getMonth() + 1;
-  const currentYear = date.getFullYear();
-  const formatDate = currentYear + '-' + currentMonth + '-' + currentDate;
 
-  const order = {
-    created_at: formatDate,
-    total_amount: parseInt(money),
-    fullname: profile.fullname,
-    phone: profile.phone,
-    city: 'HCM',
-    district: 'District 1',
-    wards: 'Abc',
-    specific_address: 'A123',
-    status_id: {
-      id: 1,
-      status: 'Cho xac nhan',
-    },
-    account_id: profile,
-    discount_id: null,
-  };
-
-  const post = async (order) => {
-    let orderDetails = {
-      quantity: null,
-      amount: null,
-      order_id: null,
-      product_id: null,
-    };
-    let myobj = {};
-    let mang = [];
-    let getProduct = await productGetAll();
-    cart.map((item) => {
-      orderDetails.quantity = item.quantity;
-      orderDetails.amount = item.quantity * item.price;
-      orderDetails.order_id = order;
-      getProduct.content.map((pr) => {
-        if (pr.id == item.id) {
-          orderDetails.product_id = pr;
-          myobj = { ...myobj, ...orderDetails };
-          mang.push(myobj);
-        }
+  const handleOrder = async () => {
+    try {
+      await postOrders({
+        fullname: address.fullname,
+        phone: address.phone,
+        city: address.city,
+        district: address.district,
+        wards: address.wards,
+        specificAddress: address.specific_address,
+        accountId: profile.id,
+        discountId: discounts.id,
+        orderDetails: cart.map((item) => {
+          return {
+            quantity: item.quantity,
+            productId: item.id,
+          };
+        }),
       });
-    });
-    mang.map((item) => {
-      postOrderDetail(`${pathApi.order + '/postdetails'}`, item);
-    });
-  };
-  const postOrderDetail = async (url, item) => {
-    let post = await postOrderDetails(url, item);
-    if (post) {
-      console.log(post);
-    }
-  };
-  const postOrder = async () => {
-    let postOrderss = await postOrders(`${pathApi.order + '/post'}`, order);
-    if (postOrderss) {
-      post(postOrderss);
+      toast.success('Thanh toán thành công');
+    } catch (error) {
+      toast.success('Thanh toán thất bại');
+      throw new error();
     }
   };
 
   return (
     <div className="container">
-      <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow ">
-        {/* <div className="col-span-6"> */}
+      <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow">
         <div className="flex items-center flex-wrap grid-flow-row gap-x-3">
           <div className="flex flex-shrink-0 items-center justify-center pr-3 ">
             <h1 className="mx-2 text-center text-lg">Phương thức thanh toán</h1>
@@ -85,7 +46,7 @@ const Pay = ({ money, cart }) => {
             type="button"
             className={
               payWith === 'shopeePay'
-                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300  text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
@@ -110,7 +71,7 @@ const Pay = ({ money, cart }) => {
             type="button"
             className={
               payWith === 'recive'
-                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
@@ -123,7 +84,7 @@ const Pay = ({ money, cart }) => {
             type="button"
             className={
               payWith === 'vnPay'
-                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 border-orange text-orange rounded-sm '
+                ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
@@ -132,14 +93,7 @@ const Pay = ({ money, cart }) => {
           >
             Thanh toán VNPay
           </Button>
-          {/* </div> */}
         </div>
-        {/* <div className="col-span-6">
-          <div className="flex items-center justify-end">
-            <div className="me-20">Thanh toán khi nhận hàng</div>
-            <button className=" text-blue-700  uppercase">Thay đổi</button>
-          </div>
-        </div> */}
       </div>
       <div className="bg-[#fffefb] py-5 px-9 border-dotted border-b-2 border-gray rouned-sm shadow">
         <div className="flex flex-row-reverse items-center mb-4">
@@ -147,11 +101,11 @@ const Pay = ({ money, cart }) => {
           <div className="">Tổng tiền hàng</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ27.500</div>
+          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ0</div>
           <div className="">Phí vận chuyển</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-orange text-2xl min-w-[140px] text-end">đ{money + 27500}</div>
+          <div className="text-orange text-2xl min-w-[140px] text-end">đ{money}</div>
           <div className="">Tổng thanh toán</div>
         </div>
       </div>
@@ -165,7 +119,7 @@ const Pay = ({ money, cart }) => {
           </div>
           <Link to={''}>
             <Button
-              onClick={postOrder}
+              onClick={handleOrder}
               type="submit"
               className="flex items-center justify-center bg-red-500 py-2 rounded-sm px-20  text-white hover:bg-red-600"
             >
@@ -180,6 +134,8 @@ const Pay = ({ money, cart }) => {
 Pay.propTypes = {
   money: PropTypes.number,
   cart: PropTypes.array,
+  discounts: PropTypes.array,
+  address: PropTypes.any,
 };
 
 export default Pay;

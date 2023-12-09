@@ -31,7 +31,7 @@ const DialogBody = (props) => {
           y="0"
           version="1.1"
           viewBox="0 0 29 29"
-          xml:space="preserve"
+          xml: space="preserve"
         >
           <path
             fill="none"
@@ -230,8 +230,8 @@ const TotalCart = ({ price, status }) => {
               </div>
 
               <Link to={carts.length == 0 ? '/cart' : '/order'}>
-                <div className="mr-5 border-2 border-orange-800 h-14 w-60 rounded-lg text-center bg text-white flex justify-center hover:cursor-pointer ">
-                  <p className="self-center">Mua Hàng </p>
+                <div className="mr-5 rounded-sm bg-orange py-2 px-4 text-white flex justify-center">
+                  Mua Hàng
                 </div>
               </Link>
             </div>

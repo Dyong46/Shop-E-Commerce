@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
-import { setStatus, setStatusDone } from '~/servers/OrderService';
+import { setStatusCancel, setStatusDone } from '~/servers/OrderService';
 
 const WaitForConfirmation = ({ order, param }) => {
   const navigate = useNavigate();
   const onClickStatus = async () => {
-    let set = await setStatus(order);
+    let set = await setStatusCancel(order);
     if (set) {
       navigate('/user/purchase?status=4');
     }

@@ -4,16 +4,14 @@ import com.poly.dto.OrderAccount;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
 import com.poly.service.OrderAccService;
-import com.poly.Utils.ResponseBodyServer;
 import com.poly.constant.StatusOrder;
 import com.poly.dto.OrderDTO;
-import com.poly.entity.Order;
-import com.poly.entity.OrderDetail;
 import com.poly.entity.OrderStatus;
 import com.poly.repo.OrderRepository;
 import com.poly.service.OrderDetailsService;
 import com.poly.service.OrderService;
 import com.poly.service.OrderStatusService;
+import com.poly.utils.ResponseBodyServer;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -56,7 +54,7 @@ public class OrderController {
     // Đang có vấn đề
     @GetMapping("/status")
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,
-                                        @RequestParam("status_id") String status) {
+            @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
     }
 
@@ -69,6 +67,30 @@ public class OrderController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PutMapping("/shipping")
+    public ResponseEntity<?> shippingOrder(@RequestParam("order_id") Integer id)
+                    throws ChangeSetPersister.NotFoundException{
+        Order order = orderService.getOrderById(id);
+        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN);
+        ResponseBodyServer responseBodyServer;
+        if(order != null){
+            if(order.getStatus_id().equals(status)){
+                OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
+                order.setStatus_id(orderStatus);
+                orderRepository.save(order);
+                responseBodyServer = ResponseBodyServer.builder().statusCode(200).message("Successfully!")
+                        .payload(order).build();
+            }else {
+                responseBodyServer = ResponseBodyServer.builder().statusCode(404)
+                        .message("Can't set status because status might is shipping").payload(null).build();
+            }
+        }else {
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + order.getId())
+                    .payload(null).build();
+        }
+        return ResponseEntity.status(200).body(responseBodyServer);
     }
 
     @PutMapping("/complete")

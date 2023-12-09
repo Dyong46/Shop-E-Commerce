@@ -4,8 +4,10 @@ import Button from "~/components/Button";
 import { deleteAddress } from "~/servers/addressService";
 import PropTypes from 'prop-types'
 import { Modal } from "flowbite-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DeleteAddressDialog = ({ id }) => {
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
 
   const handleDelete = async () => {
@@ -13,9 +15,10 @@ const DeleteAddressDialog = ({ id }) => {
       const res = await deleteAddress(id)
       if (res) {
         toast.success("Delete address success")
+        await queryClient.invalidateQueries(['address']);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response.message);
       toast.error("Delete address fail")
     } finally {
       setOpen(false)
