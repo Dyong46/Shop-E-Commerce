@@ -58,6 +58,11 @@ public class OrderController {
         return orderService.getAllOrderById(id, status);
     }
 
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Integer id) {
+        return orderService.getOrderById(id);
+    }
+
     @PostMapping()
     public ResponseEntity<?> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException{
         try {
