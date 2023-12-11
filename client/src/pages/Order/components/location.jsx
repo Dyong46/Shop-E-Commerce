@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { AddressContext } from '~/Context/Address/AddressContext';
 
 const Location = (props) => {
@@ -18,11 +18,11 @@ const Location = (props) => {
               <h1 className="mx-2 text-center text-xl pb-2">Địa chỉ nhận hàng</h1>
             </div>
             <div className="flex flex-row">
-              {address_default.map((item) => {
+              {address_default.map((item, index) => {
                 if (item.is_default == true) {
                   setAdres(item);
                   return (
-                    <>
+                    <Fragment key={index}>
                       <p className=" font-bold">
                         {item.fullname} (+84) {item.phone}
                       </p>
@@ -35,7 +35,7 @@ const Location = (props) => {
                       <button onClick={props.openDialog} className="text-base mx-5 text-blue-600">
                         Thay đổi
                       </button>
-                    </>
+                    </Fragment>
                   );
                 }
               })}

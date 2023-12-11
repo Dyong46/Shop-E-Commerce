@@ -2,11 +2,6 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import { AddressContext } from '~/Context/Address/AddressContext';
 
-// const imgStyle = {
-//   width: '100px',
-//   height: '100px',
-//   marginRight: '5px'
-// };
 const LocationCard = (props) => {
   const { group, idVoucher, addDefault } = props;
   const [check, setCheck] = useState(true);
