@@ -59,13 +59,38 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Order> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException {
+    public ResponseEntity<?> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException{
         try {
             Order createdOrder = orderService.createOrder(entity);
-            return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PutMapping("/shipping")
+    public ResponseEntity<?> shippingOrder(@RequestParam("order_id") Integer id)
+                    throws ChangeSetPersister.NotFoundException{
+        Order order = orderService.getOrderById(id);
+        OrderStatus status = orderStatusService.findOrderbyId(StatusOrder.CHO_XAC_NHAN);
+        ResponseBodyServer responseBodyServer;
+        if(order != null){
+            if(order.getStatus_id().equals(status)){
+                OrderStatus orderStatus = orderStatusService.findOrderbyId(StatusOrder.DANG_GIAO);
+                order.setStatus_id(orderStatus);
+                orderRepository.save(order);
+                responseBodyServer = ResponseBodyServer.builder().statusCode(200).message("Successfully!")
+                        .payload(order).build();
+            }else {
+                responseBodyServer = ResponseBodyServer.builder().statusCode(404)
+                        .message("Can't set status because status might is shipping").payload(null).build();
+            }
+        }else {
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + order.getId())
+                    .payload(null).build();
+        }
+        return ResponseEntity.status(200).body(responseBodyServer);
     }
 
     @PutMapping("/complete")
@@ -86,10 +111,10 @@ public class OrderController {
                         .message("Can't set status because status might is shipping").payload(null).build();
             }
         } else {
-            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + orderCheck.getId())
+            responseBodyServer = ResponseBodyServer.builder().statusCode(404).message("Not Found!" + id)
                     .payload(null).build();
         }
-        return ResponseEntity.status(200).body(responseBodyServer);
+        return ResponseEntity.status(responseBodyServer.getStatusCode()).body(responseBodyServer);
     }
 
     @PutMapping("/cancel")
