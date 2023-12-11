@@ -52,6 +52,11 @@ export default function data() {
       console.error(error);
     }
   }, []);
+
+  const changeOrderStatus = async (id) => {
+    await changeStatusOrder(id);
+  };
+
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -109,7 +114,7 @@ export default function data() {
         ),
         action: (
           <MDTypography component="a" href="#" color="text">
-            <Icon onClick={() => {}}>pendingIcon</Icon>
+            <Icon onClick={() => changeOrderStatus(client.id)}>pendingIcon</Icon>
           </MDTypography>
         ),
       }))
