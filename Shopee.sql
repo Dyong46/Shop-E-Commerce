@@ -111,9 +111,9 @@ CREATE TABLE [orders] (
   [total_amount] bigint,
   [fullname] nvarchar(50),
   [phone] varchar(11),
-  [city] nvarchar(20),
-  [district] nvarchar(20),
-  [wards] nvarchar(20),
+  [city] nvarchar(100),
+  [district] nvarchar(100),
+  [wards] nvarchar(100),
   [specific_address] nvarchar(100),
   [account_id] integer,
   [discount_id] integer
