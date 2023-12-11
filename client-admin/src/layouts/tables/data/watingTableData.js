@@ -25,12 +25,6 @@ import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 
 // Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
-import logoGithub from "assets/images/small-logos/github.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-import logoSlack from "assets/images/small-logos/logo-slack.svg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-import logoInvesion from "assets/images/small-logos/logo-invision.svg";
 import { useEffect, useState } from "react";
 import { getOrderByStatus } from "servers/OrderService";
 
@@ -52,6 +46,11 @@ export default function data() {
       console.error(error);
     }
   }, []);
+
+  const changeOrderStatus = async (id) => {
+    await changeStatusOrder(id);
+  };
+
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -109,7 +108,7 @@ export default function data() {
         ),
         action: (
           <MDTypography component="a" href="#" color="text">
-            <Icon onClick={() => {}}>pendingIcon</Icon>
+            <Icon onClick={() => changeOrderStatus(client.id)}>pendingIcon</Icon>
           </MDTypography>
         ),
       }))
