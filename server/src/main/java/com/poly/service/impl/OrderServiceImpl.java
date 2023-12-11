@@ -1,5 +1,7 @@
 package com.poly.service.impl;
 
+import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.utils.ResponseBodyServer;
 import com.poly.constant.StatusOrder;
 import com.poly.dto.OrderDTO;
@@ -175,5 +177,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order postOrder(Order order){
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderStatusStatisticalDTO> getOrderStatusStatistical() {
+        return orderRepository.getAllProductByStatus();
+    }
+
+    @Override
+    public List<OrderYearStatisticalDTO> getAllOrderByYear(String year) {
+        return orderRepository.getAllOrderByYear(year);
     }
 }

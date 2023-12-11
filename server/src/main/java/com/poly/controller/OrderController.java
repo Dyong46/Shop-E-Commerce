@@ -1,6 +1,8 @@
 package com.poly.controller;
 
 import com.poly.dto.OrderAccount;
+import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
 import com.poly.service.OrderAccService;
@@ -57,6 +59,20 @@ public class OrderController {
             @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
     }
+
+    @GetMapping("/statistical/totalprice")
+    public ResponseEntity<List<OrderStatusStatisticalDTO>> getOrderStatus(){
+        List<OrderStatusStatisticalDTO> status = orderService.getOrderStatusStatistical();
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
+    @PostMapping("/statistical/year")
+    public ResponseEntity<List<OrderYearStatisticalDTO>> getOrderByYear(
+                        @RequestParam("year") String year){
+        List<OrderYearStatisticalDTO> status = orderService.getAllOrderByYear(year);
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
 
     @PostMapping()
     public ResponseEntity<?> paymentProduct(@RequestBody OrderDTO entity) throws MessagingException{
