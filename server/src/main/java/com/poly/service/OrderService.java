@@ -1,8 +1,9 @@
 package com.poly.service;
 
 import com.poly.dto.OrderDTO;
+import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.entity.Order;
-import jakarta.mail.MessagingException;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface OrderService {
     List<Order> getAllOrderById(Integer id, String status);
     Order createOrder(OrderDTO orderRequestDTO) throws Exception;
     Order postOrder(Order order);
+    List<OrderStatusStatisticalDTO>  getOrderStatusStatistical();
+
+    List<OrderYearStatisticalDTO> getAllOrderByYear(String year);
 }
