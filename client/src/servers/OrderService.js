@@ -28,6 +28,6 @@ const setStatusCancel = (idorder)=> {
 }
 
 const setStatusDone = (idorder) => {
-    return api.post(`${pathApi.order}`+'/complete?order_id='+`${idorder}`)
+    return api.put(`${pathApi.order}`+'/complete?order_id='+`${idorder}`)
 }
 export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatusCancel,setStatusDone}

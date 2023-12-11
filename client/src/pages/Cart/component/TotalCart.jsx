@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import Dialog from '~/components/dialog/Dialog';
-import VoucherCard from '~/components/dialog/card/VoucherCard';
+import VoucherCard from '~/components/dialog/Card/VoucherCard';
 import { Link } from 'react-router-dom';
 import { getAllDiscount } from '~/servers/discountService';
 import PropTypes from 'prop-types';
@@ -31,7 +31,7 @@ const DialogBody = (props) => {
           y="0"
           version="1.1"
           viewBox="0 0 29 29"
-          xml: space="preserve"
+          xml:space="preserve"
         >
           <path
             fill="none"

@@ -105,7 +105,9 @@ const Pay = ({ money, cart, address, discounts }) => {
           <div className="">Phí vận chuyển</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-orange text-2xl min-w-[140px] text-end">đ{money}</div>
+          <div className="text-orange text-2xl min-w-[140px] text-end">
+            đ{discounts != null ? money - (money * discounts.discount_percent) / 100 : money}
+          </div>
           <div className="">Tổng thanh toán</div>
         </div>
       </div>
