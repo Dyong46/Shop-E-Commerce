@@ -1,5 +1,3 @@
-import LocationCard from '~/components/dialog/card/LocationCard';
-import Dialog from '~/components/dialog/Dialog';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { AddressContext } from '~/Context/Address/AddressContext';
@@ -8,7 +6,6 @@ const Location = (props) => {
   const [addres, setAdres] = useContext(AddressContext);
   const { status, address_default } = props;
 
-  console.log(addres);
   if (status == false) {
     return (
       <div>
