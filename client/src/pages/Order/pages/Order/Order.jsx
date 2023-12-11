@@ -5,8 +5,8 @@ import Products from '../../components/Products';
 import Voucher from '../../components/Voucher';
 import { useContext, useState, useEffect } from 'react';
 import { CartContext } from '~/Context/ContextCart/CartContext';
-import LocationCard from '~/components/dialog/card/LocationCard';
-import VoucherCard from '~/components/dialog/card/VoucherCard';
+import LocationCard from '~/components/dialog/Card/LocationCard';
+import VoucherCard from '~/components/dialog/Card/VoucherCard';
 import { getAllDiscount } from '~/servers/discountService';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
@@ -17,57 +17,6 @@ import { AddressContext } from '~/Context/Address/AddressContext';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 
 const DialogBody = (props) => {
-  const ButtonShowmore = (props) => {
-    return (
-      <button className="flex" onClick={props.handle}>
-        <p>Xem thêm</p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 101 101" id="down">
-          <path d="m80.5 33-30 30-30-30c-.9-.9-2.5-.9-3.4 0s-.9 2.5 0 3.4L48.8 68c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7l31.7-31.7c.9-.9.9-2.5 0-3.4s-2.5-.9-3.4.1z"></path>
-        </svg>
-      </button>
-    );
-  };
-
-  const ButtonHide = (props) => {
-    return (
-      <button className="flex" onClick={props.handle}>
-        <p>Ẩn bớt</p>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="23"
-          height="23"
-          id="up"
-          x="0"
-          y="0"
-          version="1.1"
-          viewBox="0 0 29 29"
-          xmlSpace="preserve"
-        >
-          <path
-            fill="none"
-            stroke="#000"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeMiterlimit="10"
-            strokeWidth="2"
-            d="m8.5 17.5 6-6 6 6"
-          ></path>
-        </svg>
-      </button>
-    );
-  };
-
-  const [showmore, setShowmore] = useState(false);
-  // const [showmoreVoucher, setShowmoreVoucher] = useState(false);
-
-  const handleShowmore = () => {
-    setShowmore(!showmore);
-  };
-
-  // const handleShowmoreVoucher = () => {
-  //   setShowmoreVoucher(!showmoreVoucher);
-  // };
-
   return (
     <>
       <div className="flex pt-2 pb-5">
@@ -80,31 +29,9 @@ const DialogBody = (props) => {
       </div>
       <div className="overflow-y-auto h-96">
         <div className="mb-2">Mã Miễn Phí Vận Chuyển</div>
-        {props.data.slice(0, showmore ? props.data.length : 1).map((item, index) => {
+        {props.data.map((item, index) => {
           return <VoucherCard group={'voucher'} key={index} data={item} />;
         })}
-
-        <div className="flex flex-col justify-center mt-2">
-          {showmore ? <ButtonHide handle={handleShowmore} /> : <ButtonShowmore handle={handleShowmore} />}
-        </div>
-
-        {/* <div className="mt-10 mb-2">Giảm Giá & Hoàn Xu</div> */}
-        {/* { */}
-        {/*   props.data[1].slice(0, showmoreVoucher ? props.data[1].length : 2) */}
-        {/*     .map((item) => { */}
-        {/*       return (<VoucherCard group={"voucher2"} img={props.img} />); */}
-        {/*     }) */}
-        {/* } */}
-        {/**/}
-        {/* <div className="flex flex-col justify-center mt-2"> */}
-        {/*   { */}
-        {/**/}
-        {/*     showmoreVoucher ? */}
-        {/*       <ButtonHide handle={handleShowmoreVoucher} /> : */}
-        {/*       <ButtonShowmore handle={handleShowmoreVoucher} /> */}
-        {/*   } */}
-        {/**/}
-        {/* </div> */}
       </div>
     </>
   );
