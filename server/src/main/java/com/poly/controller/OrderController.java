@@ -53,6 +53,11 @@ public class OrderController {
         return orderService.getAllOrderByStatus(id);
     }
 
+    @GetMapping("/account/{id}")
+    public List<Order> getOrdersByAccount(@PathVariable Integer id) {
+        return orderService.getOrdersByAccount(id);
+    }
+
     // Đang có vấn đề
     @GetMapping("/status")
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,

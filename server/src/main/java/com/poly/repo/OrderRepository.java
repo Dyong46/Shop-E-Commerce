@@ -22,6 +22,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("select o from Order o where o.id = :id")
     Optional<Order> findByOrderById(Integer id);
 
+    @Query("select o from Order o where o.account_id.id = :id")
+    List<Order> getOrdersByAccount(Integer id);
+
     @Query("select o from Order o where o.account_id.id = :id and o.status_id.id = :status")
     List<Order> getAllOrderById(Integer id, String status);
 
