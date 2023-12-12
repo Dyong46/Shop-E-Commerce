@@ -1,42 +1,56 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
 import { postOrders } from '~/servers/OrderService';
 import { AppContext } from '~/contexts/app.contexts';
 import { toast } from 'react-toastify';
+import { CartContext } from '~/Context/ContextCart/CartContext';
+import { action, useStore } from '~/Context';
 
 const Pay = ({ money, cart, address, discounts }) => {
   const [payWith, setPayWith] = useState('');
   const { profile } = useContext(AppContext);
+  const [carts, setCarts] = useContext(CartContext);
+  const [state, dispath] = useStore();
+  const { todos } = state;
 
-  console.log(discounts, 'dis');
+  var mang = [];
 
   const handleOrder = async () => {
-    try {
-      await postOrders({
-        fullname: address.fullname,
-        phone: address.phone,
-        city: address.city,
-        district: address.district,
-        wards: address.wards,
-        specificAddress: address.specific_address,
-        accountId: profile.id,
-        discountId: discounts.id,
-        orderDetails: cart.map((item) => {
-          return {
-            quantity: item.quantity,
-            productId: item.id,
-          };
-        }),
-      });
-      toast.success('Thanh toán thành công');
-    } catch (error) {
-      toast.success('Thanh toán thất bại');
-      throw new error();
-    }
+    carts.forEach((element) => {
+      let index = todos.indexOf(element);
+      if (index !== -1) {
+        todos.splice(index, 1);
+      }
+    });
+    // try {
+    //   await postOrders({
+    //     fullname: address.fullname,
+    //     phone: address.phone,
+    //     city: address.city,
+    //     district: address.district,
+    //     wards: address.wards,
+    //     specificAddress: address.specific_address,
+    //     accountId: profile.id,
+    //     discountId: discounts.id,
+    //     orderDetails: cart.map((item) => {
+    //       return {
+    //         quantity: item.quantity,
+    //         productId: item.id,
+    //       };
+    //     }),
+    //   });
+    //   toast.success('Thanh toán thành công');
+    // } catch (error) {
+    //   toast.success('Thanh toán thất bại');
+    //   throw new error();
+    // }
   };
 
+  // useEffect(() => {
+  //   handleOrder();
+  // });
   return (
     <div className="container">
       <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow">

@@ -103,7 +103,7 @@ const DialogBody = (props) => {
 const TotalCart = ({ price, status }) => {
   const [money] = useContext(PriceContext);
   const [carts] = useContext(CartContext);
-  console.log(carts);
+
   const [discounts, setDiscounts] = useState([]);
 
   const [open, setOpen] = useState(false);
@@ -230,9 +230,7 @@ const TotalCart = ({ price, status }) => {
               </div>
 
               <Link to={carts.length == 0 ? '/cart' : '/order'}>
-                <div className="mr-5 rounded-sm bg-orange py-2 px-4 text-white flex justify-center">
-                  Mua Hàng
-                </div>
+                <div className="mr-5 rounded-sm bg-orange py-2 px-4 text-white flex justify-center">Mua Hàng</div>
               </Link>
             </div>
           </div>
