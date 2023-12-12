@@ -27,6 +27,7 @@ import MDProgress from "components/MDProgress";
 // Images
 import { useEffect, useState } from "react";
 import { getOrderByStatus } from "servers/OrderService";
+import { Link } from "react-router-dom";
 
 export default function data() {
   const [clients, setClient] = useState([]);
@@ -80,9 +81,11 @@ export default function data() {
   const rows = Array.isArray(clients) // Check if products is an array
     ? clients.map((client, index) => ({
         project: (
-          <Project
-            name={client.fullname} // replace with the actual property from your product object
-          />
+          <Link to={`/Orders?orderId=${client.id}`}>
+            <Project
+              name={client.fullname} // replace with the actual property from your product object
+            />
+          </Link>
         ),
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">

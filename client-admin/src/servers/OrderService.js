@@ -16,6 +16,11 @@ const getAllOrderDetails = () => {
 const postOrderDetails = (url, obj) => {
   return api.post(url, obj);
 };
+
+const getOrderById = (id) => {
+  return api.get(`${pathApi.order}` + "/" + `${id}`);
+};
+
 const getOrderByAccount = (id) => {
   return api.get(`${pathApi.order}` + "/details/" + `${id}`);
 };
@@ -32,10 +37,6 @@ const setStatusCancel = (idorder) => {
   return api.put(`${pathApi.order}` + "/cancel?order_id=" + `${idorder}`);
 };
 
-const changeStatusOrder = (idorder) => {
-  return api.put(`${pathApi.order}` + "/shipping?order_id=1=" + `${idorder}`);
-};
-
 const setStatusDone = (idorder) => {
   return api.post(`${pathApi.order}` + "/complete?order_id=" + `${idorder}`);
 };
@@ -43,6 +44,7 @@ const setStatusDone = (idorder) => {
 export {
   getAllOrder,
   postOrders,
+  getOrderById,
   postOrderDetails,
   getAllOrderDetails,
   getOrderByAccount,

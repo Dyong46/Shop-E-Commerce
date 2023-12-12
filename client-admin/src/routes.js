@@ -44,6 +44,7 @@ import SignIn from "layouts/authentication/sign-in";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import Products from "layouts/products";
+import OrderDetail from "layouts/orderDetail";
 
 const routes = [
   {
@@ -61,6 +62,14 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/Orders",
     component: <Tables />,
+  },
+  {
+    type: "collapse",
+    name: "Chi tiết đơn hàng",
+    key: "OrderDetail",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/Orders/:orderId",
+    component: <OrderDetail />,
   },
   {
     type: "collapse",
