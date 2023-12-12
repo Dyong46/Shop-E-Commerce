@@ -18,34 +18,34 @@ const Pay = ({ money, cart, address, discounts }) => {
   var mang = [];
 
   const handleOrder = async () => {
-    carts.forEach((element) => {
-      let index = todos.indexOf(element);
-      if (index !== -1) {
-        todos.splice(index, 1);
-      }
-    });
-    // try {
-    //   await postOrders({
-    //     fullname: address.fullname,
-    //     phone: address.phone,
-    //     city: address.city,
-    //     district: address.district,
-    //     wards: address.wards,
-    //     specificAddress: address.specific_address,
-    //     accountId: profile.id,
-    //     discountId: discounts.id,
-    //     orderDetails: cart.map((item) => {
-    //       return {
-    //         quantity: item.quantity,
-    //         productId: item.id,
-    //       };
-    //     }),
-    //   });
-    //   toast.success('Thanh toán thành công');
-    // } catch (error) {
-    //   toast.success('Thanh toán thất bại');
-    //   throw new error();
-    // }
+    try {
+      await postOrders({
+        fullname: address.fullname,
+        phone: address.phone,
+        city: address.city,
+        district: address.district,
+        wards: address.wards,
+        specificAddress: address.specific_address,
+        accountId: profile.id,
+        discountId: discounts.id,
+        orderDetails: cart.map((item) => {
+          return {
+            quantity: item.quantity,
+            productId: item.id,
+          };
+        }),
+      });
+      carts.forEach((element) => {
+        let index = todos.indexOf(element);
+        if (index !== -1) {
+          todos.splice(index, 1);
+        }
+      });
+      toast.success('Thanh toán thành công');
+    } catch (error) {
+      toast.success('Thanh toán thất bại');
+      throw new error();
+    }
   };
 
   // useEffect(() => {
