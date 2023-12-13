@@ -1,21 +1,20 @@
-import { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
 import { postOrders } from '~/servers/orderService';
 import { AppContext } from '~/contexts/app.contexts';
 import { toast } from 'react-toastify';
 import { CartContext } from '~/Context/ContextCart/CartContext';
-import { action, useStore } from '~/Context';
+import { useStore } from '~/Context';
 
 const Pay = ({ money, cart, address, discounts }) => {
+  const navigate = useNavigate();
   const [payWith, setPayWith] = useState('');
   const { profile } = useContext(AppContext);
-  const [carts, setCarts] = useContext(CartContext);
-  const [state, dispath] = useStore();
+  const [carts,] = useContext(CartContext);
+  const [state,] = useStore();
   const { todos } = state;
-
-  var mang = [];
 
   const handleOrder = async () => {
     try {
@@ -41,8 +40,10 @@ const Pay = ({ money, cart, address, discounts }) => {
           todos.splice(index, 1);
         }
       });
+      navigate('/');
       toast.success('Thanh toán thành công');
     } catch (error) {
+      navigate('/');
       toast.success('Thanh toán thất bại');
       throw new error();
     }
