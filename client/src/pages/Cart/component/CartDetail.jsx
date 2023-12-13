@@ -172,7 +172,7 @@ const CartDetails = ({ cart, index }) => {
               <div className="">
                 <input
                   className="w-10 h-6 justify-content-center check-item"
-                  onClick={() => {
+                  onChange={() => {
                     getPriceProduct(index, cart.checked);
                   }}
                   type="checkbox"
@@ -229,7 +229,7 @@ const CartDetails = ({ cart, index }) => {
                 </div>
               </div>
               <div className="w-40 text-orange">
-                <p className="total-product" key={cart.id} value={cart.id}>
+                <p className="total-product" key={cart.id}>
                   ₫{cart.price * cart.quantity}
                 </p>
               </div>

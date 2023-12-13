@@ -1,6 +1,8 @@
 package com.poly.controller;
 
 import com.poly.dto.OrderAccount;
+import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
 import com.poly.service.OrderAccService;
@@ -51,11 +53,35 @@ public class OrderController {
         return orderService.getAllOrderByStatus(id);
     }
 
+    @GetMapping("/account/{id}")
+    public List<Order> getOrdersByAccount(@PathVariable Integer id) {
+        return orderService.getOrdersByAccount(id);
+    }
+
     // Đang có vấn đề
     @GetMapping("/status")
     public List<Order> getAllOrderById(@RequestParam("account_id") Integer id,
             @RequestParam("status_id") String status) {
         return orderService.getAllOrderById(id, status);
+    }
+
+    @GetMapping("/statistical/totalprice")
+    public ResponseEntity<List<OrderStatusStatisticalDTO>> getOrderStatus(){
+        List<OrderStatusStatisticalDTO> status = orderService.getOrderStatusStatistical();
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
+    @PostMapping("/statistical/year")
+    public ResponseEntity<List<OrderYearStatisticalDTO>> getOrderByYear(
+                        @RequestParam("year") String year){
+        List<OrderYearStatisticalDTO> status = orderService.getAllOrderByYear(year);
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Integer id) {
+        return orderService.getOrderById(id);
     }
 
     @PostMapping()

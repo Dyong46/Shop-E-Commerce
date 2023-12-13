@@ -22,25 +22,24 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <StoreProvider>
-          <AccountProvider>
-            <AddressProvider>
-              <DiscountProvider>
-                <CartProvider>
-                  <PriceProvider>
-                    <AppProvider>
-                      <App />
-                    </AppProvider>
-                  </PriceProvider>
-                </CartProvider>
-              </DiscountProvider>
-            </AddressProvider>
-          </AccountProvider>
-        </StoreProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+
+  <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <StoreProvider>
+        <AccountProvider>
+          <AddressProvider>
+            <DiscountProvider>
+              <CartProvider>
+                <PriceProvider>
+                  <AppProvider>
+                    <App />
+                  </AppProvider>
+                </PriceProvider>
+              </CartProvider>
+            </DiscountProvider>
+          </AddressProvider>
+        </AccountProvider>
+      </StoreProvider>
+    </QueryClientProvider>
+  </BrowserRouter>
 );

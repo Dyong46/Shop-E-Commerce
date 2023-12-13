@@ -32,6 +32,10 @@ const setStatusCancel = (idorder) => {
   return api.put(`${pathApi.order}` + "/cancel?order_id=" + `${idorder}`);
 };
 
+const changeStatusOrder = (idorder) => {
+  return api.put(`${pathApi.order}` + "/shipping?order_id=1=" + `${idorder}`);
+};
+
 const setStatusDone = (idorder) => {
   return api.post(`${pathApi.order}` + "/complete?order_id=" + `${idorder}`);
 };

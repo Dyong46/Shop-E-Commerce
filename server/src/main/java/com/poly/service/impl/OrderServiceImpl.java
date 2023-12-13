@@ -1,5 +1,7 @@
 package com.poly.service.impl;
 
+import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.utils.ResponseBodyServer;
 import com.poly.constant.StatusOrder;
 import com.poly.dto.OrderDTO;
@@ -12,7 +14,6 @@ import com.poly.entity.OrderStatus;
 import com.poly.repo.OrderRepository;
 import com.poly.repo.ProductRepository;
 import com.poly.service.*;
-import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderById(Integer id) {
         return orderRepository.getOrderById(id);
+    }
+
+    @Override
+    public List<Order> getOrdersByAccount(Integer id) {
+        return orderRepository.getOrdersByAccount(id);
     }
 
     @Override
@@ -175,5 +181,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order postOrder(Order order){
         return orderRepository.save(order);
+    }
+
+    @Override
+    public List<OrderStatusStatisticalDTO> getOrderStatusStatistical() {
+        return orderRepository.getAllProductByStatus();
+    }
+
+    @Override
+    public List<OrderYearStatisticalDTO> getAllOrderByYear(String year) {
+        return orderRepository.getAllOrderByYear(year);
     }
 }
