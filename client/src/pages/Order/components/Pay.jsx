@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
-import { postOrders } from '~/servers/OrderService';
+import { postOrders } from '~/servers/orderService';
 import { AppContext } from '~/contexts/app.contexts';
 import { toast } from 'react-toastify';
 

@@ -16,11 +16,11 @@ const AddressCard = ({ address }) => {
   const handleChangeDefault = async () => {
     try {
       await changeDefaultAddress(profile.id, address.id)
-      toast.success("Change default address success")
+      toast.success("Thay đổi địa chỉ mặc định thành công")
       await queryClient.invalidateQueries(['address']);
     } catch (error) {
       console.log(error.response.message);
-      toast.error("Change default error")
+      toast.error("Thay đổi địa chỉ thất bại. Vui lòng thử lại sau !!!")
     }
   }
 

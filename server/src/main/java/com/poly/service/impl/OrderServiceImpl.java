@@ -14,7 +14,6 @@ import com.poly.entity.OrderStatus;
 import com.poly.repo.OrderRepository;
 import com.poly.repo.ProductRepository;
 import com.poly.service.*;
-import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +64,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderById(Integer id) {
         return orderRepository.getOrderById(id);
+    }
+
+    @Override
+    public List<Order> getOrdersByAccount(Integer id) {
+        return orderRepository.getOrdersByAccount(id);
     }
 
     @Override

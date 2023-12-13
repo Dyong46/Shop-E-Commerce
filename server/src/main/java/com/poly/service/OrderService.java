@@ -11,6 +11,9 @@ public interface OrderService {
     List<Order> getAllOrder();
     Order setStatusCancel(Integer id);
     Order getOrderById(Integer id);
+
+    List<Order> getOrdersByAccount(Integer id);
+
     List<Order> getAllOrderByStatus(Integer id);
     Order cancelOrder(Integer id);
     List<Order> getAllOrderById(Integer id, String status);

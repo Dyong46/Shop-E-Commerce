@@ -17,10 +17,10 @@ const postOrderDetails =(url,obj)=>{
     return api.post(url,obj)
 }
 const getOrderByAccount = (id) => {
-    return api.get(`${pathApi.order}`+'/details/'+`${id}`)
+    return api.get(`${pathApi.order}/account/${id}`)
 }
-const getOrderByAccountStatus = (id,status) => {
-    return api.get(`${pathApi.order}`+'/details/'+`${id}`+"/"+`${status}`)
+const getOrdersByStatus = (acountId, statusId) => {
+    return api.get(`${pathApi.order}/status?account_id=${acountId}&status_id=${statusId}`)
 }
 
 const setStatusCancel = (idorder)=> {
@@ -30,4 +30,4 @@ const setStatusCancel = (idorder)=> {
 const setStatusDone = (idorder) => {
     return api.put(`${pathApi.order}`+'/complete?order_id='+`${idorder}`)
 }
-export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrderByAccountStatus,setStatusCancel,setStatusDone}
+export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrdersByStatus,setStatusCancel,setStatusDone}
