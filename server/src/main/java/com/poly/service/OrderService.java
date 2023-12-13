@@ -2,6 +2,7 @@ package com.poly.service;
 
 import com.poly.dto.OrderDTO;
 import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderTopProductStatisticalDTO;
 import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.entity.Order;
 
@@ -19,4 +20,6 @@ public interface OrderService {
     List<OrderStatusStatisticalDTO>  getOrderStatusStatistical();
 
     List<OrderYearStatisticalDTO> getAllOrderByYear(String year);
+
+    List<OrderTopProductStatisticalDTO> getTopProduct();
 }
