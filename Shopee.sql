@@ -173,6 +173,7 @@ INSERT INTO accounts ([email],  [username],  [password],  [fullname],  [phone], 
 VALUES
 	('admin@gmail.com',    'admin123',   '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',   N'Minh Thư',   '0341287223',   1,   '2003-02-01',   'https://i.pinimg.com/750x/42/6e/72/426e7248106e39fdbfecc84c08fca83c.jpg',  '2022-12-10',  '2023-09-01',  'admin'),
 	('user@gmail.com',	'user123',	'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',	N'User 123', '0256456588',	0,	'2003-01-01',	'https://i.pinimg.com/564x/44/34/d6/4434d6fa92e52e36a2cabe468390f264.jpg',		'2019-01-01',	'2023-08-08','user'),
+	('test@gmail.com',	'test',	'8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',	N'Test 123', '0123456789',	0,	'2003-03-04',	'https://i.pinimg.com/564x/44/34/d6/4434d6fa92e52e36a2cabe468390f264.jpg',		'2023-12-13',	null,'admin'),
 	('minthu1203@gmail.com',		'mthusayhi123',	'71f4f6a4107717d7290a7af99563eb534f41c44c50f055835f97b8abec26393d',	N'Minh Thư','0252488655',	0,	'2006-1-10',	'https://i.pinimg.com/564x/83/0e/31/830e314f163e3fc5ebb071f3db124c93.jpg',		'2020-02-02',	'2022-12-12','user'),
 	('vuthanhtrung@gmail.com',	'trung123',	'69596fe31f8b339800ca34029a2dc3aa14710b616b043e896e091db62203edf4', N'Trung',		'0332414841',	0,	'2003-04-09',	'https://i.pinimg.com/736x/8c/8b/8a/8c8b8a236086a28253dda4bf407bb3bb.jpg',		'2019-05-17',	'2022-04-23','user'),
 	('nguyenhoangyen@gmail.com',	'yen123',	'c6b83ce863d571f7a51291d06a872ac070a8f9c95666cc39d44ef8571c3c65a6',	N'Yến',	'0211648711',	1,	'1999-04-24',	'https://i.pinimg.com/564x/b9/fb/93/b9fb93a07520a543e1b3c9a017d4b2da.jpg',		'2015-01-09',	'2020-10-10','user')
@@ -183,11 +184,11 @@ INSERT INTO addresses ([fullname],  [phone],  [city],  [district],  [wards],  [s
 VALUES
 	(N'Phạm Trần Minh Thư',		'0247259910',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'123 Khu phố 1',	1,	1),
 	(N'Nguyễn Ngọc Bảo Anh',	'0123599522',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-12-i-761',	N'Phường-Trung-Mỹ-Tây-i-26785',	N'123 Khu phố 1',		0,	1),
-	(N'Nguyễn Hoàng Duy',	'0575114554',	N'Thành phố HCM',	N'Quận 3',	N'Phường 3',	N'Khu phố 3',		1,	2),
-	(N'Nguyễn Bảo Ngọc',		'0235799112',	N'Thành phố HCM',	N'Quận 4',	N'Phường 4',	N'Khu phố 4',	1,	3),
-	(N'Trương Kiều Oanh',	'0974757373',	N'Thành phố HCM',	N'Quận 5',	N'Phường 5',	N'Khu phố 5',		1,	4),
-	(N'Nguyễn Bích Quyên',	'0154448487',	N'Thành phố HCM',	N'Quận 6',	N'Phường 6',	N'Khu phố 6',		1,	5),
-	(N'Nguyễn Hoàng Yến',	'0148481533',	N'Thành phố HCM',	N'Quận 7',	N'Phường 7',	N'Khu phố 7',		0,	5)
+	(N'Nguyễn Hoàng Duy',	'0575114554',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'123 Khu phố 1',		1,	2),
+	(N'Nguyễn Bảo Ngọc',		'0235799112',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường 4',	N'Khu phố 4',	1,	3),
+	(N'Trương Kiều Oanh',	'0974757373',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'Khu phố 5',		1,	4),
+	(N'Nguyễn Bích Quyên',	'0154448487',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'Khu phố 6',		1,	5),
+	(N'Nguyễn Hoàng Yến',	'0148481533',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'Khu phố 7',		0,	5)
 GO
 
 -- Chèn dữ liệu mới vào bảng categories
