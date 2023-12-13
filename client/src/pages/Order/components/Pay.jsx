@@ -22,9 +22,8 @@ const Pay = ({ money, cart, address, discounts, address_list }) => {
     try {
       if (address_list.length == 0) {
         toast.error('Vui lòng chọn địa chỉ trước khi thanh toán');
-        if (payWith == '') {
-          toast.error('Vui lòng chọn phương thức thanh toán');
-        }
+      } else if (payWith == '') {
+        toast.error('Vui lòng chọn phương thức thanh toán');
       } else {
         await postOrders({
           fullname: address.fullname,
