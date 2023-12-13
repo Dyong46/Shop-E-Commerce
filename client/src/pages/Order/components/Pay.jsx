@@ -117,14 +117,14 @@ const Pay = ({ money, cart, address, discounts }) => {
           <div className="">Tổng tiền hàng</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-gray-400 text-sm min-w-[140px] text-end">
-            đ{discounts.length != 0 ? (money * discounts.discount_percent) / 100 : 0}
-          </div>
-          <div className="">Giảm giá</div>
-        </div>
-        <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-gray-400 text-sm min-w-[140px] text-end">đ0</div>
           <div className="">Phí vận chuyển</div>
+        </div>
+        <div className="flex flex-row-reverse items-center mb-4">
+          <div className="text-gray-400 text-sm min-w-[140px] text-end">
+            - đ{discounts.length != 0 ? (money * discounts.discount_percent) / 100 : 0}
+          </div>
+          <div className="">Tổng cộng Voucher giảm giá</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-orange text-2xl min-w-[140px] text-end">
