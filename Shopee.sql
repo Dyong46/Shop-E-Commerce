@@ -222,6 +222,7 @@ VALUES (N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác l
        (N'Đệm Ngồi Bệt',								N'Ghế Dercor mẫu mới Siêu Ngộ Nghĩnh Vải Nỉ nhung mềm mịn',					500000,		30, 'https://down-vn.img.susercontent.com/file/sg-11134201-7qvg8-lg0m4pbe0u801e', '2023-09-03', '2023-09-03', 8),
 	   (N'Kem Nền Fit Me',							N'Tint C Tươi Mướt Chống Nắng với Vitamin C & SPF50 Maybelline',				200000,		50, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lifr5pgus7o280', '2023-09-03', '2023-09-03', 9),
        (N'Túi Vải Đeo Vai',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
+	   
 	   (N'Túi Vải',							N'Dạng form túi lớn',														50000,		20, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
 	   (N'Túi Vải Lớn',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
 	   (N'Áo thun',							N'Dạng form túi lớn',														50000,		30, 'https://down-vn.img.susercontent.com/file/d3fe7006b6d4ad4ec63b970732d7dc5a', '2023-09-03', '2023-09-03', 10),
