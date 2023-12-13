@@ -1,6 +1,7 @@
 package com.poly.repo;
 
 import com.poly.dto.OrderStatusStatisticalDTO;
+import com.poly.dto.OrderTopAccountStatisticalDTO;
 import com.poly.dto.OrderTopProductStatisticalDTO;
 import com.poly.dto.OrderYearStatisticalDTO;
 import com.poly.entity.Order;
@@ -40,4 +41,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "GROUP BY a.id, a.name_product, a.price, a.img, a.quantity, a.category_id " +
             "ORDER BY COUNT(b.quantity) DESC")
     List<OrderTopProductStatisticalDTO> getTopProduct();
+
+    @Query("SELECT new com.poly.dto.OrderTopAccountStatisticalDTO(a.id, a.email, a.fullname, a.img, SUM(b.total_amount)) " +
+            "FROM Account a INNER JOIN Order b ON a.id = b.account_id.id " +
+            "GROUP BY a.id, a.email, a.fullname, a.img " +
+            "ORDER BY SUM(b.total_amount) DESC")
+    List<OrderTopAccountStatisticalDTO> getTopAccount();
 }

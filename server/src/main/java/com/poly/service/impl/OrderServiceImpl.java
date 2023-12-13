@@ -190,4 +190,9 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderTopProductStatisticalDTO> getTopProduct() {
         return orderRepository.getTopProduct();
     }
+
+    @Override
+    public List<OrderTopAccountStatisticalDTO> getTopAccount() {
+        return orderRepository.getTopAccount();
+    }
 }

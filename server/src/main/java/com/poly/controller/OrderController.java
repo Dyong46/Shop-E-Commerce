@@ -69,6 +69,12 @@ public class OrderController {
         return new ResponseEntity<>(status,HttpStatus.OK);
     }
 
+    @GetMapping("/statistical/topaccounts")
+    public ResponseEntity<List<OrderTopAccountStatisticalDTO>> getTopAccont(){
+        List<OrderTopAccountStatisticalDTO> status = orderService.getTopAccount();
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
     @PostMapping("/statistical/year")
     public ResponseEntity<List<OrderYearStatisticalDTO>> getOrderByYear(
                         @RequestParam("year") String year){
