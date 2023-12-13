@@ -10,6 +10,7 @@ import Review from './components/Review';
 import { action, useStore } from '~/Context';
 import { Helmet } from 'react-helmet-async';
 import { convert } from 'html-to-text';
+import { toast } from 'react-toastify';
 
 const ProductDetail = () => {
   const { nameId } = useParams();
@@ -145,11 +146,11 @@ const ProductDetail = () => {
       <Helmet>
         <title>{product.name_product}</title>
         <meta
-          name='description'
+          name="description"
           content={convert(product.description, {
             limits: {
-              maxInputLength: 150
-            }
+              maxInputLength: 150,
+            },
           })}
         />
       </Helmet>
@@ -795,6 +796,7 @@ const ProductDetail = () => {
                 <div
                   className="mt-8 flex"
                   onClick={() => {
+                    toast.success('Đã thêm vào giỏ hàng');
                     if (todos.length == 0) {
                       dispath(
                         action.addTodoInput(
