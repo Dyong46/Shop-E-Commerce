@@ -13,6 +13,8 @@ public interface OrderService {
 
     Order getOrderById(Integer id);
 
+    List<Order> getOrdersByAccount(Integer id);
+
     List<Order> getAllOrderByStatus(Integer id);
 
     Order cancelOrder(Integer id);
