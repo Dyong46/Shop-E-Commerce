@@ -36,9 +36,37 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
+// Api
+import { getStatistical } from "servers/OrderService";
+import { getStatisticalYear } from "servers/OrderService";
+
+// React
+import { useEffect, useState } from "react";
+import pathApi from "constrants/pathApi";
+
+const mang = [];
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const navigate = useNavigate();
+  const [statistical, setStatistical] = useState([]);
+  const [statisticalYear, setStatisticalYear] = useState([]);
+
+  const getStatistiCalTotalprice = async () => {
+    let getall = await getStatistical();
+    setStatistical(getall);
+  };
+
+  const getSevenInStatisticalYear = async (y) => {
+    let getalls = await getStatisticalYear(y);
+    setStatisticalYear(getalls);
+    mang.push(getalls);
+  };
+
+  useEffect(() => {
+    let currentYear = new Date();
+    getStatistiCalTotalprice();
+    getSevenInStatisticalYear(currentYear.getFullYear());
+  }, []);
 
   const onClick = (category) => {
     // navigate("/tables", { category });
@@ -64,15 +92,15 @@ function Dashboard() {
 
   function statusUI() {
     const elements = [];
-    for (var i of categorys) {
+    statistical.map((item, index) => {
       elements.push(
         <Grid item xs={12} md={6} lg={3}>
           <MDBox mb={1.5}>
             <ComplexStatisticsCard
               color="dark"
-              icon={i.icon}
-              title={i.text}
-              count={281}
+              icon={categorys[index].icon}
+              title={item.status}
+              count={item.count}
               percentage={{
                 color: "success",
                 amount: "+55%",
@@ -82,7 +110,7 @@ function Dashboard() {
           </MDBox>
         </Grid>
       );
-    }
+    });
     return elements;
   }
 
@@ -96,7 +124,7 @@ function Dashboard() {
 
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} md={6} lg={8}>
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
@@ -151,5 +179,4 @@ function Dashboard() {
     </DashboardLayout>
   );
 }
-
 export default Dashboard;

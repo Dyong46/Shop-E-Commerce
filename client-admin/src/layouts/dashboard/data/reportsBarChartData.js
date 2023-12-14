@@ -11,9 +11,25 @@ Coded by www.creative-tim.com
  =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
+**/
+
+import { getStatisticalYear } from "servers/OrderService";
+
+var mang = [];
+async function statisticalYear() {
+  const getSevenInStatisticalYear = async (y) => {
+    let getalls = await getStatisticalYear(y);
+    mang.push(getalls);
+  };
+
+  let currentYear = new Date();
+  await getSevenInStatisticalYear(currentYear.getFullYear());
+
+  return mang;
+}
+statisticalYear();
 
 export default {
   labels: ["Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-  datasets: { label: "Sales", data: [50, 20, 10, 22, 50, 10, 40] },
+  datasets: { label: "Sales", data: mang },
 };
