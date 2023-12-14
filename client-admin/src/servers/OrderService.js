@@ -40,6 +40,14 @@ const setStatusDone = (idorder) => {
   return api.post(`${pathApi.order}` + "/complete?order_id=" + `${idorder}`);
 };
 
+const getStatistical = () => {
+  return api.get(`${pathApi.order}` + "/statistical/totalprice");
+};
+
+const getStatisticalYear = (years) => {
+  return api.post(`${pathApi.order}` + "/statistical/year?year=" + `${years}`);
+};
+
 export {
   getAllOrder,
   postOrders,
@@ -50,4 +58,6 @@ export {
   setStatusCancel,
   setStatusDone,
   getOrderByStatus,
+  getStatistical,
+  getStatisticalYear,
 };
