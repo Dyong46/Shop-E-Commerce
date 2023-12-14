@@ -1,13 +1,10 @@
 package com.poly.controller;
 
-import com.poly.dto.OrderAccount;
-import com.poly.dto.OrderStatusStatisticalDTO;
-import com.poly.dto.OrderYearStatisticalDTO;
+import com.poly.dto.*;
 import com.poly.entity.Order;
 import com.poly.entity.OrderDetail;
 import com.poly.service.OrderAccService;
 import com.poly.constant.StatusOrder;
-import com.poly.dto.OrderDTO;
 import com.poly.entity.OrderStatus;
 import com.poly.repo.OrderRepository;
 import com.poly.service.OrderDetailsService;
@@ -68,6 +65,18 @@ public class OrderController {
     @GetMapping("/statistical/totalprice")
     public ResponseEntity<List<OrderStatusStatisticalDTO>> getOrderStatus(){
         List<OrderStatusStatisticalDTO> status = orderService.getOrderStatusStatistical();
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
+    @GetMapping("/statistical/topproduct")
+    public ResponseEntity<List<OrderTopProductStatisticalDTO>> getProductTop(){
+        List<OrderTopProductStatisticalDTO> status = orderService.getTopProduct();
+        return new ResponseEntity<>(status,HttpStatus.OK);
+    }
+
+    @GetMapping("/statistical/topaccounts")
+    public ResponseEntity<List<OrderTopAccountStatisticalDTO>> getTopAccont(){
+        List<OrderTopAccountStatisticalDTO> status = orderService.getTopAccount();
         return new ResponseEntity<>(status,HttpStatus.OK);
     }
 
