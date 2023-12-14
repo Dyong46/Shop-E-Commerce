@@ -33,7 +33,7 @@ const setStatusCancel = (idorder) => {
 };
 
 const changeStatusOrder = (idorder) => {
-  return api.put(`${pathApi.order}` + "/shipping?order_id=1=" + `${idorder}`);
+  return api.put(`${pathApi.order}` + "/shipping?order_id=" + `${idorder}`);
 };
 
 const setStatusDone = (idorder) => {
@@ -49,5 +49,6 @@ export {
   getOrderByAccountStatus,
   setStatusCancel,
   setStatusDone,
+  changeStatusOrder,
   getOrderByStatus,
 };
