@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { PriceContext } from '~/Context/ContextCart/PriceCartContext';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import { useContext } from 'react';
+import { formatCurrency } from '~/utils/utils';
 const Products = ({ cartitem }) => {
   const [carts] = useContext(CartContext);
   const [money] = useContext(PriceContext);
@@ -45,9 +46,9 @@ const Products = ({ cartitem }) => {
                     consequatur. Fugiat voluptatibus illum officia.
                   </p>
                   <div className="flex gap-x-8 grid-cols-7 flex-row">
-                    <div className="col-span-2 w-full">đ{item.price}</div>
+                    <div className="col-span-2 w-full">đ{formatCurrency(item.price)}</div>
                     <div className="col-span-2 w-full">{item.quantity}</div>
-                    <div className="col-span-2 w-full">đ{item.price * item.quantity}</div>
+                    <div className="col-span-2 w-full">đ{formatCurrency(item.price * item.quantity)}</div>
                   </div>
                 </div>
               );
@@ -87,7 +88,7 @@ const Products = ({ cartitem }) => {
                 <div className="pt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
                   Tổng số tiền ({carts.lenght} sản phẩm):
                 </div>
-                <div className="mx-2 text-lg text-orange">₫{money}</div>
+                <div className="mx-2 text-lg text-orange">₫{formatCurrency(money)}</div>
               </div>
             </div>
           </div>

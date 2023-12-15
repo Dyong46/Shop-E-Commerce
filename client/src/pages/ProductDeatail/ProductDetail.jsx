@@ -2,7 +2,7 @@ import Footer from '~/components/Footer';
 import './style.scss';
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getIdFromNameId } from '~/utils/utils';
+import { formatCurrency, getIdFromNameId } from '~/utils/utils';
 import { productById } from '~/servers/productService';
 import { reviewProduct } from '~/servers/reviewService';
 import { getGalleries } from '~/servers/galleriesService';
@@ -273,8 +273,8 @@ const ProductDetail = () => {
               </div>
               <div className="flex flex-col mt-5 bg-text p-5">
                 <div className="flex">
-                  <span className="line-through mt-3 mr-2">₫79.000 - ₫129.000</span>
-                  <span className="text-orange text-3xl">₫{product.price}</span>
+                  <span className="line-through mt-3 mr-2">₫{formatCurrency(product.price + 150000)} - ₫formatCurrency(product.price + 200000)</span>
+                  <span className="text-orange text-3xl">₫{formatCurrency(product.price)}</span>
                 </div>
                 <div className="flex mt-1">
                   <svg
