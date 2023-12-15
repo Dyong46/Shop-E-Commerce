@@ -41,7 +41,6 @@ import MDInput from "components/MDInput";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 import { styled } from "@mui/material/styles";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -414,7 +413,6 @@ function Products() {
           </Stack>
         </Grid>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }

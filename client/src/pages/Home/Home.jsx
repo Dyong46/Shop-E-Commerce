@@ -7,9 +7,24 @@ import useQueryConfig from '~/hooks/useQueryConfig';
 import Pagination from '~/components/Pagination';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const queryConfig = useQueryConfig();
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const status = params.get('status');
+
+    if (status === 'success') {
+      toast.success("Thanh toán thành công.")
+    } else if (status === 'failed') {
+      toast.error("Thanh toán thất bại ")
+    }
+  }, [location.search]);
 
   const { data: productsData } = useQuery({
     queryKey: ['products', queryConfig],

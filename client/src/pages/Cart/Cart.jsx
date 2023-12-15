@@ -12,8 +12,9 @@ const Cart = () => {
   const [state] = useStore();
   const [pr, setPr] = useState(0);
   const [status, setStatus] = useState();
-  const [, setCarts] = useContext(CartContext);
+  const [carts, setCarts] = useContext(CartContext);
   const { todos } = state;
+  console.log(todos, 't');
   var tong = 0;
   var mang = [];
   const checkAllItem = () => {

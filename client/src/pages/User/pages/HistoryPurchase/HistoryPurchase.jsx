@@ -3,18 +3,22 @@ import { Link, createSearchParams } from 'react-router-dom';
 import path from '~/constants/path';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import WaitForConfirmation from './Layout/WaitForConfirmation';
 import { AppContext } from '~/contexts/app.contexts';
 import { useContext } from 'react';
-import { getOrderByAccount, getOrderByAccountStatus } from '~/servers/OrderService';
 import useQueryParams from '~/hooks/useQueryParams';
-import { generateNameId } from '~/utils/utils';
+import { getOrderByAccount, getOrdersByStatus } from '~/servers/orderService';
+import OrderDetail from './Layout/OrderDetail';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartFlatbed, faStore } from '@fortawesome/free-solid-svg-icons';
+import ActionCard from './Layout/ActionCard';
+import OrderEmpty from '~/assets/images/order-empty.png'
+import { toast } from 'react-toastify';
 
 const purchaseTabs = [
   { status: purchasesStatus.all, name: 'Tất cả' },
   { status: purchasesStatus.waitForConfirmation, name: 'Chờ xác nhận' },
-  { status: purchasesStatus.inProgress, name: 'Đang giao' },
-  { status: purchasesStatus.delivered, name: 'Đã giao' },
+  { status: purchasesStatus.inProgress, name: 'Đang vận chuyển' },
+  { status: purchasesStatus.delivered, name: 'Hoàn thành' },
   { status: purchasesStatus.cancelled, name: 'Đã hủy' },
 ];
 
@@ -22,9 +26,7 @@ const HistoryPurchase = () => {
   const { profile } = useContext(AppContext);
   const queryParams = useQueryParams();
   const status = Number(queryParams.status) || purchasesStatus.all;
-
-  const [order, setOrder] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [orders, setOrders] = useState(null);
 
   const purchaseTabsLink = purchaseTabs.map((tab) => (
     <Link
@@ -44,90 +46,81 @@ const HistoryPurchase = () => {
     </Link>
   ));
 
-  const getAllOrders = async (idorder, status) => {
-    let getAllDetails = await getOrderByAccountStatus(idorder, status);
-    if (getAllDetails) {
-      setOrder(getAllDetails);
+  const getOrders = async () => {
+    try {
+      const res = await getOrderByAccount(profile.id);
+      if (res) {
+        setOrders(res)
+      }
+    } catch (error) {
+      toast.error(error.response.message)
+      console.log(error);
     }
-  };
+  }
 
-  const getAllOrderAcc = async () => {
-    let tong = 0;
-    let getAll = await getOrderByAccount(profile.id);
-    if (getAll) {
-      setOrder(getAll);
-
-      getAll.map((item) => {
-        tong += item.quantity * item.price;
-        setTotal(tong);
-        setOrder(getAll);
-      });
+  const fetchOrdersByStatus = async (statusId) => {
+    try {
+      const res = await getOrdersByStatus(profile.id, statusId)
+      if (res) {
+        setOrders(res)
+      }
+    } catch (error) {
+      toast.error(error.response.message)
+      console.log(error);
     }
-  };
+  }
 
   useEffect(() => {
     if (status == 0) {
-      getAllOrderAcc();
-    } else if (status == 1) {
-      getAllOrders(profile.id, 1);
-    } else if (status == 2) {
-      getAllOrders(profile.id, 2);
-    } else if (status == 3) {
-      getAllOrders(profile.id, 3);
-    } else if (status == 4) {
-      getAllOrders(profile.id, 4);
+      getOrders()
+    } else {
+      fetchOrdersByStatus(status)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   return (
     <div>
-      <div className="overflow-x-auto">
+      <div>
         <div className="min-w-[700px]">
-          <div className="sticky top-0 flex rounded-t-sm shadow-sm">{purchaseTabsLink}</div>
-          <div>
-            <div className="mt-4 rounded-sm border-black/10 bg-white p-6 text-gray-800 shadow-sm">
-              {order?.map((item, index) => (
-                <div className="flex mt-5" key={index}>
-                  <div className="flex-shrink-0">
-                    <img className="h-20 w-20 object-cover" src={item.img} alt={item.name_product} />
+          <div className="sticky top-0 z-10 flex rounded-t-sm shadow-sm">{purchaseTabsLink}</div>
+          {orders && orders.length > 0 && orders?.map((order, index) => (
+            <div className='mt-4 shadow-sm rounded-sm' key={index}>
+              <div className="px-5 bg-white pt-6 pb-4 text-gray-800">
+                <div className='flex justify-between pb-4'>
+                  <div className="col-left">
+                    <FontAwesomeIcon icon={faStore} className='mr-2' />
+                    <span className='font-bold'>Choco Jewelry</span>
                   </div>
-                  <div className="ml-3 flex-grow overflow-hidden">
-                    <Link
-                      to={`${path.home}`}
-                      className="truncate hover:text-gray-500"
-                    >
-                      {item.name_product}
-                    </Link>
-                    <div className="mt-3">x{item.quantity}</div>
-                  </div>
-                  <div className="ml-3 flex-shrink-0">
-                    <div className="mb-2 text-end">
-                      <span className="truncate text-gray-500 line-through">
-                        ₫{item.quantity * item.price + 100000}
-                      </span>
-                      <span className="ml-2 truncate text-orange">₫{item.quantity * item.price}</span>
-                    </div>
-                    <WaitForConfirmation order={item.id_order} param={status} />
+                  <div className="col-right text-gray-500">
+                    <FontAwesomeIcon icon={faCartFlatbed} className='mr-2' />
+                    Đơn hàng đã được giao thành công ?
+                    <span className="border-r border-gray-300 mx-2"></span>
+                    <span className='text-orange uppercase'>{order.status_id.status}</span>
                   </div>
                 </div>
-              ))}
-
-              <div className="flex justify-end">
-                <div>
-                  <span>Tổng giá tiền</span>
-                  {order.map((item, index) => {
-                    if (index == 0) {
-                      return (
-                        <span className="ml-4 text-xl text-orange" key={index}>
-                          ₫{total}
-                        </span>
-                      );
-                    }
-                  })}
+                <div className='border-t border-gray-300 mb-3'></div>
+                <div className="container">
+                  {order?.orderDetails && order.orderDetails.map((orderDetail, index) => (
+                    <OrderDetail orderDetail={orderDetail} key={index} />
+                  ))}
                 </div>
               </div>
+              <ActionCard order={order} />
             </div>
-          </div>
+          ))}
+          {
+            orders && orders.length == 0 && (
+              <div className='mt-4 shadow-sm rounded-sm px-5 bg-white pt-6 pb-4 h-[600px] flex items-center justify-center'>
+                <div>
+                  <div className=''>
+                    <img src={OrderEmpty} alt="Don't have order" />
+                  </div>
+                  <h2 className='text-center text-lg mt-4 font-semibold leading-6'>Chưa có đơn hàng</h2>
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

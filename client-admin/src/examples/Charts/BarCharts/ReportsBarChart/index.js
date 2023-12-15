@@ -46,7 +46,9 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 function ReportsBarChart({ color, title, description, date, chart }) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
-
+  // console.log(data.datasets[0].data[0].age, "data");
+  // const { datas } = data.datasets[0].data[0];
+  // console.log(data);
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox padding="1rem">

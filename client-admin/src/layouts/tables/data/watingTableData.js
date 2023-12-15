@@ -50,6 +50,7 @@ export default function data() {
 
   const changeOrderStatus = async (id) => {
     await changeStatusOrder(id);
+    await getProductWatting();
   };
 
   const Project = ({ image, name }) => (
