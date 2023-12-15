@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import path from '~/constants/path';
-import { generateNameId } from '~/utils/utils';
+import { formatCurrency, generateNameId } from '~/utils/utils';
 
 import { memo } from 'react';
 
@@ -24,21 +24,11 @@ const Product = ({ product }) => {
           </div>
           <div className="overflow-hidden p-2">
             <div className="min-h-[2rem] text-xs line-clamp-2">{product.name_product}</div>
-            {/* <div className="mt-3 flex items-center">
-              <div className="max-w-[50%] truncate text-gray-500 line-through">
-                <span className="text-xs">₫</span>
-                <span className="text-sm">50.000</span>
-              </div>
-              <div className="ml-1 truncate text-orange">
-                <span className="text-xs">₫</span>
-                <span className="text-sm">{product.price}</span>
-              </div>
-            </div> */}
             <div className="mt-3 flex items-center justify-between">
               {/* <ProductRating rating={product.rating} /> */}
               <div className="truncate text-orange">
                 <span className="text-xs">₫</span>
-                <span className="text-base">{product.price}</span>
+                <span className="text-base">{formatCurrency(product.price)}</span>
               </div>
               <div className="ml-1 text-xs text-gray-500">
                 <span>5.6k</span>

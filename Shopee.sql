@@ -217,9 +217,9 @@ GO
 INSERT INTO products ([name_product], [description], [price], [quantity], [img], [created_at], [updated_at], [category_id])
 VALUES 
 -- 1
-(N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác len MIKENCO Monogram cardigan',							9500000,	50, 'https://down-vn.img.susercontent.com/file/sg-11134201-22120-i51z5ni30olvf8', '2023-09-03', '2023-09-03', 3),
-       (N'Áo khoác nam MIKENCO Fancy varsity',		N'Sản phẩm:Áo khoác nam MIKENCO Fancy varsity',								13000000,	30, 'https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8', '2023-09-03', '2023-09-03', 3),
-	   (N'Giày_Jordan',								N'Giày Jordan Paris 2 Phối Màu Nhẹ Nhàng Bản sịn Đủ Size Nam Nữ',			9500000,	50, 'https://down-vn.img.susercontent.com/file/ed7a7ed84c137af454c39e8999cdc11f', '2023-09-03', '2023-09-03', 4),
+(N'Áo khoác len MIKENCO Monogram cardigan',	N'Sản phẩm:Áo khoác len MIKENCO Monogram cardigan',							950000,	50, 'https://down-vn.img.susercontent.com/file/sg-11134201-22120-i51z5ni30olvf8', '2023-09-03', '2023-09-03', 3),
+       (N'Áo khoác nam MIKENCO Fancy varsity',		N'Sản phẩm:Áo khoác nam MIKENCO Fancy varsity',								130000,	30, 'https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8', '2023-09-03', '2023-09-03', 3),
+	   (N'Giày_Jordan',								N'Giày Jordan Paris 2 Phối Màu Nhẹ Nhàng Bản sịn Đủ Size Nam Nữ',			950000,	50, 'https://down-vn.img.susercontent.com/file/ed7a7ed84c137af454c39e8999cdc11f', '2023-09-03', '2023-09-03', 4),
        (N'Bút dạ quang 6 màu highlight',				N'Văn phòng phẩm LENG KENG chuyên cung cấp những vật phẩm đơn giản phục vụ cho các hoạt động văn phòng như: giấy in, sổ, giấy note',		10000,	30, 'https://down-vn.img.susercontent.com/file/2f4754cba01b090b26316fdf0fbffc71', '2023-09-03', '2023-09-03', 12),
 	   (N'Sổ còng A4 A5 B5',							N'sổ ghi chép, take notes, bujo CS0',										15000,		50, 'https://down-vn.img.susercontent.com/file/vn-11134201-23020-po7j7wmmhjnv6d',  '2023-09-03', '2023-09-03', 12),
        (N'Áo Baby Tee',								N'Áo Thun form nữ',															100000,		30, 'https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lijy4lg57geq27', '2023-09-03', '2023-09-03', 3),
@@ -641,8 +641,8 @@ GO
 
 INSERT INTO orders (created_at, status_id, total_amount, account_id, fullname,  phone, city, district, wards, specific_address, discount_id)
 VALUES
-('2023-01-04', 1, 9500000, 1, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123', null),
-('2023-01-04', 2, 19000000, 2, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  null),
+('2023-01-04', 1, 950000, 1, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123', null),
+('2023-01-04', 2, 1900000, 2, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  null),
 ('2023-09-29', 1, 40000,  3, N'Thái Dương', '0233438893',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  null),
 ('2023-08-29', 2, 1036800,  3, N'Quốc Hào', '0895422101',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  1),
 ('2023-02-16', 1, 589000, 3, N'Tú Anh', '0908055625',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',null),
@@ -661,8 +661,8 @@ GO
 
 INSERT INTO order_details (order_id, product_id, quantity, amount)
 VALUES
-(1, 1, 1, 9500000),
-(2, 1, 2, 19000000),
+(1, 1, 1, 950000),
+(2, 1, 2, 1900000),
 (3, 5, 2, 30000),
 (3, 4, 1, 10000),
 (4, 20, 10, 340000),
