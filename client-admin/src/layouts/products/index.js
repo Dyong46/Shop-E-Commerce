@@ -29,7 +29,7 @@ import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 
 import { useForm, Controller } from "react-hook-form";
-import { userSchema, isAxiosUnprocessableEntityError } from "utils/rules";
+import { userSchema } from "utils/rules";
 
 import { productGetAll, updateProduct } from "servers/productService";
 // Material Dashboard 2 React components

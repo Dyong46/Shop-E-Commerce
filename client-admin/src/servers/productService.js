@@ -18,7 +18,7 @@ const updateProduct = (id, product) => {
 };
 
 const removeProduct = (id) => {
-  return api.delete(`${pathApi.product}/${id}`);
+  return api.delete(`${pathApi.product}?id=${id}`);
 };
 
 export { productGetAll, updateProduct, productById, createProduct, removeProduct };

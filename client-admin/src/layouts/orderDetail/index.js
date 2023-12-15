@@ -41,13 +41,15 @@ import { useState, useEffect } from "react";
 
 function OrderDetail() {
   const { orderId } = useParams();
-  const [order, setOrder] = useState({});
+  console.log("order id: ", orderId);
+  const [test, setTest] = useState({});
 
   const getOrderDetail = async (id) => {
     try {
+      console.log("id in get detail", id);
       const res = await getOrderById(id);
-      console.log(res);
-      setOrder(res);
+
+      setTest(res);
     } catch (error) {
       console.log(error);
     }
@@ -60,8 +62,6 @@ function OrderDetail() {
       console.error(error);
     }
   }, []);
-
-  console.log("halsjdhfkajshdfkjhaksdhkfhjdf", order);
 
   const Project = (image, name) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -82,9 +82,10 @@ function OrderDetail() {
       </MDBox>
     </MDBox>
   );
+  console.log("order detail: ", test?.orderDetails);
 
-  const rows = order?.orderDetails
-    ? order.orderDetails.map((product, index) => ({
+  const rows = test?.orderDetails
+    ? test.orderDetails.map((product, index) => ({
         project: (
           <Project
             image={product.product_id.img} // replace with the actual property from your product object
@@ -139,7 +140,7 @@ function OrderDetail() {
             <Grid item xs={12}>
               <Card>
                 <MDBox pt={3}>
-                  {order?.orderDetails && (
+                  {test?.orderDetails && (
                     <DataTable
                       table={{ columns: columns, rows: rows }}
                       isSorted={false}
