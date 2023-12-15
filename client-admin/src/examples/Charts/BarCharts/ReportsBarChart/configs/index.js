@@ -20,17 +20,28 @@ function configs(labels, datasets) {
     // console.log(item[index].totalPrice, "datata");
     if (item[index].month == 6) {
       mang[0] = item[index].totalPrice;
-    } else if (item[index].month == 7) {
+    }
+
+    if (item[index].month == 7) {
       mang[1] = item[index].totalPrice;
-    } else if (item[index].month == 8) {
+    }
+
+    if (item[index].month == 8) {
       mang[2] = item[index].totalPrice;
-    } else if (item[index].month == 9) {
+    }
+
+    if (item[index].month == 9) {
       mang[3] = item[index].totalPrice;
-    } else if (item[index].month == 10) {
+    }
+
+    if (item[index].month == 10) {
       mang[4] = item[index].totalPrice;
-    } else if (item[index].month == 11) {
+    }
+
+    if (item[index].month == 11) {
       mang[5] = item[index].totalPrice;
-    } else if (item[index].month == 12) {
+    }
+    if (item[index].month == 12) {
       mang[6] = item[index].totalPrice;
     }
   });
