@@ -39,7 +39,7 @@ import MDProgress from "components/MDProgress/index.js";
 import MDAvatar from "components/MDAvatar/index.js";
 import { useState, useEffect } from "react";
 
-function OrderDetail() {
+function ProductDetail() {
   const { orderId } = useParams();
   console.log("order id: ", orderId);
   const [test, setTest] = useState({});
@@ -130,7 +130,7 @@ function OrderDetail() {
     { Header: "Mô tả", accessor: "completion", align: "center" },
     { Header: "Chỉnh sửa", accessor: "action", align: "center" },
   ];
-
+  console.log(rows);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -158,4 +158,4 @@ function OrderDetail() {
   );
 }
 
-export default OrderDetail;
+export default ProductDetail;
