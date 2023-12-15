@@ -58,7 +58,7 @@ const routes = [
     type: "collapse",
     name: "Đơn hàng",
     key: "Orders",
-    icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <Icon fontSize="small">local_mall</Icon>,
     route: "/Orders",
     component: <Tables />,
   },
@@ -69,14 +69,6 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/products",
     component: <Products />,
-  },
-  {
-    type: "collapse",
-    name: "Đăng nhập",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
   },
 ];
 

@@ -46,10 +46,14 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import { clearLS } from "utils/auth";
+import { setProfile } from "context";
+import { setIsAuthenticated } from "context";
+import { toast } from "react-toastify";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
+  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, isAuthenticated } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
 
@@ -83,10 +87,16 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     return () => window.removeEventListener("resize", handleMiniSidenav);
   }, [dispatch, location]);
 
+  const handleLogout = () => {
+    setProfile(dispatch, null);
+    setIsAuthenticated(dispatch, false);
+    clearLS();
+    toast.success("Đăng xuất thành công");
+  };
+
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     let returnValue;
-
     if (type === "collapse") {
       returnValue = href ? (
         <Link
@@ -178,7 +188,14 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           (darkMode && !transparentSidenav && whiteSidenav)
         }
       />
-      <List>{renderRoutes}</List>
+      <List>
+        {renderRoutes}
+        <SidenavCollapse
+          name="Đăng xuất"
+          icon={<Icon fontSize="small">logout</Icon>}
+          onClick={handleLogout}
+        />
+      </List>
     </SidenavRoot>
   );
 }
