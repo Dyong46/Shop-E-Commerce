@@ -140,6 +140,13 @@ const ProductDetail = () => {
     }
   };
 
+  function checkQuantity() {
+    let a = document.querySelector('.carts');
+    a.style.border = '1px soild #808080';
+    a.style.background = '#C0C0C0';
+    a.style.color = '#778899';
+  }
+
   if (!product || !galleries) return null;
   return (
     <div>
@@ -796,61 +803,66 @@ const ProductDetail = () => {
                 <div
                   className="mt-8 flex"
                   onClick={() => {
-                    toast.success('Đã thêm vào giỏ hàng');
-                    if (todos.length == 0) {
-                      dispath(
-                        action.addTodoInput(
-                          id,
-                          product.name_product,
-                          color,
-                          size,
-                          quantity,
-                          product.img,
-                          'namshop',
-                          product.price,
-                          product.quantity,
-                          false,
-                        ),
-                      );
+                    if (product.quantity == 0) {
+                      toast.error('Hiện không có sản phẩm');
+                      checkQuantity();
                     } else {
-                      todos.findIndex((element) => {
-                        if (element.id == id) {
-                          dispath(
-                            action.addTodoInput(
-                              id,
-                              product.name_product,
-                              color,
-                              size,
-                              quantity,
-                              product.img,
-                              'namshop',
-                              product.price,
-                              product.quantity,
-                              false,
-                            ),
-                          );
-                        } else {
-                          dispath(
-                            action.addTodoInput(
-                              id,
-                              product.name_product,
-                              color,
-                              size,
-                              quantity,
-                              product.img,
-                              'namshop',
-                              product.price,
-                              product.quantity,
-                              false,
-                            ),
-                          );
-                        }
-                      });
+                      toast.success('Đã thêm vào giỏ hàng');
+                      if (todos.length == 0) {
+                        dispath(
+                          action.addTodoInput(
+                            id,
+                            product.name_product,
+                            color,
+                            size,
+                            quantity,
+                            product.img,
+                            'namshop',
+                            product.price,
+                            product.quantity,
+                            false,
+                          ),
+                        );
+                      } else {
+                        todos.findIndex((element) => {
+                          if (element.id == id) {
+                            dispath(
+                              action.addTodoInput(
+                                id,
+                                product.name_product,
+                                color,
+                                size,
+                                quantity,
+                                product.img,
+                                'namshop',
+                                product.price,
+                                product.quantity,
+                                false,
+                              ),
+                            );
+                          } else {
+                            dispath(
+                              action.addTodoInput(
+                                id,
+                                product.name_product,
+                                color,
+                                size,
+                                quantity,
+                                product.img,
+                                'namshop',
+                                product.price,
+                                product.quantity,
+                                false,
+                              ),
+                            );
+                          }
+                        });
+                      }
                     }
                   }}
                 >
                   <div
-                    className="flex justify-center p-3 w-56 rounded-sm cursor-pointer"
+                    className="flex justify-center p-3 w-56 rounded-sm cursor-pointer carts"
                     style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
                   >
                     <svg
