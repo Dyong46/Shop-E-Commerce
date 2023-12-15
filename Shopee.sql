@@ -372,11 +372,37 @@ GO
 INSERT INTO orders (created_at, status_id, total_amount, account_id, fullname,  phone, city, district, wards, specific_address, discount_id)
 VALUES
 ('2023-08-04', 1, 9500000, 1, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123', null),
-('2023-08-04', 2, 13000000, 2, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  null)
+('2023-08-04', 2, 26000000, 2, N'Minh Thư', '0123456789', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  null),
+('2023-09-29', 1, 40000,  3, N'Thái Dương', '0233438893',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  null),
+('2023-09-29', 2, 1036800,  3, N'Quốc Hào', '0895422101',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  1),
+('2023-01-16', 1, 589000, 3, N'Tú Anh', '0908055625',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',null),
+('2023-08-11', 1, 578000,3,N'Bình Minh','0323366710',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',null),
+('2023-04-04', 2, 816000,3,N'Phương Ly','0214115778',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',2),
+('2023-05-05', 3, 1000000, 3,N'Triệu Vân','0112247854',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',null),
+('2023-01-01', 3, 1562400 , 3, 'Minh Anh','0221160981',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',  1),
+('2023-10-12', 3,  400000, 3, N'Minh Hằng','0551148770',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',null),
+('2023-07-07', 4, 2041000,3, N'Phương Vy','0117544100',N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',2),
+('2023-05-06', 4,1984000,3,N'Minh Trang','0987456478', N'Thành-phố-Hồ-Chí-Minh-i-79', N'Quận-1-i-760', N'Phường-Tân-Định-i-26734', N'A123',null)
 GO
 
 INSERT INTO order_details (order_id, product_id, quantity, amount)
 VALUES
 (1, 1, 1, 9500000),
-(2, 1, 2, 13000000)
+(2, 1, 2, 13000000),
+(3, 5, 2, 30000),
+(3, 4, 1, 10000),
+(4, 20, 10, 340000),
+(4, 32, 1, 812000),
+(5, 25, 1, 589000),
+(6, 21, 2, 578000),
+(7, 18, 1,370000),
+(7, 19, 2,650000),
+(8, 8,  2, 1000000),
+(9 ,21, 2,596000),
+(9, 23, 2,1140000),
+(10, 9, 2, 400000),
+(11,14, 2, 1440000),
+(11, 15, 2, 1152000),
+(12, 24, 5, 1395000),
+(12, 25, 1, 589000)
 GO
