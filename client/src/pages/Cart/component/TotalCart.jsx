@@ -6,6 +6,7 @@ import VoucherCard from '~/components/dialog/Card/VoucherCard';
 import { Link } from 'react-router-dom';
 import { getAllDiscount } from '~/servers/discountService';
 import PropTypes from 'prop-types';
+import { formatCurrency } from '~/utils/utils';
 const DialogBody = (props) => {
   const ButtonShowmore = (props) => {
     return (
@@ -221,9 +222,9 @@ const TotalCart = ({ price, status }) => {
                 <div className="flex">
                   Tổng thanh toán ({carts.length} Sản phẩm):
                   {status == true ? (
-                    <p className="text-orange text-2xl">₫{price}</p>
+                    <p className="text-orange text-2xl">₫{formatCurrency(price)}</p>
                   ) : (
-                    <p className="text-orange text-2xl">₫{money}</p>
+                    <p className="text-orange text-2xl">₫{formatCurrency(money)}</p>
                   )}
                   {/* <p className="text-orange text-2xl">₫{status == true ? price : money}</p> */}
                 </div>
