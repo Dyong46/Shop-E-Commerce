@@ -40,10 +40,10 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
+import Products from "layouts/products";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-import Products from "layouts/products";
 
 const routes = [
   {
@@ -72,15 +72,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Thông tin",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
-  {
-    type: "collapse",
-    name: "Đăng xuất",
+    name: "Đăng nhập",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
