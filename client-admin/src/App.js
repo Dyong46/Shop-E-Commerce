@@ -37,6 +37,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import { ToastContainer } from "react-toastify";
+import UseRouteElement from "useRouteElements";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -135,6 +136,8 @@ export default function App() {
     </MDBox>
   );
 
+  const routeElements = UseRouteElement();
+
   // remove rtl
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
@@ -151,10 +154,7 @@ export default function App() {
           />
         </>
       )}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
+      {routeElements}
       <ToastContainer
         position="top-right"
         autoClose={3000}
