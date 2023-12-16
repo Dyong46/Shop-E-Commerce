@@ -84,9 +84,9 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "Sản phẩm", accessor: "project", width: "30%", align: "left" },
-      { Header: "Giá", accessor: "budget", align: "left" },
-      { Header: "Tồn kho", accessor: "status", align: "center" },
+      { Header: "", accessor: "project", width: "30%", align: "left" },
+      { Header: "", accessor: "budget", align: "left" },
+      { Header: "", accessor: "status", align: "center" },
     ],
     rows: rows,
   };

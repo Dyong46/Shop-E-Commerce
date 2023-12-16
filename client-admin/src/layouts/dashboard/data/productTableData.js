@@ -71,7 +71,7 @@ export default function data() {
         project: (
           <Project
             image={product.img} // replace with the actual property from your product object
-            name={product.name_product} // replace with the actual property from your product object
+            name={product.nameProduct} // replace with the actual property from your product object
           />
         ),
         budget: (
@@ -99,10 +99,10 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "Sản phẩm", accessor: "project", width: "30%", align: "left" },
-      { Header: "Giá", accessor: "budget", align: "left" },
-      { Header: "Tồn kho", accessor: "status", align: "center" },
-      { Header: "Mô tả", accessor: "completion", align: "center" },
+      { Header: "", accessor: "project", width: "30%", align: "left" },
+      { Header: "", accessor: "budget", align: "left" },
+      { Header: "", accessor: "status", align: "center" },
+      { Header: "", accessor: "completion", align: "center" },
     ],
     rows: rows,
   };

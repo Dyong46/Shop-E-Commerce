@@ -84,7 +84,7 @@ export default function data() {
   const rows = Array.isArray(clients) // Check if products is an array
     ? clients.map((client, index) => ({
         project: (
-          <Link to={`/orders?orderId=${client.id}`}>
+          <Link to={`/orders/${client.id}`}>
             <Project
               name={client.fullname} // replace with the actual property from your product object
             />
