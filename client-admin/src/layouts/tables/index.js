@@ -17,28 +17,15 @@ Coded by www.creative-tim.com
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
-import { styled } from "@mui/material/styles";
 
 // Data
 import projectsTableData from "layouts/tables/data/projectsTableData";
@@ -46,9 +33,8 @@ import cancelTableData from "layouts/tables/data/cancelTableData";
 import watingTableData from "layouts/tables/data/watingTableData";
 import watingAcceptTableData from "layouts/tables/data/watingAcceptTableData";
 
-import { useState, useRef, useMemo } from "react";
+import { useState } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 function Orders() {
   const { columns: pColumns, rows: pRows } = projectsTableData();

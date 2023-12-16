@@ -49,6 +49,14 @@ const getStatistical = () => {
   return api.get(`${pathApi.order}` + "/statistical/totalprice");
 };
 
+const getTopProduct = () => {
+  return api.get(`${pathApi.order}` + "/statistical/topproduct");
+};
+
+const getTopAccount = () => {
+  return api.get(`${pathApi.order}` + "/statistical/topaccount");
+};
+
 const getStatisticalYear = (years) => {
   return api.post(`${pathApi.order}` + "/statistical/year?year=" + `${years}`);
 };
@@ -67,4 +75,6 @@ export {
   getOrderByStatus,
   getStatistical,
   getStatisticalYear,
+  getTopProduct,
+  getTopAccount,
 };

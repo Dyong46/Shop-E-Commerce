@@ -15,6 +15,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import DataTable from "examples/Tables/DataTable";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -31,24 +33,22 @@ import { Link, useNavigate } from "react-router-dom";
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
-
 // Api
 import { getStatistical } from "servers/OrderService";
 import { getStatisticalYear } from "servers/OrderService";
 
 // React
 import { useEffect, useState } from "react";
-import pathApi from "constrants/pathApi";
+import productTableData from "./data/productTableData.js";
+import accountTableData from "./data/accountTableData.js";
 
 const mang = [];
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
-  const navigate = useNavigate();
+  const { sales } = reportsLineChartData;
   const [statistical, setStatistical] = useState([]);
-  const [statisticalYear, setStatisticalYear] = useState([]);
+  const [setStatisticalYear] = useState([]);
+  const { columns: pColumns, rows: pRows } = productTableData();
+  const { columns: aColumns, rows: aRows } = accountTableData();
 
   const getStatistiCalTotalprice = async () => {
     let getall = await getStatistical();
@@ -163,16 +163,49 @@ function Dashboard() {
           </Grid>
         </MDBox>
 
-        {/* <MDBox> */}
-        {/*   <Grid container spacing={3}> */}
-        {/*     <Grid item xs={12} md={6} lg={8}> */}
-        {/*       <Projects /> */}
-        {/*     </Grid> */}
-        {/*     <Grid item xs={12} md={6} lg={4}> */}
-        {/*       <OrdersOverview /> */}
-        {/*     </Grid> */}
-        {/*   </Grid> */}
-        {/* </MDBox> */}
+        <MDBox>
+          <Grid container spacing={3}>
+            <Card>
+              <MDBox pt={3}>
+                <DataTable
+                  table={{ columns: columns, rows: rows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
+              </MDBox>
+            </Card>
+            {/* <Grid item xs={12} md={6} lg={8}> */}
+            {/*   <Projects /> */}
+            {/* </Grid> */}
+            {/* <Grid item xs={12} md={6} lg={4}> */}
+            {/*   <OrdersOverview /> */}
+            {/* </Grid> */}
+            <Card>
+              <MDBox pt={3}>
+                <DataTable
+                  table={{ columns: pColumns, rows: pRows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
+              </MDBox>
+            </Card>
+            <Card>
+              <MDBox pt={3}>
+                <DataTable
+                  table={{ columns: aColumns, rows: aRows }}
+                  isSorted={false}
+                  entriesPerPage={false}
+                  showTotalEntries={false}
+                  noEndBorder
+                />
+              </MDBox>
+            </Card>
+          </Grid>
+        </MDBox>
       </MDBox>
     </DashboardLayout>
   );
