@@ -44,6 +44,8 @@ export default function data() {
     }
   }, []);
 
+  console.log("accounts: ", accounts);
+
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -64,8 +66,8 @@ export default function data() {
     </MDBox>
   );
 
-  const rows = Array.isArray(accounts.content) // Check if products is an array
-    ? accounts.content.map((product, index) => ({
+  const rows = Array.isArray(accounts) // Check if products is an array
+    ? accounts.map((product, index) => ({
         project: <Project image={product.img} name={product.fullname} />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
@@ -74,7 +76,7 @@ export default function data() {
         ),
         status: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {product.totalAmount} {/* replace with the actual property from your product object */}
+            {product.totalAmount}
           </MDTypography>
         ),
       }))

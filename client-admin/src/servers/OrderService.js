@@ -54,7 +54,7 @@ const getTopProduct = () => {
 };
 
 const getTopAccount = () => {
-  return api.get(`${pathApi.order}` + "/statistical/topaccount");
+  return api.get(`${pathApi.order}` + "/statistical/topaccounts");
 };
 
 const getStatisticalYear = (years) => {

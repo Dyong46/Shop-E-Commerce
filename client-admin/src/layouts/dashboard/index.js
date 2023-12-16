@@ -46,7 +46,7 @@ const mang = [];
 function Dashboard() {
   const { sales } = reportsLineChartData;
   const [statistical, setStatistical] = useState([]);
-  const [setStatisticalYear] = useState([]);
+  const [statisticalYear, setStatisticalYear] = useState([]);
   const { columns: pColumns, rows: pRows } = productTableData();
   const { columns: aColumns, rows: aRows } = accountTableData();
 
@@ -165,45 +165,40 @@ function Dashboard() {
 
         <MDBox>
           <Grid container spacing={3}>
-            <Card>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: columns, rows: rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
             {/* <Grid item xs={12} md={6} lg={8}> */}
             {/*   <Projects /> */}
             {/* </Grid> */}
             {/* <Grid item xs={12} md={6} lg={4}> */}
             {/*   <OrdersOverview /> */}
             {/* </Grid> */}
-            <Card>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-            <Card>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: aColumns, rows: aRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
+
+            <Grid item xs={12} md={6} lg={12}>
+              <Card>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns: pColumns, rows: pRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={12}>
+              <Card>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns: aColumns, rows: aRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
           </Grid>
         </MDBox>
       </MDBox>

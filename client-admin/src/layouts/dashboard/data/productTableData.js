@@ -26,7 +26,6 @@ import MDProgress from "components/MDProgress";
 
 // Images
 import { useEffect, useState } from "react";
-import { productGetAll } from "servers/productService";
 import { getTopProduct } from "servers/OrderService";
 
 export default function data() {
@@ -36,6 +35,8 @@ export default function data() {
     const res = await getTopProduct();
     setProduct(res);
   };
+
+  console.log("products: ", products);
 
   useEffect(() => {
     try {
@@ -65,8 +66,8 @@ export default function data() {
     </MDBox>
   );
 
-  const rows = Array.isArray(products.content) // Check if products is an array
-    ? products.content.map((product, index) => ({
+  const rows = Array.isArray(products) // Check if products is an array
+    ? products.map((product, index) => ({
         project: (
           <Project
             image={product.img} // replace with the actual property from your product object
