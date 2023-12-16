@@ -36,12 +36,10 @@ const UseRouteElement = () => {
         {
           path: "/orders",
           element: <Tables />,
-          children: [
-            {
-              path: ":orderId",
-              element: <OrderDetail />,
-            },
-          ],
+        },
+        {
+          path: "/orders/:orderId",
+          element: <OrderDetail />,
         },
         {
           path: "/products",
