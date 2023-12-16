@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 import PropTypes from 'prop-types';
-import { postOrders } from '~/servers/orderService';
+import { postOrders, stripePayment } from '~/servers/orderService';
 import { AppContext } from '~/contexts/app.contexts';
 import { toast } from 'react-toastify';
 import { CartContext } from '~/Context/ContextCart/CartContext';
@@ -12,6 +12,7 @@ import { formatCurrency } from '~/utils/utils';
 const Pay = ({ money, cart, address, discounts, address_list }) => {
   const navigate = useNavigate();
   const [payWith, setPayWith] = useState('');
+  console.log(payWith);
   const { profile } = useContext(AppContext);
   const [carts] = useContext(CartContext);
   const [state] = useStore();
@@ -23,6 +24,32 @@ const Pay = ({ money, cart, address, discounts, address_list }) => {
         toast.error('Vui lòng chọn địa chỉ trước khi thanh toán');
       } else if (payWith == '') {
         toast.error('Vui lòng chọn phương thức thanh toán');
+      } else if (payWith == 'stripe') {
+        const res = await stripePayment({
+          fullname: address.fullname,
+          phone: address.phone,
+          city: address.city,
+          district: address.district,
+          wards: address.wards,
+          specificAddress: address.specific_address,
+          accountId: profile.id,
+          discountId: discounts.id,
+          orderDetails: cart.map((item) => {
+            return {
+              quantity: item.quantity,
+              productId: item.id,
+            };
+          }),
+          successUrl: 'http://localhost:8086?status=success',
+          errorUrl: 'http://localhost:8086?status=failed'
+        })
+        console.log(res);
+        if (res) {
+          // window.location.href = res
+        } else {
+          toast.error('Không có URL trả về từ API.');
+          window.location.href = 'http://localhost:8086?status=failed';
+        }
       } else {
         await postOrders({
           fullname: address.fullname,
@@ -104,15 +131,15 @@ const Pay = ({ money, cart, address, discounts, address_list }) => {
           <Button
             type="button"
             className={
-              payWith === 'vnPay'
+              payWith === 'stripe'
                 ? 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 text-orange rounded-sm '
                 : 'flex items-center justify-center px-2 py-2 outline-none border border-gray-300 hover:border-orange hover:text-orange rounded-sm '
             }
             onClick={() => {
-              setPayWith('vnPay');
+              setPayWith('stripe');
             }}
           >
-            Thanh toán VNPay
+            Thanh toán Stripe
           </Button>
         </div>
       </div>

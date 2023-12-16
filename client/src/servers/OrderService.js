@@ -9,6 +9,10 @@ const postOrders = (order) => {
     return api.post(`${pathApi.order}`, order)
 }
 
+const stripePayment = (order) => {
+  return api.post(`${pathApi.stripe}`, order)
+}
+
 const getAllOrderDetails = () => {
     return api.get(`${pathApi.order}`+'/details')
 }
@@ -30,4 +34,4 @@ const setStatusCancel = (idorder)=> {
 const setStatusDone = (idorder) => {
     return api.put(`${pathApi.order}`+'/complete?order_id='+`${idorder}`)
 }
-export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrdersByStatus,setStatusCancel,setStatusDone}
+export {getAllOrder,postOrders,postOrderDetails,getAllOrderDetails,getOrderByAccount,getOrdersByStatus,setStatusCancel,setStatusDone,stripePayment}
