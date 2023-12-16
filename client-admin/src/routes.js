@@ -52,7 +52,7 @@ const routes = [
     name: "Trang chủ",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
+    route: "",
     component: <Dashboard />,
   },
   {

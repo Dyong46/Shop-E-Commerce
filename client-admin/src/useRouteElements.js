@@ -30,7 +30,7 @@ const UseRouteElement = () => {
       element: <ProtectedRoute />,
       children: [
         {
-          path: "/dashboard",
+          path: "",
           element: <Dashboard />,
         },
         {
