@@ -45,7 +45,7 @@ const Pay = ({ money, cart, address, discounts, address_list }) => {
         })
         console.log(res);
         if (res) {
-          // window.location.href = res
+          window.location.href = res
         } else {
           toast.error('Không có URL trả về từ API.');
           window.location.href = 'http://localhost:8086?status=failed';

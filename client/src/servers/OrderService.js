@@ -10,7 +10,7 @@ const postOrders = (order) => {
 }
 
 const stripePayment = (order) => {
-  return api.post(`${pathApi.stripe}`, order)
+  return api.post(`${pathApi.stripe}/checkout`, order)
 }
 
 const getAllOrderDetails = () => {
