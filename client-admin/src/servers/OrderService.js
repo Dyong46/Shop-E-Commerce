@@ -33,11 +33,19 @@ const setStatusCancel = (idorder) => {
 };
 
 const changeStatusOrder = (idorder) => {
-  return api.put(`${pathApi.order}` + "/shipping?order_id=1=" + `${idorder}`);
+  return api.put(`${pathApi.order}` + "/shipping?order_id=" + `${idorder}`);
 };
 
 const setStatusDone = (idorder) => {
   return api.post(`${pathApi.order}` + "/complete?order_id=" + `${idorder}`);
+};
+
+const getStatistical = () => {
+  return api.get(`${pathApi.order}` + "/statistical/totalprice");
+};
+
+const getStatisticalYear = (years) => {
+  return api.post(`${pathApi.order}` + "/statistical/year?year=" + `${years}`);
 };
 
 export {
@@ -49,5 +57,8 @@ export {
   getOrderByAccountStatus,
   setStatusCancel,
   setStatusDone,
+  changeStatusOrder,
   getOrderByStatus,
+  getStatistical,
+  getStatisticalYear,
 };

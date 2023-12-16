@@ -78,6 +78,11 @@ const Order = () => {
     // getAddressByAcc();
     getAddress();
     getAll();
+    var currentUrl = window.location.href;
+
+    if (address.length == 0) {
+      toast.error('Vui lòng chọn địa chỉ');
+    }
   }, []);
 
   const handleClickToOpen = () => {
@@ -137,7 +142,7 @@ const Order = () => {
 
         <Voucher openDialog={handleClickToOpenVoucher} />
         <div className="h-7"></div>
-        <Pay cart={carts} money={money} address={addres} discounts={discounts} />
+        <Pay cart={carts} money={money} address_list={address} address={addres} discounts={discounts} />
       </div>
     </>
   );

@@ -14,18 +14,38 @@ Coded by www.creative-tim.com
 */
 
 function configs(labels, datasets) {
+  var mang = [0, 0, 0, 0, 0, 0, 0];
+  // console.log(datasets.data);
+  datasets.data.map((item, index) => {
+    // console.log(item[index].totalPrice, "datata");
+    if (item[index].month == 6) {
+      mang[0] = item[index].totalPrice;
+    } else if (item[index].month == 7) {
+      mang[1] = item[index].totalPrice;
+    } else if (item[index].month == 8) {
+      mang[2] = item[index].totalPrice;
+    } else if (item[index].month == 9) {
+      mang[3] = item[index].totalPrice;
+    } else if (item[index].month == 10) {
+      mang[4] = item[index].totalPrice;
+    } else if (item[index].month == 11) {
+      mang[5] = item[index].totalPrice;
+    } else if (item[index].month == 12) {
+      mang[6] = item[index].totalPrice;
+    }
+  });
   return {
     data: {
       labels,
       datasets: [
         {
-          label: datasets.label,
+          label: "Sale",
           tension: 0.4,
           borderWidth: 0,
           borderRadius: 4,
           borderSkipped: false,
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          data: datasets.data,
+          data: mang,
           maxBarThickness: 6,
         },
       ],

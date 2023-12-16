@@ -26,7 +26,7 @@ import MDProgress from "components/MDProgress";
 
 // Images
 import { useEffect, useState } from "react";
-import { getOrderByStatus } from "servers/OrderService";
+import { getOrderByStatus, changeStatusOrder } from "servers/OrderService";
 
 export default function data() {
   const [clients, setClient] = useState([]);
@@ -49,6 +49,7 @@ export default function data() {
 
   const changeOrderStatus = async (id) => {
     await changeStatusOrder(id);
+    await getProductWatting();
   };
 
   const Project = ({ image, name }) => (

@@ -50,7 +50,7 @@ const NewAddressDialog = () => {
         city: data.address.province,
         district: data.address.district,
         wards: data.address.ward,
-        specific_address: data.detailAddress,
+        specific_address: data.detail_address,
         account_id: JSON.parse(JSON.stringify(profile))
       })
       if (res && res.id) {

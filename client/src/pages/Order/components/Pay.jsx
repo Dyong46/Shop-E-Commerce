@@ -7,41 +7,48 @@ import { AppContext } from '~/contexts/app.contexts';
 import { toast } from 'react-toastify';
 import { CartContext } from '~/Context/ContextCart/CartContext';
 import { useStore } from '~/Context';
+import { formatCurrency } from '~/utils/utils';
 
-const Pay = ({ money, cart, address, discounts }) => {
+const Pay = ({ money, cart, address, discounts, address_list }) => {
   const navigate = useNavigate();
   const [payWith, setPayWith] = useState('');
   const { profile } = useContext(AppContext);
-  const [carts,] = useContext(CartContext);
-  const [state,] = useStore();
+  const [carts] = useContext(CartContext);
+  const [state] = useStore();
   const { todos } = state;
 
   const handleOrder = async () => {
     try {
-      await postOrders({
-        fullname: address.fullname,
-        phone: address.phone,
-        city: address.city,
-        district: address.district,
-        wards: address.wards,
-        specificAddress: address.specific_address,
-        accountId: profile.id,
-        discountId: discounts.id,
-        orderDetails: cart.map((item) => {
-          return {
-            quantity: item.quantity,
-            productId: item.id,
-          };
-        }),
-      });
-      carts.forEach((element) => {
-        let index = todos.indexOf(element);
-        if (index !== -1) {
-          todos.splice(index, 1);
-        }
-      });
-      navigate('/');
-      toast.success('Thanh toán thành công');
+      if (address_list.length == 0) {
+        toast.error('Vui lòng chọn địa chỉ trước khi thanh toán');
+      } else if (payWith == '') {
+        toast.error('Vui lòng chọn phương thức thanh toán');
+      } else {
+        await postOrders({
+          fullname: address.fullname,
+          phone: address.phone,
+          city: address.city,
+          district: address.district,
+          wards: address.wards,
+          specificAddress: address.specific_address,
+          accountId: profile.id,
+          discountId: discounts.id,
+          orderDetails: cart.map((item) => {
+            return {
+              quantity: item.quantity,
+              productId: item.id,
+            };
+          }),
+        });
+        carts.forEach((element) => {
+          let index = todos.indexOf(element);
+          if (index !== -1) {
+            todos.splice(index, 1);
+          }
+        });
+        navigate('/');
+        toast.success('Thanh toán thành công');
+      }
     } catch (error) {
       navigate('/');
       toast.success('Thanh toán thất bại');
@@ -49,9 +56,6 @@ const Pay = ({ money, cart, address, discounts }) => {
     }
   };
 
-  // useEffect(() => {
-  //   handleOrder();
-  // });
   return (
     <div className="container">
       <div className="rounded-sm bg-white py-5 px-9 text-sm capitalize text-slate-900 shadow">
@@ -114,7 +118,7 @@ const Pay = ({ money, cart, address, discounts }) => {
       </div>
       <div className="bg-[#fffefb] py-5 px-9 border-dotted border-b-2 border-gray rouned-sm shadow">
         <div className="flex flex-row-reverse items-center mb-4">
-          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ{money}</div>
+          <div className="text-gray-400 text-sm min-w-[140px] text-end">đ{formatCurrency(money)}</div>
           <div className="">Tổng tiền hàng</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
@@ -123,13 +127,13 @@ const Pay = ({ money, cart, address, discounts }) => {
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-gray-400 text-sm min-w-[140px] text-end">
-            - đ{discounts.length != 0 ? (money * discounts.discount_percent) / 100 : 0}
+            - đ{formatCurrency(discounts.length != 0 ? (money * discounts.discount_percent) / 100 : 0)}
           </div>
           <div className="">Tổng cộng Voucher giảm giá</div>
         </div>
         <div className="flex flex-row-reverse items-center mb-4">
           <div className="text-orange text-2xl min-w-[140px] text-end">
-            đ{discounts.length != 0 ? money - (money * discounts.discount_percent) / 100 : money}
+            đ{formatCurrency(discounts.length != 0 ? money - (money * discounts.discount_percent) / 100 : money)}
           </div>
           <div className="">Tổng thanh toán</div>
         </div>
@@ -161,6 +165,7 @@ Pay.propTypes = {
   cart: PropTypes.array,
   discounts: PropTypes.array,
   address: PropTypes.any,
+  address_list: PropTypes.array,
 };
 
 export default Pay;

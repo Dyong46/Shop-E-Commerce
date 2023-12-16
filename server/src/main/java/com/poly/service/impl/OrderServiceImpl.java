@@ -1,11 +1,8 @@
 package com.poly.service.impl;
 
-import com.poly.dto.OrderStatusStatisticalDTO;
-import com.poly.dto.OrderYearStatisticalDTO;
+import com.poly.dto.*;
 import com.poly.utils.ResponseBodyServer;
 import com.poly.constant.StatusOrder;
-import com.poly.dto.OrderDTO;
-import com.poly.dto.OrderDetailDTO;
 import com.poly.entity.*;
 import com.poly.repo.DiscountRepository;
 import com.poly.entity.Order;
@@ -191,5 +188,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderYearStatisticalDTO> getAllOrderByYear(String year) {
         return orderRepository.getAllOrderByYear(year);
+    }
+
+    @Override
+    public List<OrderTopProductStatisticalDTO> getTopProduct() {
+        return orderRepository.getTopProduct();
+    }
+
+    @Override
+    public List<OrderTopAccountStatisticalDTO> getTopAccount() {
+        return orderRepository.getTopAccount();
     }
 }
