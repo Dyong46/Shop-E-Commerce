@@ -18,7 +18,6 @@ const postOrderDetails = (url, obj) => {
 };
 
 const getOrderById = (id) => {
-  console.log("abcd", id);
   return api.get(`${pathApi.order}/${id}`);
 };
 

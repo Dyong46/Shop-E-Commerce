@@ -28,6 +28,7 @@ import MDProgress from "components/MDProgress";
 import { useEffect, useState } from "react";
 import { getOrderByStatus } from "servers/OrderService";
 import { Link } from "react-router-dom";
+import { changeStatusOrder } from "servers/OrderService";
 
 export default function data() {
   const [clients, setClient] = useState([]);
@@ -49,6 +50,7 @@ export default function data() {
   }, []);
 
   const changeOrderStatus = async (id) => {
+    console.log(id);
     await changeStatusOrder(id);
     await getProductWatting();
   };

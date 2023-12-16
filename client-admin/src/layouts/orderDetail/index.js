@@ -1,25 +1,8 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
-j=======================================r=================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
-import PropTypes from "prop-types";
 
-import { productGetAll, updateProduct } from "servers/productService";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -29,24 +12,22 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import { styled } from "@mui/material/styles";
 
 // Data
-import { Icon, Typography } from "@mui/material";
+import { Icon } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getOrderById } from "servers/OrderService.js";
-import MDProgress from "components/MDProgress/index.js";
 import MDAvatar from "components/MDAvatar/index.js";
 import { useState, useEffect } from "react";
 
+import PropTypes from "prop-types";
+
 function OrderDetail() {
   const { orderId } = useParams();
-  console.log("order id: ", orderId);
-  const [test, setTest] = useState({});
+  const [test, setTest] = useState(null);
 
   const getOrderDetail = async (id) => {
     try {
-      console.log("id in get detail", id);
       const res = await getOrderById(id);
       console.log("res: ", res);
       setTest(res);
@@ -63,7 +44,7 @@ function OrderDetail() {
     }
   }, []);
 
-  const Project = (image, name) => (
+  const Product = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
       <MDTypography display="block" variant="button" fontWeight="medium" ml={1} lineHeight={1}>
@@ -72,63 +53,39 @@ function OrderDetail() {
     </MDBox>
   );
 
-  const Progress = (color, value) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-      <MDBox ml={0.5} width="9rem">
-        <MDProgress variant="gradient" color={color} value={value} />
-      </MDBox>
-    </MDBox>
-  );
-  console.log("order detail: ", test?.orderDetails);
+  Product.propTypes = {
+    image: PropTypes.string,
+    name: PropTypes.string,
+  };
 
-  const rows = Object.keys(test).length
-    ? test.orderDetails?.map((product, index) => ({
-        project: (
-          <Project
-            image="#" // replace with the actual property from your product object
-            name="hello" // replace with the actual property from your product object
-          />
+  const rows = Array.isArray(test?.orderDetails)
+    ? test.orderDetails.map((orderDetail, index) => ({
+        product: (
+          <Product image={orderDetail.product_id.img} name={orderDetail.product_id.name_product} />
         ),
-        budget: (
+        quantity: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            jalksdjflaksdjflkajsdlkfjasdlkfjalksdjffklasdjf
+            {orderDetail.quantity}
           </MDTypography>
         ),
-        status: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {product.quantity}
+        price: (
+          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
+            {orderDetail.product_id.price}
           </MDTypography>
         ),
-        completion: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ textAlign: "left" }}
-          >
-            {product.description} {/* replace with the actual property from your product object */}
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" color="text">
-            <Icon onClick={() => handleEdit(product.id)}>edit</Icon>
-            <Icon onClick={() => remove(product.id)}>delete</Icon>
+        desc: (
+          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
+            {orderDetail.product_id.description}
           </MDTypography>
         ),
       }))
     : [];
 
   const columns = [
-    { Header: "Sản phẩm", accessor: "project", width: "30%", align: "left" },
-    { Header: "Số lượng", accessor: "status", align: "center" },
-    { Header: "Giá", accessor: "budget", align: "left" },
-    { Header: "Mô tả", accessor: "completion", align: "center" },
-    { Header: "Chỉnh sửa", accessor: "action", align: "center" },
+    { Header: "Sản phẩm", accessor: "product", width: "30%", align: "left" },
+    { Header: "Số lượng", accessor: "quantity", width: "30%", align: "center" },
+    { Header: "Giá", accessor: "price", align: "left" },
+    { Header: "Mô tả", accessor: "desc", align: "left" },
   ];
 
   return (
@@ -153,7 +110,6 @@ function OrderDetail() {
           </Stack>
         </Grid>
       </MDBox>
-      <Footer />
     </DashboardLayout>
   );
 }
