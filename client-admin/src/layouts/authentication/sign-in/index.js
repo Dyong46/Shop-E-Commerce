@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
 const loginSchema = schema.pick(["email", "password"]);
 
 function Basic() {
-  const [controller, dispatch] = useMaterialUIController();
+  const [, dispatch] = useMaterialUIController();
   const navigate = useNavigate();
   const {
     register,
