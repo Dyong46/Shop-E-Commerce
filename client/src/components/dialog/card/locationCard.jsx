@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import { AddressContext } from '~/Context/Address/AddressContext';
+import { getNameFromNameId } from '~/utils/utils';
 
 const LocationCard = (props) => {
   const { group, idVoucher, addDefault } = props;
@@ -48,7 +49,7 @@ const LocationCard = (props) => {
 
               <p className=" text-gray-500">{item.specific_address}</p>
               <p className="text-gray-500">
-                {item.wards}, {item.district}, {item.city}
+                {getNameFromNameId(item.wards)}, {getNameFromNameId(item.district)}, {getNameFromNameId(item.city)}
               </p>
               <div className="w-14">
                 {item.is_default == true ? (
