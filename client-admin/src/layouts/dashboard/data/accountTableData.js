@@ -8,6 +8,7 @@ import MDAvatar from "components/MDAvatar";
 // Images
 import { useEffect, useState } from "react";
 import { getTopAccount } from "servers/OrderService";
+import { formatCurrency } from "utils/utils";
 
 export default function data() {
   const [accounts, setAccount] = useState([]);
@@ -54,7 +55,7 @@ export default function data() {
         ),
         totalAmount: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {product.totalAmount}
+            {formatCurrency(product.totalAmount)}
           </MDTypography>
         ),
       }))

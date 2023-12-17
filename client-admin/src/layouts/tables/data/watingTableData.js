@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 import { changeStatusOrder } from "servers/OrderService";
 import { getAddress } from "utils/utils";
 import { getNameFromNameId } from "utils/utils";
+import { formatCurrency } from "utils/utils";
 
 export default function data() {
   const [clients, setClient] = useState([]);
@@ -93,7 +94,7 @@ export default function data() {
         ),
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            {client.total_amount} {/* replace with the actual property from your product object */}
+            {formatCurrency(client.total_amount)}
           </MDTypography>
         ),
         status: (
