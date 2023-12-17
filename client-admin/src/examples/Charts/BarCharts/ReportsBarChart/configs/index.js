@@ -15,24 +15,36 @@ Coded by www.creative-tim.com
 
 function configs(labels, datasets) {
   var mang = [0, 0, 0, 0, 0, 0, 0];
-  // console.log(datasets.data);
-  datasets.data.map((item, index) => {
-    // console.log(item[index].totalPrice, "datata");
-    if (item[index].month == 6) {
-      mang[0] = item[index].totalPrice;
-    } else if (item[index].month == 7) {
-      mang[1] = item[index].totalPrice;
-    } else if (item[index].month == 8) {
-      mang[2] = item[index].totalPrice;
-    } else if (item[index].month == 9) {
-      mang[3] = item[index].totalPrice;
-    } else if (item[index].month == 10) {
-      mang[4] = item[index].totalPrice;
-    } else if (item[index].month == 11) {
-      mang[5] = item[index].totalPrice;
-    } else if (item[index].month == 12) {
-      mang[6] = item[index].totalPrice;
+  var manga = [...datasets.data[0]];
+  manga.map((item, index) => {
+    // console.log(item[index], "item");
+    if (item.month == 6) {
+      mang[0] = item.totalPrice;
     }
+    if (item.month == 7) {
+      mang[1] = item.totalPrice;
+    }
+    if (item.month == 8) {
+      mang[2] = item.totalPrice;
+    }
+    if (item.month == 9) {
+      mang[3] = item.totalPrice;
+    }
+    if (item.month == 10) {
+      mang[4] = item.totalPrice;
+    }
+    if (item.month == 11) {
+      mang[5] = item.totalPrice;
+    }
+    if (item.month == 12) {
+      mang[6] = item.totalPrice;
+    }
+  });
+
+  console.log(manga, "mang");
+
+  manga.map((item, index) => {
+    console.log(item.month, "item manga");
   });
   return {
     data: {
