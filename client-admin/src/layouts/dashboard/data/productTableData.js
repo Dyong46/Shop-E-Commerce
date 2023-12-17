@@ -1,32 +1,13 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import Icon from "@mui/material/Icon";
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
 
 // Images
 import { useEffect, useState } from "react";
 import { getTopProduct } from "servers/OrderService";
+
+import PropTypes from "prop-types";
 
 export default function data() {
   const [products, setProduct] = useState([]);
@@ -35,8 +16,6 @@ export default function data() {
     const res = await getTopProduct();
     setProduct(res);
   };
-
-  console.log("products: ", products);
 
   useEffect(() => {
     try {
@@ -55,54 +34,55 @@ export default function data() {
     </MDBox>
   );
 
-  const Progress = ({ color, value }) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-      <MDBox ml={0.5} width="9rem">
-        <MDProgress variant="gradient" color={color} value={value} />
-      </MDBox>
-    </MDBox>
-  );
+  Project.propTypes = {
+    image: PropTypes.string,
+    name: PropTypes.string,
+  };
 
   const rows = Array.isArray(products) // Check if products is an array
     ? products.map((product, index) => ({
-        project: (
+        id: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {product.id}
+          </MDTypography>
+        ),
+        product: (
           <Project
             image={product.img} // replace with the actual property from your product object
             name={product.nameProduct} // replace with the actual property from your product object
           />
         ),
-        budget: (
+        category: (
+          <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
+            {product.category.name}
+          </MDTypography>
+        ),
+        price: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             {product.price}
           </MDTypography>
         ),
-        status: (
+        quantity: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {product.totalBuy}/{product.quantity}
+            {product.quantity}
           </MDTypography>
         ),
-        completion: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ textAlign: "left" }}
-          ></MDTypography>
+        totalBuy: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {product.totalBuy}
+          </MDTypography>
         ),
       }))
     : [];
 
   return {
     columns: [
-      { Header: "", accessor: "project", width: "30%", align: "left" },
-      { Header: "", accessor: "budget", align: "left" },
-      { Header: "", accessor: "status", align: "center" },
-      { Header: "", accessor: "completion", align: "center" },
+      { Header: "Id", accessor: "id", align: "left" },
+      { Header: "Product", accessor: "product", width: "30%", align: "left" },
+      { Header: "Category", accessor: "category", align: "left" },
+      { Header: "Price", accessor: "price", align: "left" },
+      { Header: "Quantity", accessor: "quantity", align: "center" },
+      { Header: "Total Buy", accessor: "totalBuy", align: "center" },
     ],
     rows: rows,
   };
