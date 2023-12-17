@@ -1,28 +1,9 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import Icon from "@mui/material/Icon";
+import PropTypes from "prop-types";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
-import MDProgress from "components/MDProgress";
 
 // Images
 import { useEffect, useState } from "react";
@@ -44,8 +25,6 @@ export default function data() {
     }
   }, []);
 
-  console.log("accounts: ", accounts);
-
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -55,26 +34,25 @@ export default function data() {
     </MDBox>
   );
 
-  const Progress = ({ color, value }) => (
-    <MDBox display="flex" alignItems="center">
-      <MDTypography variant="caption" color="text" fontWeight="medium">
-        {value}%
-      </MDTypography>
-      <MDBox ml={0.5} width="9rem">
-        <MDProgress variant="gradient" color={color} value={value} />
-      </MDBox>
-    </MDBox>
-  );
+  Project.propTypes = {
+    image: PropTypes.string,
+    name: PropTypes.string,
+  };
 
-  const rows = Array.isArray(accounts) // Check if products is an array
-    ? accounts.map((product, index) => ({
-        project: <Project image={product.img} name={product.fullname} />,
-        budget: (
+  const rows = Array.isArray(accounts)
+    ? accounts.map((product) => ({
+        id: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {product.id}
+          </MDTypography>
+        ),
+        user: <Project image={product.img} name={product.fullname} />,
+        email: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             {product.email}
           </MDTypography>
         ),
-        status: (
+        totalAmount: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             {product.totalAmount}
           </MDTypography>
@@ -84,9 +62,10 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "", accessor: "project", width: "30%", align: "left" },
-      { Header: "", accessor: "budget", align: "left" },
-      { Header: "", accessor: "status", align: "center" },
+      { Header: "ID", accessor: "id", align: "left" },
+      { Header: "User", accessor: "user", width: "30%", align: "left" },
+      { Header: "Email", accessor: "email", align: "left" },
+      { Header: "Tổng tiền", accessor: "totalAmount", align: "center" },
     ],
     rows: rows,
   };
