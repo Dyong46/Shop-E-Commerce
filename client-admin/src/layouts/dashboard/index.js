@@ -70,34 +70,17 @@ function Dashboard() {
   const onClick = (category) => {
     // navigate("/tables", { category });
   };
-  const categorys = [
-    {
-      text: "chờ xác nhận",
-      icon: "verified",
-    },
-    {
-      text: "Chờ Lấy Hàng",
-      icon: "shoppingCartCheckoutIcon ",
-    },
-    {
-      text: "Đã Xử Lý",
-      icon: "checkCircleIcon ",
-    },
-    {
-      text: "Đơn Huỷ",
-      icon: "cancel",
-    },
-  ];
 
   function statusUI() {
     const elements = [];
+    console.log("statistical: ", statistical);
     statistical.map((item, index) => {
       elements.push(
         <Grid item xs={12} md={6} lg={3}>
           <MDBox mb={1.5}>
             <ComplexStatisticsCard
               color="dark"
-              icon={categorys[index].icon}
+              icon={item.icon}
               title={item.status}
               count={item.count}
               percentage={{

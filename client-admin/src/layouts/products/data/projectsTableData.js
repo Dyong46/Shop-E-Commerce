@@ -43,6 +43,7 @@ export default function data() {
 
   const remove = async (id) => {
     await removeProduct(id);
+    getAllProduct();
   };
 
   const handleEdit = (id) => {
