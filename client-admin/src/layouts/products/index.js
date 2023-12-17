@@ -68,6 +68,7 @@ function Products() {
     cleanIdProduct,
     getAllProduct,
   } = projectsTableData();
+
   const profileSchema = userSchema.pick([
     "title",
     "price",
@@ -108,6 +109,7 @@ function Products() {
 
   const handleClose = async () => {
     setOpen(!open);
+    if (!open) reset();
   };
 
   const handleUpload = () => {
@@ -389,8 +391,8 @@ function Products() {
                     <DialogActions>
                       <MDButton
                         onClick={() => {
-                          handleClose();
                           cleanIdProduct();
+                          handleClose();
                         }}
                       >
                         Disagree

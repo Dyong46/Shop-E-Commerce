@@ -54,6 +54,7 @@ export default function data() {
 
   const cleanIdProduct = () => {
     setIdProduct(null);
+    console.log(idProduct);
   };
 
   useEffect(() => {
