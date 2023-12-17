@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Fragment, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { AddressContext } from '~/Context/Address/AddressContext';
+import { getNameFromNameId } from '~/utils/utils';
 
 const Location = (props) => {
   const [addres, setAdres] = useContext(AddressContext);
@@ -28,7 +29,7 @@ const Location = (props) => {
                         {item.fullname} (+84) {item.phone}
                       </p>
                       <p className="mb-3 ml-3 font-normal text-gray-500 dark:text-gray-400">
-                        {item.specific_address}, {item.wards}, {item.district}, {item.city}
+                        {item.specific_address}, {getNameFromNameId(item.wards)}, {getNameFromNameId(item.district)}, {getNameFromNameId(item.city)}
                       </p>
                       <p className="text-xs font-bold ml-4 mt-1 dark:text-orange h-4 outline outline-1 outline-orange">
                         Mặt Định
