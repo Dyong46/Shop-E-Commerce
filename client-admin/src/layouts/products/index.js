@@ -53,6 +53,7 @@ import { upload } from "servers/cloudinaryService.js";
 import { createProduct } from "servers/productService.js";
 import { productById } from "servers/productService.js";
 import { categoriesGetAll } from "servers/categoryService.js";
+import { toast } from "react-toastify";
 
 function Products() {
   const [open, setOpen] = useState(false);
@@ -102,8 +103,6 @@ function Products() {
     return file ? URL.createObjectURL(file) : "";
   }, [file]);
 
-  console.log("preview image: ", previewImage);
-
   const handleClose = async () => {
     setOpen(!open);
   };
@@ -113,18 +112,12 @@ function Products() {
   };
 
   const onFileChange = (event) => {
-    const fileFromLocal = event.target.files[0];
-
+    const fileFromLocal = event.target.files?.[0];
     fileInputRef.current?.setAttribute("value", "");
-
-    if (!fileFromLocal) {
-      console.error("......");
-    } else {
-      setFile(fileFromLocal);
-    }
+    console.log("111aaa", fileFromLocal);
+    setFile(fileFromLocal);
+    toast.success("Upload ảnh thành công");
   };
-
-  console.log(file);
 
   const handleOpenUpdate = async () => {
     console.log(pId);
@@ -340,7 +333,7 @@ function Products() {
                             </MDBox>
                           </Stack>
                           <Stack>
-                            <img style={{ width: 200 }} src={img || previewImage} loading="lazy" />
+                            <img style={{ width: 200 }} src={previewImage} />
                             <MDButton
                               variant="contained"
                               onClick={handleUpload}
@@ -350,12 +343,14 @@ function Products() {
                             </MDButton>
                             <input
                               className="hidden"
-                              value={file?.name || null}
                               type="file"
                               accept=".jpg,.jpeg,.png"
                               ref={fileInputRef}
-                              onChange={onFileChange}
                               hidden
+                              onChange={onFileChange}
+                              onClick={(event) => {
+                                event.target.value = null;
+                              }}
                             />
                           </Stack>
                         </Stack>
