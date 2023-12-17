@@ -1,7 +1,5 @@
-import axios from "axios";
-import config from "~/constants/config";
-import HttpStatusCode from "~/constants/httpStatusCode.enum";
-import userImage from "~/assets/images/user.svg";
+import axios, { HttpStatusCode } from "axios";
+import config from "constrants/config";
 
 export function isAxiosError(error) {
   return axios.isAxiosError(error);
@@ -53,5 +51,21 @@ export const getAvatarUrl = (avatarName) => {
   if (avatarName && avatarName.includes("http")) {
     return avatarName;
   }
-  return avatarName ? `${config.baseUrl}images/${avatarName}` : userImage;
+  return avatarName ? `${config.baseUrl}images/${avatarName}` : "#";
 };
+
+export const getNameFromNameId = (nameId) => {
+  if (!nameId) return "";
+  const name = nameId.split("-i-")[0];
+  return name.replace(/-/g, " ");
+};
+//
+// export const getAddress = (ward, district, city) => {
+//   return (
+//     ward?.split("-i-")[0].replaceAll("-", " ") +
+//     ", " +
+//     district?.split("-i-")[0].replaceAll("-", " ") +
+//     ", " +
+//     city?.split("-i-")[0].replaceAll("-", " ")
+//   );
+// };

@@ -29,11 +29,11 @@ import { useEffect, useState } from "react";
 import { getOrderByStatus } from "servers/OrderService";
 import { Link } from "react-router-dom";
 import { changeStatusOrder } from "servers/OrderService";
+import { getAddress } from "utils/utils";
+import { getNameFromNameId } from "utils/utils";
 
 export default function data() {
   const [clients, setClient] = useState([]);
-  const [idProduct, setIdProduct] = useState("");
-  const [open, setOpen] = useState(false);
 
   const getProductWatting = async () => {
     const res = await getOrderByStatus(1);
@@ -97,19 +97,11 @@ export default function data() {
         ),
         status: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {client.wards + " " + client.district + " " + client.city}
-          </MDTypography>
-        ),
-        completion: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ textAlign: "left" }}
-          >
-            {client.distric}
+            {getNameFromNameId(client.wards) +
+              ", " +
+              getNameFromNameId(client?.district) +
+              ", " +
+              getNameFromNameId(client?.city)}
           </MDTypography>
         ),
         action: (

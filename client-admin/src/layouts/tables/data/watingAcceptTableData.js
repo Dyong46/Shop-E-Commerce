@@ -25,20 +25,14 @@ import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 
 // Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
-import logoGithub from "assets/images/small-logos/github.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-import logoSlack from "assets/images/small-logos/logo-slack.svg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-import logoInvesion from "assets/images/small-logos/logo-invision.svg";
 import { useEffect, useState } from "react";
 import { getOrderByStatus } from "servers/OrderService";
 import { Link } from "react-router-dom";
+import { getAddress } from "utils/utils";
+import { getNameFromNameId } from "utils/utils";
 
 export default function data() {
   const [clients, setClient] = useState([]);
-  const [idProduct, setIdProduct] = useState("");
-  const [open, setOpen] = useState(false);
 
   const getProductWatting = async () => {
     const res = await getOrderByStatus(2);
@@ -53,6 +47,7 @@ export default function data() {
       console.error(error);
     }
   }, []);
+
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -95,19 +90,11 @@ export default function data() {
         ),
         status: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {client.wards + " " + client.district + " " + client.city}
-          </MDTypography>
-        ),
-        completion: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ textAlign: "left" }}
-          >
-            {client.distric}
+            {getNameFromNameId(client.wards) +
+              ", " +
+              getNameFromNameId(client?.district) +
+              ", " +
+              getNameFromNameId(client?.city)}
           </MDTypography>
         ),
         action: (

@@ -58,7 +58,6 @@ function Products() {
   const [open, setOpen] = useState(false);
 
   const [file, setFile] = useState();
-  const [age, setAge] = useState("");
   const [categorys, setCategorys] = useState([]);
 
   const { columns: pColumns, rows: pRows, idProduct: pId } = projectsTableData();
@@ -94,18 +93,16 @@ function Products() {
     formState: { errors },
   } = methods;
 
-  const handleChangeAge = (event) => {
-    setAge(event.target.value);
-  };
-
   const fileInputRef = useRef(null);
 
   const img =
     "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
 
-  // const previewImage = useMemo(() => {
-  //   return file ? URL.createObjectURL(file) : "";
-  // }, [file]);
+  const previewImage = useMemo(() => {
+    return file ? URL.createObjectURL(file) : "";
+  }, [file]);
+
+  console.log("preview image: ", previewImage);
 
   const handleClose = async () => {
     setOpen(!open);
@@ -123,9 +120,11 @@ function Products() {
     if (!fileFromLocal) {
       console.error("......");
     } else {
-      setFile(event.target.files);
+      setFile(fileFromLocal);
     }
   };
+
+  console.log(file);
 
   const handleOpenUpdate = async () => {
     console.log(pId);
@@ -141,13 +140,6 @@ function Products() {
         quantity: product?.quantity || "",
         "category_id.id": product?.category_id.id || "",
       });
-
-      // setValue("name_product", product.name_product || "");
-      // setValue("description", product.description || "");
-      // setValue("price", product.phone || "");
-      // setValue("img", product.img || "");
-      // setValue("quantity", product.quantity || "");
-      // setValue("category_id.id", product.category_id.id || "");
     }
   };
 
@@ -348,12 +340,7 @@ function Products() {
                             </MDBox>
                           </Stack>
                           <Stack>
-                            <img
-                              style={{ width: 200 }}
-                              srcSet={`${img ?? previewImage}`}
-                              src={`${img ?? previewImage}`}
-                              loading="lazy"
-                            />
+                            <img style={{ width: 200 }} src={img || previewImage} loading="lazy" />
                             <MDButton
                               variant="contained"
                               onClick={handleUpload}
@@ -368,9 +355,6 @@ function Products() {
                               accept=".jpg,.jpeg,.png"
                               ref={fileInputRef}
                               onChange={onFileChange}
-                              onClick={(event) => {
-                                event.target.value = null;
-                              }}
                               hidden
                             />
                           </Stack>
