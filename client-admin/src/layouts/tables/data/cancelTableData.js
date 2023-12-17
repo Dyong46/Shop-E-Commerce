@@ -17,6 +17,7 @@ import { getNameFromNameId } from "utils/utils";
 
 export default function data() {
   const [clients, setClient] = useState([]);
+  const moment = require("moment");
 
   const getProductWatting = async () => {
     const res = await getOrderByStatus(4);
@@ -77,6 +78,11 @@ export default function data() {
               getNameFromNameId(client?.city)}
           </MDTypography>
         ),
+        dateCreate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {moment(new Date(client.created_at).toString()).format("DD/MM/YYYY")}
+          </MDTypography>
+        ),
         action: (
           <MDTypography component="a" href="#" color="text">
             <Icon onClick={() => {}}>cancel</Icon>
@@ -90,6 +96,7 @@ export default function data() {
       { Header: "Tên Khách Hàng", accessor: "project", width: "30%", align: "left" },
       { Header: "Giá trị đơn hàng", accessor: "budget", align: "left" },
       { Header: "Địa chỉ", accessor: "status", align: "center" },
+      { Header: "Ngày tạo", accessor: "dateCreate", align: "center" },
       { Header: "Đơn huỷ", accessor: "action", align: "center" },
     ],
 
