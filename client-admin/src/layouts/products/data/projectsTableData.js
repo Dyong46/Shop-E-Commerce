@@ -51,6 +51,10 @@ export default function data() {
     setIdProduct(id);
   };
 
+  const cleanIdProduct = () => {
+    setIdProduct(null);
+  };
+
   useEffect(() => {
     try {
       getAllProduct();
@@ -128,6 +132,7 @@ export default function data() {
     ],
     rows: rows,
     idProduct: idProduct,
-    open: open,
+    cleanIdProduct,
+    getAllProduct,
   };
 }

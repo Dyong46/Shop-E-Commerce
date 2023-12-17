@@ -61,7 +61,13 @@ function Products() {
   const [file, setFile] = useState();
   const [categorys, setCategorys] = useState([]);
 
-  const { columns: pColumns, rows: pRows, idProduct: pId } = projectsTableData();
+  const {
+    columns: pColumns,
+    rows: pRows,
+    idProduct: pId,
+    cleanIdProduct,
+    getAllProduct,
+  } = projectsTableData();
   const profileSchema = userSchema.pick([
     "title",
     "price",
@@ -96,9 +102,6 @@ function Products() {
 
   const fileInputRef = useRef(null);
 
-  const img =
-    "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
-
   const previewImage = useMemo(() => {
     return file ? URL.createObjectURL(file) : "";
   }, [file]);
@@ -120,9 +123,7 @@ function Products() {
   };
 
   const handleOpenUpdate = async () => {
-    console.log(pId);
     const product = await productById(pId);
-    console.log("product by id", product);
 
     if (product) {
       reset({
@@ -159,26 +160,32 @@ function Products() {
     console.log("data: ", payload);
     try {
       let imgFile = imageFile;
-      // if (file) {
-      //   console.log(file);
-      //   const uploadRes = await upload({ image: file });
-      //
-      //   imgFile = uploadRes.url;
-      // }
-      setValue("img", "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8");
+      if (file) {
+        console.log(file);
+        const uploadRes = await upload({ image: file });
 
-      console.log(imgFile);
+        imgFile = uploadRes.url;
+      }
+
+      setValue("img", imgFile);
 
       if (pId) {
-        await updateProduct(pId, data);
-      } else {
-        const res = await createProduct({
+        await updateProduct(pId, {
           ...data,
-          img: "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8",
+          img: imgFile,
+        });
+      } else {
+        await createProduct({
+          ...data,
+          img: imgFile,
         });
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      cleanIdProduct();
+      getAllProduct();
+      handleClose();
     }
   });
 
@@ -287,7 +294,12 @@ function Products() {
                                 control={control}
                                 name="price"
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                                  <MDInput label="Price" value={value || ""} onChange={onChange} />
+                                  <MDInput
+                                    type="number"
+                                    label="Price"
+                                    value={value || ""}
+                                    onChange={onChange}
+                                  />
                                 )}
                               />
                             </MDBox>
@@ -297,6 +309,7 @@ function Products() {
                                 name="quantity"
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
                                   <MDInput
+                                    type="number"
                                     label="Quantity"
                                     value={value || ""}
                                     onChange={onChange}
@@ -372,8 +385,15 @@ function Products() {
                       </Stack>
                     </DialogContent>
                     <DialogActions>
-                      <MDButton onClick={handleClose}>Disagree</MDButton>
-                      <button type="submit">Agree</button>
+                      <MDButton
+                        onClick={() => {
+                          handleClose();
+                          cleanIdProduct();
+                        }}
+                      >
+                        Disagree
+                      </MDButton>
+                      <MDButton type="submit">Aggre</MDButton>
                     </DialogActions>
                   </form>
                 </Dialog>
