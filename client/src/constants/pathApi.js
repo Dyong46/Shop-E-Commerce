@@ -7,7 +7,8 @@ const pathApi = {
 	address: 'api/address',
 	review: 'api/reviews',
 	gallery: 'api/galleries',
-  cloudinary: 'api/cloudinary'
+  cloudinary: 'api/cloudinary',
+  stripe: 'api/stripe'
 };
 
 export default pathApi;
