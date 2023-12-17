@@ -126,7 +126,7 @@ export default function data() {
       { Header: "Ngày tạo", accessor: "dateCreate", align: "center" },
       { Header: "Đang chờ xác nhận", accessor: "action", align: "center" },
     ],
-
     rows: rows,
+    getProductWatting,
   };
 }

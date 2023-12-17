@@ -33,16 +33,32 @@ import cancelTableData from "layouts/tables/data/cancelTableData";
 import watingTableData from "layouts/tables/data/watingTableData";
 import watingAcceptTableData from "layouts/tables/data/watingAcceptTableData";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tab, Tabs, Typography } from "@mui/material";
 
 function Orders() {
-  const { columns: pColumns, rows: pRows } = projectsTableData();
-  const { columns: wColumns, rows: wRows } = watingTableData();
-  const { columns: waColumns, rows: waRows } = watingAcceptTableData();
-  const { columns: cColumns, rows: cRows } = cancelTableData();
+  const { columns: pColumns, rows: pRows, getProductClientRecive } = projectsTableData();
+  const { columns: wColumns, rows: wRows, getProductWatting } = watingTableData();
+  const { columns: waColumns, rows: waRows, getProductWattingAccept } = watingAcceptTableData();
+  const { columns: cColumns, rows: cRows, getProductCancel } = cancelTableData();
 
   const [value, setValue] = useState(0);
+  useEffect(() => {
+    switch (value) {
+      case 0:
+        getProductWatting();
+        break;
+      case 1:
+        getProductWattingAccept();
+        break;
+      case 2:
+        getProductClientRecive();
+        break;
+      case 3:
+        getProductCancel();
+        break;
+    }
+  }, [value]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

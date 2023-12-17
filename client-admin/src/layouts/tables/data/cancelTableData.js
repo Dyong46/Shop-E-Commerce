@@ -19,7 +19,7 @@ export default function data() {
   const [clients, setClient] = useState([]);
   const moment = require("moment");
 
-  const getProductWatting = async () => {
+  const getProductCancel = async () => {
     const res = await getOrderByStatus(4);
     console.log("cho xac nhan", res);
     setClient(res);
@@ -27,7 +27,7 @@ export default function data() {
 
   useEffect(() => {
     try {
-      getProductWatting();
+      getProductCancel();
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +99,7 @@ export default function data() {
       { Header: "Ngày tạo", accessor: "dateCreate", align: "center" },
       { Header: "Đơn huỷ", accessor: "action", align: "center" },
     ],
-
     rows: rows,
+    getProductCancel,
   };
 }
