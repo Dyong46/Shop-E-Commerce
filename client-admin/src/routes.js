@@ -44,6 +44,7 @@ import Products from "layouts/products";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import OrderDetail from "layouts/orderDetail";
 
 const routes = [
   {
@@ -51,16 +52,24 @@ const routes = [
     name: "Trang chủ",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
+    route: "",
     component: <Dashboard />,
   },
   {
     type: "collapse",
     name: "Đơn hàng",
     key: "Orders",
-    icon: <Icon fontSize="small">local_mall</Icon>,
-    route: "/Orders",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/orders",
     component: <Tables />,
+  },
+  {
+    type: "Sidenav",
+    name: "Chi tiết đơn hàng",
+    key: "OrderDetail",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/orders/:orderId",
+    component: <OrderDetail />,
   },
   {
     type: "collapse",
@@ -69,6 +78,22 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/products",
     component: <Products />,
+  },
+  {
+    type: "Sidenav",
+    name: "Chi tiết sản phẩm",
+    key: "ProductDetail",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/products/:productId",
+    component: <OrderDetail />,
+  },
+  {
+    type: "collapse",
+    name: "Đăng nhập",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
   },
 ];
 

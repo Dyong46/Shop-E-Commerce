@@ -29,7 +29,7 @@ import Select from "@mui/material/Select";
 import PropTypes from "prop-types";
 
 import { useForm, Controller } from "react-hook-form";
-import { userSchema, isAxiosUnprocessableEntityError } from "utils/rules";
+import { userSchema } from "utils/rules";
 
 import { productGetAll, updateProduct } from "servers/productService";
 // Material Dashboard 2 React components
@@ -53,15 +53,22 @@ import { upload } from "servers/cloudinaryService.js";
 import { createProduct } from "servers/productService.js";
 import { productById } from "servers/productService.js";
 import { categoriesGetAll } from "servers/categoryService.js";
+import { toast } from "react-toastify";
 
 function Products() {
   const [open, setOpen] = useState(false);
 
   const [file, setFile] = useState();
-  const [age, setAge] = useState("");
   const [categorys, setCategorys] = useState([]);
 
-  const { columns: pColumns, rows: pRows, idProduct: pId } = projectsTableData();
+  const {
+    columns: pColumns,
+    rows: pRows,
+    idProduct: pId,
+    cleanIdProduct,
+    getAllProduct,
+  } = projectsTableData();
+
   const profileSchema = userSchema.pick([
     "title",
     "price",
@@ -94,21 +101,15 @@ function Products() {
     formState: { errors },
   } = methods;
 
-  const handleChangeAge = (event) => {
-    setAge(event.target.value);
-  };
-
   const fileInputRef = useRef(null);
 
-  const img =
-    "https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg";
-
-  // const previewImage = useMemo(() => {
-  //   return file ? URL.createObjectURL(file) : "";
-  // }, [file]);
+  const previewImage = useMemo(() => {
+    return file ? URL.createObjectURL(file) : "";
+  }, [file]);
 
   const handleClose = async () => {
     setOpen(!open);
+    if (!open) reset();
   };
 
   const handleUpload = () => {
@@ -116,21 +117,15 @@ function Products() {
   };
 
   const onFileChange = (event) => {
-    const fileFromLocal = event.target.files[0];
-
+    const fileFromLocal = event.target.files?.[0];
     fileInputRef.current?.setAttribute("value", "");
-
-    if (!fileFromLocal) {
-      console.error("......");
-    } else {
-      setFile(event.target.files);
-    }
+    console.log("111aaa", fileFromLocal);
+    setFile(fileFromLocal);
+    toast.success("Upload ảnh thành công");
   };
 
   const handleOpenUpdate = async () => {
-    console.log(pId);
     const product = await productById(pId);
-    console.log("product by id", product);
 
     if (product) {
       reset({
@@ -141,13 +136,6 @@ function Products() {
         quantity: product?.quantity || "",
         "category_id.id": product?.category_id.id || "",
       });
-
-      // setValue("name_product", product.name_product || "");
-      // setValue("description", product.description || "");
-      // setValue("price", product.phone || "");
-      // setValue("img", product.img || "");
-      // setValue("quantity", product.quantity || "");
-      // setValue("category_id.id", product.category_id.id || "");
     }
   };
 
@@ -174,26 +162,34 @@ function Products() {
     console.log("data: ", payload);
     try {
       let imgFile = imageFile;
-      // if (file) {
-      //   console.log(file);
-      //   const uploadRes = await upload({ image: file });
-      //
-      //   imgFile = uploadRes.url;
-      // }
-      setValue("img", "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8");
+      if (file) {
+        console.log(file);
+        const uploadRes = await upload({ image: file });
 
-      console.log(imgFile);
+        imgFile = uploadRes.url;
+      }
+
+      console.log("img file: ", imgFile);
+
+      setValue("img", imgFile);
 
       if (pId) {
-        await updateProduct(pId, data);
-      } else {
-        const res = await createProduct({
+        await updateProduct(pId, {
           ...data,
-          img: "https://down-vn.img.susercontent.com/file/sg-11134201-23010-exq71yxtktlvf8",
+          img: imgFile,
+        });
+      } else {
+        await createProduct({
+          ...data,
+          img: imgFile,
         });
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      cleanIdProduct();
+      getAllProduct();
+      handleClose();
     }
   });
 
@@ -302,7 +298,12 @@ function Products() {
                                 control={control}
                                 name="price"
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
-                                  <MDInput label="Price" value={value || ""} onChange={onChange} />
+                                  <MDInput
+                                    type="number"
+                                    label="Price"
+                                    value={value || ""}
+                                    onChange={onChange}
+                                  />
                                 )}
                               />
                             </MDBox>
@@ -312,6 +313,7 @@ function Products() {
                                 name="quantity"
                                 render={({ field: { onChange, onBlur, value, ref } }) => (
                                   <MDInput
+                                    type="number"
                                     label="Quantity"
                                     value={value || ""}
                                     onChange={onChange}
@@ -348,12 +350,7 @@ function Products() {
                             </MDBox>
                           </Stack>
                           <Stack>
-                            <img
-                              style={{ width: 200 }}
-                              srcSet={`${img ?? previewImage}`}
-                              src={`${img ?? previewImage}`}
-                              loading="lazy"
-                            />
+                            <img style={{ width: 200 }} src={previewImage} />
                             <MDButton
                               variant="contained"
                               onClick={handleUpload}
@@ -363,15 +360,14 @@ function Products() {
                             </MDButton>
                             <input
                               className="hidden"
-                              value={file?.name || null}
                               type="file"
                               accept=".jpg,.jpeg,.png"
                               ref={fileInputRef}
+                              hidden
                               onChange={onFileChange}
                               onClick={(event) => {
                                 event.target.value = null;
                               }}
-                              hidden
                             />
                           </Stack>
                         </Stack>
@@ -393,8 +389,15 @@ function Products() {
                       </Stack>
                     </DialogContent>
                     <DialogActions>
-                      <MDButton onClick={handleClose}>Disagree</MDButton>
-                      <button type="submit">Agree</button>
+                      <MDButton
+                        onClick={() => {
+                          cleanIdProduct();
+                          handleClose();
+                        }}
+                      >
+                        Disagree
+                      </MDButton>
+                      <MDButton type="submit">Aggre</MDButton>
                     </DialogActions>
                   </form>
                 </Dialog>

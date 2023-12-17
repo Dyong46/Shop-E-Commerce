@@ -16,6 +16,11 @@ const getAllOrderDetails = () => {
 const postOrderDetails = (url, obj) => {
   return api.post(url, obj);
 };
+
+const getOrderById = (id) => {
+  return api.get(`${pathApi.order}/${id}`);
+};
+
 const getOrderByAccount = (id) => {
   return api.get(`${pathApi.order}` + "/details/" + `${id}`);
 };
@@ -44,6 +49,14 @@ const getStatistical = () => {
   return api.get(`${pathApi.order}` + "/statistical/totalprice");
 };
 
+const getTopProduct = () => {
+  return api.get(`${pathApi.order}` + "/statistical/topproduct");
+};
+
+const getTopAccount = () => {
+  return api.get(`${pathApi.order}` + "/statistical/topaccounts");
+};
+
 const getStatisticalYear = (years) => {
   return api.post(`${pathApi.order}` + "/statistical/year?year=" + `${years}`);
 };
@@ -51,6 +64,7 @@ const getStatisticalYear = (years) => {
 export {
   getAllOrder,
   postOrders,
+  getOrderById,
   postOrderDetails,
   getAllOrderDetails,
   getOrderByAccount,
@@ -61,4 +75,6 @@ export {
   getOrderByStatus,
   getStatistical,
   getStatisticalYear,
+  getTopProduct,
+  getTopAccount,
 };

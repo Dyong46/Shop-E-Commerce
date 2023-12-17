@@ -26,12 +26,15 @@ import MDProgress from "components/MDProgress";
 
 // Images
 import { useEffect, useState } from "react";
-import { getOrderByStatus, changeStatusOrder } from "servers/OrderService";
+import { getOrderByStatus } from "servers/OrderService";
+import { Link } from "react-router-dom";
+import { changeStatusOrder } from "servers/OrderService";
+import { getAddress } from "utils/utils";
+import { getNameFromNameId } from "utils/utils";
 
 export default function data() {
   const [clients, setClient] = useState([]);
-  const [idProduct, setIdProduct] = useState("");
-  const [open, setOpen] = useState(false);
+  const moment = require("moment");
 
   const getProductWatting = async () => {
     const res = await getOrderByStatus(1);
@@ -48,6 +51,7 @@ export default function data() {
   }, []);
 
   const changeOrderStatus = async (id) => {
+    console.log(id);
     await changeStatusOrder(id);
     await getProductWatting();
   };
@@ -81,9 +85,11 @@ export default function data() {
   const rows = Array.isArray(clients) // Check if products is an array
     ? clients.map((client, index) => ({
         project: (
-          <Project
-            name={client.fullname} // replace with the actual property from your product object
-          />
+          <Link to={`/orders/${client.id}`}>
+            <Project
+              name={client.fullname} // replace with the actual property from your product object
+            />
+          </Link>
         ),
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
@@ -92,19 +98,16 @@ export default function data() {
         ),
         status: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {client.wards + " " + client.district + " " + client.city}
+            {getNameFromNameId(client.wards) +
+              ", " +
+              getNameFromNameId(client?.district) +
+              ", " +
+              getNameFromNameId(client?.city)}
           </MDTypography>
         ),
-        completion: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ textAlign: "left" }}
-          >
-            {client.distric}
+        dateCreate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {moment(new Date(client.created_at).toString()).format("DD/MM/YYYY")}
           </MDTypography>
         ),
         action: (
@@ -120,9 +123,10 @@ export default function data() {
       { Header: "Tên Khách Hàng", accessor: "project", width: "30%", align: "left" },
       { Header: "Giá trị đơn hàng", accessor: "budget", align: "left" },
       { Header: "Địa chỉ", accessor: "status", align: "center" },
+      { Header: "Ngày tạo", accessor: "dateCreate", align: "center" },
       { Header: "Đang chờ xác nhận", accessor: "action", align: "center" },
     ],
-
     rows: rows,
+    getProductWatting,
   };
 }

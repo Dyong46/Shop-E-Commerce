@@ -25,21 +25,17 @@ import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 
 // Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
-import logoGithub from "assets/images/small-logos/github.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
-import logoSlack from "assets/images/small-logos/logo-slack.svg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
-import logoInvesion from "assets/images/small-logos/logo-invision.svg";
 import { useEffect, useState } from "react";
 import { getOrderByStatus } from "servers/OrderService";
+import { Link } from "react-router-dom";
+import { getAddress } from "utils/utils";
+import { getNameFromNameId } from "utils/utils";
 
 export default function data() {
   const [clients, setClient] = useState([]);
-  const [idProduct, setIdProduct] = useState("");
-  const [open, setOpen] = useState(false);
+  const moment = require("moment");
 
-  const getProductWatting = async () => {
+  const getProductWattingAccept = async () => {
     const res = await getOrderByStatus(2);
     console.log("cho xac nhan", res);
     setClient(res);
@@ -47,11 +43,12 @@ export default function data() {
 
   useEffect(() => {
     try {
-      getProductWatting();
+      getProductWattingAccept();
     } catch (error) {
       console.error(error);
     }
   }, []);
+
   const Project = ({ image, name }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       <MDAvatar src={image} name={name} size="sm" variant="rounded" />
@@ -81,9 +78,11 @@ export default function data() {
   const rows = Array.isArray(clients) // Check if products is an array
     ? clients.map((client, index) => ({
         project: (
-          <Project
-            name={client.fullname} // replace with the actual property from your product object
-          />
+          <Link to={`/orders/${client.id}`}>
+            <Project
+              name={client.fullname} // replace with the actual property from your product object
+            />
+          </Link>
         ),
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
@@ -92,19 +91,16 @@ export default function data() {
         ),
         status: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {client.wards + " " + client.district + " " + client.city}
+            {getNameFromNameId(client.wards) +
+              ", " +
+              getNameFromNameId(client?.district) +
+              ", " +
+              getNameFromNameId(client?.city)}
           </MDTypography>
         ),
-        completion: (
-          <MDTypography
-            component="a"
-            href="#"
-            variant="caption"
-            color="text"
-            fontWeight="medium"
-            sx={{ textAlign: "left" }}
-          >
-            {client.distric}
+        dateCreate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {moment(new Date(client.created_at).toString()).format("DD/MM/YYYY")}
           </MDTypography>
         ),
         action: (
@@ -120,9 +116,10 @@ export default function data() {
       { Header: "Tên Khách Hàng", accessor: "project", width: "30%", align: "left" },
       { Header: "Giá trị đơn hàng", accessor: "budget", align: "left" },
       { Header: "Địa chỉ", accessor: "status", align: "center" },
+      { Header: "Ngày tạo", accessor: "dateCreate", align: "center" },
       { Header: "Đang giao", accessor: "action", align: "center" },
     ],
-
     rows: rows,
+    getProductWattingAccept,
   };
 }

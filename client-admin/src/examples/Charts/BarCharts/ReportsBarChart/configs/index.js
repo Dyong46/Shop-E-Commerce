@@ -14,50 +14,18 @@ Coded by www.creative-tim.com
 */
 
 function configs(labels, datasets) {
-  var mang = [0, 0, 0, 0, 0, 0, 0];
-  var manga = [...datasets.data[0]];
-  manga.map((item, index) => {
-    // console.log(item[index], "item");
-    if (item.month == 6) {
-      mang[0] = item.totalPrice;
-    }
-    if (item.month == 7) {
-      mang[1] = item.totalPrice;
-    }
-    if (item.month == 8) {
-      mang[2] = item.totalPrice;
-    }
-    if (item.month == 9) {
-      mang[3] = item.totalPrice;
-    }
-    if (item.month == 10) {
-      mang[4] = item.totalPrice;
-    }
-    if (item.month == 11) {
-      mang[5] = item.totalPrice;
-    }
-    if (item.month == 12) {
-      mang[6] = item.totalPrice;
-    }
-  });
-
-  console.log(manga, "mang");
-
-  manga.map((item, index) => {
-    console.log(item.month, "item manga");
-  });
   return {
     data: {
       labels,
       datasets: [
         {
-          label: "Sale",
+          label: datasets.label,
           tension: 0.4,
           borderWidth: 0,
           borderRadius: 4,
           borderSkipped: false,
           backgroundColor: "rgba(255, 255, 255, 0.8)",
-          data: mang,
+          data: datasets.data,
           maxBarThickness: 6,
         },
       ],

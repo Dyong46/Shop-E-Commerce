@@ -37,7 +37,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
             "(:name IS NULL OR LOWER(p.name_product) LIKE %:name%) " +
             "AND (:category IS NULL OR p.category_id.name = :category) " +
             "AND (:priceMin IS NULL OR p.price >= :priceMin) " +
-            "AND (:priceMax IS NULL OR p.price <= :priceMax)")
+            "AND (:priceMax IS NULL OR p.price <= :priceMax)" +
+            "AND p.deleted_at is null")
     Page<Product> findFilteredProducts(
             @Param("name") String name,
             @Param("category") String category,

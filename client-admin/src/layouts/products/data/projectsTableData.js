@@ -35,6 +35,7 @@ export default function data() {
   const [products, setProduct] = useState([]);
   const [idProduct, setIdProduct] = useState("");
   const [open, setOpen] = useState(false);
+  const moment = require("moment");
 
   const getAllProduct = async () => {
     const res = await productGetAll();
@@ -43,11 +44,17 @@ export default function data() {
 
   const remove = async (id) => {
     await removeProduct(id);
+    getAllProduct();
   };
 
   const handleEdit = (id) => {
     setOpen(true);
     setIdProduct(id);
+  };
+
+  const cleanIdProduct = () => {
+    setIdProduct(null);
+    console.log(idProduct);
   };
 
   useEffect(() => {
@@ -80,32 +87,31 @@ export default function data() {
 
   const rows = Array.isArray(products.content) // Check if products is an array
     ? products.content.map((product, index) => ({
-        project: (
-          <Project
-            image={product.img} // replace with the actual property from your product object
-            name={product.name_product} // replace with the actual property from your product object
-          />
-        ),
+        project: <Project image={product.img} name={product.name_product} />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            {product.price} {/* replace with the actual property from your product object */}
+            {product.price}
           </MDTypography>
         ),
         status: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {product.quantity} {/* replace with the actual property from your product object */}
+          <MDTypography component="a" variant="caption" color="text" fontWeight="medium">
+            {product.quantity}
           </MDTypography>
         ),
         completion: (
           <MDTypography
             component="a"
-            href="#"
             variant="caption"
             color="text"
             fontWeight="medium"
             sx={{ textAlign: "left" }}
           >
-            {product.description} {/* replace with the actual property from your product object */}
+            {product.description}
+          </MDTypography>
+        ),
+        dateCreate: (
+          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+            {moment(new Date(product.created_at).toString()).format("DD/MM/YYYY")}
           </MDTypography>
         ),
         action: (
@@ -122,11 +128,13 @@ export default function data() {
       { Header: "Sản phẩm", accessor: "project", width: "30%", align: "left" },
       { Header: "Giá", accessor: "budget", align: "left" },
       { Header: "Tồn kho", accessor: "status", align: "center" },
-      { Header: "Mô tả", accessor: "completion", align: "center" },
+      { Header: "Mô tả", accessor: "completion", align: "left" },
+      { Header: "Ngày tạo", accessor: "dateCreate", align: "center" },
       { Header: "Chỉnh sửa", accessor: "action", align: "center" },
     ],
     rows: rows,
     idProduct: idProduct,
-    open: open,
+    cleanIdProduct,
+    getAllProduct,
   };
 }

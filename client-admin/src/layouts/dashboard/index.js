@@ -1,20 +1,7 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import DataTable from "examples/Tables/DataTable";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -25,51 +12,39 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import { Link, useNavigate } from "react-router-dom";
 
 // Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
+import statisticalYear from "./data/reportsBarChartData.js";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 // Api
 import { getStatistical } from "servers/OrderService";
-import { getStatisticalYear } from "servers/OrderService";
 
 // React
 import { useEffect, useState } from "react";
-import pathApi from "constrants/pathApi";
+import productTableData from "./data/productTableData.js";
+import accountTableData from "./data/accountTableData.js";
 
-const mang = [];
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
-  const navigate = useNavigate();
+  const { sales } = reportsLineChartData;
+  const [statisticalByTotal, setStatisticalByTotal] = useState([]);
   const [statistical, setStatistical] = useState([]);
-  const [statisticalYear, setStatisticalYear] = useState([]);
+  const { columns: pColumns, rows: pRows } = productTableData();
+  const { columns: aColumns, rows: aRows } = accountTableData();
 
-  const getStatistiCalTotalprice = async () => {
+  const getStatistiCalTotal = async () => {
     let getall = await getStatistical();
+    let res = await statisticalYear();
+    console.log(res);
+    console.log(sales);
+    setStatisticalByTotal(res);
     setStatistical(getall);
   };
 
-  const getSevenInStatisticalYear = async (y) => {
-    let getalls = await getStatisticalYear(y);
-    setStatisticalYear(getalls);
-    mang.push(getalls);
-  };
-
   useEffect(() => {
-    let currentYear = new Date();
-    getStatistiCalTotalprice();
-    getSevenInStatisticalYear(currentYear.getFullYear());
+    getStatistiCalTotal();
   }, []);
 
-  const onClick = (category) => {
-    // navigate("/tables", { category });
-  };
   const categorys = [
     {
       text: "chờ xác nhận",
@@ -130,7 +105,7 @@ function Dashboard() {
                   title="Thống kê 7 tháng gần nhất"
                   description="Last Campaign Performance"
                   date="Cập nhật 2 ngày trước"
-                  chart={reportsBarChartData}
+                  chart={statisticalByTotal}
                 />
               </MDBox>
             </Grid>
@@ -149,30 +124,40 @@ function Dashboard() {
                 />
               </MDBox>
             </Grid>
-            {/* <Grid item xs={12} md={6} lg={4}> */}
-            {/*   <MDBox mb={3}> */}
-            {/*     <ReportsLineChart */}
-            {/*       color="dark" */}
-            {/*       title="completed tasks" */}
-            {/*       description="Last Campaign Performance" */}
-            {/*       date="just updated" */}
-            {/*       chart={tasks} */}
-            {/*     /> */}
-            {/*   </MDBox> */}
-            {/* </Grid> */}
           </Grid>
         </MDBox>
 
-        {/* <MDBox> */}
-        {/*   <Grid container spacing={3}> */}
-        {/*     <Grid item xs={12} md={6} lg={8}> */}
-        {/*       <Projects /> */}
-        {/*     </Grid> */}
-        {/*     <Grid item xs={12} md={6} lg={4}> */}
-        {/*       <OrdersOverview /> */}
-        {/*     </Grid> */}
-        {/*   </Grid> */}
-        {/* </MDBox> */}
+        <MDBox>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={12} lg={12}>
+              <Card>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns: pColumns, rows: pRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} md={12} lg={12}>
+              <Card>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns: aColumns, rows: aRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
+          </Grid>
+        </MDBox>
       </MDBox>
     </DashboardLayout>
   );

@@ -5,6 +5,7 @@ import SignIn from "layouts/authentication/sign-in";
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Products from "layouts/products";
+import OrderDetail from "layouts/orderDetail";
 import { useMaterialUIController } from "context";
 
 function ProtectedRoute() {
@@ -29,12 +30,16 @@ const UseRouteElement = () => {
       element: <ProtectedRoute />,
       children: [
         {
-          path: "/dashboard",
+          path: "",
           element: <Dashboard />,
         },
         {
-          path: "/Orders",
+          path: "/orders",
           element: <Tables />,
+        },
+        {
+          path: "/orders/:orderId",
+          element: <OrderDetail />,
         },
         {
           path: "/products",
