@@ -11,6 +11,7 @@ import { action, useStore } from '~/Context';
 import { Helmet } from 'react-helmet-async';
 import { convert } from 'html-to-text';
 import { toast } from 'react-toastify';
+import Button from '~/components/Button';
 
 const ProductDetail = () => {
   const { nameId } = useParams();
@@ -139,6 +140,13 @@ const ProductDetail = () => {
       document.body.style.overflow = 'auto';
     }
   };
+
+  function checkQuantity() {
+    let a = document.querySelector('.carts');
+    a.style.border = '1px soild #808080';
+    a.style.background = '#C0C0C0';
+    a.style.color = '#778899';
+  }
 
   if (!product || !galleries) return null;
   return (
@@ -795,118 +803,124 @@ const ProductDetail = () => {
                     </span>
                   </div>
                 </div>
-                <div
-                  className="mt-8 flex"
-                  onClick={() => {
-                    toast.success('Đã thêm vào giỏ hàng');
-                    if (todos.length == 0) {
-                      dispath(
-                        action.addTodoInput(
-                          id,
-                          product.name_product,
-                          color,
-                          size,
-                          quantity,
-                          product.img,
-                          'namshop',
-                          product.price,
-                          product.quantity,
-                          false,
-                        ),
-                      );
-                    } else {
-                      todos.findIndex((element) => {
-                        if (element.id == id) {
-                          dispath(
-                            action.addTodoInput(
-                              id,
-                              product.name_product,
-                              color,
-                              size,
-                              quantity,
-                              product.img,
-                              'namshop',
-                              product.price,
-                              product.quantity,
-                              false,
-                            ),
-                          );
-                        } else {
-                          dispath(
-                            action.addTodoInput(
-                              id,
-                              product.name_product,
-                              color,
-                              size,
-                              quantity,
-                              product.img,
-                              'namshop',
-                              product.price,
-                              product.quantity,
-                              false,
-                            ),
-                          );
-                        }
-                      });
-                    }
-                  }}
-                >
+                {product.quantity !== 0 ? (
                   <div
-                    className="flex justify-center p-3 w-56 rounded-sm cursor-pointer"
-                    style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
+                    className="mt-8 flex"
+                    onClick={() => {
+                      toast.success('Đã thêm vào giỏ hàng');
+                      if (todos.length == 0) {
+                        dispath(
+                          action.addTodoInput(
+                            id,
+                            product.name_product,
+                            color,
+                            size,
+                            quantity,
+                            product.img,
+                            'namshop',
+                            product.price,
+                            product.quantity,
+                            false,
+                          ),
+                        );
+                      } else {
+                        todos.findIndex((element) => {
+                          if (element.id == id) {
+                            dispath(
+                              action.addTodoInput(
+                                id,
+                                product.name_product,
+                                color,
+                                size,
+                                quantity,
+                                product.img,
+                                'namshop',
+                                product.price,
+                                product.quantity,
+                                false,
+                              ),
+                            );
+                          } else {
+                            dispath(
+                              action.addTodoInput(
+                                id,
+                                product.name_product,
+                                color,
+                                size,
+                                quantity,
+                                product.img,
+                                'namshop',
+                                product.price,
+                                product.quantity,
+                                false,
+                              ),
+                            );
+                          }
+                        });
+                      }
+                    }}
                   >
-                    <svg
-                      enableBackground="new 0 0 15 15"
-                      viewBox="0 0 15 15"
-                      x="0"
-                      y="0"
-                      className="shopee-svg-icon tDviDD icon-add-to-cart mr-2"
-                      width={20}
-                      stroke="#F05D40"
+                    <div
+                      className="flex justify-center p-3 w-56 rounded-sm cursor-pointer carts"
+                      style={{ border: '1px solid #F05D40', background: '#FFEEE8' }}
                     >
-                      <g>
+                      <svg
+                        enableBackground="new 0 0 15 15"
+                        viewBox="0 0 15 15"
+                        x="0"
+                        y="0"
+                        className="shopee-svg-icon tDviDD icon-add-to-cart mr-2"
+                        width={20}
+                        stroke="#F05D40"
+                      >
                         <g>
-                          <polyline
+                          <g>
+                            <polyline
+                              fill="none"
+                              points=".5 .5 2.7 .5 5.2 11 12.4 11 14.5 3.5 3.7 3.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeMiterlimit="10"
+                            ></polyline>
+                            <circle cx="6" cy="13.5" r="1" stroke="#F05D40"></circle>
+                            <circle cx="11.5" cy="13.5" r="1" stroke="#F05D40"></circle>
+                          </g>
+                          <line
                             fill="none"
-                            points=".5 .5 2.7 .5 5.2 11 12.4 11 14.5 3.5 3.7 3.5"
+                            stroke="#F05D40"
                             strokeLinecap="round"
-                            strokeLinejoin="round"
                             strokeMiterlimit="10"
-                          ></polyline>
-                          <circle cx="6" cy="13.5" r="1" stroke="#F05D40"></circle>
-                          <circle cx="11.5" cy="13.5" r="1" stroke="#F05D40"></circle>
+                            x1="7.5"
+                            x2="10.5"
+                            y1="7"
+                            y2="7"
+                          ></line>
+                          <line
+                            fill="white"
+                            stroke="#F05D40"
+                            strokeLinecap="round"
+                            strokeMiterlimit="10"
+                            x1="9"
+                            x2="9"
+                            y1="8.5"
+                            y2="5.5"
+                          ></line>
                         </g>
-                        <line
-                          fill="none"
-                          stroke="#F05D40"
-                          strokeLinecap="round"
-                          strokeMiterlimit="10"
-                          x1="7.5"
-                          x2="10.5"
-                          y1="7"
-                          y2="7"
-                        ></line>
-                        <line
-                          fill="white"
-                          stroke="#F05D40"
-                          strokeLinecap="round"
-                          strokeMiterlimit="10"
-                          x1="9"
-                          x2="9"
-                          y1="8.5"
-                          y2="5.5"
-                        ></line>
-                      </g>
-                    </svg>
-                    <span style={{ color: '#F05D40' }}>Thêm vào giỏ hàng</span>
+                      </svg>
+                      <span style={{ color: '#F05D40' }}>Thêm vào giỏ hàng</span>
+                    </div>
+                    <div
+                      className="flex justify-center p-3 w-56 ml-5 rounded-sm cursor-pointer"
+                      style={{ border: '1px solid #F05D40', background: '#EE4D2D' }}
+                    >
+                      <span style={{ color: 'white' }}>Mua ngay</span>
+                    </div>
                   </div>
-                  <div
-                    className="flex justify-center p-3 w-56 ml-5 rounded-sm cursor-pointer"
-                    style={{ border: '1px solid #F05D40', background: '#EE4D2D' }}
-                  >
-                    <span style={{ color: 'white' }}>Mua ngay</span>
+                ) : (
+                  <div className="mt-8 flex">
+                    <Button className='text-gray-400 px-5 py-2 border border-gray-300'>Không còn sản phẩm</Button>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
