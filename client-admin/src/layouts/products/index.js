@@ -167,6 +167,8 @@ function Products() {
         imgFile = uploadRes.url;
       }
 
+      console.log("img file: ", imgFile);
+
       setValue("img", imgFile);
 
       if (pId) {
