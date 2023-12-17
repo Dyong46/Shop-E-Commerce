@@ -185,7 +185,7 @@ VALUES
 	(N'Phạm Trần Minh Thư',		'0247259910',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'123 Khu phố 1',	1,	1),
 	(N'Nguyễn Ngọc Bảo Anh',	'0123599522',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-12-i-761',	N'Phường-Trung-Mỹ-Tây-i-26785',	N'123 Khu phố 1',		0,	1),
 	(N'Nguyễn Hoàng Duy',	'0575114554',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'123 Khu phố 1',		1,	2),
-	(N'Nguyễn Bảo Ngọc',		'0235799112',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường 4',	N'Khu phố 4',	1,	3),
+	(N'Nguyễn Bảo Ngọc',		'0235799112',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-2673',	N'Khu phố 4',	1,	3),
 	(N'Trương Kiều Oanh',	'0974757373',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'Khu phố 5',		1,	4),
 	(N'Nguyễn Bích Quyên',	'0154448487',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'Khu phố 6',		1,	5),
 	(N'Nguyễn Hoàng Yến',	'0148481533',	N'Thành-phố-Hồ-Chí-Minh-i-79',	N'Quận-1-i-760',	N'Phường-Tân-Định-i-26734',	N'Khu phố 7',		0,	5)
