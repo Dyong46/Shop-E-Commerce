@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getTopProduct } from "servers/OrderService";
 
 import PropTypes from "prop-types";
+import { formatCurrency } from "utils/utils";
 
 export default function data() {
   const [products, setProduct] = useState([]);
@@ -59,7 +60,7 @@ export default function data() {
         ),
         price: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
-            {product.price}
+            {formatCurrency(product.price)}
           </MDTypography>
         ),
         quantity: (
