@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { Fragment, useContext, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { Fragment, useContext } from 'react';
 import { AddressContext } from '~/Context/Address/AddressContext';
 import { getNameFromNameId } from '~/utils/utils';
 
