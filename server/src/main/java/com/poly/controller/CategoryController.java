@@ -3,19 +3,12 @@ package com.poly.controller;
 import com.poly.entity.Category;
 import com.poly.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
@@ -24,27 +17,57 @@ public class CategoryController {
     CategoryService categoryService;
 
     @GetMapping()
-    public List<Category> getAllCategory() {
-        return categoryService.getAllCategory();
+    public ResponseEntity<List<Category>> getAllCategory() {
+        try {
+            return ResponseEntity.ok(categoryService.getAllCategory());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Integer id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) {
+        try {
+            if (id <= 0) {
+                return ResponseEntity.badRequest().build();
+            }
+            Category category = categoryService.getCategoryById(id);
+            return category != null ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping()
-    public Category create(@RequestBody Category category) {
-        return categoryService.save(category);
+    public ResponseEntity<Category> create(@Valid @RequestBody Category category) {
+        try {
+            return ResponseEntity.ok(categoryService.save(category));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PutMapping("/{id}")
-    public Category update(@RequestBody Category category, @PathVariable Integer id) {
-        return categoryService.update(category, id);
+    public ResponseEntity<Category> update(@Valid @RequestBody Category category, @PathVariable Integer id) {
+        try {
+            if (id <= 0) {
+                return ResponseEntity.badRequest().build();
+            }
+            return ResponseEntity.ok(categoryService.update(category, id));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public Category delete(@PathVariable Integer id) {
-        return categoryService.deleted(id);
+    public ResponseEntity<Category> delete(@PathVariable Integer id) {
+        try {
+            if (id <= 0) {
+                return ResponseEntity.badRequest().build();
+            }
+            return ResponseEntity.ok(categoryService.deleted(id));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
