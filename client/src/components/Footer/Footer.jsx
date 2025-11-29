@@ -114,7 +114,7 @@ function Footer() {
             </p>
             <h6 className="fonts mt-5">TOP THƯƠNG HIỆU NỔI BẬT</h6>
             <p className="my-3 leading-5 ">
-              <a href="">Philips</a> | Deerma | L'Oréal | Kiehl's | Kappa | Juno | Converse | Biti's | Owen | Pedro |
+              <a href="">Philips</a> | Deerma | L&apos;Oréal | Kiehl&apos;s | Kappa | Juno | Converse | Biti&apos;s | Owen | Pedro |
               New Balance | adidas | Samsung | Sunhouse | Xiaomi | Oreo | Nike | Pantio | Supreme | PUMA | Kindle | DHC
               | Transino | Martiderm | Paula’s Choice | The Ordinary | KitKat | Teelab | SomeHow | Elise | YODY |
               Coolmate | MARC Fashion | Vergency | Scott Platon | GUMAC | Vascara | MWC | Shondo | CANIFA | Sablanca |
